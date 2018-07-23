@@ -1,0 +1,1 @@
+provides: pigx-common-core, spring-cloud-starter-security

@@ -1,0 +1,49 @@
+spring:
+  cloud:
+    gateway:
+      locator:
+        enabled: true
+      routes:
+      - id: pigx-auth
+        uri: lb://pigx-auth
+        predicates:
+        - Path=/auth/**
+        filters:
+          # 验证码处理
+        - ImageCodeGatewayFilter
+          # 前端密码解密
+        - PasswordDecoderFilter
+        - StripPrefix=1
+      - id: pigx-upms
+        uri: lb://pigx-upms
+        predicates:
+        - Path=/admin/**
+        filters:
+          # Swagger请求头处理
+        - SwaggerHeaderFilter
+          # 请求头清理避免不合法请求头
+        - name: RemoveRequestHeader
+          args:
+            name: from
+          # 限流配置
+        - name: RequestRateLimiter
+          args:
+            key-resolver: '#{@remoteAddrKeyResolver}'
+            redis-rate-limiter.replenishRate: 10
+            redis-rate-limiter.burstCapacity: 20
+        - StripPrefix=1
+          # 降级配置
+        - name: Hystrix
+          args:
+            name: default
+            fallbackUri: 'forward:/fallback'
+
+security:
+  encode:
+    # 前端密码密钥，必须16位
+    key: 'pigxpigxpigxpigx'
+
+# 不校验验证码终端
+ignore:
+  clients:
+    - test

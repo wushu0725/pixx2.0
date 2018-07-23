@@ -1,0 +1,13 @@
+FROM anapsix/alpine-java:8_server-jre_unlimited
+
+MAINTAINER wangiegie@gmail.com
+
+RUN mkdir -p /pigx/bin/com.pig4cloud/pigx-eureka
+
+WORKDIR /pigx/bin/com.pig4cloud/pigx-eureka
+
+EXPOSE 1025
+
+ADD ./pigx-eureka/target/pigx-eureka.jar ./
+
+CMD java -Djava.security.egd=file:/dev/./urandom -jar pigx-eureka.jar

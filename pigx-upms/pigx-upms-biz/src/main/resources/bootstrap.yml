@@ -1,0 +1,26 @@
+server:
+  port: 4000
+
+spring:
+  application:
+    name: pigx-upms
+  # dev环境
+  profiles:
+    active: dev
+  # 配置中心
+  cloud:
+    config:
+      fail-fast: true
+      name: ${spring.application.name}
+      profile: ${spring.profiles.active}
+      discovery:
+        enabled: true
+        service-id: pigx-config
+
+# 注册中心配置
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://pig:pig@localhost:1025/eureka/

@@ -1,0 +1,64 @@
+version: '2'
+services:
+  pigx-redis:
+    image: redis:4.0.10
+    ports:
+      - 6379:6379
+    restart: always
+
+  pigx-eureka:
+    build:
+      context: ./
+      dockerfile: ./pigx-eureka/Dockerfile
+    restart: always
+    ports:
+      - 1025:1025
+
+  pigx-config:
+    links:
+      - pigx-eureka
+    build:
+      context: ./
+      dockerfile: ./pigx-config/Dockerfile
+    restart: always
+
+  pigx-gateway:
+    links:
+      - pigx-eureka
+    build:
+      context: ./
+      dockerfile: ./pigx-gateway/Dockerfile
+    restart: always
+    ports:
+      - 9999:9999
+
+  pigx-auth:
+    links:
+      - pigx-eureka
+      - pigx-redis
+    build:
+      context: ./
+      dockerfile: ./pigx-auth/Dockerfile
+    restart: always
+    ports:
+      - 3000:3000
+
+  pig-upms:
+    links:
+      - pigx-eureka
+      - pigx-redis
+      - pigx-gateway
+    build:
+      context: ./
+      dockerfile: ./pigx-upms/pigx-upms-biz/Dockerfile
+    restart: always
+
+  pig-monitor:
+    links:
+      - pigx-eureka
+    build:
+      context: ./
+      dockerfile: ./pigx-monitor/Dockerfile
+    restart: always
+    ports:
+      - 5001:5001
