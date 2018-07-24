@@ -6,7 +6,7 @@ RUN mkdir -p /pigx/bin/com.pig4cloud/pigx-auth
 
 WORKDIR /pigx/bin/com.pig4cloud/pigx-auth
 
-EXPOSE 1025
+EXPOSE 3000
 
 ADD ./pigx-auth/target/pigx-auth.jar ./
 

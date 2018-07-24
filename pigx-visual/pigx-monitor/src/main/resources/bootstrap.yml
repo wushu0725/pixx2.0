@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: pigx-monitor
+    name: pigx-daemon
   #配置中心
   cloud:
     config:

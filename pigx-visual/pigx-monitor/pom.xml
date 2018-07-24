@@ -23,7 +23,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.pig4cloud</groupId>
-		<artifactId>pigx</artifactId>
+		<artifactId>pigx-visual</artifactId>
 		<version>${pigx.version}</version>
 	</parent>
 
