@@ -58,7 +58,17 @@ services:
       - pigx-eureka
     build:
       context: ./
-      dockerfile: ./pigx-daemon/Dockerfile
+      dockerfile: ./pigx-visual/pigx-monitor/Dockerfile
     restart: always
     ports:
       - 5001:5001
+
+  pig-daemon:
+    links:
+      - pigx-eureka
+    build:
+      context: ./
+      dockerfile: ./pigx-visual/pigx-daemon/Dockerfile
+    restart: always
+    ports:
+      - 5002:5002
