@@ -17,6 +17,7 @@
 package com.pig4cloud.pigx.common.swagger.config;
 
 
+import cn.hutool.core.collection.CollUtil;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -37,7 +38,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author Sywd
+ * @author lengleng
  * swagger配置
  */
 @Configuration
@@ -58,29 +59,29 @@ public class SwaggerAutoConfiguration {
 	@Bean
 	public Docket api(SwaggerProperties swaggerProperties) {
 		// base-path处理
-		// 当没有配置任何path的时候，解析/**
-		if (swaggerProperties.getBasePath().isEmpty()) {
+		if (CollUtil.isEmpty(swaggerProperties.getBasePath())) {
 			swaggerProperties.getBasePath().add(BASE_PATH);
 		}
+
 		List<Predicate<String>> basePath = new ArrayList();
-		for (String path : swaggerProperties.getBasePath()) {
-			basePath.add(PathSelectors.ant(path));
-		}
+		swaggerProperties.getBasePath().forEach(path -> basePath.add(PathSelectors.ant(path)));
+
 		// exclude-path处理
-		// 当没有任何配置的时候，解析Spring Boot默认的异常处理路径/error
-		if(swaggerProperties.getExcludePath().isEmpty()){
+		if (CollUtil.isEmpty(swaggerProperties.getExcludePath())) {
 			swaggerProperties.getExcludePath().add(DEFAULT_EXCLUDE_PATH);
 		}
+
 		List<Predicate<String>> excludePath = new ArrayList<>();
-		for (String path : swaggerProperties.getExcludePath()) {
-			excludePath.add(PathSelectors.ant(path));
-		}
-		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
-			.apis(RequestHandlerSelectors.any()).paths(Predicates.and(
-				Predicates.not(Predicates.or(excludePath)),
-				Predicates.or(basePath)))
-			.build().securitySchemes(Collections.singletonList(securitySchema()))
-			.securityContexts(Collections.singletonList(securityContext())).pathMapping("/");
+		swaggerProperties.getExcludePath().forEach(path -> excludePath.add(PathSelectors.ant(path)));
+
+		return new Docket(DocumentationType.SWAGGER_2)
+			.apiInfo(apiInfo()).select()
+			.apis(RequestHandlerSelectors.any())
+			.paths(Predicates.and(Predicates.not(Predicates.or(excludePath)), Predicates.or(basePath)))
+			.build()
+			.securitySchemes(Collections.singletonList(securitySchema()))
+			.securityContexts(Collections.singletonList(securityContext()))
+			.pathMapping("/");
 	}
 
 	private SecurityContext securityContext() {
