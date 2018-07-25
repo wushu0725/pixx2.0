@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable()
 			.authorizeRequests()
-			.antMatchers("actuator/**").permitAll()
+			.antMatchers("/actuator/**").permitAll()
 			.anyRequest()
 			.authenticated().and().httpBasic();
 	}
