@@ -35,6 +35,7 @@
 
 	<modules>
 		<module>pigx-common-core</module>
+		<module>pigx-common-job</module>
 		<module>pigx-common-log</module>
 		<module>pigx-common-security</module>
 		<module>pigx-common-swagger</module>

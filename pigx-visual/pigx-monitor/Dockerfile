@@ -6,8 +6,8 @@ RUN mkdir -p /pigx/bin/com.pig4cloud/pigx-monitor
 
 WORKDIR /pigx/bin/com.pig4cloud/pigx-monitor
 
-EXPOSE 1025
+EXPOSE 5001
 
-ADD ./pigx-monitor/target/pigx-monitor.jar ./
+ADD ./pigx-visual/pigx-monitor/target/pigx-monitor.jar ./
 
 CMD java -Djava.security.egd=file:/dev/./urandom -jar pigx-monitor.jar

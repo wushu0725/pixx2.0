@@ -23,36 +23,18 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.pig4cloud</groupId>
-		<artifactId>pigx-common</artifactId>
+		<artifactId>pigx</artifactId>
 		<version>${pigx.version}</version>
 	</parent>
 
-	<artifactId>pigx-common-swagger</artifactId>
+	<artifactId>pigx-visual</artifactId>
 	<version>${pigx.version}</version>
-	<packaging>jar</packaging>
-	<name>pigx-common-swagger</name>
-	<description>pigx 接口文档</description>
+	<name>pigx-visual</name>
+	<description>pigx 图形化功能模块</description>
+	<packaging>pom</packaging>
 
-
-	<dependencies>
-		<!--安全模块支持swagger security-->
-		<dependency>
-			<groupId>com.pig4cloud</groupId>
-			<artifactId>pigx-common-security</artifactId>
-			<version>${pigx.version}</version>
-		</dependency>
-		<!--server-api-->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>${servlet-api.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<!--swagger 依赖-->
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>${swagger.version}</version>
-		</dependency>
-	</dependencies>
+	<modules>
+		<module>pigx-daemon</module>
+		<module>pigx-monitor</module>
+	</modules>
 </project>

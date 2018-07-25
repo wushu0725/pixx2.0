@@ -15,25 +15,25 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.eureka.security;
+package com.pig4cloud.pigx.daemon.listener;
+
+import com.dangdang.ddframe.job.executor.ShardingContexts;
+import com.dangdang.ddframe.job.lite.api.listener.ElasticJobListener;
 
 /**
  * @author lengleng
- * @date 2018/7/12
+ * @date 2018/7/24
+ * 任务监听器
  */
+public class PigxElasticJobListener implements ElasticJobListener {
 
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
-@EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable()
-			.authorizeRequests()
-			.antMatchers("/actuator/**").permitAll()
-			.anyRequest()
-			.authenticated().and().httpBasic();
+	public void beforeJobExecuted(ShardingContexts shardingContexts) {
+		System.out.println(shardingContexts.getJobName() + " | MyElasticJobListener beforeJobExecuted");
+	}
+
+	@Override
+	public void afterJobExecuted(ShardingContexts shardingContexts) {
+		System.out.println(shardingContexts.getJobName() + " | MyElasticJobListener afterJobExecuted");
 	}
 }

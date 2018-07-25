@@ -15,25 +15,26 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.eureka.security;
+package com.pig4cloud.pigx.daemon.job;
+
+import com.dangdang.ddframe.job.api.ShardingContext;
+import com.dangdang.ddframe.job.api.simple.SimpleJob;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author lengleng
- * @date 2018/7/12
+ * @date 2018/2/7
+ * 测试Job
  */
-
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
-@EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable()
-			.authorizeRequests()
-			.antMatchers("/actuator/**").permitAll()
-			.anyRequest()
-			.authenticated().and().httpBasic();
-	}
+@Slf4j
+public class PigxSimpleJob implements SimpleJob {
+    /**
+     * 业务执行逻辑
+     *
+     * @param shardingContext 分片信息
+     */
+    @Override
+    public void execute(ShardingContext shardingContext) {
+        log.info("shardingContext:{}", shardingContext);
+    }
 }

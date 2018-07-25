@@ -15,25 +15,22 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.eureka.security;
+package com.pig4cloud.pigx.common.job.annotation;
+
+import com.pig4cloud.pigx.common.job.ElasticJobAutoConfiguration;
+import org.springframework.context.annotation.Import;
+
+import java.lang.annotation.*;
 
 /**
  * @author lengleng
- * @date 2018/7/12
+ * @date 2018/7/24
+ * 开启pigx job
  */
-
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
-@EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable()
-			.authorizeRequests()
-			.antMatchers("/actuator/**").permitAll()
-			.anyRequest()
-			.authenticated().and().httpBasic();
-	}
+@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
+@Import({ElasticJobAutoConfiguration.class})
+public @interface EnablePigxJob {
 }

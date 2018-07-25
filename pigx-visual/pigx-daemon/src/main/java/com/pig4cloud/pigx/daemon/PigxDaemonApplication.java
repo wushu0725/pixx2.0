@@ -15,25 +15,23 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.eureka.security;
+package com.pig4cloud.pigx.daemon;
+
+import com.pig4cloud.pigx.common.job.annotation.EnablePigxJob;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author lengleng
- * @date 2018/7/12
+ * @date 2018/7/24
+ * 分布式任务调度模块
  */
+@EnablePigxJob
+@SpringBootApplication
+public class PigxDaemonApplication {
 
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
-@EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable()
-			.authorizeRequests()
-			.antMatchers("/actuator/**").permitAll()
-			.anyRequest()
-			.authenticated().and().httpBasic();
+	public static void main(String[] args) {
+		SpringApplication.run(PigxDaemonApplication.class, args);
 	}
+
 }

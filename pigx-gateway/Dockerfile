@@ -6,7 +6,7 @@ RUN mkdir -p /pigx/bin/com.pig4cloud/pigx-gateway
 
 WORKDIR /pigx/bin/com.pig4cloud/pigx-gateway
 
-EXPOSE 1025
+EXPOSE 9999
 
 ADD ./pigx-gateway/target/pigx-gateway.jar ./
 

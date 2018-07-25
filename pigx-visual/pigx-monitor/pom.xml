@@ -23,7 +23,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.pig4cloud</groupId>
-		<artifactId>pigx</artifactId>
+		<artifactId>pigx-visual</artifactId>
 		<version>${pigx.version}</version>
 	</parent>
 
@@ -40,6 +40,11 @@
 			<groupId>de.codecentric</groupId>
 			<artifactId>spring-boot-admin-starter-server</artifactId>
 			<version>${monitor.version}</version>
+		</dependency>
+		<!--配置中心客户端-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
 		<!--配置中心客户端-->
 		<dependency>

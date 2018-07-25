@@ -1,0 +1,36 @@
+spring:
+  # 保存定时任务的数据源
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1:3306/pigx?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+  elasticjob:
+    # 分布式任务协调依赖zookeeper
+    zookeeper:
+      server-lists: 127.0.0.1:2181
+      namespace: pigx-daemon
+    # 普通任务
+    simples:
+      spring-simple-job:
+        job-class: com.pig4cloud.pigx.daemon.job.PigxSimpleJob
+        cron: 0/2 * * * * ?
+        sharding-total-count: 3
+        sharding-item-parameters: 0=service1,1=service2,2=service3
+        eventTraceRdbDataSource: 'dataSource'
+        listener:
+          listener-class: com.pig4cloud.pigx.daemon.listener.PigxElasticJobListener
+    # 简单任务
+    dataflows:
+      spring-dataflow-job:
+        job-class: com.pig4cloud.pigx.daemon.job.PigxDataflowJob
+        cron: 0/2 * * * * ?
+        sharding-total-count: 3
+        sharding-item-parameters: 0=service1,1=service2,2=service3
+        streaming-process: true
+        eventTraceRdbDataSource: 'dataSource'
+        listener:
+          distributed-listener-class: com.pig4cloud.pigx.daemon.listener.PigxDistributeElasticJobListener
+          started-timeout-milliseconds: 5000
+          completed-timeout-milliseconds: 10000

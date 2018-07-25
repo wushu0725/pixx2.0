@@ -27,32 +27,30 @@
 		<version>${pigx.version}</version>
 	</parent>
 
-	<artifactId>pigx-common-swagger</artifactId>
+	<artifactId>pigx-common-job</artifactId>
 	<version>${pigx.version}</version>
 	<packaging>jar</packaging>
-	<name>pigx-common-swagger</name>
-	<description>pigx 接口文档</description>
-
+	<name>pigx-common-job</name>
+	<description>pigx 定时任务</description>
 
 	<dependencies>
-		<!--安全模块支持swagger security-->
 		<dependency>
-			<groupId>com.pig4cloud</groupId>
-			<artifactId>pigx-common-security</artifactId>
-			<version>${pigx.version}</version>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
 		</dependency>
-		<!--server-api-->
+
+		<!-- import elastic-job lite core -->
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>${servlet-api.version}</version>
-			<scope>provided</scope>
+			<groupId>com.dangdang</groupId>
+			<artifactId>elastic-job-lite-core</artifactId>
+			<version>${elastic-job-lite.version}</version>
 		</dependency>
-		<!--swagger 依赖-->
+		<!-- import other module if need -->
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>${swagger.version}</version>
+			<groupId>com.dangdang</groupId>
+			<artifactId>elastic-job-lite-spring</artifactId>
+			<version>${elastic-job-lite.version}</version>
 		</dependency>
 	</dependencies>
 </project>
