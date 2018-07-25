@@ -38,3 +38,6 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: true
+# swagger相关配置
+swagger:
+  exclude-path: /actuator/**,/error
