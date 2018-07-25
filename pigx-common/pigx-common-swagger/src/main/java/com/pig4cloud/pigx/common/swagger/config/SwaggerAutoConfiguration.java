@@ -17,7 +17,10 @@
 package com.pig4cloud.pigx.common.swagger.config;
 
 
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -43,9 +46,39 @@ import java.util.List;
 public class SwaggerAutoConfiguration {
 
 	@Bean
-	public Docket api() {
+	@ConditionalOnMissingBean
+	public SwaggerProperties swaggerProperties() {
+		return new SwaggerProperties();
+	}
+
+	private static final String DEFAULT_EXCLUDE_PATH = "/error";
+	private static final String BASE_PATH = "/**";
+
+
+	@Bean
+	public Docket api(SwaggerProperties swaggerProperties) {
+		// base-path处理
+		// 当没有配置任何path的时候，解析/**
+		if (swaggerProperties.getBasePath().isEmpty()) {
+			swaggerProperties.getBasePath().add(BASE_PATH);
+		}
+		List<Predicate<String>> basePath = new ArrayList();
+		for (String path : swaggerProperties.getBasePath()) {
+			basePath.add(PathSelectors.ant(path));
+		}
+		// exclude-path处理
+		// 当没有任何配置的时候，解析Spring Boot默认的异常处理路径/error
+		if(swaggerProperties.getExcludePath().isEmpty()){
+			swaggerProperties.getExcludePath().add(DEFAULT_EXCLUDE_PATH);
+		}
+		List<Predicate<String>> excludePath = new ArrayList<>();
+		for (String path : swaggerProperties.getExcludePath()) {
+			excludePath.add(PathSelectors.ant(path));
+		}
 		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
-			.apis(RequestHandlerSelectors.any()).paths(PathSelectors.any())
+			.apis(RequestHandlerSelectors.any()).paths(Predicates.and(
+				Predicates.not(Predicates.or(excludePath)),
+				Predicates.or(basePath)))
 			.build().securitySchemes(Collections.singletonList(securitySchema()))
 			.securityContexts(Collections.singletonList(securityContext())).pathMapping("/");
 	}
