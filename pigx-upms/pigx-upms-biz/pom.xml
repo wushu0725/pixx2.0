@@ -74,6 +74,12 @@
 			<artifactId>spring-boot-admin-starter-client</artifactId>
 			<version>${monitor.version}</version>
 		</dependency>
+		<!--mybatis-->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>${mbp.boot.version}</version>
+		</dependency>
 		<!--数据库-->
 		<dependency>
 			<groupId>mysql</groupId>

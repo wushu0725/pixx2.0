@@ -20,7 +20,7 @@
 package com.pig4cloud.pigx.auth.config;
 
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
-import com.pig4cloud.pigx.common.security.compoent.PigxWebResponseExceptionTranslator;
+import com.pig4cloud.pigx.common.security.component.PigxWebResponseExceptionTranslator;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

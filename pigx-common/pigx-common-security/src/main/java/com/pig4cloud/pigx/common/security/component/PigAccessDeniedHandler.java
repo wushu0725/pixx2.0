@@ -17,7 +17,7 @@
  *
  */
 
-package com.pig4cloud.pigx.common.security.compoent;
+package com.pig4cloud.pigx.common.security.component;
 
 /**
  * @author lengleng

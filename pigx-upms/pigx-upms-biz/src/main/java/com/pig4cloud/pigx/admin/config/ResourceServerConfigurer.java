@@ -19,8 +19,8 @@
 
 package com.pig4cloud.pigx.admin.config;
 
-import com.pig4cloud.pigx.common.security.compoent.PigAccessDeniedHandler;
-import com.pig4cloud.pigx.common.security.compoent.ResourceAuthExceptionEntryPoint;
+import com.pig4cloud.pigx.common.security.component.PigAccessDeniedHandler;
+import com.pig4cloud.pigx.common.security.component.ResourceAuthExceptionEntryPoint;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;

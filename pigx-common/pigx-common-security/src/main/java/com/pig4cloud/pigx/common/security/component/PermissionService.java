@@ -17,7 +17,7 @@
  *
  */
 
-package com.pig4cloud.pigx.common.security.compoent;
+package com.pig4cloud.pigx.common.security.component;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;

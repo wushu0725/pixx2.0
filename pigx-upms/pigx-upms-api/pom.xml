@@ -38,8 +38,9 @@
 		<!--mybatis-plus 依賴-->
 		<dependency>
 			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<artifactId>mybatis-plus</artifactId>
 			<version>${mbp.boot.version}</version>
+			<scope>compile</scope>
 		</dependency>
 		<!--core 工具类-->
 		<dependency>

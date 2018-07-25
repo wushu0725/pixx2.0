@@ -15,7 +15,7 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.common.security.compoent;
+package com.pig4cloud.pigx.common.security.component;
 
 import com.pig4cloud.pigx.common.security.exception.*;
 import lombok.extern.slf4j.Slf4j;
