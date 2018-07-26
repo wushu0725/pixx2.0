@@ -15,7 +15,7 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.gateway.handle;
+package com.pig4cloud.pigx.gateway.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ public class SwaggerSecurityHandler implements HandlerFunction<ServerResponse> {
 	/**
 	 * Handle the given request.
 	 *
-	 * @param request the request to handle
+	 * @param request the request to handler
 	 * @return the response
 	 */
 	@Override

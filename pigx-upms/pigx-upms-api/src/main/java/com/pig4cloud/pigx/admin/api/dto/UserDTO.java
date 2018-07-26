@@ -21,6 +21,7 @@ package com.pig4cloud.pigx.admin.api.dto;
 
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ import java.util.List;
  * @date 2017/11/5
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class UserDTO extends SysUser {
 	/**
 	 * 角色ID

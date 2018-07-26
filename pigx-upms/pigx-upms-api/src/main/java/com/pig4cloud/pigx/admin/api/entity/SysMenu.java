@@ -26,6 +26,7 @@ import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -39,6 +40,7 @@ import java.util.Date;
  * @since 2017-11-08
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName("sys_menu")
 public class SysMenu extends Model<SysMenu> {
 

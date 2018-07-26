@@ -92,19 +92,4 @@ public class SysUser implements Serializable {
 	@TableField("dept_id")
 	private Integer deptId;
 
-	@Override
-	public String toString() {
-		return "SysUser{" +
-			"userId=" + userId +
-			", username='" + username + '\'' +
-			", password='" + password + '\'' +
-			", salt='" + salt + '\'' +
-			", createTime=" + createTime +
-			", updateTime=" + updateTime +
-			", delFlag='" + delFlag + '\'' +
-			", phone='" + phone + '\'' +
-			", avatar='" + avatar + '\'' +
-			", deptId=" + deptId +
-			'}';
-	}
 }

@@ -22,6 +22,7 @@ package com.pig4cloud.pigx.admin.api.entity;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
@@ -34,6 +35,7 @@ import java.io.Serializable;
  * @since 2018-01-22
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName("sys_dept_relation")
 public class SysDeptRelation extends Model<SysDeptRelation> {
 
