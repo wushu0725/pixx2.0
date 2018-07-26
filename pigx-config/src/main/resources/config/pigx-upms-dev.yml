@@ -40,13 +40,6 @@ mybatis-plus:
     cache-enabled: true
 # swagger相关配置
 swagger:
-  description: '全宇宙最牛逼的Spring Cloud微服务开发脚手架'
-  version: '1.2.4'
-  #base-package: com.pig4cloud.pigx.admin.controller
   exclude-path:
     - /actuator/**
     - /error
-  contact:
-    name: '冷冷'
-    email: 'wangiegie@gmail.com'
-    url: 'https://gitee.wang/pig/pigx'
