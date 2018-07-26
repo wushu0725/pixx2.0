@@ -8,21 +8,15 @@ spring:
       password: pig
   application:
     name: pigx-eureka
-  boot:
-    admin:
-      client:
-        url: http://localhost:5001
-        instance:
-          name: PIGX-EUREKA
 
 # docker-compose部署时候 hostname 换成pigx-eureka
 # 类似的 redis 使用pigx-redis ,gateway 换成 pigx-gateway
 eureka:
   instance:
-    hostname: localhost
+    hostname: pigx-eureka
     prefer-ip-address: true
   client:
-    register-with-eureka: false
+    register-with-eureka: true
     fetch-registry: false
     service-url:
       defaultZone: http://pig:pig@${eureka.instance.hostname}:${server.port}/eureka/

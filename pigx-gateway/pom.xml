@@ -56,9 +56,9 @@
 		</dependency>
 		<!--hutool-->
 		<dependency>
-			<groupId>cn.hutool</groupId>
-			<artifactId>hutool-all</artifactId>
-			<version>${hutool.version}</version>
+			<groupId>com.pig4cloud</groupId>
+			<artifactId>pigx-common-core</artifactId>
+			<version>${pigx.version}</version>
 		</dependency>
 		<!--接口文档-->
 		<dependency>
