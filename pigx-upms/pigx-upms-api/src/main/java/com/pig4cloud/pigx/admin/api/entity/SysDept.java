@@ -26,6 +26,7 @@ import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -39,6 +40,7 @@ import java.util.Date;
  * @since 2018-01-22
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName("sys_dept")
 public class SysDept extends Model<SysDept> {
 
