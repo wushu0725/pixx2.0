@@ -62,7 +62,7 @@ public class SwaggerAutoConfiguration {
 		if (CollUtil.isEmpty(swaggerProperties.getBasePath())) {
 			swaggerProperties.getBasePath().add(BASE_PATH);
 		}
-
+		//noinspection unchecked
 		List<Predicate<String>> basePath = new ArrayList();
 		swaggerProperties.getBasePath().forEach(path -> basePath.add(PathSelectors.ant(path)));
 
@@ -70,13 +70,14 @@ public class SwaggerAutoConfiguration {
 		if (CollUtil.isEmpty(swaggerProperties.getExcludePath())) {
 			swaggerProperties.getExcludePath().add(DEFAULT_EXCLUDE_PATH);
 		}
-
 		List<Predicate<String>> excludePath = new ArrayList<>();
 		swaggerProperties.getExcludePath().forEach(path -> excludePath.add(PathSelectors.ant(path)));
 
+		//noinspection Guava
 		return new Docket(DocumentationType.SWAGGER_2)
-			.apiInfo(apiInfo()).select()
-			.apis(RequestHandlerSelectors.any())
+			.host(swaggerProperties.getHost())
+			.apiInfo(apiInfo(swaggerProperties)).select()
+			.apis(RequestHandlerSelectors.basePackage(swaggerProperties.getBasePackage()))
 			.paths(Predicates.and(Predicates.not(Predicates.or(excludePath)), Predicates.or(basePath)))
 			.build()
 			.securitySchemes(Collections.singletonList(securitySchema()))
@@ -86,7 +87,7 @@ public class SwaggerAutoConfiguration {
 
 	private SecurityContext securityContext() {
 		return SecurityContext.builder().securityReferences(defaultAuth())
-			.forPaths(PathSelectors.ant("/**"))
+			.forPaths(PathSelectors.ant(BASE_PATH))
 			.build();
 	}
 
@@ -114,13 +115,15 @@ public class SwaggerAutoConfiguration {
 		return new OAuth("pigX OAuth", authorizationScopeList, grantTypes);
 	}
 
-	private ApiInfo apiInfo() {
+	private ApiInfo apiInfo(SwaggerProperties swaggerProperties) {
 		return new ApiInfoBuilder()
-			.title("PigX Swagger API ")
-			.description("https://gitee.com/log4j/pig/wikis")
-			.termsOfServiceUrl("https://gitee.wang/pig/pigx")
-			.contact(new Contact("冷冷", "https://gitee.wang/pig/pigx", "wangiegie@gmail.com"))
-			.version("2.0")
+			.title(swaggerProperties.getTitle())
+			.description(swaggerProperties.getDescription())
+			.license(swaggerProperties.getLicense())
+			.licenseUrl(swaggerProperties.getLicenseUrl())
+			.termsOfServiceUrl(swaggerProperties.getTermsOfServiceUrl())
+			.contact(new Contact(swaggerProperties.getContact().getName(), swaggerProperties.getContact().getUrl(), swaggerProperties.getContact().getEmail()))
+			.version(swaggerProperties.getVersion())
 			.build();
 	}
 
