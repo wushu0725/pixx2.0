@@ -2,7 +2,7 @@
 spring:
   redis:
     password:
-    host: pigx-redis
+    host: localhost
 # 暴露监控端点
 management:
   endpoints:

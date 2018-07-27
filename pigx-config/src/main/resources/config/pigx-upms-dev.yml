@@ -6,7 +6,7 @@ security:
       client-secret: pigx
       scope: server
     resource:
-      token-info-uri: http://pigx-gateway:9999/auth/oauth/check_token
+      token-info-uri: http://localhost:9999/auth/oauth/check_token
 
 # 数据源
 spring:
