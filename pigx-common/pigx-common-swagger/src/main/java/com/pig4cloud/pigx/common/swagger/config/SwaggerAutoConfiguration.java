@@ -85,34 +85,39 @@ public class SwaggerAutoConfiguration {
 			.pathMapping("/");
 	}
 
+	/**
+	 * 配置默认的全局鉴权策略的开关，通过正则表达式进行匹配；默认匹配所有URL
+	 * @return
+	 */
 	private SecurityContext securityContext() {
-		return SecurityContext.builder().securityReferences(defaultAuth())
-			.forPaths(PathSelectors.ant(BASE_PATH))
+		return SecurityContext.builder()
+			.securityReferences(defaultAuth())
+			.forPaths(PathSelectors.regex(swaggerProperties().getAuthorization().getAuthRegex()))
 			.build();
 	}
 
+	/**
+	 * 默认的全局鉴权策略
+	 *
+	 * @return
+	 */
 	private List<SecurityReference> defaultAuth() {
-
-		final AuthorizationScope[] authorizationScopes = new AuthorizationScope[3];
-		authorizationScopes[0] = new AuthorizationScope("read", "read all");
-		authorizationScopes[1] = new AuthorizationScope("trust", "trust all");
-		authorizationScopes[2] = new AuthorizationScope("write", "write all");
-
-		return Collections.singletonList(new SecurityReference("pigX OAuth", authorizationScopes));
+		ArrayList<AuthorizationScope> authorizationScopeList = new ArrayList<>();
+		swaggerProperties().getAuthorization().getAuthorizationScopeList().forEach(authorizationScope->authorizationScopeList.add(new AuthorizationScope(authorizationScope.getScope(),authorizationScope.getDescription())));
+		AuthorizationScope[] authorizationScopes = new AuthorizationScope[authorizationScopeList.size()];
+		return Collections.singletonList(SecurityReference.builder()
+			.reference(swaggerProperties().getAuthorization().getName())
+			.scopes(authorizationScopeList.toArray(authorizationScopes))
+			.build());
 	}
 
 
 	private OAuth securitySchema() {
-		ArrayList authorizationScopeList = new ArrayList();
-		authorizationScopeList.add(new AuthorizationScope("server", "server all"));
-		authorizationScopeList.add(new AuthorizationScope("read", "read all"));
-		authorizationScopeList.add(new AuthorizationScope("write", "access all"));
-
-		ArrayList grantTypes = new ArrayList();
-		GrantType creGrant = new ResourceOwnerPasswordCredentialsGrant("http://localhost:9999/auth/oauth/token");
-
-		grantTypes.add(creGrant);
-		return new OAuth("pigX OAuth", authorizationScopeList, grantTypes);
+		ArrayList<AuthorizationScope> authorizationScopeList = new ArrayList<>();
+		swaggerProperties().getAuthorization().getAuthorizationScopeList().forEach(authorizationScope->authorizationScopeList.add(new AuthorizationScope(authorizationScope.getScope(),authorizationScope.getDescription())));
+		ArrayList<GrantType> grantTypes = new ArrayList<>();
+		swaggerProperties().getAuthorization().getTokenUrlList().forEach(tokenUrl->grantTypes.add(new ResourceOwnerPasswordCredentialsGrant(tokenUrl)));
+		return new OAuth(swaggerProperties().getAuthorization().getName(), authorizationScopeList, grantTypes);
 	}
 
 	private ApiInfo apiInfo(SwaggerProperties swaggerProperties) {

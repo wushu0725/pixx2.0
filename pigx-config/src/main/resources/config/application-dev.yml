@@ -47,9 +47,21 @@ ribbon:
 
 #swagger公共信息
 swagger:
+  title: 'PigX Swagger API'
   description: '全宇宙最牛逼的Spring Cloud微服务开发脚手架'
   version: '1.3.0'
+  license: 'Powered By PigX'
+  licenseUrl: 'https://gitee.com/log4j/pig/wikis'
+  terms-of-service-url: 'https://gitee.wang/pig/pigx'
   contact:
     name: '冷冷'
     email: 'wangiegie@gmail.com'
     url: 'https://gitee.wang/pig/pigx'
+  authorization:
+    name: 'pigX OAuth'
+    auth-regex: '^.*$'
+    authorization-scope-list:
+      - scope: 'server'
+        description: 'server all'
+    token-url-list:
+      - 'http://localhost:9999/auth/oauth/token'

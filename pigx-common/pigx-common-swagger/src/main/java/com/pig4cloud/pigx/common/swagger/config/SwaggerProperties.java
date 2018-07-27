@@ -19,7 +19,6 @@ package com.pig4cloud.pigx.common.swagger.config;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,37 +47,41 @@ public class SwaggerProperties {
 	/**
 	 * 标题
 	 **/
-	private String title = "PigX Swagger API";
+	private String title = "";
 	/**
 	 * 描述
 	 **/
-	private String description = "https://gitee.com/log4j/pig/wikis";
+	private String description = "";
 	/**
 	 * 版本
 	 **/
-	private String version = "2.0";
+	private String version = "";
 	/**
 	 * 许可证
 	 **/
-	private String license = "Powered By PigX";
+	private String license = "";
 	/**
 	 * 许可证URL
 	 **/
-	private String licenseUrl = "https://gitee.com/log4j/pig/wikis";
+	private String licenseUrl = "";
 	/**
 	 * 服务条款URL
 	 **/
-	private String termsOfServiceUrl = "https://gitee.wang/pig/pigx";
+	private String termsOfServiceUrl = "";
 
-	/**
-	 * 忽略的参数类型
-	 **/
-	private List<Class<?>> ignoredParameterTypes = new ArrayList<>();
 	/**
 	 * host信息
 	 **/
 	private String host = "";
+	/**
+	 * 联系人信息
+	 */
 	private Contact contact = new Contact();
+	/**
+	 * 全局统一鉴权配置
+	 **/
+	private Authorization authorization = new Authorization();
+
 	@Data
 	@NoArgsConstructor
 	public static class Contact {
@@ -86,15 +89,53 @@ public class SwaggerProperties {
 		/**
 		 * 联系人
 		 **/
-		private String name = "冷冷";
+		private String name = "";
 		/**
 		 * 联系人url
 		 **/
-		private String url = "https://gitee.wang/pig/pigx";
+		private String url = "";
 		/**
 		 * 联系人email
 		 **/
-		private String email = "wangiegie@gmail.com";
+		private String email = "";
+
+	}
+
+	@Data
+	@NoArgsConstructor
+	public static class Authorization {
+
+		/**
+		 * 鉴权策略ID，需要和SecurityReferences ID保持一致
+		 */
+		private String name = "";
+
+		/**
+		 * 需要开启鉴权URL的正则
+		 */
+		private String authRegex = "^.*$";
+
+		/**
+		 * 鉴权作用域列表
+		 */
+		private List<AuthorizationScope> authorizationScopeList = new ArrayList<>();
+
+		private List<String> tokenUrlList =new ArrayList<>();
+	}
+
+	@Data
+	@NoArgsConstructor
+	public static class AuthorizationScope {
+
+		/**
+		 * 作用域名称
+		 */
+		private String scope = "";
+
+		/**
+		 * 作用域描述
+		 */
+		private String description = "";
 
 	}
 }

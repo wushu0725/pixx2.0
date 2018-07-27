@@ -40,6 +40,14 @@ mybatis-plus:
     cache-enabled: true
 # swagger相关配置
 swagger:
+  authorization:
+    authorization-scope-list:
+      - scope: 'server'
+        description: 'server all'
+      - scope: 'read'
+        description: 'read all'
+      - scope: 'write'
+        description: 'access all'
   exclude-path:
     - /actuator/**
     - /error
