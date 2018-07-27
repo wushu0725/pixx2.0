@@ -20,7 +20,6 @@
 package com.pig4cloud.pigx.admin.api.entity;
 
 import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
@@ -31,7 +30,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- *
+ * 客户端信息
  * </p>
  *
  * @author lengleng
@@ -46,21 +45,14 @@ public class SysOauthClientDetails extends Model<SysOauthClientDetails> {
 
 	@TableId(value = "client_id", type = IdType.INPUT)
 	private String clientId;
-	@TableField("resource_ids")
 	private String resourceIds;
-	@TableField("client_secret")
 	private String clientSecret;
 	private String scope;
-	@TableField("authorized_grant_types")
 	private String authorizedGrantTypes;
-	@TableField("web_server_redirect_uri")
 	private String webServerRedirectUri;
 	private String authorities;
-	@TableField("access_token_validity")
 	private Integer accessTokenValidity;
-	@TableField("refresh_token_validity")
 	private Integer refreshTokenValidity;
-	@TableField("additional_information")
 	private String additionalInformation;
 	private String autoapprove;
 

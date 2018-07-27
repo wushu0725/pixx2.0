@@ -19,7 +19,6 @@
 
 package com.pig4cloud.pigx.admin.api.entity;
 
-import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -63,18 +62,15 @@ public class SysUser implements Serializable {
 	/**
 	 * 创建时间
 	 */
-	@TableField("create_time")
 	private Date createTime;
 	/**
 	 * 修改时间
 	 */
-	@TableField("update_time")
 	private Date updateTime;
 	/**
 	 * 0-正常，1-删除
 	 */
 	@TableLogic
-	@TableField("del_flag")
 	private String delFlag;
 
 	/**
@@ -89,7 +85,6 @@ public class SysUser implements Serializable {
 	/**
 	 * 部门ID
 	 */
-	@TableField("dept_id")
 	private Integer deptId;
 
 }

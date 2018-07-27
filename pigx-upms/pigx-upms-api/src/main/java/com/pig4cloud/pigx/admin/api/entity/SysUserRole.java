@@ -59,12 +59,4 @@ public class SysUserRole extends Model<SysUserRole> {
 	protected Serializable pkVal() {
 		return this.userId;
 	}
-
-	@Override
-	public String toString() {
-		return "SysUserRole{" +
-			", userId=" + userId +
-			", roleId=" + roleId +
-			"}";
-	}
 }

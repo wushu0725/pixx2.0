@@ -20,7 +20,6 @@
 package com.pig4cloud.pigx.admin.api.entity;
 
 import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -62,7 +61,6 @@ public class SysMenu extends Model<SysMenu> {
 	/**
 	 * 父菜单ID
 	 */
-	@TableField("parent_id")
 	private Integer parentId;
 	/**
 	 * 图标
@@ -83,18 +81,15 @@ public class SysMenu extends Model<SysMenu> {
 	/**
 	 * 创建时间
 	 */
-	@TableField("create_time")
 	private Date createTime;
 	/**
 	 * 更新时间
 	 */
-	@TableField("update_time")
 	private Date updateTime;
 	/**
 	 * 0--正常 1--删除
 	 */
 	@TableLogic
-	@TableField("del_flag")
 	private String delFlag;
 	/**
 	 * 前端URL
@@ -107,20 +102,4 @@ public class SysMenu extends Model<SysMenu> {
 		return this.menuId;
 	}
 
-	@Override
-	public String toString() {
-		return "SysMenu{" +
-			", menuId=" + menuId +
-			", name=" + name +
-			", permission=" + permission +
-			", parentId=" + parentId +
-			", icon=" + icon +
-			", component=" + component +
-			", sort=" + sort +
-			", type=" + type +
-			", createTime=" + createTime +
-			", updateTime=" + updateTime +
-			", delFlag=" + delFlag +
-			"}";
-	}
 }

@@ -58,12 +58,4 @@ public class SysRoleMenu extends Model<SysRoleMenu> {
 	protected Serializable pkVal() {
 		return this.roleId;
 	}
-
-	@Override
-	public String toString() {
-		return "SysRoleMenu{" +
-			", roleId=" + roleId +
-			", menuId=" + menuId +
-			"}";
-	}
 }

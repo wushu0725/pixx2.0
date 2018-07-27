@@ -28,7 +28,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- *
+ * 部门关系表
  * </p>
  *
  * @author lengleng
@@ -56,11 +56,4 @@ public class SysDeptRelation extends Model<SysDeptRelation> {
 		return this.ancestor;
 	}
 
-	@Override
-	public String toString() {
-		return "SysDeptRelation{" +
-			", ancestor=" + ancestor +
-			", descendant=" + descendant +
-			"}";
-	}
 }

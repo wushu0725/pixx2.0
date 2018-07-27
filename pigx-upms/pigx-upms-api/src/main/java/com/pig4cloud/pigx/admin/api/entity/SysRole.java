@@ -20,7 +20,6 @@
 package com.pig4cloud.pigx.admin.api.entity;
 
 import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -33,7 +32,7 @@ import java.util.Date;
 
 /**
  * <p>
- * <p>
+ * 角色表
  * </p>
  *
  * @author lengleng
@@ -48,21 +47,15 @@ public class SysRole extends Model<SysRole> {
 
 	@TableId(value = "role_id", type = IdType.AUTO)
 	private Integer roleId;
-	@TableField("role_name")
 	private String roleName;
-	@TableField("role_code")
 	private String roleCode;
-	@TableField("role_desc")
 	private String roleDesc;
-	@TableField("create_time")
 	private Date createTime;
-	@TableField("update_time")
 	private Date updateTime;
 	/**
 	 * 删除标识（0-正常,1-删除）
 	 */
 	@TableLogic
-	@TableField("del_flag")
 	private String delFlag;
 
 	@Override

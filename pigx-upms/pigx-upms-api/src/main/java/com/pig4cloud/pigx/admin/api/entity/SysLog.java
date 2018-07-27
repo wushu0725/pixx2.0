@@ -107,23 +107,4 @@ public class SysLog implements Serializable {
 	private String serviceId;
 
 
-	@Override
-	public String toString() {
-		return "SysLog{" +
-			"id=" + id +
-			", type='" + type + '\'' +
-			", title='" + title + '\'' +
-			", createBy='" + createBy + '\'' +
-			", createTime=" + createTime +
-			", updateTime=" + updateTime +
-			", remoteAddr='" + remoteAddr + '\'' +
-			", userAgent='" + userAgent + '\'' +
-			", requestUri='" + requestUri + '\'' +
-			", method='" + method + '\'' +
-			", params='" + params + '\'' +
-			", time=" + time +
-			", delFlag='" + delFlag + '\'' +
-			", exception='" + exception + '\'' +
-			'}';
-	}
 }

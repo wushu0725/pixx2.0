@@ -20,7 +20,6 @@
 package com.pig4cloud.pigx.admin.api.entity;
 
 import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -55,43 +54,26 @@ public class SysDept extends Model<SysDept> {
 	/**
 	 * 排序
 	 */
-	@TableField("order_num")
 	private Integer orderNum;
 	/**
 	 * 创建时间
 	 */
-	@TableField("create_time")
 	private Date createTime;
 	/**
 	 * 修改时间
 	 */
-	@TableField("update_time")
 	private Date updateTime;
 	/**
 	 * 是否删除  -1：已删除  0：正常
 	 */
-	@TableField("del_flag")
 	@TableLogic
 	private String delFlag;
 
-	@TableField("parent_id")
 	private Integer parentId;
 
 
 	@Override
 	protected Serializable pkVal() {
 		return this.deptId;
-	}
-
-	@Override
-	public String toString() {
-		return "SysDept{" +
-			", deptId=" + deptId +
-			", name=" + name +
-			", orderNum=" + orderNum +
-			", createTime=" + createTime +
-			", updateTime=" + updateTime +
-			", delFlag=" + delFlag +
-			"}";
 	}
 }

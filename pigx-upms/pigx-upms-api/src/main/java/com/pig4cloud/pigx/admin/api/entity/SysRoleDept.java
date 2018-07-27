@@ -20,7 +20,6 @@
 package com.pig4cloud.pigx.admin.api.entity;
 
 import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
@@ -49,12 +48,10 @@ public class SysRoleDept extends Model<SysRoleDept> {
 	/**
 	 * 角色ID
 	 */
-	@TableField("role_id")
 	private Integer roleId;
 	/**
 	 * 部门ID
 	 */
-	@TableField("dept_id")
 	private Integer deptId;
 
 
@@ -63,12 +60,4 @@ public class SysRoleDept extends Model<SysRoleDept> {
 		return this.id;
 	}
 
-	@Override
-	public String toString() {
-		return "SysRoleDept{" +
-			", id=" + id +
-			", roleId=" + roleId +
-			", deptId=" + deptId +
-			"}";
-	}
 }

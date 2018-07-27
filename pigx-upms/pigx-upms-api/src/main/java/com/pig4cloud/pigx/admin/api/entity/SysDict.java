@@ -20,7 +20,6 @@
 package com.pig4cloud.pigx.admin.api.entity;
 
 import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -75,12 +74,10 @@ public class SysDict extends Model<SysDict> {
 	/**
 	 * 创建时间
 	 */
-	@TableField("create_time")
 	private Date createTime;
 	/**
 	 * 更新时间
 	 */
-	@TableField("update_time")
 	private Date updateTime;
 	/**
 	 * 备注信息
@@ -89,7 +86,6 @@ public class SysDict extends Model<SysDict> {
 	/**
 	 * 删除标记
 	 */
-	@TableField("del_flag")
 	@TableLogic
 	private String delFlag;
 
@@ -99,19 +95,4 @@ public class SysDict extends Model<SysDict> {
 		return this.id;
 	}
 
-	@Override
-	public String toString() {
-		return "SysDict{" +
-			", id=" + id +
-			", value=" + value +
-			", label=" + label +
-			", type=" + type +
-			", description=" + description +
-			", sort=" + sort +
-			", createTime=" + createTime +
-			", updateTime=" + updateTime +
-			", remarks=" + remarks +
-			", delFlag=" + delFlag +
-			"}";
-	}
 }
