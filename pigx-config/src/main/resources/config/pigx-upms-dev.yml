@@ -38,7 +38,7 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: true
-# swagger相关配置
+# swagger相关配置,覆盖全局配置
 swagger:
   authorization:
     authorization-scope-list:
@@ -48,6 +48,3 @@ swagger:
         description: 'read all'
       - scope: 'write'
         description: 'access all'
-  exclude-path:
-    - /actuator/**
-    - /error

@@ -53,6 +53,9 @@ swagger:
   license: 'Powered By PigX'
   licenseUrl: 'https://gitee.com/log4j/pig/wikis'
   terms-of-service-url: 'https://gitee.wang/pig/pigx'
+  exclude-path:
+    - /actuator/**
+    - /error
   contact:
     name: '冷冷'
     email: 'wangiegie@gmail.com'
