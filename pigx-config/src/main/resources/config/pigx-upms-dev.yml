@@ -2,8 +2,8 @@
 security:
   oauth2:
     client:
-      client-id: pigx
-      client-secret: pigx
+      client-id: pig
+      client-secret: pig
       scope: server
     resource:
       token-info-uri: http://localhost:9999/auth/oauth/check_token

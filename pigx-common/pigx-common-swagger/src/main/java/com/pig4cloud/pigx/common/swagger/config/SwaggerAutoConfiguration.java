@@ -87,6 +87,7 @@ public class SwaggerAutoConfiguration {
 
 	/**
 	 * 配置默认的全局鉴权策略的开关，通过正则表达式进行匹配；默认匹配所有URL
+	 *
 	 * @return
 	 */
 	private SecurityContext securityContext() {
@@ -103,7 +104,7 @@ public class SwaggerAutoConfiguration {
 	 */
 	private List<SecurityReference> defaultAuth() {
 		ArrayList<AuthorizationScope> authorizationScopeList = new ArrayList<>();
-		swaggerProperties().getAuthorization().getAuthorizationScopeList().forEach(authorizationScope->authorizationScopeList.add(new AuthorizationScope(authorizationScope.getScope(),authorizationScope.getDescription())));
+		swaggerProperties().getAuthorization().getAuthorizationScopeList().forEach(authorizationScope -> authorizationScopeList.add(new AuthorizationScope(authorizationScope.getScope(), authorizationScope.getDescription())));
 		AuthorizationScope[] authorizationScopes = new AuthorizationScope[authorizationScopeList.size()];
 		return Collections.singletonList(SecurityReference.builder()
 			.reference(swaggerProperties().getAuthorization().getName())
@@ -114,9 +115,9 @@ public class SwaggerAutoConfiguration {
 
 	private OAuth securitySchema() {
 		ArrayList<AuthorizationScope> authorizationScopeList = new ArrayList<>();
-		swaggerProperties().getAuthorization().getAuthorizationScopeList().forEach(authorizationScope->authorizationScopeList.add(new AuthorizationScope(authorizationScope.getScope(),authorizationScope.getDescription())));
+		swaggerProperties().getAuthorization().getAuthorizationScopeList().forEach(authorizationScope -> authorizationScopeList.add(new AuthorizationScope(authorizationScope.getScope(), authorizationScope.getDescription())));
 		ArrayList<GrantType> grantTypes = new ArrayList<>();
-		swaggerProperties().getAuthorization().getTokenUrlList().forEach(tokenUrl->grantTypes.add(new ResourceOwnerPasswordCredentialsGrant(tokenUrl)));
+		swaggerProperties().getAuthorization().getTokenUrlList().forEach(tokenUrl -> grantTypes.add(new ResourceOwnerPasswordCredentialsGrant(tokenUrl)));
 		return new OAuth(swaggerProperties().getAuthorization().getName(), authorizationScopeList, grantTypes);
 	}
 
