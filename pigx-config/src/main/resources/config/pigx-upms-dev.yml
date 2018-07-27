@@ -40,4 +40,6 @@ mybatis-plus:
     cache-enabled: true
 # swagger相关配置
 swagger:
-  exclude-path: /actuator/**,/error
+  exclude-path:
+    - /actuator/**
+    - /error

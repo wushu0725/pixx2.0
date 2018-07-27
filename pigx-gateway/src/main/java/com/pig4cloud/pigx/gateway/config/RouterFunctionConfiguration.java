@@ -17,7 +17,7 @@
 
 package com.pig4cloud.pigx.gateway.config;
 
-import com.pig4cloud.pigx.gateway.handle.*;
+import com.pig4cloud.pigx.gateway.handler.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;

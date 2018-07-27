@@ -21,12 +21,14 @@ package com.pig4cloud.pigx.admin.api.dto;
 
 import com.pig4cloud.pigx.admin.api.vo.MenuVO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author lengleng
  * @date 2017年11月9日23:33:27
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class MenuTree extends TreeNode {
 	private String icon;
 	private String name;

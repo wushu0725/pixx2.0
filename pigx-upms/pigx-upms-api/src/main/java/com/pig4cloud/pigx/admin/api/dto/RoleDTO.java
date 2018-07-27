@@ -21,6 +21,7 @@ package com.pig4cloud.pigx.admin.api.dto;
 
 import com.pig4cloud.pigx.admin.api.entity.SysRole;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author lengleng
@@ -28,6 +29,7 @@ import lombok.Data;
  * 角色Dto
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class RoleDTO extends SysRole {
 	/**
 	 * 角色部门Id

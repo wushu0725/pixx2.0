@@ -26,6 +26,7 @@ import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -39,6 +40,7 @@ import java.util.Date;
  * @since 2017-10-29
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName("sys_role")
 public class SysRole extends Model<SysRole> {
 
@@ -68,16 +70,4 @@ public class SysRole extends Model<SysRole> {
 		return this.roleId;
 	}
 
-	@Override
-	public String toString() {
-		return "SysRole{" +
-			", roleId=" + roleId +
-			", roleName=" + roleName +
-			", roleCode=" + roleCode +
-			", roleDesc=" + roleDesc +
-			", createTime=" + createTime +
-			", updateTime=" + updateTime +
-			", delFlag=" + delFlag +
-			"}";
-	}
 }

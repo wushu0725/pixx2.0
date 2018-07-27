@@ -2,4 +2,4 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.pig4cloud.pigx.common.security.component.PermissionService,\
   com.pig4cloud.pigx.common.security.component.PigAccessDeniedHandler,\
   com.pig4cloud.pigx.common.security.component.ResourceAuthExceptionEntryPoint,\
-  com.pig4cloud.pigx.common.security.interceptor.PigxFeignClientIntercept
+  com.pig4cloud.pigx.common.security.interceptor.PigxFeignClientInterceptor
