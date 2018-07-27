@@ -45,7 +45,7 @@ ribbon:
   ReadTimeout: 10000
   ConnectTimeout: 10000
 
-`#swagger公共信息
+#swagger公共信息
 swagger:
   description: '全宇宙最牛逼的Spring Cloud微服务开发脚手架'
   version: '1.2.4'
