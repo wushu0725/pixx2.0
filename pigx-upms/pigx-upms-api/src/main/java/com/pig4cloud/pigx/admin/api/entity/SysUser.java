@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -62,11 +63,11 @@ public class SysUser implements Serializable {
 	/**
 	 * 创建时间
 	 */
-	private Date createTime;
+	private LocalDateTime createTime;
 	/**
 	 * 修改时间
 	 */
-	private Date updateTime;
+	private LocalDateTime updateTime;
 	/**
 	 * 0-正常，1-删除
 	 */

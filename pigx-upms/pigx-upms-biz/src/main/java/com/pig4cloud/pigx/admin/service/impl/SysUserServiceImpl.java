@@ -49,6 +49,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -168,7 +169,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	public Boolean updateUser(UserDTO userDto, String username) {
 		SysUser sysUser = new SysUser();
 		BeanUtils.copyProperties(userDto, sysUser);
-		sysUser.setUpdateTime(new Date());
+		sysUser.setUpdateTime(LocalDateTime.now());
 		this.updateById(sysUser);
 
 		SysUserRole condition = new SysUserRole();

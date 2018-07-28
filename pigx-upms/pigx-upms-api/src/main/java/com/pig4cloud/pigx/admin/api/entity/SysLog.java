@@ -25,6 +25,7 @@ import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -60,11 +61,11 @@ public class SysLog implements Serializable {
 	/**
 	 * 创建时间
 	 */
-	private Date createTime;
+	private LocalDateTime createTime;
 	/**
 	 * 更新时间
 	 */
-	private Date updateTime;
+	private LocalDateTime updateTime;
 	/**
 	 * 操作IP地址
 	 */

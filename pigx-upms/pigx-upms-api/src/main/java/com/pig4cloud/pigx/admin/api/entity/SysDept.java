@@ -28,7 +28,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -58,11 +58,11 @@ public class SysDept extends Model<SysDept> {
 	/**
 	 * 创建时间
 	 */
-	private Date createTime;
+	private LocalDateTime createTime;
 	/**
 	 * 修改时间
 	 */
-	private Date updateTime;
+	private LocalDateTime updateTime;
 	/**
 	 * 是否删除  -1：已删除  0：正常
 	 */

@@ -29,7 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -103,7 +103,7 @@ public class DeptController {
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_dept_edit')")
 	public Boolean edit(@RequestBody SysDept sysDept) {
-		sysDept.setUpdateTime(new Date());
+		sysDept.setUpdateTime(LocalDateTime.now());
 		return sysDeptService.updateDeptById(sysDept);
 	}
 }

@@ -26,7 +26,7 @@ import com.pig4cloud.pigx.admin.service.SysLogService;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -45,7 +45,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
 		SysLog sysLog = new SysLog();
 		sysLog.setId(id);
 		sysLog.setDelFlag(CommonConstant.STATUS_DEL);
-		sysLog.setUpdateTime(new Date());
+		sysLog.setUpdateTime(LocalDateTime.now());
 		return updateById(sysLog);
 	}
 }

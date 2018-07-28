@@ -28,7 +28,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -50,8 +50,8 @@ public class SysRole extends Model<SysRole> {
 	private String roleName;
 	private String roleCode;
 	private String roleDesc;
-	private Date createTime;
-	private Date updateTime;
+	private LocalDateTime createTime;
+	private LocalDateTime updateTime;
 	/**
 	 * 删除标识（0-正常,1-删除）
 	 */

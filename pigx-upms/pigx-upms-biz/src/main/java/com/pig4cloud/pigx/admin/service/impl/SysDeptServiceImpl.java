@@ -33,6 +33,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -98,7 +99,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 	public Boolean deleteDeptById(Integer id) {
 		SysDept sysDept = new SysDept();
 		sysDept.setDeptId(id);
-		sysDept.setUpdateTime(new Date());
+		sysDept.setUpdateTime(LocalDateTime.now());
 		sysDept.setDelFlag(CommonConstant.STATUS_DEL);
 		this.deleteById(sysDept);
 		sysDeptMapper.deleteDeptRealtion(id);
