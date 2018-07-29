@@ -75,7 +75,7 @@ public class PigxWebResponseExceptionTranslator implements WebResponseExceptionT
 			return handleOAuth2Exception(new MethodNotAllowed(ase.getMessage(), ase));
 		}
 
-		 ase = (OAuth2Exception) throwableAnalyzer.getFirstThrowableOfType(
+		ase = (OAuth2Exception) throwableAnalyzer.getFirstThrowableOfType(
 			OAuth2Exception.class, causeChain);
 
 		if (ase != null) {

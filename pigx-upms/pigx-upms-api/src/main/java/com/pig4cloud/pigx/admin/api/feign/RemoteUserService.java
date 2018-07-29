@@ -29,19 +29,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 /**
-  * @author lengleng
-  * @date 2018/6/22
-  */
- @FeignClient(value = ServiceNameConstant.UMPS_SERVICE, fallback = RemoteUserServiceFallbackImpl.class)
- public interface RemoteUserService {
-	 /**
-	  * 通过用户名查询用户、角色信息
-	  *
-	  * @param username 用户名
-	  * @param from     调用标志
-	  * @return R
-	  */
-	 @GetMapping("/user/info/{username}")
-	 R<UserInfo> info(@PathVariable("username") String username
-		 , @RequestHeader("from") String from);
- }
+ * @author lengleng
+ * @date 2018/6/22
+ */
+@FeignClient(value = ServiceNameConstant.UMPS_SERVICE, fallback = RemoteUserServiceFallbackImpl.class)
+public interface RemoteUserService {
+	/**
+	 * 通过用户名查询用户、角色信息
+	 *
+	 * @param username 用户名
+	 * @param from     调用标志
+	 * @return R
+	 */
+	@GetMapping("/user/info/{username}")
+	R<UserInfo> info(@PathVariable("username") String username
+		, @RequestHeader("from") String from);
+}

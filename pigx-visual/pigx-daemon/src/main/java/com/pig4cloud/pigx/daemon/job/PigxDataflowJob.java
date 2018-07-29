@@ -28,13 +28,13 @@ import java.util.List;
  */
 public class PigxDataflowJob implements DataflowJob<Integer> {
 
-    @Override
-    public List<Integer> fetchData(ShardingContext shardingContext) {
-        return null;
-    }
+	@Override
+	public List<Integer> fetchData(ShardingContext shardingContext) {
+		return null;
+	}
 
-    @Override
-    public void processData(ShardingContext shardingContext, List<Integer> list) {
+	@Override
+	public void processData(ShardingContext shardingContext, List<Integer> list) {
 
-    }
+	}
 }

@@ -120,7 +120,7 @@ public class SwaggerProperties {
 		 */
 		private List<AuthorizationScope> authorizationScopeList = new ArrayList<>();
 
-		private List<String> tokenUrlList =new ArrayList<>();
+		private List<String> tokenUrlList = new ArrayList<>();
 	}
 
 	@Data

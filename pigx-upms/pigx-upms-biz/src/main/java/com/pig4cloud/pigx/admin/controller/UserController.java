@@ -99,7 +99,7 @@ public class UserController {
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_user_del')")
 	@ApiOperation(value = "删除用户", notes = "根据ID删除用户")
-	@ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "int", paramType = "path",example = "1000")
+	@ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "int", paramType = "path", example = "1000")
 	public R<Boolean> userDel(@PathVariable Integer id) {
 		SysUser sysUser = userService.selectById(id);
 		return new R<>(userService.deleteUserById(sysUser));

@@ -50,6 +50,15 @@ public class PasswordDecoderFilter extends AbstractGatewayFilterFactory {
 	@Value("${security.encode.key:1234567812345678}")
 	private String encodeKey;
 
+	private static String decryptAES(String data, String pass) throws Exception {
+		Cipher cipher = Cipher.getInstance(DEFAULT_CIPHER_ALGORITHM);
+		SecretKeySpec keyspec = new SecretKeySpec(pass.getBytes(), KEY_ALGORITHM);
+		IvParameterSpec ivspec = new IvParameterSpec(pass.getBytes());
+		cipher.init(Cipher.DECRYPT_MODE, keyspec, ivspec);
+		byte[] result = cipher.doFinal(Base64.decode(data.getBytes(CharsetUtil.UTF_8)));
+		return new String(result, CharsetUtil.UTF_8);
+	}
+
 	@Override
 	public GatewayFilter apply(Object config) {
 		return (exchange, chain) -> {
@@ -83,15 +92,5 @@ public class PasswordDecoderFilter extends AbstractGatewayFilterFactory {
 			ServerHttpRequest newRequest = exchange.getRequest().mutate().uri(newUri).build();
 			return chain.filter(exchange.mutate().request(newRequest).build());
 		};
-	}
-
-
-	private static String decryptAES(String data, String pass) throws Exception {
-		Cipher cipher = Cipher.getInstance(DEFAULT_CIPHER_ALGORITHM);
-		SecretKeySpec keyspec = new SecretKeySpec(pass.getBytes(), KEY_ALGORITHM);
-		IvParameterSpec ivspec = new IvParameterSpec(pass.getBytes());
-		cipher.init(Cipher.DECRYPT_MODE, keyspec, ivspec);
-		byte[] result = cipher.doFinal(Base64.decode(data.getBytes(CharsetUtil.UTF_8)));
-		return new String(result, CharsetUtil.UTF_8);
 	}
 }

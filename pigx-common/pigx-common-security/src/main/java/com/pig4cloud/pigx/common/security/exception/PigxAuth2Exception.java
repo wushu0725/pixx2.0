@@ -19,8 +19,6 @@ package com.pig4cloud.pigx.common.security.exception;
 
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 
-import java.util.Map;
-
 /**
  * @author lengleng
  * @date 2018/7/8

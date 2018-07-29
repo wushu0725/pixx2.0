@@ -46,15 +46,14 @@ import java.util.List;
 @EnableAutoConfiguration
 public class SwaggerAutoConfiguration {
 
+	private static final String DEFAULT_EXCLUDE_PATH = "/error";
+	private static final String BASE_PATH = "/**";
+
 	@Bean
 	@ConditionalOnMissingBean
 	public SwaggerProperties swaggerProperties() {
 		return new SwaggerProperties();
 	}
-
-	private static final String DEFAULT_EXCLUDE_PATH = "/error";
-	private static final String BASE_PATH = "/**";
-
 
 	@Bean
 	public Docket api(SwaggerProperties swaggerProperties) {

@@ -45,97 +45,11 @@ import java.io.IOException;
 public class ImageCodeGatewayFilter extends AbstractGatewayFilterFactory {
 	public static final String DEFAULT_CODE_KEY = "DEFAULT_CODE_KEY";
 	public static final String OAUTH_TOKEN_URL = "/oauth/token";
+	private static final String BASIC_ = "Basic ";
 	@Autowired
 	private RedisTemplate redisTemplate;
 	@Autowired
 	private FilterIgnorePropertiesConfig filterIgnorePropertiesConfig;
-
-	@Override
-	public GatewayFilter apply(Object config) {
-		return (exchange, chain) -> {
-			ServerHttpRequest request = exchange.getRequest();
-
-			// 不是登录请求，直接向下执行
-			if (!StrUtil.containsAnyIgnoreCase(request.getURI().getPath(), OAUTH_TOKEN_URL)) {
-				return chain.filter(exchange);
-			}
-
-			// 终端设置不校验， 直接向下执行(1. 从请求参数中获取 2.从header取)
-			String clientId = request.getQueryParams().getFirst("client_id");
-			if (StrUtil.isNotBlank(clientId)) {
-				if (filterIgnorePropertiesConfig.getClients().contains(clientId)) {
-					return chain.filter(exchange);
-				}
-			}
-			try {
-				String[] clientInfos = extractAndDecodeHeader(request);
-				if (filterIgnorePropertiesConfig.getClients().contains(clientInfos[0])) {
-					return chain.filter(exchange);
-				}
-			} catch (Exception e) {
-				ServerHttpResponse response = exchange.getResponse();
-				response.setStatusCode(HttpStatus.PRECONDITION_REQUIRED);
-				return response.setComplete();
-			}
-
-			//校验验证码合法性
-			try {
-				checkCode(request);
-			} catch (ValidateCodeException e) {
-				ServerHttpResponse response = exchange.getResponse();
-				response.setStatusCode(HttpStatus.PRECONDITION_REQUIRED);
-				return response.setComplete();
-			}
-
-			return chain.filter(exchange);
-		};
-	}
-
-
-	/**
-	 * 检查code
-	 *
-	 * @param request
-	 * @throws ValidateCodeException 校验异常
-	 */
-	private void checkCode(ServerHttpRequest request) throws ValidateCodeException {
-		String code = request.getQueryParams().getFirst("code");
-
-		if (StrUtil.isBlank(code)) {
-			throw new ValidateCodeException();
-		}
-
-		String randomStr = request.getQueryParams().getFirst("randomStr");
-		if (StrUtil.isBlank(randomStr)) {
-			throw new ValidateCodeException();
-		}
-
-		String key = DEFAULT_CODE_KEY + randomStr;
-		if (!redisTemplate.hasKey(key)) {
-			throw new ValidateCodeException();
-		}
-
-		Object codeObj = redisTemplate.opsForValue().get(key);
-
-		if (codeObj == null) {
-			throw new ValidateCodeException();
-		}
-
-		String saveCode = codeObj.toString();
-		if (StrUtil.isBlank(saveCode)) {
-			redisTemplate.delete(key);
-			throw new ValidateCodeException();
-		}
-
-		if (!StrUtil.equals(saveCode, code)) {
-			redisTemplate.delete(key);
-			throw new ValidateCodeException();
-		}
-
-		redisTemplate.delete(key);
-	}
-
-	private static final String BASIC_ = "Basic ";
 
 	/**
 	 * 从header 请求中的clientId/clientsecect
@@ -182,5 +96,89 @@ public class ImageCodeGatewayFilter extends AbstractGatewayFilterFactory {
 		}
 
 		return extractAndDecodeHeader(header);
+	}
+
+	@Override
+	public GatewayFilter apply(Object config) {
+		return (exchange, chain) -> {
+			ServerHttpRequest request = exchange.getRequest();
+
+			// 不是登录请求，直接向下执行
+			if (!StrUtil.containsAnyIgnoreCase(request.getURI().getPath(), OAUTH_TOKEN_URL)) {
+				return chain.filter(exchange);
+			}
+
+			// 终端设置不校验， 直接向下执行(1. 从请求参数中获取 2.从header取)
+			String clientId = request.getQueryParams().getFirst("client_id");
+			if (StrUtil.isNotBlank(clientId)) {
+				if (filterIgnorePropertiesConfig.getClients().contains(clientId)) {
+					return chain.filter(exchange);
+				}
+			}
+			try {
+				String[] clientInfos = extractAndDecodeHeader(request);
+				if (filterIgnorePropertiesConfig.getClients().contains(clientInfos[0])) {
+					return chain.filter(exchange);
+				}
+			} catch (Exception e) {
+				ServerHttpResponse response = exchange.getResponse();
+				response.setStatusCode(HttpStatus.PRECONDITION_REQUIRED);
+				return response.setComplete();
+			}
+
+			//校验验证码合法性
+			try {
+				checkCode(request);
+			} catch (ValidateCodeException e) {
+				ServerHttpResponse response = exchange.getResponse();
+				response.setStatusCode(HttpStatus.PRECONDITION_REQUIRED);
+				return response.setComplete();
+			}
+
+			return chain.filter(exchange);
+		};
+	}
+
+	/**
+	 * 检查code
+	 *
+	 * @param request
+	 * @throws ValidateCodeException 校验异常
+	 */
+	private void checkCode(ServerHttpRequest request) throws ValidateCodeException {
+		String code = request.getQueryParams().getFirst("code");
+
+		if (StrUtil.isBlank(code)) {
+			throw new ValidateCodeException();
+		}
+
+		String randomStr = request.getQueryParams().getFirst("randomStr");
+		if (StrUtil.isBlank(randomStr)) {
+			throw new ValidateCodeException();
+		}
+
+		String key = DEFAULT_CODE_KEY + randomStr;
+		if (!redisTemplate.hasKey(key)) {
+			throw new ValidateCodeException();
+		}
+
+		Object codeObj = redisTemplate.opsForValue().get(key);
+
+		if (codeObj == null) {
+			throw new ValidateCodeException();
+		}
+
+		String saveCode = codeObj.toString();
+		if (StrUtil.isBlank(saveCode)) {
+			redisTemplate.delete(key);
+			throw new ValidateCodeException();
+		}
+
+		if (!StrUtil.equals(saveCode, code)) {
+			redisTemplate.delete(key);
+			throw new ValidateCodeException();
+		}
+
+		redisTemplate.delete(key);
 	}
 }
