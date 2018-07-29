@@ -118,12 +118,12 @@ public class RoleController {
 	 * 更新角色菜单
 	 *
 	 * @param roleId  角色ID
-	 * @param menuIds 菜单结合
+	 * @param menuIds 菜单ID拼成的字符串，每个id之间根据逗号分隔
 	 * @return success、false
 	 */
 	@PutMapping("/roleMenuUpd")
 	@PreAuthorize("@pms.hasPermission('sys_role_perm')")
-	public R<Boolean> roleMenuUpd(Integer roleId, @RequestParam("menuIds[]") Integer[] menuIds) {
+	public R<Boolean> roleMenuUpd(Integer roleId, @RequestParam(value = "menuIds",required = false) String menuIds) {
 		SysRole sysRole = sysRoleService.selectById(roleId);
 		return new R<>(sysRoleMenuService.insertRoleMenus(sysRole.getRoleCode(), roleId, menuIds));
 	}

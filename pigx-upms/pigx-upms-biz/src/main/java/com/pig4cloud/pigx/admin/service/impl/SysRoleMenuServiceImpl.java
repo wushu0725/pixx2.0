@@ -19,6 +19,7 @@
 
 package com.pig4cloud.pigx.admin.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.entity.SysRoleMenu;
@@ -28,6 +29,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -40,18 +42,28 @@ import java.util.List;
  */
 @Service
 public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRoleMenu> implements SysRoleMenuService {
+	/**
+	 *
+	 * @param role
+	 * @param roleId  角色
+	 * @param menuIds 菜单ID拼成的字符串，每个id之间根据逗号分隔
+	 * @return
+	 */
 	@Override
 	@CacheEvict(value = "menu_details", key = "#role + '_menu'")
-	public Boolean insertRoleMenus(String role, Integer roleId, Integer[] menuIds) {
+	public Boolean insertRoleMenus(String role, Integer roleId, String menuIds) {
 		SysRoleMenu condition = new SysRoleMenu();
 		condition.setRoleId(roleId);
 		this.delete(new EntityWrapper<>(condition));
-
 		List<SysRoleMenu> roleMenuList = new ArrayList<>();
-		for (Integer menuId : menuIds) {
+		List<String> menuIdList = Arrays.asList(menuIds.split(","));
+		if(CollUtil.isEmpty(menuIdList)){
+			return Boolean.TRUE;
+		}
+		for (String menuId : menuIdList) {
 			SysRoleMenu roleMenu = new SysRoleMenu();
 			roleMenu.setRoleId(roleId);
-			roleMenu.setMenuId(menuId);
+			roleMenu.setMenuId(Integer.valueOf(menuId));
 			roleMenuList.add(roleMenu);
 		}
 		return this.insertBatch(roleMenuList);

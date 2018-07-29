@@ -38,8 +38,8 @@ public interface SysRoleMenuService extends IService<SysRoleMenu> {
 	 *
 	 * @param role
 	 * @param roleId  角色
-	 * @param menuIds 菜单列表
+	 * @param menuIds 菜单ID拼成的字符串，每个id之间根据逗号分隔
 	 * @return
 	 */
-	Boolean insertRoleMenus(String role, Integer roleId, Integer[] menuIds);
+	Boolean insertRoleMenus(String role, Integer roleId, String menuIds);
 }
