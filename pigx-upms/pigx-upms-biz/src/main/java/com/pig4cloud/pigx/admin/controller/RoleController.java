@@ -108,7 +108,7 @@ public class RoleController {
 	 * @param params 分页对象
 	 * @return 分页对象
 	 */
-	@RequestMapping("/rolePage")
+	@GetMapping("/rolePage")
 	public Page rolePage(@RequestParam Map<String, Object> params) {
 		params.put(CommonConstant.DEL_FLAG, CommonConstant.STATUS_NORMAL);
 		return sysRoleService.selectwithDeptPage(new Query<>(params), new EntityWrapper<>());
@@ -123,7 +123,7 @@ public class RoleController {
 	 */
 	@PutMapping("/roleMenuUpd")
 	@PreAuthorize("@pms.hasPermission('sys_role_perm')")
-	public R<Boolean> roleMenuUpd(Integer roleId, @RequestParam(value = "menuIds",required = false) String menuIds) {
+	public R<Boolean> roleMenuUpd(Integer roleId, @RequestParam(value = "menuIds", required = false) String menuIds) {
 		SysRole sysRole = sysRoleService.selectById(roleId);
 		return new R<>(sysRoleMenuService.insertRoleMenus(sysRole.getRoleCode(), roleId, menuIds));
 	}

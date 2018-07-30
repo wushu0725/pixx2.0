@@ -40,7 +40,6 @@
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus</artifactId>
 			<version>${mbp.boot.version}</version>
-			<scope>compile</scope>
 		</dependency>
 		<!--core 工具类-->
 		<dependency>

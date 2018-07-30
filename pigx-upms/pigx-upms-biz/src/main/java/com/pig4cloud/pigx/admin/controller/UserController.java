@@ -149,7 +149,7 @@ public class UserController {
 	 * @param params 参数集
 	 * @return 用户集合
 	 */
-	@RequestMapping("/userPage")
+	@GetMapping("/userPage")
 	public Page userPage(@RequestParam Map<String, Object> params) {
 		return userService.selectWithRolePage(new Query(params));
 	}

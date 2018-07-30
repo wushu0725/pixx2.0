@@ -1,1 +1,1 @@
-provides: mybatis-plus-boot-starter, pigx-common-security
+provides: mybatis-plus, pigx-common-security
