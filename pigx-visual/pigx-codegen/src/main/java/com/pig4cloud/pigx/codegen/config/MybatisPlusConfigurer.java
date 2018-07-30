@@ -15,24 +15,27 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.daemon;
+package com.pig4cloud.pigx.codegen.config;
 
-import com.pig4cloud.pigx.common.job.annotation.EnablePigxJob;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.SpringCloudApplication;
+import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author lengleng
- * @date 2018/7/24
- * 分布式任务调度模块
+ * @date 2017/10/29
  */
-@EnablePigxJob
-@SpringCloudApplication
-public class PigxDaemonApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(PigxDaemonApplication.class, args);
+@Configuration
+@MapperScan("com.pig4cloud.pigx.codegen.mapper")
+public class MybatisPlusConfigurer {
+	/**
+	 * 分页插件
+	 *
+	 * @return PaginationInterceptor
+	 */
+	@Bean
+	public PaginationInterceptor paginationInterceptor() {
+		return new PaginationInterceptor();
 	}
-
 }

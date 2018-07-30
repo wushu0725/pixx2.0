@@ -1,0 +1,90 @@
+package ${package}.${moduleName}.controller;
+
+import java.util.Arrays;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import com.pig4cloud.pigx.common.core.constant.CommonConstant;
+import com.pig4cloud.pigx.common.core.util.Query;
+
+import ${package}.${moduleName}.entity.${className};
+import ${package}.${moduleName}.service.${className}Service;
+import com.pig4cloud.pigx.common.core.util.R;
+import java.util.Map;
+
+
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@RestController
+@RequestMapping("${moduleName}/${pathName}")
+public class ${className}Controller {
+    @Autowired
+    private ${className}Service ${classname}Service;
+
+
+    /**
+    *  列表
+    * @param params
+    * @return
+    */
+    @GetMapping("/page")
+    public Page page(@RequestParam Map<String, Object> params) {
+      params.put(CommonConstant.DEL_FLAG, CommonConstant.STATUS_NORMAL);
+      return  ${classname}Service.selectPage(new Query<>(params), new EntityWrapper<>());
+    }
+
+
+    /**
+     * 信息
+     * @param ${pk.lowerAttrName}
+     * @return R
+     */
+    @GetMapping("/{${pk.lowerAttrName}}")
+    public R info(@PathVariable("${pk.lowerAttrName}") ${pk.attrType} ${pk.lowerAttrName}){
+			${className} ${classname} = ${classname}Service.selectById(${pk.lowerAttrName});
+
+			  return new R<>(${classname});
+    }
+
+    /**
+     * 保存
+     * @param ${classname}
+     * @return R
+     */
+    @PostMapping("/save")
+    public R save(@RequestBody ${className} ${classname}){
+			${classname}Service.insert(${classname});
+
+			  return new R<>(Boolean.TRUE);
+    }
+
+    /**
+     * 修改
+     * @param ${classname}
+     * @return R
+     */
+    @PutMapping("/update")
+    public R update(@RequestBody ${className} ${classname}){
+			${classname}Service.updateById(${classname});
+
+      return new R<>(Boolean.TRUE);
+    }
+
+    /**
+     * 删除
+     * @param ${pk.lowerAttrName}s
+     * @return R
+     */
+    @DeleteMapping("/delete")
+    public R delete(@RequestBody ${pk.attrType}[] ${pk.lowerAttrName}s){
+			${classname}Service.deleteBatchIds(Arrays.asList(${pk.lowerAttrName}s));
+
+      return new R<>(Boolean.TRUE);
+    }
+
+}

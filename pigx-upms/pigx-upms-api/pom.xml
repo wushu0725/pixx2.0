@@ -35,12 +35,6 @@
 
 
 	<dependencies>
-		<!--mybatis-plus 依賴-->
-		<dependency>
-			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus</artifactId>
-			<version>${mbp.boot.version}</version>
-		</dependency>
 		<!--core 工具类-->
 		<dependency>
 			<groupId>com.pig4cloud</groupId>

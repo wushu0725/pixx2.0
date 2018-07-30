@@ -21,7 +21,7 @@ package com.pig4cloud.pigx.admin.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.pig4cloud.pigx.admin.api.dto.Query;
+import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.admin.api.dto.UserDTO;
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 import com.pig4cloud.pigx.admin.api.entity.SysUser;

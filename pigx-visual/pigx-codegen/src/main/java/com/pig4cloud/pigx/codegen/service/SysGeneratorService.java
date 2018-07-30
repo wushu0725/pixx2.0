@@ -15,24 +15,30 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.daemon;
+package com.pig4cloud.pigx.codegen.service;
 
-import com.pig4cloud.pigx.common.job.annotation.EnablePigxJob;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.SpringCloudApplication;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.pig4cloud.pigx.common.core.util.Query;
+
+import java.util.Map;
 
 /**
  * @author lengleng
- * @date 2018/7/24
- * 分布式任务调度模块
+ * @date 2018/7/29
  */
-@EnablePigxJob
-@SpringCloudApplication
-public class PigxDaemonApplication {
+public interface SysGeneratorService {
+	/**
+	 * 生成代码
+	 *
+	 * @param tableNames 表名称
+	 * @return
+	 */
+	byte[] generatorCode(String[] tableNames);
 
-	public static void main(String[] args) {
-		SpringApplication.run(PigxDaemonApplication.class, args);
-	}
-
+	/**
+	 * 分页查询表
+	 * @param query 查询条件
+	 * @return
+	 */
+	Page queryPage(Map<String,Object> query);
 }

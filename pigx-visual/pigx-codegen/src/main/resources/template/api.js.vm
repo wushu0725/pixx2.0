@@ -15,24 +15,42 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.daemon;
+import request from '@/router/axios'
 
-import com.pig4cloud.pigx.common.job.annotation.EnablePigxJob;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.SpringCloudApplication;
+export function fetchList(query) {
+  return request({
+    url: '/${moduleName}/${pathName}/page',
+    method: 'get',
+    params: query
+  })
+}
 
-/**
- * @author lengleng
- * @date 2018/7/24
- * 分布式任务调度模块
- */
-@EnablePigxJob
-@SpringCloudApplication
-public class PigxDaemonApplication {
+export function addObj(obj) {
+  return request({
+    url: '/${moduleName}/${pathName}/',
+    method: 'post',
+    data: obj
+  })
+}
 
-	public static void main(String[] args) {
-		SpringApplication.run(PigxDaemonApplication.class, args);
-	}
+export function getObj(id) {
+  return request({
+    url: '/${moduleName}/${pathName}/' + id,
+    method: 'get'
+  })
+}
 
+export function delObj(id) {
+  return request({
+    url: '/${moduleName}/${pathName}/' + id,
+    method: 'delete'
+  })
+}
+
+export function putObj(obj) {
+  return request({
+    url: '/${moduleName}/${pathName}/',
+    method: 'put',
+    data: obj
+  })
 }

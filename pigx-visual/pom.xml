@@ -34,6 +34,7 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>pigx-codegen</module>
 		<module>pigx-daemon</module>
 		<module>pigx-monitor</module>
 	</modules>

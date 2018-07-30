@@ -15,24 +15,20 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.daemon;
+package com.pig4cloud.pigx.codegen;
 
-import com.pig4cloud.pigx.common.job.annotation.EnablePigxJob;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 
 /**
  * @author lengleng
- * @date 2018/7/24
- * 分布式任务调度模块
+ * @date 2018/07/29
+ * 代码生成模块
  */
-@EnablePigxJob
 @SpringCloudApplication
-public class PigxDaemonApplication {
+public class PigxCodeGenApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PigxDaemonApplication.class, args);
+		SpringApplication.run(PigxCodeGenApplication.class, args);
 	}
-
 }

@@ -22,7 +22,7 @@ package com.pig4cloud.pigx.admin.service.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.pig4cloud.pigx.admin.api.dto.Query;
+import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.admin.api.dto.RoleDTO;
 import com.pig4cloud.pigx.admin.api.entity.SysRole;
 import com.pig4cloud.pigx.admin.api.entity.SysRoleDept;

@@ -20,7 +20,7 @@
 package com.pig4cloud.pigx.admin.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.pig4cloud.pigx.admin.api.dto.Query;
+import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
 import com.pig4cloud.pigx.admin.api.vo.UserVO;
 import org.apache.ibatis.annotations.Param;

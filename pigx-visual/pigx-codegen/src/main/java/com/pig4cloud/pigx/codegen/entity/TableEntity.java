@@ -15,24 +15,41 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.daemon;
+package com.pig4cloud.pigx.codegen.entity;
 
-import com.pig4cloud.pigx.common.job.annotation.EnablePigxJob;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.SpringCloudApplication;
+import lombok.Data;
+
+import java.util.List;
 
 /**
  * @author lengleng
- * @date 2018/7/24
- * 分布式任务调度模块
+ * @date 2018/07/29
+ * 表属性： https://blog.csdn.net/lkforce/article/details/79557482
  */
-@EnablePigxJob
-@SpringCloudApplication
-public class PigxDaemonApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(PigxDaemonApplication.class, args);
-	}
-
+@Data
+public class TableEntity {
+	/**
+	 * 名称
+	 */
+	private String tableName;
+	/**
+	 * 备注
+	 */
+	private String comments;
+	/**
+	 * 主键
+	 */
+	private ColumnEntity pk;
+	/**
+	 * 列名
+	 */
+	private List<ColumnEntity> columns;
+	/**
+	 * 驼峰类型
+	 */
+	private String caseClassName;
+	/**
+	 * 普通类型
+	 */
+	private String lowerClassName;
 }
