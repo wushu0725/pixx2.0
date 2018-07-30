@@ -49,6 +49,17 @@ import java.util.zip.ZipOutputStream;
 @Slf4j
 public class GenUtils {
 
+	public static final String ENTITY_JAVA_VM = "Entity.java.vm";
+	public static final String MAPPER_JAVA_VM = "Mapper.java.vm";
+	public static final String SERVICE_JAVA_VM = "Service.java.vm";
+	public static final String SERVICE_IMPL_JAVA_VM = "ServiceImpl.java.vm";
+	public static final String CONTROLLER_JAVA_VM = "Controller.java.vm";
+	public static final String MAPPER_XML_VM = "Mapper.xml.vm";
+	public static final String MENU_SQL_VM = "menu.sql.vm";
+	public static final String INDEX_VUE_VM = "index.vue.vm";
+	public static final String API_JS_VM = "api.js.vm";
+	public static final String CRUD_JS_VM = "crud.js.vm";
+
 	public static List<String> getTemplates() {
 		List<String> templates = new ArrayList<>();
 		templates.add("template/Entity.java.vm" );
@@ -123,7 +134,7 @@ public class GenUtils {
 		String mainPath = config.getString("mainPath" );
 		mainPath = StringUtils.isBlank(mainPath) ? "com.pig4cloud.pigx" : mainPath;
 		//封装模板数据
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>(16);
 		map.put("tableName", tableEntity.getTableName());
 		map.put("comments", tableEntity.getComments());
 		map.put("pk", tableEntity.getPk());
@@ -199,44 +210,44 @@ public class GenUtils {
 			packagePath += packageName.replace(".", File.separator) + File.separator + moduleName + File.separator;
 		}
 
-		if (template.contains("Entity.java.vm" )) {
+		if (template.contains(ENTITY_JAVA_VM)) {
 			return packagePath + "entity" + File.separator + className + ".java";
 		}
 
-		if (template.contains("Mapper.java.vm" )) {
+		if (template.contains(MAPPER_JAVA_VM)) {
 			return packagePath + "mapper" + File.separator + className + "Mapper.java";
 		}
 
-		if (template.contains("Service.java.vm" )) {
+		if (template.contains(SERVICE_JAVA_VM)) {
 			return packagePath + "service" + File.separator + className + "Service.java";
 		}
 
-		if (template.contains("ServiceImpl.java.vm" )) {
+		if (template.contains(SERVICE_IMPL_JAVA_VM)) {
 			return packagePath + "service" + File.separator + "impl" + File.separator + className + "ServiceImpl.java";
 		}
 
-		if (template.contains("Controller.java.vm" )) {
+		if (template.contains(CONTROLLER_JAVA_VM)) {
 			return packagePath + "controller" + File.separator + className + "Controller.java";
 		}
 
-		if (template.contains("Mapper.xml.vm" )) {
+		if (template.contains(MAPPER_XML_VM)) {
 			return "pigx" + File.separator + "main" + File.separator + "resources" + File.separator + "mapper" + File.separator + moduleName + File.separator + className + "Mapper.xml";
 		}
 
-		if (template.contains("menu.sql.vm" )) {
+		if (template.contains(MENU_SQL_VM)) {
 			return className.toLowerCase() + "_menu.sql";
 		}
 
-		if (template.contains("index.vue.vm" )) {
+		if (template.contains(INDEX_VUE_VM)) {
 			return "pigx-ui" + File.separator + "src" + File.separator + "views" +
 				File.separator + moduleName + File.separator + className.toLowerCase() + File.separator + "index.vue";
 		}
 
-		if (template.contains("api.js.vm" )) {
+		if (template.contains(API_JS_VM)) {
 			return "pigx-ui" + File.separator + "src" + File.separator + "api" + File.separator + className.toLowerCase() + ".js";
 		}
 
-		if (template.contains("crud.js.vm" )) {
+		if (template.contains(CRUD_JS_VM)) {
 			return "pigx-ui" + File.separator + "src" + File.separator + "const" +
 				File.separator + "curd" + File.separator + className.toLowerCase() + ".js";
 		}
