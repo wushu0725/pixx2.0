@@ -34,9 +34,8 @@ import java.util.zip.ZipOutputStream;
 /**
  * 代码生成器
  *
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年12月19日 下午3:33:38
+ * @author lengleng
+ * @date 2018-07-30
  */
 @Service
 @AllArgsConstructor

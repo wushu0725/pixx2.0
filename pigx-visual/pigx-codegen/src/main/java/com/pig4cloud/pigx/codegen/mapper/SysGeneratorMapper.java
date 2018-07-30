@@ -17,18 +17,14 @@
 
 package com.pig4cloud.pigx.codegen.mapper;
 
-import com.baomidou.mybatisplus.plugins.Page;
-import com.pig4cloud.pigx.common.core.util.Query;
-
 import java.util.List;
 import java.util.Map;
 
 /**
  * 代码生成器
  *
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年12月19日 下午3:32:04
+ * @author lengleng
+ * @date 2018-07-30
  */
 public interface SysGeneratorMapper {
 
