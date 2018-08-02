@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 139.224.200.249
+ Source Server         : 114.116.45.246
  Source Server Type    : MySQL
- Source Server Version : 50721
- Source Host           : 139.224.200.249
+ Source Server Version : 50722
+ Source Host           : 114.116.45.246
  Source Database       : pigx
 
  Target Server Type    : MySQL
- Target Server Version : 50721
+ Target Server Version : 50722
  File Encoding         : utf-8
 
- Date: 06/26/2018 21:52:22 PM
+ Date: 08/02/2018 22:07:34 PM
 */
 
 SET NAMES utf8;
@@ -77,13 +77,13 @@ CREATE TABLE `sys_dict` (
   KEY `sys_dict_value` (`value`),
   KEY `sys_dict_label` (`label`),
   KEY `sys_dict_del_flag` (`del_flag`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='字典表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='字典表';
 
 -- ----------------------------
 --  Records of `sys_dict`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_dict` VALUES ('2', '9', '异常', 'log_type', '日志异常', '1', '2017-12-28 13:06:39', '2018-01-06 10:54:41', null, '0'), ('3', '0', '正常', 'log_type', '正常', '1', '2018-05-11 23:52:57', '2018-05-11 23:52:57', '123', '0');
+INSERT INTO `sys_dict` VALUES ('2', '9', '异常', 'log_type', '日志异常', '1', '2018-07-09 06:16:14', '2018-07-09 06:16:14', '4567', '0'), ('3', '0', '正常', 'log_type', '正常', '1', '2018-07-09 06:15:40', '2018-07-09 06:15:40', '1234', '0');
 COMMIT;
 
 -- ----------------------------
@@ -137,7 +137,7 @@ CREATE TABLE `sys_menu` (
 --  Records of `sys_menu`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_menu` VALUES ('1', '系统管理', null, '/admin', '-1', 'icon-xitongguanli', 'Layout', '1', '0', '2017-11-07 20:56:00', '2018-05-14 21:53:22', '0'), ('2', '用户管理', null, 'user', '1', 'icon-yonghuguanli', 'views/admin/user/index', '2', '0', '2017-11-02 22:24:37', '2018-05-14 22:11:35', '0'), ('3', '菜单管理', null, 'menu', '1', 'icon-caidanguanli', 'views/admin/menu/index', '3', '0', '2017-11-08 09:57:27', '2018-05-14 22:11:21', '0'), ('4', '角色管理', null, 'role', '1', 'icon-jiaoseguanli', 'views/admin/role/index', '4', '0', '2017-11-08 10:13:37', '2018-05-14 22:11:19', '0'), ('5', '日志管理', null, 'log', '1', 'icon-rizhiguanli', 'views/admin/log/index', '5', '0', '2017-11-20 14:06:22', '2018-05-14 22:11:18', '0'), ('6', '字典管理', null, 'dict', '1', 'icon-zygl', 'views/admin/dict/index', '6', '0', '2017-11-29 11:30:52', '2018-05-14 22:12:48', '0'), ('7', '部门管理', null, 'dept', '1', 'icon-iconbmgl', 'views/admin/dept/index', '7', '0', '2018-01-20 13:17:19', '2018-05-14 22:11:16', '0'), ('8', '系统监控', null, '', '-1', 'icon-iconbmgl', null, '8', '0', '2018-01-22 12:30:41', '2018-06-24 17:10:11', '1'), ('9', '服务监控', null, 'http://139.224.200.249:5001', '8', 'icon-jiankong', null, '9', '0', '2018-01-23 10:53:33', '2018-06-24 17:10:12', '1'), ('10', 'zipkin监控', null, 'http://139.224.200.249:5002', '8', 'icon-jiankong', null, '11', '0', '2018-01-23 10:55:18', '2018-06-24 17:10:12', '1'), ('11', 'pinpoint监控', null, 'https://pinpoint.pig4cloud.com', '8', 'icon-xiazaihuancun', null, '10', '0', '2018-01-25 11:08:52', '2018-06-24 17:10:12', '1'), ('12', '缓存状态', null, 'http://139.224.200.249:8585', '8', 'icon-ecs-status', null, '12', '0', '2018-01-23 10:56:11', '2018-06-24 17:10:12', '1'), ('13', 'ELK状态', null, 'http://139.224.200.249:5601', '8', 'icon-ecs-status', null, '13', '0', '2018-01-23 10:55:47', '2018-06-24 17:10:12', '1'), ('14', '接口文档', null, 'http://139.224.200.249:9999/swagger-ui.html', '8', 'icon-wendangdocument72', null, '14', '0', '2018-01-23 10:56:43', '2018-06-24 17:10:12', '1'), ('15', '任务监控', null, 'http://139.224.200.249:8899', '8', 'icon-jiankong', null, '15', '0', '2018-01-23 10:55:18', '2018-06-24 17:10:12', '1'), ('22', '用户新增', 'sys_user_add', null, '2', null, null, null, '1', '2017-11-08 09:52:09', '2017-12-04 16:31:10', '0'), ('23', '用户修改', 'sys_user_edit', null, '2', null, null, null, '1', '2017-11-08 09:52:48', '2018-06-26 21:16:57', '0'), ('24', '用户删除', 'sys_user_del', null, '2', null, null, null, '1', '2017-11-08 09:54:01', '2017-12-04 16:31:18', '0'), ('32', '菜单新增', 'sys_menu_add', null, '3', null, null, null, '1', '2017-11-08 10:15:53', '2018-01-20 14:37:50', '0'), ('33', '菜单修改', 'sys_menu_edit', null, '3', null, null, null, '1', '2017-11-08 10:16:23', '2018-01-20 14:37:56', '0'), ('34', '菜单删除', 'sys_menu_del', null, '3', null, null, null, '1', '2017-11-08 10:16:43', '2018-01-20 14:38:03', '0'), ('42', '角色新增', 'sys_role_add', null, '4', null, null, null, '1', '2017-11-08 10:14:18', '2018-04-20 07:21:38', '0'), ('43', '角色修改', 'sys_role_edit', null, '4', null, null, null, '1', '2017-11-08 10:14:41', '2018-04-20 07:21:50', '0'), ('44', '角色删除', 'sys_role_del', null, '4', null, null, null, '1', '2017-11-08 10:14:59', '2018-04-20 07:22:00', '0'), ('45', '分配权限', 'sys_role_perm', null, '4', null, null, null, '1', '2018-04-20 07:22:55', '2018-04-20 07:24:40', '0'), ('52', '日志删除', 'sys_log_del', null, '5', null, null, null, '1', '2017-11-20 20:37:37', '2017-11-28 17:36:52', '0'), ('62', '字典删除', 'sys_dict_del', null, '6', null, null, null, '1', '2017-11-29 11:30:11', '2018-01-07 15:40:51', '0'), ('63', '字典新增', 'sys_dict_add', null, '6', null, null, null, '1', '2018-05-11 22:34:55', null, '0'), ('64', '字典修改', 'sys_dict_edit', null, '6', null, null, null, '1', '2018-05-11 22:36:03', '2018-06-26 21:17:36', '0'), ('72', '部门新增', 'sys_dept_add', null, '7', null, null, null, '1', '2018-01-20 14:56:16', '2018-01-20 21:17:57', '0'), ('73', '部门修改', 'sys_dept_edit', null, '7', null, null, null, '1', '2018-01-20 14:56:59', '2018-01-20 21:17:59', '0'), ('74', '部门删除', 'sys_dept_del', null, '7', null, null, null, '1', '2018-01-20 14:57:28', '2018-01-20 21:18:05', '0'), ('100', '客户端管理', '', 'client', '1', 'icon-bangzhushouji', 'views/admin/client/index', '10', '0', '2018-01-20 13:17:19', '2018-05-15 21:28:10', '0'), ('101', '客户端新增', 'sys_client_add', null, '100', '1', null, null, '1', '2018-05-15 21:35:18', '2018-05-16 10:35:26', '0'), ('102', '客户端修改', 'sys_client_edit', null, '100', null, null, null, '1', '2018-05-15 21:37:06', '2018-06-26 21:17:17', '0'), ('103', '客户端删除', 'sys_client_del', null, '100', null, null, null, '1', '2018-05-15 21:39:16', '2018-05-15 21:52:34', '0'), ('200', '服务监控', null, 'http://127.0.0.1:5001', '1', 'icon-msnui-supervise', null, '9', '0', '2018-06-26 10:50:32', '2018-06-26 11:04:42', '0');
+INSERT INTO `sys_menu` VALUES ('1', '系统管理', null, '/admin', '-1', 'icon-xitongguanli', 'Layout', '1', '0', '2017-11-07 20:56:00', '2018-05-14 21:53:22', '0'), ('2', '用户管理', null, 'user', '1', 'icon-yonghuguanli', 'views/admin/user/index', '2', '0', '2017-11-02 22:24:37', '2018-05-14 22:11:35', '0'), ('3', '菜单管理', null, 'menu', '1', 'icon-caidanguanli', 'views/admin/menu/index', '3', '0', '2017-11-08 09:57:27', '2018-05-14 22:11:21', '0'), ('4', '角色管理', null, 'role', '1', 'icon-jiaoseguanli', 'views/admin/role/index', '4', '0', '2017-11-08 10:13:37', '2018-05-14 22:11:19', '0'), ('5', '日志管理', null, 'log', '1', 'icon-rizhiguanli', 'views/admin/log/index', '5', '0', '2017-11-20 14:06:22', '2018-05-14 22:11:18', '0'), ('6', '字典管理', null, 'dict', '1', 'icon-zygl', 'views/admin/dict/index', '6', '0', '2017-11-29 11:30:52', '2018-05-14 22:12:48', '0'), ('7', '部门管理', null, 'dept', '1', 'icon-iconbmgl', 'views/admin/dept/index', '7', '0', '2018-01-20 13:17:19', '2018-05-14 22:11:16', '0'), ('8', '客户端管理', '', 'client', '1', 'icon-bangzhushouji', 'views/admin/client/index', '8', '0', '2018-01-20 13:17:19', '2018-07-29 13:38:19', '0'), ('9', '代码生成', '', 'gen', '1', 'icon-weibiaoti46', 'views/admin/gen/index', '9', '0', '2018-01-20 13:17:19', '2018-08-02 08:19:59', '0'), ('22', '用户新增', 'sys_user_add', null, '2', null, null, null, '1', '2017-11-08 09:52:09', '2017-12-04 16:31:10', '0'), ('23', '用户修改', 'sys_user_edit', null, '2', null, null, null, '1', '2017-11-08 09:52:48', '2018-06-26 21:16:57', '0'), ('24', '用户删除', 'sys_user_del', null, '2', null, null, null, '1', '2017-11-08 09:54:01', '2017-12-04 16:31:18', '0'), ('32', '菜单新增', 'sys_menu_add', null, '3', null, null, null, '1', '2017-11-08 10:15:53', '2018-01-20 14:37:50', '0'), ('33', '菜单修改', 'sys_menu_edit', null, '3', null, null, null, '1', '2017-11-08 10:16:23', '2018-01-20 14:37:56', '0'), ('34', '菜单删除', 'sys_menu_del', null, '3', null, null, null, '1', '2017-11-08 10:16:43', '2018-01-20 14:38:03', '0'), ('42', '角色新增', 'sys_role_add', null, '4', null, null, null, '1', '2017-11-08 10:14:18', '2018-04-20 07:21:38', '0'), ('43', '角色修改', 'sys_role_edit', null, '4', null, null, null, '1', '2017-11-08 10:14:41', '2018-04-20 07:21:50', '0'), ('44', '角色删除', 'sys_role_del', null, '4', null, null, null, '1', '2017-11-08 10:14:59', '2018-04-20 07:22:00', '0'), ('45', '分配权限', 'sys_role_perm', null, '4', null, null, null, '1', '2018-04-20 07:22:55', '2018-04-20 07:24:40', '0'), ('52', '日志删除', 'sys_log_del', null, '5', null, null, null, '1', '2017-11-20 20:37:37', '2017-11-28 17:36:52', '0'), ('62', '字典删除', 'sys_dict_del', null, '6', null, null, null, '1', '2017-11-29 11:30:11', '2018-01-07 15:40:51', '0'), ('63', '字典新增', 'sys_dict_add', null, '6', null, null, null, '1', '2018-05-11 22:34:55', null, '0'), ('64', '字典修改', 'sys_dict_edit', null, '6', null, null, null, '1', '2018-05-11 22:36:03', '2018-06-26 21:17:36', '0'), ('72', '部门新增', 'sys_dept_add', null, '7', null, null, null, '1', '2018-01-20 14:56:16', '2018-01-20 21:17:57', '0'), ('73', '部门修改', 'sys_dept_edit', null, '7', null, null, null, '1', '2018-01-20 14:56:59', '2018-01-20 21:17:59', '0'), ('74', '部门删除', 'sys_dept_del', null, '7', null, null, null, '1', '2018-01-20 14:57:28', '2018-01-20 21:18:05', '0'), ('81', '客户端新增', 'sys_client_add', null, '8', '1', null, null, '1', '2018-05-15 21:35:18', '2018-07-29 13:38:59', '0'), ('82', '客户端修改', 'sys_client_edit', null, '8', null, null, null, '1', '2018-05-15 21:37:06', '2018-07-29 13:39:01', '0'), ('83', '客户端删除', 'sys_client_del', null, '8', null, null, null, '1', '2018-05-15 21:39:16', '2018-07-29 13:39:06', '0'), ('100', '系统监控', null, '', '-1', 'icon-iconbmgl', null, '2', '0', '2018-07-27 01:13:21', '2018-07-29 13:39:31', '0'), ('101', '服务监控', null, 'http://127.0.0.1:5001', '100', 'icon-jiankong', null, '0', '0', '2018-06-26 10:50:32', '2018-07-29 13:39:48', '0'), ('102', '接口文档', null, 'http://127.0.0.1:9999/swagger-ui.html', '100', 'icon-wendangdocument72', null, '1', '0', '2018-06-26 10:50:32', '2018-07-29 13:39:51', '0'), ('103', '任务监控', null, 'http://localhost:9999/swagger-ui.html', '100', 'icon-msnui-supervise', null, '2', '0', '2018-06-26 10:50:32', '2018-07-29 13:40:00', '0');
 COMMIT;
 
 -- ----------------------------
@@ -163,7 +163,7 @@ CREATE TABLE `sys_oauth_client_details` (
 --  Records of `sys_oauth_client_details`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_oauth_client_details` VALUES ('app', null, 'app', 'server', 'password,refresh_token', null, null, null, null, null, 'true'), ('pig', null, 'pig', 'server', 'password,refresh_token', null, null, null, null, null, 'false');
+INSERT INTO `sys_oauth_client_details` VALUES ('app', null, 'app', 'server', 'password,refresh_token', null, null, null, null, null, 'true'), ('pig', null, 'pig', 'server', 'password,refresh_token', null, null, null, null, null, 'true'), ('test', null, 'test', 'server', 'password,refresh_token', null, null, null, null, null, 'true');
 COMMIT;
 
 -- ----------------------------
@@ -186,7 +186,7 @@ CREATE TABLE `sys_role` (
 --  Records of `sys_role`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_role` VALUES ('1', 'admin', 'ROLE_ADMIN', '超级管理员', '2017-10-29 15:45:51', '2018-04-22 11:40:29', '0'), ('14', 'demo', 'demo', 'demo用户', '2018-04-20 07:14:32', '2018-06-12 18:43:22', '0'), ('15', 'demo2', 'demo2', 'demo2', '2018-06-12 18:59:38', null, '0'), ('16', 'demo3', 'demo3', 'demo', '2018-06-13 07:07:25', '2018-06-24 17:16:47', '1');
+INSERT INTO `sys_role` VALUES ('1', 'admin', 'ROLE_ADMIN', '超级管理员', '2017-10-29 15:45:51', '2018-04-22 11:40:29', '0'), ('2', 'demo', 'demo', 'demo用户', '2018-04-20 07:14:32', '2018-07-27 01:22:07', '0');
 COMMIT;
 
 -- ----------------------------
@@ -204,7 +204,7 @@ CREATE TABLE `sys_role_dept` (
 --  Records of `sys_role_dept`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_role_dept` VALUES ('11', '1', '1'), ('16', '14', '6'), ('17', '15', '5'), ('18', '16', '8');
+INSERT INTO `sys_role_dept` VALUES ('11', '1', '1'), ('16', '2', '6');
 COMMIT;
 
 -- ----------------------------
@@ -221,7 +221,7 @@ CREATE TABLE `sys_role_menu` (
 --  Records of `sys_role_menu`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_role_menu` VALUES ('1', '1'), ('1', '2'), ('1', '3'), ('1', '4'), ('1', '5'), ('1', '6'), ('1', '7'), ('1', '22'), ('1', '23'), ('1', '24'), ('1', '32'), ('1', '33'), ('1', '34'), ('1', '42'), ('1', '43'), ('1', '44'), ('1', '45'), ('1', '52'), ('1', '62'), ('1', '63'), ('1', '64'), ('1', '72'), ('1', '73'), ('1', '74'), ('1', '100'), ('1', '101'), ('1', '102'), ('1', '103'), ('1', '200'), ('14', '1'), ('14', '2'), ('14', '3'), ('14', '4'), ('14', '5'), ('14', '6'), ('14', '7'), ('14', '21'), ('14', '22'), ('14', '23'), ('14', '24'), ('14', '31'), ('14', '32'), ('14', '33'), ('14', '34'), ('14', '41'), ('14', '42'), ('14', '43'), ('14', '44'), ('14', '45'), ('14', '51'), ('14', '52'), ('14', '61'), ('14', '62'), ('14', '63'), ('14', '64'), ('14', '71'), ('14', '72'), ('14', '73'), ('14', '74'), ('14', '100'), ('14', '101'), ('14', '102'), ('14', '103'), ('14', '104'), ('14', '110'), ('14', '111'), ('14', '112'), ('14', '113'), ('15', '1'), ('15', '2'), ('15', '3'), ('15', '5'), ('15', '21'), ('15', '22'), ('15', '23'), ('15', '24'), ('15', '31'), ('15', '32'), ('15', '33'), ('15', '34'), ('15', '51'), ('15', '52'), ('16', '1'), ('16', '2'), ('16', '21'), ('16', '22'), ('16', '23'), ('16', '24');
+INSERT INTO `sys_role_menu` VALUES ('1', '1'), ('1', '2'), ('1', '3'), ('1', '4'), ('1', '5'), ('1', '6'), ('1', '7'), ('1', '8'), ('1', '9'), ('1', '22'), ('1', '23'), ('1', '24'), ('1', '32'), ('1', '33'), ('1', '34'), ('1', '42'), ('1', '43'), ('1', '44'), ('1', '45'), ('1', '52'), ('1', '62'), ('1', '63'), ('1', '64'), ('1', '72'), ('1', '73'), ('1', '74'), ('1', '81'), ('1', '82'), ('1', '83'), ('1', '100'), ('1', '101'), ('1', '102'), ('1', '103'), ('2', '200'), ('2', '201'), ('2', '202'), ('2', '203');
 COMMIT;
 
 -- ----------------------------
@@ -247,7 +247,7 @@ CREATE TABLE `sys_user` (
 --  Records of `sys_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user` VALUES ('1', 'admin', '$2a$10$vg5QNHhCknAqevx9vM2s5esllJEzF/pa8VZXtFYHhhOhUcCw/GWyS', null, '17034642888', null, '1', '2018-04-20 07:15:18', '2018-06-26 11:43:22', '0'), ('4', 'pig', '$2a$10$vg5QNHhCknAqevx9vM2s5esllJEzF/pa8VZXtFYHhhOhUcCw/GWyS', null, '17034642118', null, '1', '2018-04-22 11:39:07', '2018-05-10 18:01:11', '0'), ('5', '0098', '$2a$10$Rm.6OnUqDoiPGMd60/JzlOPErBeHJzOs39uUanCR.RP7u3uW6s5Mq', null, '17034642117', null, '1', '2018-05-29 21:35:03', null, '0'), ('7', '0097', '$2a$10$Rm.6OnUqDoiPGMd60/JzlOPErBeHJzOs39uUanCR.RP7u3uW6s5Mq', null, '17034642001', null, '1', '2018-05-29 21:35:03', null, '0'), ('8', '17034642002', '$2a$10$Rm.6OnUqDoiPGMd60/JzlOPErBeHJzOs39uUanCR.RP7u3uW6s5Mq', null, '17034642002', null, '1', '2018-05-29 21:35:03', null, '0'), ('9', '17034642003', '$2a$10$Rm.6OnUqDoiPGMd60/JzlOPErBeHJzOs39uUanCR.RP7u3uW6s5Mq', null, '17034642003', null, '1', '2018-05-29 21:35:03', null, '0'), ('10', '17034642004', '$2a$10$Rm.6OnUqDoiPGMd60/JzlOPErBeHJzOs39uUanCR.RP7u3uW6s5Mq', null, '17034642004', null, '1', '2018-05-29 21:35:03', null, '0'), ('11', '17034642005', '$2a$10$Rm.6OnUqDoiPGMd60/JzlOPErBeHJzOs39uUanCR.RP7u3uW6s5Mq', null, '17034642005', null, '1', '2018-05-29 21:35:03', null, '0'), ('14', '17034642006', '$2a$10$Rm.6OnUqDoiPGMd60/JzlOPErBeHJzOs39uUanCR.RP7u3uW6s5Mq', null, '17034642006', null, '1', '2018-05-29 21:35:03', null, '0'), ('15', '17034642007', '$2a$10$Rm.6OnUqDoiPGMd60/JzlOPErBeHJzOs39uUanCR.RP7u3uW6s5Mq', null, '17034642007', null, '1', '2018-05-29 21:35:03', null, '0'), ('16', '17034642008', '$2a$10$Rm.6OnUqDoiPGMd60/JzlOPErBeHJzOs39uUanCR.RP7u3uW6s5Mq', null, '17034642008', null, '1', '2018-05-29 21:35:03', null, '0'), ('17', '17034642009', '$2a$10$Rm.6OnUqDoiPGMd60/JzlOPErBeHJzOs39uUanCR.RP7u3uW6s5Mq', null, '17034642009', null, '1', '2018-05-29 21:35:03', null, '0'), ('18', '123456', '$2a$10$P1cRSPAJqfPpKPmQIo/GiuSfrdvRnU0nNWBywqK/lBkrL/K1TOXy6', null, '17034642115', null, '6', '2018-06-12 18:28:42', null, '0'), ('19', 'demo2', '$2a$10$qaNZ/KVvq65.wRo20dDuYOR1Qocuvnj3h9CtrXTimFI3.d1PHJMhi', null, '12345678902', null, '5', '2018-06-12 19:00:02', '2018-06-26 21:36:45', '0'), ('20', 'demo3', '$2a$10$vg5QNHhCknAqevx9vM2s5esllJEzF/pa8VZXtFYHhhOhUcCw/GWyS', null, '11122233344', null, '8', '2018-06-13 07:07:56', '2018-06-13 07:09:00', '0');
+INSERT INTO `sys_user` VALUES ('1', 'admin', '$2a$10$SJiz7YONcq5ATINeF3s/aOB9O3jKFXVfblHCerRntXAArPp4rKtvu', null, '17034642888', null, '1', '2018-04-20 07:15:18', '2018-07-16 02:36:47', '0'), ('2', 'demo', '$2a$10$SJiz7YONcq5ATINeF3s/aOB9O3jKFXVfblHCerRntXAArPp4rKtvu', null, '17034642118', null, '1', '2018-04-22 11:39:07', '2018-07-29 10:36:38', '0');
 COMMIT;
 
 -- ----------------------------
@@ -264,7 +264,7 @@ CREATE TABLE `sys_user_role` (
 --  Records of `sys_user_role`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user_role` VALUES ('1', '1'), ('4', '14'), ('5', '1'), ('7', '1'), ('8', '1'), ('9', '1'), ('10', '1'), ('11', '1'), ('12', '1'), ('13', '1'), ('14', '1'), ('15', '1'), ('16', '1'), ('17', '1'), ('18', '14'), ('19', '15');
+INSERT INTO `sys_user_role` VALUES ('1', '1'), ('2', '2');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

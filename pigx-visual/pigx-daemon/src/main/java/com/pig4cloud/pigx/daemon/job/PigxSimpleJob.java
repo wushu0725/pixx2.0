@@ -35,6 +35,6 @@ public class PigxSimpleJob implements SimpleJob {
 	 */
 	@Override
 	public void execute(ShardingContext shardingContext) {
-		log.info("shardingContext:{}", shardingContext);
+		log.info("第一个任务执行啦:{}", shardingContext);
 	}
 }

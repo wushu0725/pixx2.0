@@ -15,30 +15,41 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.codegen.service;
+package com.pig4cloud.pigx.codegen.entity;
 
-import com.baomidou.mybatisplus.plugins.Page;
-import com.pig4cloud.pigx.codegen.entity.GenConfig;
-
-import java.util.Map;
+import lombok.Data;
 
 /**
  * @author lengleng
- * @date 2018/7/29
+ * @date 2018/8/2
+ * 生成配置
  */
-public interface SysGeneratorService {
+@Data
+public class GenConfig {
 	/**
-	 * 生成代码
-	 *
-	 * @param tableNames 表名称
-	 * @return
+	 * 包名
 	 */
-	byte[] generatorCode(GenConfig tableNames);
+	private String packageName;
+	/**
+	 * 作者
+	 */
+	private String author;
+	/**
+	 * 模块名称
+	 */
+	private String moduleName;
+	/**
+	 * 表前缀
+	 */
+	private String tablePrefix;
 
 	/**
-	 * 分页查询表
-	 * @param query 查询条件
-	 * @return
+	 * 表名称
 	 */
-	Page queryPage(Map<String,Object> query);
+	private String tableName;
+
+	/**
+	 * 表备注
+	 */
+	private String comments;
 }

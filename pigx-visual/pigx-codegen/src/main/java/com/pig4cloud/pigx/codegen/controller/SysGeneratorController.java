@@ -19,6 +19,7 @@ package com.pig4cloud.pigx.codegen.controller;
 
 import cn.hutool.core.io.IoUtil;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.pig4cloud.pigx.codegen.entity.GenConfig;
 import com.pig4cloud.pigx.codegen.service.SysGeneratorService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ import java.util.Map;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/generator" )
+@RequestMapping("/generator")
 public class SysGeneratorController {
 	private final SysGeneratorService sysGeneratorService;
 
@@ -45,7 +46,7 @@ public class SysGeneratorController {
 	 * @param params 参数集
 	 * @return 数据库表
 	 */
-	@GetMapping("/page" )
+	@GetMapping("/page")
 	public Page list(@RequestParam Map<String, Object> params) {
 		return sysGeneratorService.queryPage(params);
 	}
@@ -53,14 +54,14 @@ public class SysGeneratorController {
 	/**
 	 * 生成代码
 	 */
-	@GetMapping("/code/{tableName}" )
-	public void code(@PathVariable String tableName, HttpServletResponse response) throws IOException {
-		byte[] data = sysGeneratorService.generatorCode(new String[]{tableName});
+	@PostMapping("/code")
+	public void code(@RequestBody GenConfig genConfig, HttpServletResponse response) throws IOException {
+		byte[] data = sysGeneratorService.generatorCode(genConfig);
 
 		response.reset();
-		response.setHeader("Content-Disposition", String.format("attachment; filename=%s.zip", tableName));
+		response.setHeader("Content-Disposition", String.format("attachment; filename=%s.zip", genConfig.getTableName()));
 		response.addHeader("Content-Length", "" + data.length);
-		response.setContentType("application/octet-stream; charset=UTF-8" );
+		response.setContentType("application/octet-stream; charset=UTF-8");
 
 		IoUtil.write(response.getOutputStream(), Boolean.TRUE, data);
 	}

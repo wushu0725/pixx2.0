@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.pig4cloud.pigx.common.core.constant.CommonConstant;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.pig4cloud.pigx.common.core.util.Query;
 
 import ${package}.${moduleName}.entity.${className};
@@ -21,7 +21,7 @@ import java.util.Map;
  * @date ${datetime}
  */
 @RestController
-@RequestMapping("${moduleName}/${pathName}")
+@RequestMapping("/${pathName}")
 public class ${className}Controller {
     @Autowired
     private ${className}Service ${classname}Service;
@@ -34,7 +34,6 @@ public class ${className}Controller {
     */
     @GetMapping("/page")
     public Page page(@RequestParam Map<String, Object> params) {
-      params.put(CommonConstant.DEL_FLAG, CommonConstant.STATUS_NORMAL);
       return  ${classname}Service.selectPage(new Query<>(params), new EntityWrapper<>());
     }
 

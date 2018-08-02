@@ -20,6 +20,7 @@ package com.pig4cloud.pigx.codegen.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.IoUtil;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.pig4cloud.pigx.codegen.entity.GenConfig;
 import com.pig4cloud.pigx.codegen.mapper.SysGeneratorMapper;
 import com.pig4cloud.pigx.codegen.service.SysGeneratorService;
 import com.pig4cloud.pigx.codegen.util.GenUtils;
@@ -69,22 +70,20 @@ public class SysGeneratorServiceImpl implements SysGeneratorService {
 	/**
 	 * 生成代码
 	 *
-	 * @param tableNames 表名称
+	 * @param genConfig 生成配置
 	 * @return
 	 */
 	@Override
-	public byte[] generatorCode(String[] tableNames) {
+	public byte[] generatorCode(GenConfig genConfig) {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		ZipOutputStream zip = new ZipOutputStream(outputStream);
 
-		for (String tableName : tableNames) {
-			//查询表信息
-			Map<String, String> table = queryTable(tableName);
-			//查询列信息
-			List<Map<String, String>> columns = queryColumns(tableName);
-			//生成代码
-			GenUtils.generatorCode(table, columns, zip);
-		}
+		//查询表信息
+		Map<String, String> table = queryTable(genConfig.getTableName());
+		//查询列信息
+		List<Map<String, String>> columns = queryColumns(genConfig.getTableName());
+		//生成代码
+		GenUtils.generatorCode(genConfig, table, columns, zip);
 		IoUtil.close(zip);
 		return outputStream.toByteArray();
 	}

@@ -15,30 +15,26 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.codegen.service;
+package com.pig4cloud.pigx.daemon.job;
 
-import com.baomidou.mybatisplus.plugins.Page;
-import com.pig4cloud.pigx.codegen.entity.GenConfig;
-
-import java.util.Map;
+import com.dangdang.ddframe.job.api.ShardingContext;
+import com.dangdang.ddframe.job.api.simple.SimpleJob;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author lengleng
- * @date 2018/7/29
+ * @date 2018/2/7
+ * 测试Job
  */
-public interface SysGeneratorService {
+@Slf4j
+public class PigxSimpleJob2 implements SimpleJob {
 	/**
-	 * 生成代码
+	 * 业务执行逻辑
 	 *
-	 * @param tableNames 表名称
-	 * @return
+	 * @param shardingContext 分片信息
 	 */
-	byte[] generatorCode(GenConfig tableNames);
-
-	/**
-	 * 分页查询表
-	 * @param query 查询条件
-	 * @return
-	 */
-	Page queryPage(Map<String,Object> query);
+	@Override
+	public void execute(ShardingContext shardingContext) {
+		log.info("第二个执行了:{}", shardingContext);
+	}
 }
