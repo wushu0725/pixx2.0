@@ -88,4 +88,10 @@ swagger:
       - scope: 'server'
         description: 'server all'
     token-url-list:
-      - 'http://localhost:9999/auth/oauth/token'
+      - ${security.oauth2.resource.token-info-uri}
+
+## spring security 配置
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://localhost:9999/auth/oauth/check_token

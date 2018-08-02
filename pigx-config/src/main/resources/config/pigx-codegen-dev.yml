@@ -1,3 +1,11 @@
+## spring security 配置
+security:
+  oauth2:
+    client:
+      client-id: gen
+      client-secret: gen
+      scope: server
+
 # 数据源配置
 spring:
   datasource:

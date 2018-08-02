@@ -17,6 +17,7 @@
 
 package com.pig4cloud.pigx.codegen;
 
+import com.pig4cloud.pigx.common.swagger.annotation.EnablePigxSwagger2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 
@@ -25,6 +26,7 @@ import org.springframework.cloud.client.SpringCloudApplication;
  * @date 2018/07/29
  * 代码生成模块
  */
+@EnablePigxSwagger2
 @SpringCloudApplication
 public class PigxCodeGenApplication {
 

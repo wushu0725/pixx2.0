@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : utf-8
 
- Date: 08/02/2018 22:07:34 PM
+ Date: 08/02/2018 22:34:32 PM
 */
 
 SET NAMES utf8;
@@ -163,7 +163,7 @@ CREATE TABLE `sys_oauth_client_details` (
 --  Records of `sys_oauth_client_details`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_oauth_client_details` VALUES ('app', null, 'app', 'server', 'password,refresh_token', null, null, null, null, null, 'true'), ('pig', null, 'pig', 'server', 'password,refresh_token', null, null, null, null, null, 'true'), ('test', null, 'test', 'server', 'password,refresh_token', null, null, null, null, null, 'true');
+INSERT INTO `sys_oauth_client_details` VALUES ('app', null, 'app', 'server', 'password,refresh_token', null, null, null, null, null, 'true'), ('gen', null, 'gen', 'server', 'password,refresh_token', null, null, null, null, null, 'true'), ('pig', null, 'pig', 'server', 'password,refresh_token', null, null, null, null, null, 'true'), ('test', null, 'test', 'server', 'password,refresh_token', null, null, null, null, null, 'true');
 COMMIT;
 
 -- ----------------------------

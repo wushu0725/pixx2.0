@@ -5,8 +5,6 @@ security:
       client-id: pig
       client-secret: pig
       scope: server
-    resource:
-      token-info-uri: http://localhost:9999/auth/oauth/check_token
 
 # 数据源
 spring:
