@@ -74,4 +74,16 @@ v 1.4.0 提供了代码图形化生成功能。
 
 ![](http://obq1lvsd9.bkt.clouddn.com/20180803084905.png)
 
+5. **配置路由**
+前端 index.js
+```js
+          '/code': {
+              target: baseUrl,
+              changeOrigin: true,
+              pathRewrite: {
+                  '^/code': '/code'
+              }
+          },
+```
+
 ##### 最后给角色分配，你新增的菜单和按钮喔

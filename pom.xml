@@ -50,6 +50,7 @@
 		<swagger.version>2.9.2</swagger.version>
 		<elastic-job.version>2.0.0</elastic-job.version>
 		<curator.version>2.10.0</curator.version>
+		<velocity.version>1.7</velocity.version>
 		<elastic-job-lite.version>2.1.5</elastic-job-lite.version>
 		<security.oauth.version>2.3.3.RELEASE</security.oauth.version>
 	</properties>

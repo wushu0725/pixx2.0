@@ -265,7 +265,7 @@ public class GenUtils {
 		}
 
 		if (template.contains(MAPPER_XML_VM)) {
-			return "pigx" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "mapper" + File.separator + moduleName + File.separator + className + "Mapper.xml";
+			return "pigx" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "mapper" + File.separator + className + "Mapper.xml";
 		}
 
 		if (template.contains(MENU_SQL_VM)) {

@@ -40,7 +40,7 @@ swagger:
   # 描述,默认空
   description: '全宇宙最牛逼的Spring Cloud微服务开发脚手架'
   # 版本,默认空
-  version: '1.3.0'
+  version: '1.4.0'
   # 许可证,默认空
   license: 'Powered By PigX'
   # 许可证URL,默认空

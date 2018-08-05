@@ -44,14 +44,15 @@
 			<artifactId>pigx-common-job</artifactId>
 			<version>${pigx.version}</version>
 		</dependency>
-		<!--数据库-->
+		<!--mybatis-->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>${mbp.boot.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 		<!--ZK 依赖-->
 		<dependency>
@@ -63,6 +64,12 @@
 			<groupId>org.apache.curator</groupId>
 			<artifactId>curator-recipes</artifactId>
 			<version>${curator.version}</version>
+		</dependency>
+		<!--swagger 内置安全模块-->
+		<dependency>
+			<groupId>com.pig4cloud</groupId>
+			<artifactId>pigx-common-swagger</artifactId>
+			<version>${pigx.version}</version>
 		</dependency>
 		<!--web 模块-->
 		<dependency>
