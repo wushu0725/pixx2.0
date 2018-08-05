@@ -1,3 +1,12 @@
+## spring security 配置
+security:
+  oauth2:
+    client:
+      client-id: daemon
+      client-secret: daemon
+      scope: server
+
+## 定时任务
 spring:
   # 保存定时任务的数据源
   datasource:

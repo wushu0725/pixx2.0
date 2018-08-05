@@ -46,6 +46,13 @@ spring:
         - Path=/gen/**
         filters:
         - StripPrefix=1
+      # 定时任务模块
+      - id: pigx-daemon
+        uri: lb://pigx-daemon
+        predicates:
+        - Path=/daemon/**
+        filters:
+        - StripPrefix=1
 
 security:
   encode:
