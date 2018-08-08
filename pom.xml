@@ -37,7 +37,7 @@
 	</parent>
 
 	<properties>
-		<pigx.version>1.4.0</pigx.version>
+		<pigx.version>1.4.1</pigx.version>
 		<spring-boot.version>2.0.3.RELEASE</spring-boot.version>
 		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
