@@ -17,6 +17,8 @@
 
 package com.pig4cloud.pigx.codegen.mapper;
 
+import com.pig4cloud.pigx.common.core.util.Query;
+
 import java.util.List;
 import java.util.Map;
 
@@ -31,10 +33,10 @@ public interface SysGeneratorMapper {
 	/**
 	 * 分页查询表格
 	 *
-	 * @param query
+	 * @param params
 	 * @return
 	 */
-	List<Map<String, Object>> queryList(Map query);
+	List<Map<String, Object>> queryList(Query params);
 
 	/**
 	 * 查询表数量
