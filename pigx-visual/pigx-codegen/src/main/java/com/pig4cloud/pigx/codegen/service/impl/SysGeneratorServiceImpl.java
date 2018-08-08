@@ -17,13 +17,12 @@
 
 package com.pig4cloud.pigx.codegen.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.IoUtil;
-import com.baomidou.mybatisplus.plugins.Page;
 import com.pig4cloud.pigx.codegen.entity.GenConfig;
 import com.pig4cloud.pigx.codegen.mapper.SysGeneratorMapper;
 import com.pig4cloud.pigx.codegen.service.SysGeneratorService;
 import com.pig4cloud.pigx.codegen.util.GenUtils;
+import com.pig4cloud.pigx.common.core.util.Query;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -51,20 +50,8 @@ public class SysGeneratorServiceImpl implements SysGeneratorService {
 	 * @return
 	 */
 	@Override
-	public Page queryPage(Map<String, Object> query) {
-
-		Integer current = Integer.parseInt(query.getOrDefault("page", "1").toString());
-		Integer limit = Integer.parseInt(query.getOrDefault("limit", "1").toString());
-		Page page = new Page(current, limit);
-
-		List<Map<String, Object>> list = sysGeneratorMapper.queryList(query);
-		if (CollUtil.isEmpty(list)) {
-			return page;
-		}
-
-		page.setTotal(sysGeneratorMapper.queryTotal(query));
-		page.setRecords(list);
-		return page;
+	public List<Map<String,Object>> queryPage(Query query) {
+		return sysGeneratorMapper.queryList(query);
 	}
 
 	/**
