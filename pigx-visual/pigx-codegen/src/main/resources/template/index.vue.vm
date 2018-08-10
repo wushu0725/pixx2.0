@@ -94,10 +94,6 @@
     })
     },
     currentChange(val) {
-      console.log(val)
-      this.getList()
-    },
-    currentChange(val) {
       this.page.currentPage = val
       this.getList()
     },
