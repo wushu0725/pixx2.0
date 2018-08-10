@@ -38,6 +38,6 @@ private $column.attrType $column.lowerAttrName;
    */
   @Override
   protected Serializable pkVal() {
-    return this.$pk.columnName;
+    return this.$pk.lowerAttrName;
   }
 }
