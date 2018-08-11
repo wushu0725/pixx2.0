@@ -63,7 +63,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 			.antMatchers(
 				"/actuator/**",
-				"/oauth/remvoveToken",
+				"/oauth/removeToken",
 				"/mobile/**").permitAll()
 			.anyRequest().authenticated()
 			.and().csrf().disable()
