@@ -54,6 +54,7 @@ public class RevokeTokenEndpoint {
 			}
 			tokenStore.removeAccessToken(accessToken);
 		}
+
 		return new R<>(Boolean.TRUE);
 	}
 }

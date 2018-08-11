@@ -19,15 +19,24 @@
 
 package com.pig4cloud.pigx.auth.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pig4cloud.pigx.common.security.mobile.MobileLoginSuccessHandler;
+import com.pig4cloud.pigx.common.security.mobile.MobileSecurityConfigurer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 /**
  * @author lengleng
@@ -38,14 +47,27 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Order(90)
 @Configuration
 public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
+	@Autowired
+	private ObjectMapper objectMapper;
+	@Autowired
+	private ClientDetailsService clientDetailsService;
+	@Autowired
+	private UserDetailsService pigxUserDetailsServiceImpl;
+	@Lazy
+	@Autowired
+	private AuthorizationServerTokenServices defaultAuthorizationServerTokenServices;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-			.antMatchers("/actuator/**", "/oauth/removeToken").permitAll()
+			.antMatchers(
+				"/actuator/**",
+				"/oauth/remvoveToken",
+				"/mobile/**").permitAll()
 			.anyRequest().authenticated()
-			.and().csrf().disable();
+			.and().csrf().disable()
+			.apply(mobileSecurityConfigurer());
 	}
 
 	@Bean
@@ -53,6 +75,22 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
+
+	@Bean
+	public AuthenticationSuccessHandler mobileLoginSuccessHandler() {
+		return MobileLoginSuccessHandler.builder()
+			.objectMapper(objectMapper)
+			.clientDetailsService(clientDetailsService)
+			.passwordEncoder(passwordEncoder())
+			.defaultAuthorizationServerTokenServices(defaultAuthorizationServerTokenServices).build();
+	}
+
+	@Bean
+	public MobileSecurityConfigurer mobileSecurityConfigurer() {
+		return new MobileSecurityConfigurer(mobileLoginSuccessHandler()
+			, pigxUserDetailsServiceImpl);
+	}
+
 
 	/**
 	 * https://spring.io/blog/2017/11/01/spring-security-5-0-0-rc1-released#password-storage-updated

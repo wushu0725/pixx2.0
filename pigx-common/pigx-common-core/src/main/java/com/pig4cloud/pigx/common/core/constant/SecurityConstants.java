@@ -74,4 +74,8 @@ public interface SecurityConstants {
 	 */
 	String DEFAULT_SELECT_STATEMENT = BASE_FIND_STATEMENT + " where client_id = ?";
 
+	/**
+	 * 手机号登录URL
+	 */
+	String MOBILE_TOKEN_URL = "/mobile/token";
 }
