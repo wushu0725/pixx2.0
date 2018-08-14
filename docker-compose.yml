@@ -43,7 +43,7 @@ services:
     ports:
       - 3000:3000
 
-  pig-upms:
+  pigx-upms:
     links:
       - pigx-eureka
       - pigx-redis
@@ -53,7 +53,7 @@ services:
       dockerfile: ./pigx-upms/pigx-upms-biz/Dockerfile
     restart: always
 
-  pig-monitor:
+  pigx-monitor:
     links:
       - pigx-eureka
     build:
@@ -63,7 +63,7 @@ services:
     ports:
       - 5001:5001
 
-  pig-daemon:
+  pigx-daemon:
     links:
       - pigx-eureka
     build:
@@ -72,3 +72,13 @@ services:
     restart: always
     ports:
       - 5002:5002
+
+  pigx-codegen:
+    links:
+      - pigx-eureka
+    build:
+      context: ./
+      dockerfile: ./pigx-visual/pigx-codegen/Dockerfile
+    restart: always
+    ports:
+      - 5003:5003

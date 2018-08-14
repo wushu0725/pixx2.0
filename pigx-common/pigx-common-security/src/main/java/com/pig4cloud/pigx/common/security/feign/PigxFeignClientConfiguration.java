@@ -17,11 +17,11 @@
  *
  */
 
-package com.pig4cloud.pigx.common.security.interceptor;
+package com.pig4cloud.pigx.common.security.feign;
 
 import feign.RequestInterceptor;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
@@ -34,11 +34,13 @@ import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResour
  * 使用hystrix 的信号量模式
  */
 @Configuration
+@AllArgsConstructor
 @ConditionalOnProperty("security.oauth2.client.client-id")
-public class PigxFeignClientInterceptor {
+public class PigxFeignClientConfiguration {
+
 	@Bean
 	public RequestInterceptor oauth2FeignRequestInterceptor(OAuth2ClientContext oAuth2ClientContext,
 															OAuth2ProtectedResourceDetails resource) {
-		return new OAuth2FeignRequestInterceptor(oAuth2ClientContext, resource);
+		return new PigxFeignClientInterceptor(oAuth2ClientContext, resource);
 	}
 }
