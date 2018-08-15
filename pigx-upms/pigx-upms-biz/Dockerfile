@@ -6,8 +6,8 @@ RUN mkdir -p /pigx/bin/com.pig4cloud/pigx-upms
 
 WORKDIR /pigx/bin/com.pig4cloud/pigx-upms
 
-EXPOSE 1025
+EXPOSE 4000
 
-ADD ./pigx-upms/pigx-upms-biz/target/pigx-upms-biz.jar ./
+ADD ./target/pigx-upms-biz.jar ./
 
 CMD java -Djava.security.egd=file:/dev/./urandom -jar pigx-upms-biz.jar
