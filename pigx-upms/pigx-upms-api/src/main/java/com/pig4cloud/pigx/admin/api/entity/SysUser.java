@@ -87,4 +87,14 @@ public class SysUser implements Serializable {
 	 */
 	private Integer deptId;
 
+	/**
+	 * 微信openid
+	 */
+	private String wxOpenid;
+
+	/**
+	 * QQ openid
+	 */
+	private String qqOpenid;
+
 }

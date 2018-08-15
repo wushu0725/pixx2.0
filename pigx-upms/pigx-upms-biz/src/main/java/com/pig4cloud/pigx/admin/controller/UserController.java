@@ -21,7 +21,6 @@ package com.pig4cloud.pigx.admin.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.admin.api.dto.UserDTO;
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
@@ -30,6 +29,8 @@ import com.pig4cloud.pigx.admin.api.vo.UserVO;
 import com.pig4cloud.pigx.admin.service.SysUserService;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
+import com.pig4cloud.pigx.common.core.constant.enums.EnumLoginType;
+import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.log.annotation.SysLog;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
@@ -75,7 +76,19 @@ public class UserController {
 			username = SecurityUtils.getUser();
 		}
 
-		return new R<>(userService.findUserInfo(username));
+		return new R<>(userService.findUserInfo(EnumLoginType.PWD.getType(), username));
+	}
+
+	/**
+	 * 通过社交账号查询用户、角色信息
+	 *
+	 * @param type   社交账号类型 （QQ/WX）
+	 * @param openid 账号
+	 * @return
+	 */
+	@GetMapping("/social/{type}/{openid}")
+	public R<UserInfo> social(@PathVariable String type, @PathVariable String openid) {
+		return new R<>(userService.findUserInfo(type, openid));
 	}
 
 	/**

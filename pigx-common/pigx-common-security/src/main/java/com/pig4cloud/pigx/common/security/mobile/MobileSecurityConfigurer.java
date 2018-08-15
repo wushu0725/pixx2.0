@@ -17,11 +17,11 @@
 
 package com.pig4cloud.pigx.common.security.mobile;
 
+import com.pig4cloud.pigx.common.security.util.PigxUserDetailsService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -36,7 +36,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class MobileSecurityConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 	private AuthenticationSuccessHandler mobileLoginSuccessHandler;
-	private UserDetailsService userDetailsService;
+	private PigxUserDetailsService userDetailsService;
 
 	@Override
 	public void configure(HttpSecurity http) {

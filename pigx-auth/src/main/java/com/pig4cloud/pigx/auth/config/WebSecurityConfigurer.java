@@ -22,6 +22,7 @@ package com.pig4cloud.pigx.auth.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pig4cloud.pigx.common.security.mobile.MobileLoginSuccessHandler;
 import com.pig4cloud.pigx.common.security.mobile.MobileSecurityConfigurer;
+import com.pig4cloud.pigx.common.security.util.PigxUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +32,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
@@ -52,7 +52,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private ClientDetailsService clientDetailsService;
 	@Autowired
-	private UserDetailsService pigxUserDetailsServiceImpl;
+	private PigxUserDetailsService userDetailsService;
 	@Lazy
 	@Autowired
 	private AuthorizationServerTokenServices defaultAuthorizationServerTokenServices;
@@ -88,7 +88,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Bean
 	public MobileSecurityConfigurer mobileSecurityConfigurer() {
 		return new MobileSecurityConfigurer(mobileLoginSuccessHandler()
-			, pigxUserDetailsServiceImpl);
+			, userDetailsService);
 	}
 
 

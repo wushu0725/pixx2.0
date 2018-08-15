@@ -25,7 +25,6 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.admin.api.dto.UserDTO;
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 import com.pig4cloud.pigx.admin.api.entity.SysRole;
@@ -38,6 +37,8 @@ import com.pig4cloud.pigx.admin.service.SysMenuService;
 import com.pig4cloud.pigx.admin.service.SysRoleService;
 import com.pig4cloud.pigx.admin.service.SysUserRoleService;
 import com.pig4cloud.pigx.admin.service.SysUserService;
+import com.pig4cloud.pigx.common.core.constant.enums.EnumLoginType;
+import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -79,10 +80,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	 * @return
 	 */
 	@Override
-	@Cacheable(value = "user_details", key = "#username")
-	public UserInfo findUserInfo(String username) {
+	@Cacheable(value = "user_details", key = "#type +':'+ #username")
+	public UserInfo findUserInfo(String type, String username) {
 		SysUser condition = new SysUser();
-		condition.setUsername(username);
+		if (EnumLoginType.PWD.getType().equals(type)) {
+			condition.setUsername(username);
+		} else if (EnumLoginType.WECHAT.getType().equals(type)) {
+			condition.setWxOpenid(username);
+		} else {
+			condition.setQqOpenid(username);
+		}
 		SysUser sysUser = this.selectOne(new EntityWrapper<>(condition));
 		if (sysUser == null) {
 			return null;

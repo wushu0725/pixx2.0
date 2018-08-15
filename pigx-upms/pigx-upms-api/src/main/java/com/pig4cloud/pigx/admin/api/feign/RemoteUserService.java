@@ -44,4 +44,15 @@ public interface RemoteUserService {
 	@GetMapping("/user/info/{username}")
 	R<UserInfo> info(@PathVariable("username") String username
 		, @RequestHeader("from") String from);
+
+	/**
+	 * 通过社交账号查询用户、角色信息
+	 *
+	 * @param type   社交账号类型 （QQ/WX）
+	 * @param openid 账号
+	 * @return
+	 */
+	@GetMapping("/user/social/{type}/{openid}")
+	R<UserInfo> social(@PathVariable("type") String type
+		, @PathVariable("openid") String openid);
 }

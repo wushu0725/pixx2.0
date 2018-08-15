@@ -21,11 +21,11 @@ package com.pig4cloud.pigx.admin.service;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
-import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.admin.api.dto.UserDTO;
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
 import com.pig4cloud.pigx.admin.api.vo.UserVO;
+import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 
 /**
@@ -36,10 +36,11 @@ public interface SysUserService extends IService<SysUser> {
 	/**
 	 * 查询用户信息
 	 *
+	 * @param type     类型
 	 * @param username 用户名
 	 * @return userInfo
 	 */
-	UserInfo findUserInfo(String username);
+	UserInfo findUserInfo(String type, String username);
 
 	/**
 	 * 分页查询用户信息（含有角色信息）
