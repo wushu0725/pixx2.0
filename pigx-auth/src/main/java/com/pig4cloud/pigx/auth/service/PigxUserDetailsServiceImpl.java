@@ -21,21 +21,25 @@ package com.pig4cloud.pigx.auth.service;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
 import com.pig4cloud.pigx.admin.api.feign.RemoteUserService;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
+import com.pig4cloud.pigx.common.core.constant.enums.EnumLoginType;
 import com.pig4cloud.pigx.common.core.util.R;
+import com.pig4cloud.pigx.common.security.social.WxSocialConfig;
+import com.pig4cloud.pigx.common.security.util.PigxUserDetailsService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -50,13 +54,65 @@ import java.util.Set;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class PigxUserDetailsServiceImpl implements UserDetailsService {
+public class PigxUserDetailsServiceImpl implements PigxUserDetailsService {
+	private static final String WX_AUTHORIZATION_CODE_URL = "https://api.weixin.qq.com/sns/oauth2/access_token" +
+		"?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
+	private static final String REGEX = "@";
+	private final RestTemplate restTemplate;
 	private final RemoteUserService remoteUserService;
+	private final WxSocialConfig wxSocialConfig;
 
+	/**
+	 * 用户密码登录
+	 *
+	 * @param username 用户名
+	 * @return
+	 * @throws UsernameNotFoundException
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		R<UserInfo> result = remoteUserService.info(username, SecurityConstants.FROM_IN);
+		return getUserDetails(result);
+	}
 
+
+	/**
+	 * 根据社交登录code 登录
+	 *
+	 * @param inStr TYPE@CODE
+	 * @return UserDetails
+	 * @throws UsernameNotFoundException
+	 */
+	@Override
+	public UserDetails loadUserBySocial(String inStr) throws UsernameNotFoundException {
+		String[] codeStr = inStr.split(REGEX);
+		String type = codeStr[0];
+		String code = codeStr[1];
+
+		R<UserInfo> userInfo = null;
+		if (EnumLoginType.WECHAT.getType().equals(type)) {
+			String url = String.format(WX_AUTHORIZATION_CODE_URL
+				, wxSocialConfig.getAppid(), wxSocialConfig.getSecret(), code);
+			String result = restTemplate.getForObject(url, String.class);
+			log.debug("微信响应报文:{}", result);
+
+			Object obj = JSONUtil.parseObj(result).get("openid");
+			if (obj != null) {
+				userInfo = remoteUserService.social(EnumLoginType.WECHAT.getType(), obj.toString());
+			} else {
+				throw new UsernameNotFoundException("获取用户openid失败");
+			}
+		}
+		return getUserDetails(userInfo);
+	}
+
+	/**
+	 * 构建userdetails
+	 *
+	 * @param result 用户信息
+	 * @return
+	 */
+	private UserDetails getUserDetails(R<UserInfo> result) {
 		if (result == null || result.getData() == null) {
 			throw new UsernameNotFoundException("用户不存在");
 		}
@@ -75,7 +131,7 @@ public class PigxUserDetailsServiceImpl implements UserDetailsService {
 		SysUser user = info.getSysUser();
 		boolean enabled = StrUtil.equals(user.getDelFlag(), CommonConstant.STATUS_NORMAL);
 		// 构造security用户
-		return new User(username, SecurityConstants.BCRYPT + user.getPassword(), enabled,
+		return new User(info.getSysUser().getUsername(), SecurityConstants.BCRYPT + user.getPassword(), enabled,
 			true, true, true, authorities);
 	}
 }

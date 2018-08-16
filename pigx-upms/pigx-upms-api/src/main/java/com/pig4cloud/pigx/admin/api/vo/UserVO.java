@@ -50,6 +50,17 @@ public class UserVO implements Serializable {
 	 * 随机盐
 	 */
 	private String salt;
+
+	/**
+	 * 微信openid
+	 */
+	private String wxOpenid;
+
+	/**
+	 * QQ openid
+	 */
+	private String qqOpenid;
+
 	/**
 	 * 创建时间
 	 */

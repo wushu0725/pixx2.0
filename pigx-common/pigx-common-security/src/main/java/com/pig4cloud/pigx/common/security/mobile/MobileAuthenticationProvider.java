@@ -17,28 +17,33 @@
 
 package com.pig4cloud.pigx.common.security.mobile;
 
+import com.pig4cloud.pigx.common.security.util.PigxUserDetailsService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * @author lengleng
  * @date 2018/8/5
- * 手机号登录校验逻辑
+ * 手机登录校验逻辑
+ * 验证码登录、社交登录
  */
 public class MobileAuthenticationProvider implements AuthenticationProvider {
 	@Getter
 	@Setter
-	private UserDetailsService userDetailsService;
+	private PigxUserDetailsService userDetailsService;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		MobileAuthenticationToken mobileAuthenticationToken = (MobileAuthenticationToken) authentication;
-		UserDetails userDetails = userDetailsService.loadUserByUsername("admin");
+
+		String principal = mobileAuthenticationToken.getPrincipal().toString();
+		UserDetails userDetails = userDetailsService.loadUserBySocial(principal);
+
+
 		MobileAuthenticationToken authenticationToken = new MobileAuthenticationToken(userDetails, userDetails.getAuthorities());
 		authenticationToken.setDetails(mobileAuthenticationToken.getDetails());
 		return authenticationToken;

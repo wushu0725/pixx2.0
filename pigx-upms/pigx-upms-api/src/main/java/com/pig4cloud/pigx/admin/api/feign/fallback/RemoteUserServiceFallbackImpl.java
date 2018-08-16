@@ -44,4 +44,18 @@ public class RemoteUserServiceFallbackImpl implements RemoteUserService {
 		log.error("feign 查询用户信息失败:{}", username);
 		return null;
 	}
+
+	/**
+	 * 通过社交账号查询用户、角色信息
+	 *
+	 * @param type   社交账号类型 （QQ/WX）
+	 * @param openid 账号
+	 * @return
+	 */
+	@Override
+	public R<UserInfo> social(String type, String openid) {
+		log.error("feign 查询用户信息失败:{}", openid);
+		return null;
+	}
+
 }
