@@ -12,3 +12,9 @@ social:
   wx:
     appid: wxd1678d3f83b1d83a
     secret: 6ddb043f94da5d2172926abe8533504f
+
+# 社交登录配置新
+social:
+  wx:
+    appid: wxd1678d3f83b1d83a
+    secret: 6ddb043f94da5d2172926abe8533504f

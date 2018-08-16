@@ -94,15 +94,15 @@ public class PigxUserDetailsServiceImpl implements PigxUserDetailsService {
 			String url = String.format(WX_AUTHORIZATION_CODE_URL
 				, wxSocialConfig.getAppid(), wxSocialConfig.getSecret(), code);
 			String result = restTemplate.getForObject(url, String.class);
-			log.debug("微信响应报文:{}", result);
+			log.warn("微信响应报文:{}", result);
 
 			Object obj = JSONUtil.parseObj(result).get("openid");
 			if (obj != null) {
 				userInfo = remoteUserService.social(EnumLoginType.WECHAT.getType(), obj.toString());
-			} else {
-				throw new UsernameNotFoundException("获取用户openid失败");
 			}
+
 		}
+
 		return getUserDetails(userInfo);
 	}
 
