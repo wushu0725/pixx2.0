@@ -20,8 +20,8 @@
 package com.pig4cloud.pigx.admin.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.admin.api.entity.SysRole;
+import com.pig4cloud.pigx.common.core.util.Query;
 
 import java.util.List;
 import java.util.Map;

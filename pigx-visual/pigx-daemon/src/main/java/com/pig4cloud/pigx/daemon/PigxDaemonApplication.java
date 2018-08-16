@@ -19,7 +19,6 @@ package com.pig4cloud.pigx.daemon;
 
 import com.pig4cloud.pigx.common.job.annotation.EnablePigxJob;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 
 /**

@@ -23,7 +23,8 @@ import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-  import java.io.Serializable;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**

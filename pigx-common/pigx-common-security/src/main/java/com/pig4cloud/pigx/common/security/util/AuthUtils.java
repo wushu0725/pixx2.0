@@ -17,9 +17,9 @@
 
 package com.pig4cloud.pigx.common.security.util;
 
+import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.codec.Base64;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
