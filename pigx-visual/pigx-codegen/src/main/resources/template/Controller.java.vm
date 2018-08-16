@@ -46,8 +46,7 @@ public class ${className}Controller {
     @GetMapping("/{${pk.lowerAttrName}}")
     public R info(@PathVariable("${pk.lowerAttrName}") ${pk.attrType} ${pk.lowerAttrName}){
 			${className} ${classname} = ${classname}Service.selectById(${pk.lowerAttrName});
-
-			  return new R<>(${classname});
+			return new R<>(${classname});
     }
 
     /**
@@ -55,11 +54,10 @@ public class ${className}Controller {
      * @param ${classname}
      * @return R
      */
-    @PostMapping("/save")
+    @PostMapping
     public R save(@RequestBody ${className} ${classname}){
 			${classname}Service.insert(${classname});
-
-			  return new R<>(Boolean.TRUE);
+			return new R<>(Boolean.TRUE);
     }
 
     /**
@@ -67,10 +65,9 @@ public class ${className}Controller {
      * @param ${classname}
      * @return R
      */
-    @PutMapping("/update")
+    @PutMapping
     public R update(@RequestBody ${className} ${classname}){
 			${classname}Service.updateById(${classname});
-
       return new R<>(Boolean.TRUE);
     }
 
@@ -79,10 +76,9 @@ public class ${className}Controller {
      * @param ${pk.lowerAttrName}s
      * @return R
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping
     public R delete(@RequestBody ${pk.attrType}[] ${pk.lowerAttrName}s){
 			${classname}Service.deleteBatchIds(Arrays.asList(${pk.lowerAttrName}s));
-
       return new R<>(Boolean.TRUE);
     }
 

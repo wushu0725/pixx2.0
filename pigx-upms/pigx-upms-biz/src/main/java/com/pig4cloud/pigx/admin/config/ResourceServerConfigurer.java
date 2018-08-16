@@ -46,7 +46,7 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers("/actuator/**"
 				, "/user/info/*"
-				, "/user/social/**"
+				, "/social/info/**"
 				, "/log/**"
 				, "/v2/api-docs").permitAll()
 			.anyRequest().authenticated()

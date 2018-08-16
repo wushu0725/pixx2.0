@@ -78,4 +78,10 @@ public interface SecurityConstants {
 	 * 手机号登录URL
 	 */
 	String MOBILE_TOKEN_URL = "/mobile/token";
+
+	/**
+	 * 微信获取OPENID
+	 */
+	String WX_AUTHORIZATION_CODE_URL = "https://api.weixin.qq.com/sns/oauth2/access_token" +
+		"?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
 }

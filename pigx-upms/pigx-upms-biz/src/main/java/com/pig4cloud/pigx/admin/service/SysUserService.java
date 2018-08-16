@@ -83,13 +83,4 @@ public interface SysUserService extends IService<SysUser> {
 	 * @return 用户信息
 	 */
 	UserVO selectUserVoById(Integer id);
-
-	/**
-	 * 绑定社交账号
-	 *
-	 * @param state 类型
-	 * @param code  code
-	 * @return
-	 */
-	Boolean bindSocial(String state, String code);
 }

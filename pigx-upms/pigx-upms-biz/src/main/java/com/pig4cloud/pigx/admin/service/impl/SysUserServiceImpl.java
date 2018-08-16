@@ -41,6 +41,7 @@ import com.pig4cloud.pigx.admin.service.SysUserService;
 import com.pig4cloud.pigx.common.core.constant.enums.EnumLoginType;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
+import com.pig4cloud.pigx.common.security.social.WxSocialConfig;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -69,12 +70,8 @@ import java.util.Set;
 @AllArgsConstructor
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 	private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
-	private static final String WX_AUTHORIZATION_CODE_URL = "https://api.weixin.qq.com/sns/oauth2/access_token" +
-		"?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
 	private final SysMenuService sysMenuService;
 	private final SysUserMapper sysUserMapper;
-	private final CacheManager cacheManager;
-	private final RestTemplate restTemplate;
 	private final SysRoleService sysRoleService;
 	private final SysUserRoleService sysUserRoleService;
 
@@ -125,34 +122,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		}
 		userInfo.setPermissions(ArrayUtil.toArray(permissions, String.class));
 		return userInfo;
-	}
-
-	/**
-	 * 绑定社交账号
-	 *
-	 * @param state 类型
-	 * @param code  code
-	 * @return
-	 */
-	@Override
-	public Boolean bindSocial(String state, String code) {
-		String result = restTemplate.getForObject(WX_AUTHORIZATION_CODE_URL, String.class);
-		log.debug("微信响应报文:{}", result);
-
-		Object obj = JSONUtil.parseObj(result).get("openid");
-		if (obj == null) {
-			return Boolean.FALSE;
-		}
-
-		SysUser condition = new SysUser();
-		condition.setUsername(SecurityUtils.getUser());
-		SysUser sysUser = this.selectOne(new EntityWrapper<>(condition));
-		sysUser.setWxOpenid(obj.toString());
-		sysUserMapper.updateAllColumnById(sysUser);
-
-		//更新緩存
-		cacheManager.getCache("user_details").evict(sysUser.getUsername());
-		return Boolean.TRUE;
 	}
 
 	@Override

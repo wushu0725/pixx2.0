@@ -80,30 +80,6 @@ public class UserController {
 	}
 
 	/**
-	 * 通过社交账号查询用户、角色信息
-	 *
-	 * @param type   社交账号类型 （QQ/WX）
-	 * @param openid 账号
-	 * @return
-	 */
-	@GetMapping("/social/{type}/{openid}")
-	public R<UserInfo> social(@PathVariable String type, @PathVariable String openid) {
-		return new R<>(userService.findUserInfo(type, openid));
-	}
-
-	/**
-	 * 绑定社交账号
-	 *
-	 * @param state 类型
-	 * @param code  code
-	 * @return
-	 */
-	@PostMapping("/social/bind")
-	public R<Boolean> bind(String state, String code) {
-		return new R<>(userService.bindSocial(state, code));
-	}
-
-	/**
 	 * 通过ID查询当前用户信息
 	 *
 	 * @param id ID

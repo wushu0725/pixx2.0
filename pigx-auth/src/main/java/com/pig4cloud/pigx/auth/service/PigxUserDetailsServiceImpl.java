@@ -21,7 +21,6 @@ package com.pig4cloud.pigx.auth.service;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
 import com.pig4cloud.pigx.admin.api.feign.RemoteUserService;
@@ -29,7 +28,6 @@ import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import com.pig4cloud.pigx.common.core.constant.enums.EnumLoginType;
 import com.pig4cloud.pigx.common.core.util.R;
-import com.pig4cloud.pigx.common.security.social.WxSocialConfig;
 import com.pig4cloud.pigx.common.security.util.PigxUserDetailsService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +37,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -55,12 +52,7 @@ import java.util.Set;
 @Service
 @AllArgsConstructor
 public class PigxUserDetailsServiceImpl implements PigxUserDetailsService {
-	private static final String WX_AUTHORIZATION_CODE_URL = "https://api.weixin.qq.com/sns/oauth2/access_token" +
-		"?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
-	private static final String REGEX = "@";
-	private final RestTemplate restTemplate;
 	private final RemoteUserService remoteUserService;
-	private final WxSocialConfig wxSocialConfig;
 
 	/**
 	 * 用户密码登录
@@ -85,25 +77,7 @@ public class PigxUserDetailsServiceImpl implements PigxUserDetailsService {
 	 */
 	@Override
 	public UserDetails loadUserBySocial(String inStr) throws UsernameNotFoundException {
-		String[] codeStr = inStr.split(REGEX);
-		String type = codeStr[0];
-		String code = codeStr[1];
-
-		R<UserInfo> userInfo = null;
-		if (EnumLoginType.WECHAT.getType().equals(type)) {
-			String url = String.format(WX_AUTHORIZATION_CODE_URL
-				, wxSocialConfig.getAppid(), wxSocialConfig.getSecret(), code);
-			String result = restTemplate.getForObject(url, String.class);
-			log.debug("微信响应报文:{}", result);
-
-			Object obj = JSONUtil.parseObj(result).get("openid");
-			if (obj != null) {
-				userInfo = remoteUserService.social(EnumLoginType.WECHAT.getType(), obj.toString());
-			}
-
-		}
-
-		return getUserDetails(userInfo);
+		return getUserDetails(remoteUserService.social(inStr));
 	}
 
 	/**

@@ -70,6 +70,10 @@
           currentPage: 1, // 当前页数
           pageSize: 20 // 每页显示多少条
         },
+        listQuery: {
+          page: 1,
+          limit: 20
+        },
         tableLoading: false,
         tableOption: tableOption
       }
@@ -84,21 +88,20 @@
   methods: {
     getList() {
       this.tableLoading = true
-      fetchList({
-        page: this.page.currentPage,
-        limit: this.page.pageSize
-      }).then(response => {
+      fetchList(this.listQuery).then(response => {
         this.tableData = response.data.records
-      this.page.total = response.data.total
-      this.tableLoading = false
+        this.page.total = response.data.total
+        this.tableLoading = false
     })
     },
     currentChange(val) {
       this.page.currentPage = val
+      this.listQuery.page = val
       this.getList()
     },
     sizeChange(val) {
       this.page.pageSize = val
+      this.listQuery.limit = val
       this.getList()
     },
     /**

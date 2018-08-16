@@ -15,22 +15,19 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-export const tableOption = {
-  'border': true,
-  'index': true,
-  'stripe': true,
-  'menuAlign': "center",
-  'align': "center",
-  'editBtn': false,
-  'delBtn': false,
-  'addBtn': false,
-  'dic': [],
-  'column': [
-#foreach ($column in $columns)
-	  {
-      label: '$column.comments',
-      prop: '$column.lowerAttrName'
-    },
-#end
-  ]
+package com.pig4cloud.pigx.admin.mapper;
+
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.pig4cloud.pigx.admin.api.entity.SysSocialDetails;
+import org.apache.ibatis.annotations.Mapper;
+
+/**
+ * 系统社交登录账号表
+ *
+ * @author pigx code generator
+ * @date 2018-08-16 21:30:41
+ */
+@Mapper
+public interface SysSocialDetailsMapper extends BaseMapper<SysSocialDetails> {
+
 }
