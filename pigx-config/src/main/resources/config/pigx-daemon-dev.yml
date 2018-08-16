@@ -24,7 +24,7 @@ spring:
     simples:
       spring-simple-job:
         job-class: com.pig4cloud.pigx.daemon.job.PigxSimpleJob
-        cron: 0 0 0/3 * * ?
+        cron: 0 0 0/1 * * ?
         sharding-total-count: 3
         sharding-item-parameters: 0=service1,1=service2,2=service3
         eventTraceRdbDataSource: 'dataSource'
@@ -32,7 +32,7 @@ spring:
           listener-class: com.pig4cloud.pigx.daemon.listener.PigxElasticJobListener
       spring-simple-job2:
         job-class: com.pig4cloud.pigx.daemon.job.PigxSimpleJob2
-        cron: 0 0 0/2 * * ?
+        cron: 0 0 0/1 * * ?
         sharding-total-count: 3
         sharding-item-parameters: 0=service1,1=service2,2=service3
         eventTraceRdbDataSource: 'dataSource'
