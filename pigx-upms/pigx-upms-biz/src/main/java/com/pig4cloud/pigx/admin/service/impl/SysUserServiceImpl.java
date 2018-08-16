@@ -22,6 +22,7 @@ package com.pig4cloud.pigx.admin.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -40,15 +41,18 @@ import com.pig4cloud.pigx.admin.service.SysUserService;
 import com.pig4cloud.pigx.common.core.constant.enums.EnumLoginType;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
+import com.pig4cloud.pigx.common.security.util.SecurityUtils;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -62,16 +66,17 @@ import java.util.Set;
  */
 @Slf4j
 @Service
+@AllArgsConstructor
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 	private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
-	@Autowired
-	private SysMenuService sysMenuService;
-	@Autowired
-	private SysUserMapper sysUserMapper;
-	@Autowired
-	private SysRoleService sysRoleService;
-	@Autowired
-	private SysUserRoleService sysUserRoleService;
+	private static final String WX_AUTHORIZATION_CODE_URL = "https://api.weixin.qq.com/sns/oauth2/access_token" +
+		"?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
+	private final SysMenuService sysMenuService;
+	private final SysUserMapper sysUserMapper;
+	private final CacheManager cacheManager;
+	private final RestTemplate restTemplate;
+	private final SysRoleService sysRoleService;
+	private final SysUserRoleService sysUserRoleService;
 
 	/**
 	 * 通过用户名查用户的全部信息
@@ -80,7 +85,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	 * @return
 	 */
 	@Override
-	@Cacheable(value = "user_details", key = "#type +':'+ #username")
+	@Cacheable(value = "user_details", key = "#username")
 	public UserInfo findUserInfo(String type, String username) {
 		SysUser condition = new SysUser();
 		if (EnumLoginType.PWD.getType().equals(type)) {
@@ -120,6 +125,34 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		}
 		userInfo.setPermissions(ArrayUtil.toArray(permissions, String.class));
 		return userInfo;
+	}
+
+	/**
+	 * 绑定社交账号
+	 *
+	 * @param state 类型
+	 * @param code  code
+	 * @return
+	 */
+	@Override
+	public Boolean bindSocial(String state, String code) {
+		String result = restTemplate.getForObject(WX_AUTHORIZATION_CODE_URL, String.class);
+		log.debug("微信响应报文:{}", result);
+
+		Object obj = JSONUtil.parseObj(result).get("openid");
+		if (obj == null) {
+			return Boolean.FALSE;
+		}
+
+		SysUser condition = new SysUser();
+		condition.setUsername(SecurityUtils.getUser());
+		SysUser sysUser = this.selectOne(new EntityWrapper<>(condition));
+		sysUser.setWxOpenid(obj.toString());
+		sysUserMapper.updateAllColumnById(sysUser);
+
+		//更新緩存
+		cacheManager.getCache("user_details").evict(sysUser.getUsername());
+		return Boolean.TRUE;
 	}
 
 	@Override

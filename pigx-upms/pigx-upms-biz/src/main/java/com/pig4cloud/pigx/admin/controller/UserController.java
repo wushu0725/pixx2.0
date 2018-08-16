@@ -92,6 +92,18 @@ public class UserController {
 	}
 
 	/**
+	 * 绑定社交账号
+	 *
+	 * @param state 类型
+	 * @param code  code
+	 * @return
+	 */
+	@PostMapping("/social/bind")
+	public R<Boolean> bind(String state, String code) {
+		return new R<>(userService.bindSocial(state, code));
+	}
+
+	/**
 	 * 通过ID查询当前用户信息
 	 *
 	 * @param id ID

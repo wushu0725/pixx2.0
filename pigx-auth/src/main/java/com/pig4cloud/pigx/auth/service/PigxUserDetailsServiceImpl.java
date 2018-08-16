@@ -94,7 +94,7 @@ public class PigxUserDetailsServiceImpl implements PigxUserDetailsService {
 			String url = String.format(WX_AUTHORIZATION_CODE_URL
 				, wxSocialConfig.getAppid(), wxSocialConfig.getSecret(), code);
 			String result = restTemplate.getForObject(url, String.class);
-			log.warn("微信响应报文:{}", result);
+			log.debug("微信响应报文:{}", result);
 
 			Object obj = JSONUtil.parseObj(result).get("openid");
 			if (obj != null) {
