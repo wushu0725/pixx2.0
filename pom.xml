@@ -32,14 +32,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.3.RELEASE</version>
+		<version>2.0.4.RELEASE</version>
 		<relativePath/>
 	</parent>
 
 	<properties>
-		<pigx.version>1.4.2</pigx.version>
-		<spring-boot.version>2.0.3.RELEASE</spring-boot.version>
-		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+		<pigx.version>1.5.0</pigx.version>
+		<spring-boot.version>2.0.4.RELEASE</spring-boot.version>
+		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>

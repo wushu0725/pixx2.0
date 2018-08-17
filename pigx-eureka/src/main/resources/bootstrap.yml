@@ -16,7 +16,7 @@ eureka:
     hostname: pigx-eureka
     prefer-ip-address: true
   client:
-    register-with-eureka: true
+    register-with-eureka: false
     fetch-registry: false
     service-url:
       defaultZone: http://pig:pig@${eureka.instance.hostname}:${server.port}/eureka/
