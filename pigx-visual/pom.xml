@@ -37,5 +37,6 @@
 		<module>pigx-codegen</module>
 		<module>pigx-daemon</module>
 		<module>pigx-monitor</module>
+		<module>pigx-tx-manager</module>
 	</modules>
 </project>
