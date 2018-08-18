@@ -22,7 +22,7 @@ import com.pig4cloud.pigx.manager.compensate.model.TransactionCompensateMsg;
 import java.util.List;
 
 /**
- * create by lorne on 2017/11/11
+ * @author LCN on 2017/11/11
  */
 public interface CompensateDao {
 

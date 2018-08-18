@@ -22,7 +22,8 @@ import com.pig4cloud.pigx.manager.model.ModelInfo;
 import java.util.List;
 
 /**
- * create by lorne on 2017/11/13
+ * @author LCN on 2017/11/13
+ * @author LCN
  */
 public interface ApiModelService {
 

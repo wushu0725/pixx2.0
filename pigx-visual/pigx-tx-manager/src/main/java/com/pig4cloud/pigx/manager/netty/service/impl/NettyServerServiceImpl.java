@@ -45,7 +45,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by lorne on 2017/6/30.
+ *@author LCN on 2017/6/30.
  */
 @Service
 public class NettyServerServiceImpl implements NettyServerService, DisposableBean {
@@ -71,7 +71,7 @@ public class NettyServerServiceImpl implements NettyServerService, DisposableBea
 	public void start() {
 		final int heartTime = configReader.getTransactionNettyHeartTime() + 10;
 		txCoreServerHandler = new TxCoreServerHandler(threadPool, nettyService);
-		bossGroup = new NioEventLoopGroup(50); // (1)
+		bossGroup = new NioEventLoopGroup(50);
 		workerGroup = new NioEventLoopGroup();
 		try {
 			ServerBootstrap b = new ServerBootstrap();

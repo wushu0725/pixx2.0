@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Created by lorne on 2017/6/30.
+ *@author LCN on 2017/6/30.
  */
 public class SocketManager {
 

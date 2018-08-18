@@ -20,7 +20,7 @@ package com.pig4cloud.pigx.manager.model;
 import java.util.List;
 
 /**
- * Created by lorne on 2017/7/1.
+ *@author LCN on 2017/7/1.
  */
 public class TxState {
 

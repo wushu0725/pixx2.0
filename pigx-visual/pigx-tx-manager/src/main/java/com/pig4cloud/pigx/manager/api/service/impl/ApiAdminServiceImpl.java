@@ -26,26 +26,23 @@ import com.pig4cloud.pigx.manager.manager.service.MicroService;
 import com.pig4cloud.pigx.manager.model.ModelName;
 import com.pig4cloud.pigx.manager.model.TxState;
 import com.pig4cloud.pigx.manager.redis.RedisServerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * create by lorne on 2017/11/12
+ * @author LCN on 2017/11/12
+ *
+ * @author LCN
+ * @author lengleng
  */
 @Service
+@AllArgsConstructor
 public class ApiAdminServiceImpl implements ApiAdminService {
-
-
-	@Autowired
-	private MicroService eurekaService;
-
-	@Autowired
-	private RedisServerService redisServerService;
-
-	@Autowired
-	private CompensateService compensateService;
+	private final MicroService eurekaService;
+	private final RedisServerService redisServerService;
+	private final CompensateService compensateService;
 
 	@Override
 	public TxState getState() {

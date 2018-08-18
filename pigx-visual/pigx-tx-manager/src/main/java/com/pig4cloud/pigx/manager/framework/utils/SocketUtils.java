@@ -24,7 +24,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.ReferenceCountUtil;
 
 /**
- * Created by lorne on 2017/7/6.
+ *@author LCN on 2017/7/6.
  */
 public class SocketUtils {
 

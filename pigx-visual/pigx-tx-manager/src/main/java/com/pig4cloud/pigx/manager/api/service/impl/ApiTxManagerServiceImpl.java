@@ -27,31 +27,28 @@ import com.pig4cloud.pigx.manager.manager.service.TxManagerSenderService;
 import com.pig4cloud.pigx.manager.manager.service.TxManagerService;
 import com.pig4cloud.pigx.manager.model.TxServer;
 import com.pig4cloud.pigx.manager.model.TxState;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by lorne on 2017/7/1.
+ *@author LCN on 2017/7/1.
+ *
+ * @author LCN
+ * @author lengleng
  */
 @Service
+@AllArgsConstructor
 public class ApiTxManagerServiceImpl implements ApiTxManagerService {
 
+	private final TxManagerService managerService;
 
-	@Autowired
-	private TxManagerService managerService;
+	private final MicroService eurekaService;
 
-	@Autowired
-	private MicroService eurekaService;
+	private final CompensateService compensateService;
 
-	@Autowired
-	private CompensateService compensateService;
+	private final TxManagerSenderService txManagerSenderService;
 
-
-	@Autowired
-	private TxManagerSenderService txManagerSenderService;
-
-	@Autowired
-	private ConfigReader configReader;
+	private final ConfigReader configReader;
 
 
 	@Override

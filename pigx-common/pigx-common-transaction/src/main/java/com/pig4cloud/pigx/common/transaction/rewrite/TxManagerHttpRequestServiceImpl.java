@@ -15,37 +15,33 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.common.transaction.ribbon;
+package com.pig4cloud.pigx.common.transaction.rewrite;
 
-import com.netflix.loadbalancer.NoOpLoadBalancer;
-import com.netflix.loadbalancer.Server;
+import com.codingapi.tx.netty.service.TxManagerHttpRequestService;
+import com.lorne.core.framework.utils.http.HttpUtils;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
- * created by foxdd 2017-12-05
- *
- * @author LCN
- * @since 4.1.0
+ * @author lengleng
+ * @date 2018/8/19
+ * 请求tx-manager接口实现
  */
 @Slf4j
-public class LcnNoOpLoadBalancerProxy extends NoOpLoadBalancer {
+@Service
+public class TxManagerHttpRequestServiceImpl implements TxManagerHttpRequestService {
 
-	private LcnLoadBalancerRule lcnLoadBalancerRule = new LcnLoadBalancerRule();
-
-	public LcnNoOpLoadBalancerProxy() {
-		super();
+	@Override
+	public String httpGet(String url) {
+		String res = HttpUtils.get(url);
+		log.debug("请求接口 {}，响应报文：{}", url, res);
+		return res;
 	}
 
 	@Override
-	public Server chooseServer(Object key) {
-		log.debug("enter chooseServer method, key:" + key);
-
-		List<Server> serverList = new ArrayList<Server>();
-		return lcnLoadBalancerRule.proxy(serverList, super.chooseServer(key));
-
+	public String httpPost(String url, String params) {
+		String res = HttpUtils.post(url, params);
+		log.debug("请求接口 {}，响应报文：{}", url, res);
+		return res;
 	}
-
 }

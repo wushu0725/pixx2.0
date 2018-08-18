@@ -20,7 +20,7 @@ package com.pig4cloud.pigx.manager.manager.service;
 import com.pig4cloud.pigx.manager.model.LoadBalanceInfo;
 
 /**
- * create by lorne on 2017/12/5
+ * @author LCN on 2017/12/5
  */
 public interface LoadBalanceService {
 

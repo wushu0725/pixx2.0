@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * create by lorne on 2017/11/13
+ * @author LCN on 2017/11/13
  */
 public class ModelInfoManager {
 

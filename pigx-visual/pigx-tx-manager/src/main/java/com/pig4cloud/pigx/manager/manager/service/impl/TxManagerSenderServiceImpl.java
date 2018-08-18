@@ -48,7 +48,7 @@ import java.util.concurrent.*;
 
 
 /**
- * Created by lorne on 2017/6/9.
+ * @author LCN on 2017/6/9.
  */
 @Service
 public class TxManagerSenderServiceImpl implements TxManagerSenderService {
@@ -148,8 +148,8 @@ public class TxManagerSenderServiceImpl implements TxManagerSenderService {
 							final JSONObject jsonObject = new JSONObject();
 							jsonObject.put("a", "t");
 
-
-							if (txGroup.getIsCompensate() == 1) {   //补偿请求
+							//补偿请求
+							if (txGroup.getIsCompensate() == 1) {
 								jsonObject.put("c", txInfo.getIsCommit());
 							} else { //正常业务
 								jsonObject.put("c", checkSate);
@@ -246,21 +246,18 @@ public class TxManagerSenderServiceImpl implements TxManagerSenderService {
 		//创建Task
 		final Task task = ConditionUtils.getInstance().createTask(key);
 
-		threadPool.execute(new Runnable() {
-			@Override
-			public void run() {
-				while (!task.isAwait() && !Thread.currentThread().interrupted()) {
-					try {
-						Thread.sleep(1);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+		threadPool.execute(() -> {
+			while (!task.isAwait() && !Thread.interrupted()) {
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
+			}
 
-				Channel channel = SocketManager.getInstance().getChannelByModelName(model);
-				if (channel != null && channel.isActive()) {
-					SocketUtils.sendMsg(channel, msg);
-				}
+			Channel channel = SocketManager.getInstance().getChannelByModelName(model);
+			if (channel != null && channel.isActive()) {
+				SocketUtils.sendMsg(channel, msg);
 			}
 		});
 
@@ -283,28 +280,20 @@ public class TxManagerSenderServiceImpl implements TxManagerSenderService {
 
 
 	private void threadAwaitSend(final Task task, final TxInfo txInfo, final String msg) {
-		threadPool.execute(new Runnable() {
-			@Override
-			public void run() {
-				while (!task.isAwait() && !Thread.currentThread().interrupted()) {
-					try {
-						Thread.sleep(1);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+		threadPool.execute(() -> {
+			while (!task.isAwait() && !Thread.interrupted()) {
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
+			}
 
-				if (txInfo != null && txInfo.getChannel() != null) {
-					txInfo.getChannel().send(msg, task);
-				} else {
-					task.setBack(new IBack() {
-						@Override
-						public Object doing(Object... objs) throws Throwable {
-							return "-2";
-						}
-					});
-					task.signalTask();
-				}
+			if (txInfo != null && txInfo.getChannel() != null) {
+				txInfo.getChannel().send(msg, task);
+			} else {
+				task.setBack(objs -> "-2");
+				task.signalTask();
 			}
 		});
 

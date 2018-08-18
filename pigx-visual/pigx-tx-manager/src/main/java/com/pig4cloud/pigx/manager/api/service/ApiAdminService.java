@@ -25,7 +25,8 @@ import com.pig4cloud.pigx.manager.model.TxState;
 import java.util.List;
 
 /**
- * create by lorne on 2017/11/12
+ * @author LCN on 2017/11/12
+ * @author LCN
  */
 public interface ApiAdminService {
 

@@ -25,7 +25,7 @@ import io.netty.channel.Channel;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * create by lorne on 2017/8/7
+ * @author LCN on 2017/8/7
  */
 public class ChannelSender {
 

@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 创建事务组
- * create by lorne on 2017/11/11
+ * @author LCN on 2017/11/11
  */
 @Service(value = "cg")
 public class ActionCGServiceImpl implements IActionService {

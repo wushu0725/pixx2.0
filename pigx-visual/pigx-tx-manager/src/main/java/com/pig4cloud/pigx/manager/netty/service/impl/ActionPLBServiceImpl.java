@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 添加负载模块信息
- * create by lorne on 2017/11/11
+ * @author LCN on 2017/11/11
  */
 @Service(value = "plb")
 public class ActionPLBServiceImpl implements IActionService {

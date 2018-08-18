@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 心跳包
- * create by lorne on 2017/11/11
+ * @author LCN on 2017/11/11
  */
 @Service(value = "h")
 public class ActionHServiceImpl implements IActionService {

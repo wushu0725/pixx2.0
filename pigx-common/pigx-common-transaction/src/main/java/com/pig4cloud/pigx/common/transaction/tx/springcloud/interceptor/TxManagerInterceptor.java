@@ -28,7 +28,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by lorne on 2017/6/7.
+ *@author LCN on 2017/6/7.
  *
  * @author LCN
  * @since 4.1.0

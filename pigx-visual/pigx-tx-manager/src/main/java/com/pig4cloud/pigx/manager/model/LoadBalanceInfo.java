@@ -19,7 +19,7 @@ package com.pig4cloud.pigx.manager.model;
 
 /**
  * 负载均衡模块信息
- * create by lorne on 2017/12/5
+ * @author LCN on 2017/12/5
  */
 public class LoadBalanceInfo {
 

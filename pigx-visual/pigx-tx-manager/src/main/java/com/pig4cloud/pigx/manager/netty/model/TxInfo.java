@@ -22,7 +22,7 @@ import com.lorne.core.framework.model.JsonModel;
 import com.pig4cloud.pigx.manager.model.ChannelSender;
 
 /**
- * Created by lorne on 2017/6/7.
+ *@author LCN on 2017/6/7.
  */
 public class TxInfo extends JsonModel {
 

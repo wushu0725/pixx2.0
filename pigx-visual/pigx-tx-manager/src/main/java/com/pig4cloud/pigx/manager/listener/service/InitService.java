@@ -18,7 +18,7 @@
 package com.pig4cloud.pigx.manager.listener.service;
 
 /**
- * Created by lorne on 2017/7/4.
+ *@author LCN on 2017/7/4.
  */
 public interface InitService {
 

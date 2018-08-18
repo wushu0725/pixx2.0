@@ -20,21 +20,22 @@ package com.pig4cloud.pigx.manager.api.controller;
 import com.pig4cloud.pigx.manager.api.service.ApiTxManagerService;
 import com.pig4cloud.pigx.manager.model.TxServer;
 import com.pig4cloud.pigx.manager.model.TxState;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by lorne on 2017/7/1.
+ *@author LCN on 2017/7/1.
+ *
+ * @author LCN
+ * @author lengleng
  */
 @RestController
+@AllArgsConstructor
 @RequestMapping("/tx/manager")
 public class TxManagerController {
-
-	@Autowired
-	private ApiTxManagerService apiTxManagerService;
-
+	private final ApiTxManagerService apiTxManagerService;
 
 	@RequestMapping("/getServer")
 	public TxServer getServer() {

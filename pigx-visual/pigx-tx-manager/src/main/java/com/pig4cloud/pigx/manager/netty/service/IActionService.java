@@ -20,7 +20,7 @@ package com.pig4cloud.pigx.manager.netty.service;
 import com.alibaba.fastjson.JSONObject;
 
 /**
- * create by lorne on 2017/11/11
+ * @author LCN on 2017/11/11
  */
 public interface IActionService {
 

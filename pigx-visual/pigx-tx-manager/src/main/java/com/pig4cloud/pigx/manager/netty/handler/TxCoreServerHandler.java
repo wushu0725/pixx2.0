@@ -18,7 +18,7 @@
 package com.pig4cloud.pigx.manager.netty.handler;
 
 /**
- * Created by lorne on 2017/6/29.
+ * @author LCN on 2017/6/29.
  */
 
 import com.alibaba.fastjson.JSONObject;
@@ -40,6 +40,8 @@ import java.util.concurrent.Executor;
 
 /**
  * Handles a server-side channel.
+ *
+ * @author lengleng
  */
 
 @ChannelHandler.Sharable

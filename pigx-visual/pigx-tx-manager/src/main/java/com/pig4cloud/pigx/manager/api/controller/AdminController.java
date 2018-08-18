@@ -24,7 +24,7 @@ import com.pig4cloud.pigx.manager.compensate.model.TxModel;
 import com.pig4cloud.pigx.manager.model.ModelInfo;
 import com.pig4cloud.pigx.manager.model.ModelName;
 import com.pig4cloud.pigx.manager.model.TxState;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,17 +33,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * Created by lorne on 2017/7/1.
+ *@author LCN on 2017/7/1.
+ *
+ * @author LCN
+ * @author lengleng
  */
 @RestController
+@AllArgsConstructor
 @RequestMapping("/admin")
 public class AdminController {
-
-	@Autowired
-	private ApiAdminService apiAdminService;
-
-	@Autowired
-	private ApiModelService apiModelService;
+	private final ApiAdminService apiAdminService;
+	private final ApiModelService apiModelService;
 
 
 	@RequestMapping(value = "/onlines", method = RequestMethod.GET)

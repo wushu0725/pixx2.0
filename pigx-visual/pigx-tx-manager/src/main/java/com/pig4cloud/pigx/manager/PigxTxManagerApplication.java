@@ -21,7 +21,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-
+/**
+ * @author LCN
+ * @author lengleng
+ * tx-manager ，进行了代码逻辑和代码规范重构
+ */
 @SpringBootApplication
 @EnableDiscoveryClient
 public class PigxTxManagerApplication {

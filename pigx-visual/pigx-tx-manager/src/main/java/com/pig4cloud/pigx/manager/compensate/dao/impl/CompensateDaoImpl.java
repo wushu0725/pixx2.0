@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * create by lorne on 2017/11/11
+ * @author LCN on 2017/11/11
  */
 @Service
 public class CompensateDaoImpl implements CompensateDao {

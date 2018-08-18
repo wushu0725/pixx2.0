@@ -18,7 +18,7 @@
 package com.pig4cloud.pigx.manager.framework.utils;
 
 /**
- * Created by lorne on 2017/6/8.
+ *@author LCN on 2017/6/8.
  */
 public class Constants {
 

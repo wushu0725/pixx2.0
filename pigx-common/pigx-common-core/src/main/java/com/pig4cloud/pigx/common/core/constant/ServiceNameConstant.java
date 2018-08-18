@@ -34,4 +34,9 @@ public interface ServiceNameConstant {
 	 * UMPS模块
 	 */
 	String UMPS_SERVICE = "pigx-upms";
+
+	/**
+	 * 分布式事务协调服务
+	 */
+	String  TX_MANAGER = "pigx-tx-manager";
 }

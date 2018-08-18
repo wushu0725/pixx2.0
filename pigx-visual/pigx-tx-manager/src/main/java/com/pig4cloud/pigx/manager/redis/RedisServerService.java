@@ -23,7 +23,7 @@ import com.pig4cloud.pigx.manager.netty.model.TxGroup;
 import java.util.List;
 
 /**
- * create by lorne on 2017/11/11
+ * @author LCN on 2017/11/11
  */
 public interface RedisServerService {
 

@@ -20,7 +20,7 @@
 package com.pig4cloud.pigx.manager.model;
 
 /**
- * create by lorne on 2017/11/22
+ * @author LCN on 2017/11/22
  */
 public class ModelName {
 

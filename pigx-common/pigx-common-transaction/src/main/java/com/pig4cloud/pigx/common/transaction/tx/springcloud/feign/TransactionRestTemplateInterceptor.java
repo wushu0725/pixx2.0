@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by lorne on 2017/6/26.
+ *@author LCN on 2017/6/26.
  *
  * @author LCN
  * @since 4.1.0

@@ -21,7 +21,7 @@ import com.pig4cloud.pigx.manager.model.TxServer;
 import com.pig4cloud.pigx.manager.model.TxState;
 
 /**
- * Created by lorne on 2017/7/1.
+ *@author LCN on 2017/7/1.
  */
 public interface ApiTxManagerService {
 

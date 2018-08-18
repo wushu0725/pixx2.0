@@ -19,7 +19,7 @@ package com.pig4cloud.pigx.manager.model;
 
 /**
  * 模块信息
- * create by lorne on 2017/11/13
+ * @author LCN on 2017/11/13
  */
 public class ModelInfo {
 

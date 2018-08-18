@@ -18,7 +18,7 @@
 package com.pig4cloud.pigx.manager.compensate.model;
 
 /**
- * create by lorne on 2017/11/12
+ * @author LCN on 2017/11/12
  */
 public class TxModel {
 

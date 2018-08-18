@@ -27,7 +27,7 @@ import org.springframework.http.client.ClientHttpResponse;
 import java.io.IOException;
 
 /**
- * Created by lorne on 2017/7/3.
+ *@author LCN on 2017/7/3.
  *
  * @author LCN
  * @since 4.1.0

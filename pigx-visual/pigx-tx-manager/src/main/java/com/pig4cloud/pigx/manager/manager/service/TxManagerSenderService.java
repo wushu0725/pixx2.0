@@ -20,7 +20,7 @@ package com.pig4cloud.pigx.manager.manager.service;
 import com.pig4cloud.pigx.manager.netty.model.TxGroup;
 
 /**
- * Created by lorne on 2017/6/9.
+ *@author LCN on 2017/6/9.
  */
 public interface TxManagerSenderService {
 

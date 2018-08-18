@@ -47,12 +47,12 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 /**
- * create by lorne on 2017/11/11
+ * @author LCN on 2017/11/11
  */
 @Service
 public class CompensateServiceImpl implements CompensateService {
-
-
+	private static final String SUCCESS = "success";
+	private static final String SUCCESS1 = "SUCCESS";
 	private Logger logger = LoggerFactory.getLogger(CompensateServiceImpl.class);
 
 	@Autowired
@@ -109,7 +109,7 @@ public class CompensateServiceImpl implements CompensateService {
 					logger.error("Compensate Callback Result->" + res);
 					if (configReader.isCompensateAuto()) {
 						//自动补偿,是否自动执行补偿
-						if (res.contains("success") || res.contains("SUCCESS")) {
+						if (res.contains(SUCCESS) || res.contains(SUCCESS1)) {
 							//自动补偿
 							autoCompensate(compensateKey, transactionCompensateMsg);
 						}
@@ -134,7 +134,7 @@ public class CompensateServiceImpl implements CompensateService {
 		boolean autoExecuteRes = false;
 		try {
 			int executeCount = 0;
-			autoExecuteRes = _executeCompensate(json);
+			autoExecuteRes = executeCompensate_(json);
 			logger.info("Automatic Compensate Result->" + autoExecuteRes + ",json->" + json);
 			while (!autoExecuteRes) {
 				logger.info("Compensate Failure, Entering Compensate Queue->" + autoExecuteRes + ",json->" + json);
@@ -148,7 +148,7 @@ public class CompensateServiceImpl implements CompensateService {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				autoExecuteRes = _executeCompensate(json);
+				autoExecuteRes = executeCompensate_(json);
 			}
 
 			//执行成功删除数据
@@ -181,7 +181,7 @@ public class CompensateServiceImpl implements CompensateService {
 	public List<ModelName> loadModelList() {
 		List<String> keys = compensateDao.loadCompensateKeys();
 
-		Map<String, Integer> models = new HashMap<String, Integer>();
+		Map<String, Integer> models = new HashMap<>(16);
 
 		for (String key : keys) {
 			if (key.length() > 36) {
@@ -296,6 +296,7 @@ public class CompensateServiceImpl implements CompensateService {
 		logger.info("Compensate Loaded->" + JSON.toJSONString(txGroup));
 	}
 
+	@Override
 	public TxGroup getCompensateByGroupId(String groupId) {
 		String json = compensateDao.getCompensateByGroupId(groupId);
 		if (json == null) {
@@ -315,7 +316,7 @@ public class CompensateServiceImpl implements CompensateService {
 			throw new ServiceException("no data existing");
 		}
 
-		boolean hasOk = _executeCompensate(json);
+		boolean hasOk = executeCompensate_(json);
 		if (hasOk) {
 			// 删除本地补偿数据
 			compensateDao.deleteCompensateByPath(path);
@@ -326,7 +327,7 @@ public class CompensateServiceImpl implements CompensateService {
 	}
 
 
-	private boolean _executeCompensate(String json) throws ServiceException {
+	private boolean executeCompensate_(String json) throws ServiceException {
 		JSONObject jsonObject = JSON.parseObject(json);
 
 		String model = jsonObject.getString("model");

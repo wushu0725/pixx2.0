@@ -20,7 +20,7 @@ package com.pig4cloud.pigx.manager.compensate.model;
 import com.pig4cloud.pigx.manager.netty.model.TxGroup;
 
 /**
- * create by lorne on 2017/11/11
+ * @author LCN on 2017/11/11
  */
 public class TransactionCompensateMsg {
 

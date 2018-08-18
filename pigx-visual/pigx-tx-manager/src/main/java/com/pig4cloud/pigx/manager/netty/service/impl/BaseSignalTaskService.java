@@ -23,7 +23,7 @@ import com.lorne.core.framework.utils.task.IBack;
 import com.lorne.core.framework.utils.task.Task;
 
 /**
- * create by lorne on 2017/11/13
+ * @author LCN on 2017/11/13
  */
 public class BaseSignalTaskService {
 

@@ -36,7 +36,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * create by lorne on 2017/11/11
+ * @author LCN on 2017/11/11
  */
 @Service
 public class MicroServiceImpl implements MicroService {
@@ -87,7 +87,7 @@ public class MicroServiceImpl implements MicroService {
 
 	private List<String> getServices() {
 		List<String> urls = new ArrayList<>();
-		List<ServiceInstance> serviceInstances = discoveryClient.getInstances(tmKey);
+		List<ServiceInstance> serviceInstances = discoveryClient.getInstances(TMKEY);
 		for (ServiceInstance instanceInfo : serviceInstances) {
 			urls.add(instanceInfo.getUri().toASCIIString());
 		}

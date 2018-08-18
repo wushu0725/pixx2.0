@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * create by lorne on 2017/12/5
+ * @author LCN on 2017/12/5
  */
 @Service
 public class LoadBalanceServiceImpl implements LoadBalanceService {

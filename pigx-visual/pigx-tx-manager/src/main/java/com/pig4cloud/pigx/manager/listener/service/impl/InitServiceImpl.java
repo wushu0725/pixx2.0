@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 
 
 /**
- * Created by lorne on 2017/7/4.
+ *@author LCN on 2017/7/4.
  */
 @Service
 public class InitServiceImpl implements InitService {

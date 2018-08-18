@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 上传模块信息
- * create by lorne on 2017/11/11
+ * @author LCN on 2017/11/11
  */
 @Service(value = "umi")
 public class ActionUMIServiceImpl implements IActionService {

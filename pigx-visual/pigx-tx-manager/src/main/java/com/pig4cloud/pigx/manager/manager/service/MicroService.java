@@ -21,11 +21,11 @@ import com.pig4cloud.pigx.manager.model.TxServer;
 import com.pig4cloud.pigx.manager.model.TxState;
 
 /**
- * create by lorne on 2017/11/11
+ * @author LCN on 2017/11/11
  */
 public interface MicroService {
 
-	String tmKey = "tx-manager";
+	String TMKEY = "tx-manager";
 
 	TxServer getServer();
 

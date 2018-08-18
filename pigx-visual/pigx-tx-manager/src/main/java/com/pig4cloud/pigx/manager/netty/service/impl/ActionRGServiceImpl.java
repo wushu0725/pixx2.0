@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 强制回滚事务组
- * create by lorne on 2017/11/11
+ * @author LCN on 2017/11/11
  */
 @Service(value = "rg")
 public class ActionRGServiceImpl implements IActionService {
