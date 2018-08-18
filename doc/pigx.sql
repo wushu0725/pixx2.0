@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : utf-8
 
- Date: 08/06/2018 22:00:16 PM
+ Date: 08/18/2018 12:11:52 PM
 */
 
 SET NAMES utf8;
@@ -69,7 +69,7 @@ CREATE TABLE `sys_dict` (
   `type` varchar(100) NOT NULL COMMENT '类型',
   `description` varchar(100) NOT NULL COMMENT '描述',
   `sort` decimal(10,0) NOT NULL COMMENT '排序（升序）',
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `remarks` varchar(255) DEFAULT NULL COMMENT '备注信息',
   `del_flag` char(1) NOT NULL DEFAULT '0' COMMENT '删除标记',
@@ -77,13 +77,13 @@ CREATE TABLE `sys_dict` (
   KEY `sys_dict_value` (`value`),
   KEY `sys_dict_label` (`label`),
   KEY `sys_dict_del_flag` (`del_flag`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='字典表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='字典表';
 
 -- ----------------------------
 --  Records of `sys_dict`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_dict` VALUES ('2', '9', '异常', 'log_type', '日志异常', '1', '2018-07-09 06:16:14', '2018-07-09 06:16:14', '4567', '0'), ('3', '0', '正常', 'log_type', '正常', '1', '2018-07-09 06:15:40', '2018-07-09 06:15:40', '1234', '0');
+INSERT INTO `sys_dict` VALUES ('2', '9', '异常', 'log_type', '日志异常', '1', '2018-07-09 06:16:14', '2018-07-09 06:16:14', '日志异常', '0'), ('3', '0', '正常', 'log_type', '正常', '0', '2018-07-09 06:15:40', '2018-07-09 06:15:40', '正常', '0'), ('4', '123', '123', '1234', '123', '123', '2018-08-09 07:16:47', '2018-08-16 14:01:03', '123', '1'), ('5', 'WX', '微信', 'social_type', '微信登录', '0', '2018-08-16 14:01:45', '2018-08-16 14:01:45', '微信登录', '0'), ('6', 'QQ', 'QQ', 'social_type', 'QQ登录', '1', '2018-07-09 06:15:40', '2018-07-09 06:15:40', 'QQ登录', '0');
 COMMIT;
 
 -- ----------------------------
@@ -111,7 +111,14 @@ CREATE TABLE `sys_log` (
   KEY `sys_log_request_uri` (`request_uri`),
   KEY `sys_log_type` (`type`),
   KEY `sys_log_create_date` (`create_time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='日志表';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='日志表';
+
+-- ----------------------------
+--  Records of `sys_log`
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_log` VALUES ('1', '0', '添加字典', 'pig', 'admin', '2018-08-09 07:16:49', null, '0:0:0:0:0:0:0:1', 'PostmanRuntime/7.2.0', '/dict', 'POST', '', '781', '0', null), ('2', '0', '修改字典', 'pig', 'admin', '2018-08-13 15:56:24', null, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36', '/dict', 'PUT', '', '757', '0', null), ('3', '0', '修改字典', 'pig', 'admin', '2018-08-13 15:59:58', null, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36', '/dict', 'PUT', '', '521', '0', null), ('4', '0', '修改字典', 'pig', 'admin', '2018-08-13 16:11:35', null, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36', '/dict', 'PUT', '', '429', '0', null), ('5', '0', '修改字典', 'pig', 'admin', '2018-08-13 16:18:18', null, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36', '/dict', 'PUT', '', '633', '0', null), ('6', '0', '修改字典', 'pig', 'admin', '2018-08-13 16:21:44', null, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36', '/dict', 'PUT', '', '487', '0', null), ('7', '0', '修改字典', 'pig', 'admin', '2018-08-14 03:24:48', null, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36', '/dict', 'PUT', '', '283', '0', null), ('8', '0', '修改字典', 'pig', 'admin', '2018-08-14 03:25:50', null, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36', '/dict', 'PUT', '', '249', '0', null), ('9', '0', '修改字典', 'pig', 'admin', '2018-08-14 04:03:35', null, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36', '/dict', 'PUT', '', '209', '0', null), ('10', '0', '修改字典', 'pig', 'admin', '2018-08-14 04:03:35', null, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36', '/dict', 'PUT', '', '308', '0', null), ('11', '0', '修改字典', 'pig', 'admin', '2018-08-14 04:49:28', null, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36', '/dict', 'PUT', '', '267', '0', null), ('12', '0', '修改字典', 'pig', 'admin', '2018-08-14 04:52:00', null, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36', '/dict', 'PUT', '', '414', '0', null), ('13', '0', '删除字典', 'pig', 'admin', '2018-08-16 14:01:05', null, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36', '/dict/4/1234', 'DELETE', '', '462', '0', null), ('14', '0', '添加字典', 'pig', 'admin', '2018-08-16 14:01:46', null, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36', '/dict', 'POST', '', '448', '0', null), ('15', '0', '修改字典', 'pig', 'admin', '2018-08-16 14:02:01', null, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36', '/dict', 'PUT', '', '497', '0', null), ('16', '0', '修改字典', 'pig', 'admin', '2018-08-16 14:02:16', null, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36', '/dict', 'PUT', '', '550', '0', null), ('17', '0', '修改字典', 'pig', 'admin', '2018-08-16 14:02:16', null, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36', '/dict', 'PUT', '', '374', '0', null), ('18', '0', '添加字典', 'pig', 'admin', '2018-08-16 14:02:44', null, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36', '/dict', 'POST', '', '460', '0', null);
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `sys_menu`
@@ -137,7 +144,7 @@ CREATE TABLE `sys_menu` (
 --  Records of `sys_menu`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_menu` VALUES ('1', '系统管理', null, '/admin', '-1', 'icon-xitongguanli', 'Layout', '1', '0', '2017-11-07 20:56:00', '2018-05-14 21:53:22', '0'), ('2', '用户管理', null, 'user', '1', 'icon-yonghuguanli', 'views/admin/user/index', '2', '0', '2017-11-02 22:24:37', '2018-05-14 22:11:35', '0'), ('3', '菜单管理', null, 'menu', '1', 'icon-caidanguanli', 'views/admin/menu/index', '3', '0', '2017-11-08 09:57:27', '2018-05-14 22:11:21', '0'), ('4', '角色管理', null, 'role', '1', 'icon-jiaoseguanli', 'views/admin/role/index', '4', '0', '2017-11-08 10:13:37', '2018-05-14 22:11:19', '0'), ('5', '日志管理', null, 'log', '1', 'icon-rizhiguanli', 'views/admin/log/index', '5', '0', '2017-11-20 14:06:22', '2018-05-14 22:11:18', '0'), ('6', '字典管理', null, 'dict', '1', 'icon-zygl', 'views/admin/dict/index', '6', '0', '2017-11-29 11:30:52', '2018-05-14 22:12:48', '0'), ('7', '部门管理', null, 'dept', '1', 'icon-iconbmgl', 'views/admin/dept/index', '7', '0', '2018-01-20 13:17:19', '2018-05-14 22:11:16', '0'), ('8', '客户端管理', '', 'client', '1', 'icon-bangzhushouji', 'views/admin/client/index', '8', '0', '2018-01-20 13:17:19', '2018-07-29 13:38:19', '0'), ('9', '代码生成', '', 'gen', '1', 'icon-weibiaoti46', 'views/admin/gen/index', '9', '0', '2018-01-20 13:17:19', '2018-08-02 08:19:59', '0'), ('22', '用户新增', 'sys_user_add', null, '2', null, null, null, '1', '2017-11-08 09:52:09', '2017-12-04 16:31:10', '0'), ('23', '用户修改', 'sys_user_edit', null, '2', null, null, null, '1', '2017-11-08 09:52:48', '2018-06-26 21:16:57', '0'), ('24', '用户删除', 'sys_user_del', null, '2', null, null, null, '1', '2017-11-08 09:54:01', '2017-12-04 16:31:18', '0'), ('32', '菜单新增', 'sys_menu_add', null, '3', null, null, null, '1', '2017-11-08 10:15:53', '2018-01-20 14:37:50', '0'), ('33', '菜单修改', 'sys_menu_edit', null, '3', null, null, null, '1', '2017-11-08 10:16:23', '2018-01-20 14:37:56', '0'), ('34', '菜单删除', 'sys_menu_del', null, '3', null, null, null, '1', '2017-11-08 10:16:43', '2018-01-20 14:38:03', '0'), ('42', '角色新增', 'sys_role_add', null, '4', null, null, null, '1', '2017-11-08 10:14:18', '2018-04-20 07:21:38', '0'), ('43', '角色修改', 'sys_role_edit', null, '4', null, null, null, '1', '2017-11-08 10:14:41', '2018-04-20 07:21:50', '0'), ('44', '角色删除', 'sys_role_del', null, '4', null, null, null, '1', '2017-11-08 10:14:59', '2018-04-20 07:22:00', '0'), ('45', '分配权限', 'sys_role_perm', null, '4', null, null, null, '1', '2018-04-20 07:22:55', '2018-04-20 07:24:40', '0'), ('52', '日志删除', 'sys_log_del', null, '5', null, null, null, '1', '2017-11-20 20:37:37', '2017-11-28 17:36:52', '0'), ('62', '字典删除', 'sys_dict_del', null, '6', null, null, null, '1', '2017-11-29 11:30:11', '2018-01-07 15:40:51', '0'), ('63', '字典新增', 'sys_dict_add', null, '6', null, null, null, '1', '2018-05-11 22:34:55', null, '0'), ('64', '字典修改', 'sys_dict_edit', null, '6', null, null, null, '1', '2018-05-11 22:36:03', '2018-06-26 21:17:36', '0'), ('72', '部门新增', 'sys_dept_add', null, '7', null, null, null, '1', '2018-01-20 14:56:16', '2018-01-20 21:17:57', '0'), ('73', '部门修改', 'sys_dept_edit', null, '7', null, null, null, '1', '2018-01-20 14:56:59', '2018-01-20 21:17:59', '0'), ('74', '部门删除', 'sys_dept_del', null, '7', null, null, null, '1', '2018-01-20 14:57:28', '2018-01-20 21:18:05', '0'), ('81', '客户端新增', 'sys_client_add', null, '8', '1', null, null, '1', '2018-05-15 21:35:18', '2018-07-29 13:38:59', '0'), ('82', '客户端修改', 'sys_client_edit', null, '8', null, null, null, '1', '2018-05-15 21:37:06', '2018-07-29 13:39:01', '0'), ('83', '客户端删除', 'sys_client_del', null, '8', null, null, null, '1', '2018-05-15 21:39:16', '2018-07-29 13:39:06', '0'), ('100', '系统监控', null, '/daemon', '-1', 'icon-iconbmgl', 'Layout', '2', '0', '2018-07-27 01:13:21', '2018-08-03 14:28:24', '0'), ('101', '服务监控', null, 'http://127.0.0.1:5001', '100', 'icon-jiankong', null, '0', '0', '2018-06-26 10:50:32', '2018-07-29 13:39:48', '0'), ('102', '接口文档', null, 'http://127.0.0.1:9999/swagger-ui.html', '100', 'icon-wendangdocument72', null, '1', '0', '2018-06-26 10:50:32', '2018-07-29 13:39:51', '0'), ('103', '任务监控', null, 'http://localhost:9999/swagger-ui.html', '100', 'icon-msnui-supervise', null, '2', '0', '2018-06-26 10:50:32', '2018-07-29 13:40:00', '0'), ('110', '任务轨迹', '', 'statustracelog', '100', 'icon-guiji', 'views/daemon/statustracelog/index', '8', '0', '2018-01-20 13:17:19', '2018-08-03 15:14:28', '0'), ('111', '删除', 'daemon_statustracelog_del', null, '110', '1', null, '2', '1', '2018-05-15 21:35:18', '2018-08-03 15:47:21', '0');
+INSERT INTO `sys_menu` VALUES ('1', '系统管理', null, '/admin', '-1', 'icon-xitongguanli', 'Layout', '1', '0', '2017-11-07 20:56:00', '2018-05-14 21:53:22', '0'), ('2', '用户管理', null, 'user', '1', 'icon-yonghuguanli', 'views/admin/user/index', '2', '0', '2017-11-02 22:24:37', '2018-05-14 22:11:35', '0'), ('3', '菜单管理', null, 'menu', '1', 'icon-caidanguanli', 'views/admin/menu/index', '3', '0', '2017-11-08 09:57:27', '2018-05-14 22:11:21', '0'), ('4', '角色管理', null, 'role', '1', 'icon-jiaoseguanli', 'views/admin/role/index', '4', '0', '2017-11-08 10:13:37', '2018-05-14 22:11:19', '0'), ('5', '日志管理', null, 'log', '1', 'icon-rizhiguanli', 'views/admin/log/index', '5', '0', '2017-11-20 14:06:22', '2018-05-14 22:11:18', '0'), ('6', '字典管理', null, 'dict', '1', 'icon-zygl', 'views/admin/dict/index', '6', '0', '2017-11-29 11:30:52', '2018-05-14 22:12:48', '0'), ('7', '部门管理', null, 'dept', '1', 'icon-iconbmgl', 'views/admin/dept/index', '7', '0', '2018-01-20 13:17:19', '2018-05-14 22:11:16', '0'), ('8', '客户端管理', '', 'client', '1', 'icon-bangzhushouji', 'views/admin/client/index', '8', '0', '2018-01-20 13:17:19', '2018-07-29 13:38:19', '0'), ('9', '代码生成', '', 'gen', '1', 'icon-weibiaoti46', 'views/admin/gen/index', '9', '0', '2018-01-20 13:17:19', '2018-08-02 08:19:59', '0'), ('10', '密钥管理', '1', 'social', '1', 'icon-miyue', 'views/admin/social/index', '10', '0', '2018-01-20 13:17:19', '2018-08-16 13:47:27', '0'), ('11', '密钥新增', 'generator_syssocialdetails_add', null, '10', '1', null, '0', '1', '2018-05-15 21:35:18', '2018-08-16 13:39:43', '0'), ('12', '密钥修改', 'generator_syssocialdetails_edit', null, '10', '1', null, '1', '1', '2018-05-15 21:35:18', '2018-08-16 13:39:48', '0'), ('13', '密钥删除', 'generator_syssocialdetails_del', null, '10', '1', null, '2', '1', '2018-05-15 21:35:18', '2018-08-16 13:39:54', '0'), ('22', '用户新增', 'sys_user_add', null, '2', null, null, null, '1', '2017-11-08 09:52:09', '2017-12-04 16:31:10', '0'), ('23', '用户修改', 'sys_user_edit', null, '2', null, null, null, '1', '2017-11-08 09:52:48', '2018-06-26 21:16:57', '0'), ('24', '用户删除', 'sys_user_del', null, '2', null, null, null, '1', '2017-11-08 09:54:01', '2017-12-04 16:31:18', '0'), ('32', '菜单新增', 'sys_menu_add', null, '3', null, null, null, '1', '2017-11-08 10:15:53', '2018-01-20 14:37:50', '0'), ('33', '菜单修改', 'sys_menu_edit', null, '3', null, null, null, '1', '2017-11-08 10:16:23', '2018-01-20 14:37:56', '0'), ('34', '菜单删除', 'sys_menu_del', null, '3', null, null, null, '1', '2017-11-08 10:16:43', '2018-01-20 14:38:03', '0'), ('42', '角色新增', 'sys_role_add', null, '4', null, null, null, '1', '2017-11-08 10:14:18', '2018-04-20 07:21:38', '0'), ('43', '角色修改', 'sys_role_edit', null, '4', null, null, null, '1', '2017-11-08 10:14:41', '2018-04-20 07:21:50', '0'), ('44', '角色删除', 'sys_role_del', null, '4', null, null, null, '1', '2017-11-08 10:14:59', '2018-04-20 07:22:00', '0'), ('45', '分配权限', 'sys_role_perm', null, '4', null, null, null, '1', '2018-04-20 07:22:55', '2018-04-20 07:24:40', '0'), ('52', '日志删除', 'sys_log_del', null, '5', null, null, null, '1', '2017-11-20 20:37:37', '2017-11-28 17:36:52', '0'), ('62', '字典删除', 'sys_dict_del', null, '6', null, null, null, '1', '2017-11-29 11:30:11', '2018-01-07 15:40:51', '0'), ('63', '字典新增', 'sys_dict_add', null, '6', null, null, null, '1', '2018-05-11 22:34:55', null, '0'), ('64', '字典修改', 'sys_dict_edit', null, '6', null, null, null, '1', '2018-05-11 22:36:03', '2018-06-26 21:17:36', '0'), ('72', '部门新增', 'sys_dept_add', null, '7', null, null, null, '1', '2018-01-20 14:56:16', '2018-01-20 21:17:57', '0'), ('73', '部门修改', 'sys_dept_edit', null, '7', null, null, null, '1', '2018-01-20 14:56:59', '2018-01-20 21:17:59', '0'), ('74', '部门删除', 'sys_dept_del', null, '7', null, null, null, '1', '2018-01-20 14:57:28', '2018-01-20 21:18:05', '0'), ('81', '客户端新增', 'sys_client_add', null, '8', '1', null, null, '1', '2018-05-15 21:35:18', '2018-07-29 13:38:59', '0'), ('82', '客户端修改', 'sys_client_edit', null, '8', null, null, null, '1', '2018-05-15 21:37:06', '2018-07-29 13:39:01', '0'), ('83', '客户端删除', 'sys_client_del', null, '8', null, null, null, '1', '2018-05-15 21:39:16', '2018-07-29 13:39:06', '0'), ('100', '系统监控', null, '/daemon', '-1', 'icon-iconbmgl', 'Layout', '2', '0', '2018-07-27 01:13:21', '2018-08-03 14:28:24', '0'), ('101', '服务监控', null, 'http://127.0.0.1:5001', '100', 'icon-jiankong', null, '0', '0', '2018-06-26 10:50:32', '2018-07-29 13:39:48', '0'), ('102', '接口文档', null, 'http://localhost:9999/swagger-ui.html', '100', 'icon-wendangdocument72', null, '1', '0', '2018-06-26 10:50:32', '2018-07-29 13:39:51', '0'), ('103', '任务监控', null, 'http://localhost:9999/swagger-ui.html', '100', 'icon-msnui-supervise', null, '2', '0', '2018-06-26 10:50:32', '2018-07-29 13:40:00', '0'), ('110', '任务轨迹', '', 'statustracelog', '100', 'icon-guiji', 'views/daemon/statustracelog/index', '8', '0', '2018-01-20 13:17:19', '2018-08-03 15:14:28', '0'), ('111', '删除', 'daemon_statustracelog_del', null, '110', '1', null, '2', '1', '2018-05-15 21:35:18', '2018-08-03 15:47:21', '0');
 COMMIT;
 
 -- ----------------------------
@@ -180,7 +187,7 @@ CREATE TABLE `sys_role` (
   `del_flag` char(1) COLLATE utf8mb4_bin DEFAULT '0' COMMENT '删除标识（0-正常,1-删除）',
   PRIMARY KEY (`role_id`),
   UNIQUE KEY `role_idx1_role_code` (`role_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 --  Records of `sys_role`
@@ -198,7 +205,7 @@ CREATE TABLE `sys_role_dept` (
   `role_id` int(20) DEFAULT NULL COMMENT '角色ID',
   `dept_id` int(20) DEFAULT NULL COMMENT '部门ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='角色与部门对应关系';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='角色与部门对应关系';
 
 -- ----------------------------
 --  Records of `sys_role_dept`
@@ -221,7 +228,31 @@ CREATE TABLE `sys_role_menu` (
 --  Records of `sys_role_menu`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_role_menu` VALUES ('1', '1'), ('1', '2'), ('1', '3'), ('1', '4'), ('1', '5'), ('1', '6'), ('1', '7'), ('1', '8'), ('1', '9'), ('1', '22'), ('1', '23'), ('1', '24'), ('1', '32'), ('1', '33'), ('1', '34'), ('1', '42'), ('1', '43'), ('1', '44'), ('1', '45'), ('1', '52'), ('1', '62'), ('1', '63'), ('1', '64'), ('1', '72'), ('1', '73'), ('1', '74'), ('1', '81'), ('1', '82'), ('1', '83'), ('1', '100'), ('1', '101'), ('1', '102'), ('1', '103'), ('1', '110'), ('1', '111'), ('2', '200'), ('2', '201');
+INSERT INTO `sys_role_menu` VALUES ('1', '1'), ('1', '2'), ('1', '3'), ('1', '4'), ('1', '5'), ('1', '6'), ('1', '7'), ('1', '8'), ('1', '9'), ('1', '10'), ('1', '11'), ('1', '12'), ('1', '22'), ('1', '23'), ('1', '24'), ('1', '32'), ('1', '33'), ('1', '34'), ('1', '42'), ('1', '43'), ('1', '44'), ('1', '45'), ('1', '52'), ('1', '62'), ('1', '63'), ('1', '64'), ('1', '72'), ('1', '73'), ('1', '74'), ('1', '81'), ('1', '82'), ('1', '83'), ('1', '100'), ('1', '101'), ('1', '102'), ('1', '103'), ('1', '110'), ('1', '111'), ('2', '200'), ('2', '201');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `sys_social_details`
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_social_details`;
+CREATE TABLE `sys_social_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主鍵',
+  `type` varchar(16) NOT NULL COMMENT '类型',
+  `remark` varchar(64) DEFAULT NULL COMMENT '描述',
+  `app_id` varchar(64) NOT NULL COMMENT 'appid',
+  `app_secret` varchar(64) NOT NULL COMMENT 'app_secret',
+  `redirect_url` varchar(128) DEFAULT NULL COMMENT '回调地址',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `del_flag` char(50) NOT NULL DEFAULT '0' COMMENT '删除标记',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='系统社交登录账号表';
+
+-- ----------------------------
+--  Records of `sys_social_details`
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_social_details` VALUES ('1', 'WX', '微信互联参数', 'wxd1678d3f83b1d83a', '6ddb043f94da5d2172926abe8533504f', 'daoweicloud.com', '2018-08-16 14:24:25', '2018-08-16 14:24:25', '0');
 COMMIT;
 
 -- ----------------------------
@@ -239,15 +270,19 @@ CREATE TABLE `sys_user` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `del_flag` char(1) COLLATE utf8mb4_bin DEFAULT '0' COMMENT '0-正常，1-删除',
+  `wx_openid` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '微信openid',
+  `qq_openid` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'QQ openid',
   PRIMARY KEY (`user_id`),
-  UNIQUE KEY `user_idx1_username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='用户表';
+  UNIQUE KEY `user_idx1_username` (`username`),
+  KEY `user_wx_openid` (`wx_openid`),
+  KEY `user_qq_openid` (`qq_openid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='用户表';
 
 -- ----------------------------
 --  Records of `sys_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user` VALUES ('1', 'admin', '$2a$10$SJiz7YONcq5ATINeF3s/aOB9O3jKFXVfblHCerRntXAArPp4rKtvu', null, '17034642888', null, '1', '2018-04-20 07:15:18', '2018-07-16 02:36:47', '0'), ('2', 'demo', '$2a$10$SJiz7YONcq5ATINeF3s/aOB9O3jKFXVfblHCerRntXAArPp4rKtvu', null, '17034642118', null, '1', '2018-04-22 11:39:07', '2018-07-29 10:36:38', '0');
+INSERT INTO `sys_user` VALUES ('1', 'admin', '$2a$10$SJiz7YONcq5ATINeF3s/aOB9O3jKFXVfblHCerRntXAArPp4rKtvu', null, '17034642888', null, '1', '2018-04-20 07:15:18', '2018-08-18 04:09:32', '0', '', null), ('2', 'demo', '$2a$10$SJiz7YONcq5ATINeF3s/aOB9O3jKFXVfblHCerRntXAArPp4rKtvu', null, '17034642118', null, '1', '2018-04-22 11:39:07', '2018-07-29 10:36:38', '0', null, null);
 COMMIT;
 
 -- ----------------------------
