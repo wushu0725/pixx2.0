@@ -14,11 +14,11 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: root
-    url: jdbc:mysql://mysql:3306/pigx?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/pigx?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
   elasticjob:
     # 分布式任务协调依赖zookeeper
     zookeeper:
-      server-lists: zookeeper:2181
+      server-lists: 127.0.0.1:2181
       namespace: pigx-daemon
     # 普通任务
     simples:
