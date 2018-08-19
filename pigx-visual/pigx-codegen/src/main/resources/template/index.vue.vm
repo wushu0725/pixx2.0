@@ -126,7 +126,7 @@
         type: 'warning'
       })
         .then(function() {
-          return delObj(row.clientId)
+          return delObj(row.$pk.lowerAttrName)
         })
         .then(data => {
         _this.tableData.splice(index, 1)

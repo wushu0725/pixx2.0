@@ -56,8 +56,7 @@ public class ${className}Controller {
      */
     @PostMapping
     public R save(@RequestBody ${className} ${classname}){
-			${classname}Service.insert(${classname});
-			return new R<>(Boolean.TRUE);
+			return new R<>(${classname}Service.insert(${classname}));
     }
 
     /**
@@ -73,13 +72,12 @@ public class ${className}Controller {
 
     /**
      * 删除
-     * @param ${pk.lowerAttrName}s
+     * @param ${pk.lowerAttrName}
      * @return R
      */
-    @DeleteMapping
-    public R delete(@RequestBody ${pk.attrType}[] ${pk.lowerAttrName}s){
-			${classname}Service.deleteBatchIds(Arrays.asList(${pk.lowerAttrName}s));
-      return new R<>(Boolean.TRUE);
+    @DeleteMapping("/{${pk.lowerAttrName}}")
+    public R delete(@PathVariable ${pk.attrType} ${pk.lowerAttrName}){
+      return new R<>(${classname}Service.deleteById(${pk.lowerAttrName}));
     }
 
 }

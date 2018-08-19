@@ -97,13 +97,12 @@ public class SysSocialDetailsController {
 	/**
 	 * 删除
 	 *
-	 * @param ids
+	 * @param id
 	 * @return R
 	 */
-	@DeleteMapping
-	public R delete(@RequestBody Integer[] ids) {
-		sysSocialDetailsService.deleteBatchIds(Arrays.asList(ids));
-		return new R<>(Boolean.TRUE);
+	@DeleteMapping("/{id}")
+	public R delete(@PathVariable Integer id ) {
+		return new R<>(sysSocialDetailsService.deleteById(id));
 	}
 
 	/**
