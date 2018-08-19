@@ -31,10 +31,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
- *@author LCN on 2017/7/1.
- *
+ * @author LCN on 2017/7/1.
  * @author LCN
  * @author lengleng
  */
@@ -52,9 +52,20 @@ public class AdminController {
 	}
 
 
+	@RequestMapping(value = "/avueOnlines", method = RequestMethod.GET)
+	public List<ModelInfo> avueOnlines() {
+		return apiModelService.onlines();
+	}
+
+
 	@RequestMapping(value = "/setting", method = RequestMethod.GET)
 	public TxState setting() {
 		return apiAdminService.getState();
+	}
+
+	@RequestMapping(value = "/avueSetting", method = RequestMethod.GET)
+	public List<Map<String, Object>> avueSetting() {
+		return apiAdminService.getMapState();
 	}
 
 	@RequestMapping(value = "/json", method = RequestMethod.GET)

@@ -23,14 +23,22 @@ import com.pig4cloud.pigx.manager.model.ModelName;
 import com.pig4cloud.pigx.manager.model.TxState;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author LCN on 2017/11/12
- * @author LCN
+ * @author lengleng
  */
 public interface ApiAdminService {
 
 	TxState getState();
+
+	/**
+	 * k/v 获取 值封装成map
+	 *
+	 * @return
+	 */
+	List<Map<String, Object>> getMapState();
 
 	String loadNotifyJson();
 
@@ -46,5 +54,4 @@ public interface ApiAdminService {
 	boolean hasCompensate();
 
 	boolean delCompensate(String path);
-
 }

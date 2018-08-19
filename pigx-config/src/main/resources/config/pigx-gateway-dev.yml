@@ -53,7 +53,13 @@ spring:
         - Path=/daemon/**
         filters:
         - StripPrefix=1
-
+      # 分布式事务管理模块
+      - id: pigx-tx-manager
+        uri: lb://pigx-tx-manager
+        predicates:
+        - Path=/tx/**
+        filters:
+        - StripPrefix=1
 security:
   encode:
     # 前端密码密钥，必须16位
