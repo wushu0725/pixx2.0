@@ -25,7 +25,7 @@ import com.pig4cloud.pigx.admin.api.entity.SysDept;
 import com.pig4cloud.pigx.admin.service.SysDeptService;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.util.R;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,9 +42,9 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/dept")
+@AllArgsConstructor
 public class DeptController {
-	@Autowired
-	private SysDeptService sysDeptService;
+	private final SysDeptService sysDeptService;
 
 	/**
 	 * 通过ID查询

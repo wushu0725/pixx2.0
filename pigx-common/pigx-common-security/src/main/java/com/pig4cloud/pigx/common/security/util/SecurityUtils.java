@@ -22,6 +22,7 @@ package com.pig4cloud.pigx.common.security.util;
 
 import cn.hutool.core.util.StrUtil;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
+import com.pig4cloud.pigx.common.security.service.PigxUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,12 +49,12 @@ public class SecurityUtils {
 	/**
 	 * 获取用户
 	 */
-	public static String getUser(Authentication authentication) {
+	public static PigxUser getUser(Authentication authentication) {
 		Object principal = authentication.getPrincipal();
-		if (principal == null) {
-			return null;
+		if (principal instanceof PigxUser) {
+			return (PigxUser) principal;
 		}
-		return (String) principal;
+		return null;
 	}
 
 	public static String getClientId() {
@@ -68,7 +69,7 @@ public class SecurityUtils {
 	/**
 	 * 获取用户
 	 */
-	public static String getUser() {
+	public static PigxUser getUser() {
 		Authentication authentication = getAuthentication();
 		if (authentication == null) {
 			return null;

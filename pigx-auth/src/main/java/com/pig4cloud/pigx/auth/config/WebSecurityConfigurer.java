@@ -22,7 +22,7 @@ package com.pig4cloud.pigx.auth.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pig4cloud.pigx.common.security.mobile.MobileLoginSuccessHandler;
 import com.pig4cloud.pigx.common.security.mobile.MobileSecurityConfigurer;
-import com.pig4cloud.pigx.common.security.util.PigxUserDetailsService;
+import com.pig4cloud.pigx.common.security.service.PigxUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

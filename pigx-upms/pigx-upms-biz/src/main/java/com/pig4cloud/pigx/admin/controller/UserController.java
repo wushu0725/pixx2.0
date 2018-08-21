@@ -73,7 +73,7 @@ public class UserController {
 		}
 		//为空时查询当前用户
 		if (StrUtil.isBlank(username)) {
-			username = SecurityUtils.getUser();
+			username = SecurityUtils.getUser().getUsername();
 		}
 
 		return new R<>(userService.findUserInfo(EnumLoginType.PWD.getType(), username));
@@ -163,6 +163,6 @@ public class UserController {
 	 */
 	@PutMapping("/editInfo")
 	public R<Boolean> editInfo(@RequestBody UserDTO userDto) {
-		return userService.updateUserInfo(userDto, SecurityUtils.getUser());
+		return userService.updateUserInfo(userDto, SecurityUtils.getUser().getUsername());
 	}
 }

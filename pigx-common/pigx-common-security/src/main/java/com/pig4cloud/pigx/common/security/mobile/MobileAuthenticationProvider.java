@@ -17,7 +17,7 @@
 
 package com.pig4cloud.pigx.common.security.mobile;
 
-import com.pig4cloud.pigx.common.security.util.PigxUserDetailsService;
+import com.pig4cloud.pigx.common.security.service.PigxUserDetailsService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

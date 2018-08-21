@@ -17,14 +17,12 @@
 
 package com.pig4cloud.pigx.codegen.config;
 
-import com.pig4cloud.pigx.common.security.component.PigAccessDeniedHandler;
-import com.pig4cloud.pigx.common.security.component.ResourceAuthExceptionEntryPoint;
+import com.pig4cloud.pigx.common.security.component.PigxResourceServerConfigurerAdapter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 
 /**
@@ -35,9 +33,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 @EnableResourceServer
 @AllArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
-	private final PigAccessDeniedHandler pigAccessDeniedHandler;
-	private final ResourceAuthExceptionEntryPoint resourceAuthExceptionEntryPoint;
+public class ResourceServerConfigurer extends PigxResourceServerConfigurerAdapter {
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
@@ -48,14 +44,12 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
 	}
 
 	/**
-	 * why add  resourceId
-	 * https://stackoverflow.com/questions/28703847/how-do-you-set-a-resource-id-for-a-token
+	 * 重写抽象类实现，不需要调用feign 获取 userdetils
 	 *
 	 * @param resources
-	 * @throws Exception
 	 */
 	@Override
-	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+	public void configure(ResourceServerSecurityConfigurer resources) {
 		resources.authenticationEntryPoint(resourceAuthExceptionEntryPoint)
 			.accessDeniedHandler(pigAccessDeniedHandler);
 	}

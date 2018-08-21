@@ -13,7 +13,8 @@
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
  * Author: lengleng (wangiegie@gmail.com)
- */package com.pig4cloud.pigx.common.security.util;
+ */
+package com.pig4cloud.pigx.common.security.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

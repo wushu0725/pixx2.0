@@ -38,7 +38,7 @@
 		<!--core 工具类-->
 		<dependency>
 			<groupId>com.pig4cloud</groupId>
-			<artifactId>pigx-common-security</artifactId>
+			<artifactId>pigx-common-core</artifactId>
 			<version>${pigx.version}</version>
 		</dependency>
 	</dependencies>

@@ -53,7 +53,7 @@ public class SysLogUtils {
 		});
 
 		SysLog sysLog = new SysLog();
-		sysLog.setCreateBy(SecurityUtils.getUser());
+		sysLog.setCreateBy(SecurityUtils.getUser().getUsername());
 		sysLog.setType(CommonConstant.STATUS_NORMAL);
 		sysLog.setRemoteAddr(HttpUtil.getClientIP(request));
 		sysLog.setRequestUri(URLUtil.getPath(request.getRequestURI()));

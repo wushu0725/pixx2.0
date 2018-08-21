@@ -71,9 +71,7 @@ public class SysSocialDetailsServiceImpl extends ServiceImpl<SysSocialDetailsMap
 	public Boolean bindSocial(String appId, String code) {
 		Map<String, String> result = getOpenId(appId, code);
 
-		SysUser condition = new SysUser();
-		condition.setUsername(SecurityUtils.getUser());
-		SysUser sysUser = sysUserMapper.selectOne(condition);
+		SysUser sysUser = sysUserMapper.selectById(SecurityUtils.getUser().getId());
 		sysUser.setWxOpenid(result.get("openId"));
 
 		sysUserMapper.updateAllColumnById(sysUser);

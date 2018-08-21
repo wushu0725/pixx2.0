@@ -41,12 +41,6 @@
 			<artifactId>pigx-common-security</artifactId>
 			<version>${pigx.version}</version>
 		</dependency>
-		<!--server-api-->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
 		<!--swagger 依赖-->
 		<dependency>
 			<groupId>io.springfox</groupId>

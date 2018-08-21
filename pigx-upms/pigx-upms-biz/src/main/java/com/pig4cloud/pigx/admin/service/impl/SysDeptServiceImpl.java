@@ -29,8 +29,8 @@ import com.pig4cloud.pigx.admin.mapper.SysDeptMapper;
 import com.pig4cloud.pigx.admin.mapper.SysDeptRelationMapper;
 import com.pig4cloud.pigx.admin.service.SysDeptService;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -46,11 +46,10 @@ import java.util.List;
  * @since 2018-01-20
  */
 @Service
+@AllArgsConstructor
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> implements SysDeptService {
-	@Autowired
-	private SysDeptMapper sysDeptMapper;
-	@Autowired
-	private SysDeptRelationMapper sysDeptRelationMapper;
+	private final SysDeptMapper sysDeptMapper;
+	private final SysDeptRelationMapper sysDeptRelationMapper;
 
 	/**
 	 * 添加信息部门

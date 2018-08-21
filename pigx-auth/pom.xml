@@ -46,6 +46,12 @@
 			<artifactId>pigx-upms-api</artifactId>
 			<version>${pigx.version}</version>
 		</dependency>
+		<!--security-->
+		<dependency>
+			<groupId>com.pig4cloud</groupId>
+			<artifactId>pigx-common-security</artifactId>
+			<version>${pigx.version}</version>
+		</dependency>
 		<!--spring security 、oauth、jwt依赖-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
