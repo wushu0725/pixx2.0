@@ -28,7 +28,6 @@
 	</parent>
 
 	<artifactId>pigx-upms</artifactId>
-	<version>${pigx.version}</version>
 	<name>pigx-upms</name>
 	<description>pigx 通用用户权限管理聚合模块</description>
 	<packaging>pom</packaging>

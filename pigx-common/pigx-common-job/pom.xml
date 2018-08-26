@@ -28,7 +28,6 @@
 	</parent>
 
 	<artifactId>pigx-common-job</artifactId>
-	<version>${pigx.version}</version>
 	<packaging>jar</packaging>
 	<name>pigx-common-job</name>
 	<description>pigx 定时任务</description>

@@ -28,7 +28,6 @@
 	</parent>
 
 	<artifactId>pigx-config</artifactId>
-	<version>${pigx.version}</version>
 	<packaging>jar</packaging>
 
 	<name>pigx-config</name>

@@ -28,7 +28,6 @@
 	</parent>
 
 	<artifactId>pigx-upms-biz</artifactId>
-	<version>${pigx.version}</version>
 	<packaging>jar</packaging>
 
 	<name>pigx-upms-biz</name>

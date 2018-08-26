@@ -10,7 +10,6 @@
 	</parent>
 
 	<artifactId>pigx-codegen</artifactId>
-	<version>${pigx.version}</version>
 	<packaging>jar</packaging>
 	<name>pigx-codegen</name>
 	<description>代码生成模块</description>

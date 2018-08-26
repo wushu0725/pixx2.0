@@ -27,7 +27,6 @@
 	</parent>
 
 	<artifactId>pigx-daemon</artifactId>
-	<version>${pigx.version}</version>
 	<packaging>jar</packaging>
 	<name>pigx-daemon</name>
 	<description>后台跑批定时任务模块</description>
