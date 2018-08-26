@@ -30,7 +30,7 @@ import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
  * @author lengleng
  * @date 2018/6/22
  */
-public abstract class PigxResourceServerConfigurerAdapter extends ResourceServerConfigurerAdapter {
+public abstract class BaseResourceServerConfigurerAdapter extends ResourceServerConfigurerAdapter {
 	@Autowired
 	protected ResourceAuthExceptionEntryPoint resourceAuthExceptionEntryPoint;
 	@Autowired

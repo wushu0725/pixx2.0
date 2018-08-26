@@ -8,6 +8,6 @@ WORKDIR /pigx/bin/com.pig4cloud/pigx-gateway
 
 EXPOSE 9999
 
-ADD ./target/pigx-gateway.jar ./
+ADD ./pigx-gateway/target/pigx-gateway.jar ./
 
 CMD java -Djava.security.egd=file:/dev/./urandom -jar pigx-gateway.jar

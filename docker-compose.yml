@@ -25,6 +25,7 @@ services:
   pigx-gateway:
     links:
       - pigx-eureka
+      - pigx-redis
     build:
       context: ./
       dockerfile: ./pigx-gateway/Dockerfile
@@ -40,8 +41,6 @@ services:
       context: ./
       dockerfile: ./pigx-auth/Dockerfile
     restart: always
-    ports:
-      - 3000:3000
 
   pigx-upms:
     links:
@@ -56,6 +55,7 @@ services:
   pigx-monitor:
     links:
       - pigx-eureka
+      - pigx-redis
     build:
       context: ./
       dockerfile: ./pigx-visual/pigx-monitor/Dockerfile
@@ -66,6 +66,7 @@ services:
   pigx-daemon:
     links:
       - pigx-eureka
+      - pigx-redis
     build:
       context: ./
       dockerfile: ./pigx-visual/pigx-daemon/Dockerfile
@@ -76,9 +77,20 @@ services:
   pigx-codegen:
     links:
       - pigx-eureka
+      - pigx-redis
     build:
       context: ./
       dockerfile: ./pigx-visual/pigx-codegen/Dockerfile
     restart: always
+
+  pigx-tx-manager:
+    links:
+      - pigx-eureka
+      - pigx-redis
+    build:
+      context: ./
+      dockerfile: ./pigx-visual/pigx-tx-manager/Dockerfile
+    restart: always
     ports:
-      - 5003:5003
+      - 5004:5004
+      - 9998:9998

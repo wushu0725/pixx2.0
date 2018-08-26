@@ -8,6 +8,6 @@ WORKDIR /pigx/bin/com.pig4cloud/pigx-auth
 
 EXPOSE 3000
 
-ADD ./target/pigx-auth.jar ./
+ADD ./pigx-auth/target/pigx-auth.jar ./
 
 CMD java -Djava.security.egd=file:/dev/./urandom -jar pigx-auth.jar

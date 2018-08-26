@@ -8,6 +8,6 @@ WORKDIR /pigx/bin/com.pig4cloud/pigx-config
 
 EXPOSE 4001
 
-ADD ./target/pigx-config.jar ./
+ADD ./pigx-config/target/pigx-config.jar ./
 
 CMD java -Djava.security.egd=file:/dev/./urandom -jar pigx-config.jar
