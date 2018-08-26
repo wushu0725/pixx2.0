@@ -28,7 +28,6 @@
 	</parent>
 
 	<artifactId>pigx-common-core</artifactId>
-	<version>${pigx.version}</version>
 	<packaging>jar</packaging>
 	<name>pigx-common-core</name>
 	<description>pigx 公共工具类核心包</description>
@@ -61,7 +60,6 @@
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-core</artifactId>
 			<version>${mbp.boot.version}</version>
-			<scope>compile</scope>
 		</dependency>
 		<!--feign 依赖-->
 		<dependency>

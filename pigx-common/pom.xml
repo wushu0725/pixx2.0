@@ -28,7 +28,6 @@
 	</parent>
 
 	<artifactId>pigx-common</artifactId>
-	<version>${pigx.version}</version>
 	<packaging>pom</packaging>
 	<name>pigx-common</name>
 	<description>pigx 公共聚合模块</description>

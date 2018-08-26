@@ -28,7 +28,6 @@
 	</parent>
 
 	<artifactId>pigx-common-swagger</artifactId>
-	<version>${pigx.version}</version>
 	<packaging>jar</packaging>
 	<name>pigx-common-swagger</name>
 	<description>pigx 接口文档</description>

@@ -28,7 +28,6 @@
 	</parent>
 
 	<artifactId>pigx-common-security</artifactId>
-	<version>${pigx.version}</version>
 	<packaging>jar</packaging>
 	<name>pigx-common-security</name>
 	<description>pigx 安全工具类</description>

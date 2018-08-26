@@ -9,7 +9,6 @@
 	</parent>
 
 	<artifactId>pigx-common-transaction</artifactId>
-	<version>${pigx.version}</version>
 	<packaging>jar</packaging>
 	<name>pigx-common-transaction</name>
 	<description>pigx lcn transaction</description>

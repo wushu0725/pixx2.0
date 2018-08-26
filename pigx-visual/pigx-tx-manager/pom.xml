@@ -9,7 +9,6 @@
 	</parent>
 
 	<artifactId>pigx-tx-manager</artifactId>
-	<version>${pigx.version}</version>
 	<packaging>jar</packaging>
 
 	<name>pigx-tx-manager</name>

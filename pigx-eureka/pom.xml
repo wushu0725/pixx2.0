@@ -27,9 +27,7 @@
 		<version>${pigx.version}</version>
 	</parent>
 
-	<groupId>com.pig4cloud.pigx</groupId>
 	<artifactId>pigx-eureka</artifactId>
-	<version>${pigx.version}</version>
 	<packaging>jar</packaging>
 
 	<name>pigx-eureka</name>
