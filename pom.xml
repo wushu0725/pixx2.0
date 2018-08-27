@@ -37,13 +37,13 @@
 	</parent>
 
 	<properties>
-		<pigx.version>1.5.0</pigx.version>
+		<pigx.version>1.6.0</pigx.version>
 		<spring-boot.version>2.0.4.RELEASE</spring-boot.version>
 		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<monitor.version>2.0.1</monitor.version>
+		<monitor.version>2.0.2</monitor.version>
 		<hutool.version>4.1.7</hutool.version>
 		<mbp.boot.version>2.3</mbp.boot.version>
 		<kaptcha.version>0.0.9</kaptcha.version>
@@ -52,6 +52,7 @@
 		<curator.version>2.10.0</curator.version>
 		<velocity.version>1.7</velocity.version>
 		<lcn.version>4.1.0</lcn.version>
+		<jasypt.version>2.1.0</jasypt.version>
 		<elastic-job-lite.version>2.1.5</elastic-job-lite.version>
 		<security.oauth.version>2.3.3.RELEASE</security.oauth.version>
 		<docker.url>http://192.168.0.13:4243</docker.url>
@@ -69,6 +70,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.github.ulisesbocchio</groupId>
+			<artifactId>jasypt-spring-boot-starter</artifactId>
+			<version>${jasypt.version}</version>
 		</dependency>
 		<!--监控-->
 		<dependency>

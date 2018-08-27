@@ -23,14 +23,16 @@ package com.pig4cloud.pigx.admin.controller;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.pig4cloud.pigx.admin.api.entity.SysLog;
+import com.pig4cloud.pigx.admin.api.vo.PreLogVo;
 import com.pig4cloud.pigx.admin.service.SysLogService;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,9 +45,9 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/log")
+@AllArgsConstructor
 public class LogController {
-	@Autowired
-	private SysLogService sysLogService;
+	private final SysLogService sysLogService;
 
 	/**
 	 * 分页查询日志信息
@@ -80,5 +82,16 @@ public class LogController {
 	@PostMapping
 	public R<Boolean> save(@RequestBody SysLog sysLog) {
 		return new R<>(sysLogService.insert(sysLog));
+	}
+
+	/**
+	 * 插入前端异常日志
+	 *
+	 * @param preLogVoList 日志实体
+	 * @return success/false
+	 */
+	@PostMapping("/logs")
+	public R<Boolean> saveLogs(@RequestBody List<PreLogVo> preLogVoList) {
+		return new R<>(sysLogService.insertLogs(preLogVoList));
 	}
 }
