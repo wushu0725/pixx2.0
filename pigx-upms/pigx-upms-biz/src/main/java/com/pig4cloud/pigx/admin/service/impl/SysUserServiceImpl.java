@@ -126,6 +126,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		return query;
 	}
 
+
 	/**
 	 * 通过ID查询用户信息
 	 *
@@ -135,6 +136,32 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	@Override
 	public UserVO selectUserVoById(Integer id) {
 		return sysUserMapper.selectUserVoById(id);
+	}
+
+	/**
+	 * 通过用户名查找已经删除的用户
+	 *
+	 * @param username 用户名
+	 * @return 用户对象
+	 */
+	@Override
+	public SysUser selectDeletedUserByUsername(String username) {
+		return sysUserMapper.selectDeletedUserByUsername(username);
+	}
+
+	/**
+	 * 根据用户名删除用户（真实删除）
+	 * @param username
+	 * @return
+	 */
+	@Override
+	public Boolean deleteSysUserByUsernameAndUserId(String username,Integer userId) {
+
+		sysUserMapper.deleteSysUserByUsernameAndUserId(username,userId);
+		SysUserRole condition = new SysUserRole();
+		condition.setUserId(userId);
+		sysUserRoleService.delete(new EntityWrapper<>(condition));
+		return Boolean.TRUE;
 	}
 
 	/**
@@ -190,4 +217,5 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		});
 		return Boolean.TRUE;
 	}
+
 }

@@ -61,4 +61,18 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 	 */
 	UserVO selectUserVoById(Integer id);
 
+	/**
+	 * 通过用户名查找已经删除的用户
+	 * @param username 用户名
+	 * @return 用户对象
+	 */
+	SysUser selectDeletedUserByUsername(@Param("username")String username);
+
+	/**
+	 * 根据用户名删除用户（真实删除）
+	 * @param username
+	 * @return
+	 */
+	Boolean deleteSysUserByUsernameAndUserId(@Param("username")String username,@Param("userId")Integer userId);
+
 }

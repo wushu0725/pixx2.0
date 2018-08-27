@@ -50,6 +50,7 @@ public interface SysUserService extends IService<SysUser> {
 	 */
 	Page selectWithRolePage(Query query);
 
+
 	/**
 	 * 删除用户
 	 *
@@ -83,4 +84,20 @@ public interface SysUserService extends IService<SysUser> {
 	 * @return 用户信息
 	 */
 	UserVO selectUserVoById(Integer id);
+
+	/**
+	 * 通过用户名查找已经删除的用户
+	 * @param username 用户名
+	 * @return
+	 */
+	SysUser selectDeletedUserByUsername(String username);
+
+	/**
+	 * 根据用户名删除用户（真实删除）
+	 * @param username
+	 * @return
+	 */
+	Boolean deleteSysUserByUsernameAndUserId(String username,Integer userId);
+
+
 }

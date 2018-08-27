@@ -21,7 +21,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pig4cloud.pigx.admin.mapper.SysUserMapper">
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.pig4cloud.pigx.admin.api.entity.SysUser">
+	<resultMap id="baseResultMap" type="com.pig4cloud.pigx.admin.api.entity.SysUser">
 		<id column="user_id" property="userId"/>
 		<result column="username" property="username"/>
 		<result column="password" property="password"/>
@@ -157,4 +157,25 @@
 		ORDER BY `user`.create_time DESC
 	</select>
 
+	<select id="selectDeletedUserByUsername" resultMap="baseResultMap">
+		SELECT user_id,
+		 	   username,
+		 	   password,
+		 	   phone,
+		 	   avatar,
+		 	   salt,
+		 	   dept_id,
+		 	   wx_openid,
+		 	   qq_openid,
+		 	   create_time,
+		 	   update_time,
+		 	   del_flag
+		FROM sys_user
+			WHERE username = #{username}
+			AND del_flag = 1
+	</select>
+
+	<delete id="deleteSysUserByUsernameAndUserId">
+		DELETE FROM sys_user WHERE username=#{username} AND user_id=#{userId};
+	</delete>
 </mapper>

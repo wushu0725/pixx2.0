@@ -23,4 +23,4 @@ eureka:
       defaultZone: http://pig:pig@localhost:1025/eureka/
 logging:
   level:
-    root: debug
+    root: info

@@ -116,12 +116,15 @@ public class UserController {
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_user_add')")
 	public R<Boolean> user(@RequestBody UserDTO userDto) {
+		SysUser deletedUser = userService.selectDeletedUserByUsername(userDto.getUsername());
+		if ( deletedUser!= null) {
+			userService.deleteSysUserByUsernameAndUserId(userDto.getUsername(),deletedUser.getUserId());
+		}
 		SysUser sysUser = new SysUser();
 		BeanUtils.copyProperties(userDto, sysUser);
 		sysUser.setDelFlag(CommonConstant.STATUS_NORMAL);
 		sysUser.setPassword(ENCODER.encode(userDto.getNewpassword1()));
 		userService.insert(sysUser);
-
 		userDto.getRole().forEach(roleId -> {
 			SysUserRole userRole = new SysUserRole();
 			userRole.setUserId(sysUser.getUserId());

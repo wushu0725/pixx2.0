@@ -17,7 +17,7 @@
 
 package com.pig4cloud.pigx.daemon.config;
 
-import com.pig4cloud.pigx.common.security.component.PigxResourceServerConfigurerAdapter;
+import com.pig4cloud.pigx.common.security.component.BaseResourceServerConfigurerAdapter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -33,7 +33,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 @EnableResourceServer
 @AllArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class ResourceServerConfigurer extends PigxResourceServerConfigurerAdapter {
+public class ResourceServerConfigurer extends BaseResourceServerConfigurerAdapter {
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
