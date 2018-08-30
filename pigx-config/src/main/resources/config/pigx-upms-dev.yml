@@ -2,8 +2,8 @@
 security:
   oauth2:
     client:
-      client-id: ENC(iVEZk4Gdt0UXDlX7ZN9J5g==)
-      client-secret: ENC(iVEZk4Gdt0UXDlX7ZN9J5g==)
+      client-id: ENC(ltJPpR50wT0oIY9kfOe1Iw==)
+      client-secret: ENC(ltJPpR50wT0oIY9kfOe1Iw==)
       scope: server
 
 # 数据源

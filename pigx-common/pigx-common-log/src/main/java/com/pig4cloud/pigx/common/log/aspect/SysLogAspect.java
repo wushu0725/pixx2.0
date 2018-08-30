@@ -38,7 +38,7 @@ import org.aspectj.lang.annotation.Aspect;
 public class SysLogAspect {
 
 	@Around("@annotation(sysLog)")
-	public Object aroundWxApi(ProceedingJoinPoint point, SysLog sysLog) throws Throwable {
+	public Object around(ProceedingJoinPoint point, SysLog sysLog) throws Throwable {
 		String strClassName = point.getTarget().getClass().getName();
 		String strMethodName = point.getSignature().getName();
 		log.debug("[类名]:{},[方法]:{}", strClassName, strMethodName);

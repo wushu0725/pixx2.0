@@ -2,4 +2,5 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.pig4cloud.pigx.common.core.config.JacksonConfig,\
   com.pig4cloud.pigx.common.core.config.RedisConfig,\
   com.pig4cloud.pigx.common.core.config.RestTemplateConfig,\
+  com.pig4cloud.pigx.common.core.exception.GlobalExceptionHandler,\
   com.pig4cloud.pigx.common.core.util.SpringContextHolder

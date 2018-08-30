@@ -27,19 +27,19 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.dto.UserDTO;
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
+import com.pig4cloud.pigx.admin.api.entity.SysDeptRelation;
 import com.pig4cloud.pigx.admin.api.entity.SysRole;
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
 import com.pig4cloud.pigx.admin.api.entity.SysUserRole;
 import com.pig4cloud.pigx.admin.api.vo.MenuVO;
 import com.pig4cloud.pigx.admin.api.vo.UserVO;
 import com.pig4cloud.pigx.admin.mapper.SysUserMapper;
-import com.pig4cloud.pigx.admin.service.SysMenuService;
-import com.pig4cloud.pigx.admin.service.SysRoleService;
-import com.pig4cloud.pigx.admin.service.SysUserRoleService;
-import com.pig4cloud.pigx.admin.service.SysUserService;
+import com.pig4cloud.pigx.admin.service.*;
 import com.pig4cloud.pigx.common.core.constant.enums.EnumLoginType;
+import com.pig4cloud.pigx.common.core.datascope.DataScope;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
+import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -69,6 +69,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	private final SysUserMapper sysUserMapper;
 	private final SysRoleService sysRoleService;
 	private final SysUserRoleService sysUserRoleService;
+	private final SysDeptRelationService sysDeptRelationService;
 
 	/**
 	 * 通过用户名查用户的全部信息
@@ -121,8 +122,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
 	@Override
 	public Page selectWithRolePage(Query query) {
+		DataScope dataScope = new DataScope();
+		dataScope.setScopeName("deptId");
+		dataScope.setIsOnly(true);
+		dataScope.setDeptIds(getChildDepts());
 		Object username = query.getCondition().get("username");
-		query.setRecords(sysUserMapper.selectUserVoPage(query, username));
+		query.setRecords(sysUserMapper.selectUserVoPage(query, username, dataScope));
 		return query;
 	}
 
@@ -151,13 +156,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
 	/**
 	 * 根据用户名删除用户（真实删除）
+	 *
 	 * @param username
 	 * @return
 	 */
 	@Override
-	public Boolean deleteSysUserByUsernameAndUserId(String username,Integer userId) {
+	public Boolean deleteSysUserByUsernameAndUserId(String username, Integer userId) {
 
-		sysUserMapper.deleteSysUserByUsernameAndUserId(username,userId);
+		sysUserMapper.deleteSysUserByUsernameAndUserId(username, userId);
 		SysUserRole condition = new SysUserRole();
 		condition.setUserId(userId);
 		sysUserRoleService.delete(new EntityWrapper<>(condition));
@@ -216,6 +222,25 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 			userRole.insert();
 		});
 		return Boolean.TRUE;
+	}
+
+	/**
+	 * 获取当前用户的子部门信息
+	 *
+	 * @return 子部门列表
+	 */
+	private List<Integer> getChildDepts() {
+		Integer deptId = SecurityUtils.getUser().getDeptId();
+
+		//获取当前部门的子部门
+		SysDeptRelation deptRelation = new SysDeptRelation();
+		deptRelation.setAncestor(deptId);
+		List<SysDeptRelation> deptRelationList = sysDeptRelationService.selectList(new EntityWrapper<>(deptRelation));
+		List<Integer> deptIds = new ArrayList<>();
+		for (SysDeptRelation sysDeptRelation : deptRelationList) {
+			deptIds.add(sysDeptRelation.getDescendant());
+		}
+		return deptIds;
 	}
 
 }

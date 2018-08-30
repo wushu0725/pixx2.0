@@ -20,6 +20,7 @@
 package com.pig4cloud.pigx.admin.config;
 
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
+import com.pig4cloud.pigx.common.core.datascope.DataScopeInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,5 +40,15 @@ public class MybatisPlusConfigurer {
 	@Bean
 	public PaginationInterceptor paginationInterceptor() {
 		return new PaginationInterceptor();
+	}
+
+	/**
+	 * 数据权限插件
+	 *
+	 * @return DataScopeInterceptor
+	 */
+	@Bean
+	public DataScopeInterceptor dataScopeInterceptor() {
+		return new DataScopeInterceptor();
 	}
 }

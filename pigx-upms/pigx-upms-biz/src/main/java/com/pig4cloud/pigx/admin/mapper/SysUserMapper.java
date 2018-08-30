@@ -22,6 +22,7 @@ package com.pig4cloud.pigx.admin.mapper;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
 import com.pig4cloud.pigx.admin.api.vo.UserVO;
+import com.pig4cloud.pigx.common.core.datascope.DataScope;
 import com.pig4cloud.pigx.common.core.util.Query;
 import org.apache.ibatis.annotations.Param;
 
@@ -49,9 +50,10 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 	 *
 	 * @param query    查询条件
 	 * @param username 用户名
+	 * @param dataScope
 	 * @return list
 	 */
-	List selectUserVoPage(Query query, @Param("username") Object username);
+	List selectUserVoPage(Query query, @Param("username") Object username, DataScope dataScope);
 
 	/**
 	 * 通过ID查询用户信息
