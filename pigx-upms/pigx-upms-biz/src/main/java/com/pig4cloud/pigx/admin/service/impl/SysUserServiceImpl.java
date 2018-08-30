@@ -237,9 +237,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		deptRelation.setAncestor(deptId);
 		List<SysDeptRelation> deptRelationList = sysDeptRelationService.selectList(new EntityWrapper<>(deptRelation));
 		List<Integer> deptIds = new ArrayList<>();
-		for (SysDeptRelation sysDeptRelation : deptRelationList) {
-			deptIds.add(sysDeptRelation.getDescendant());
-		}
+		deptRelationList.forEach(sysDeptRelation -> deptIds.add(sysDeptRelation.getDescendant()));
 		return deptIds;
 	}
 
