@@ -24,6 +24,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -47,6 +48,7 @@ public class SysSocialDetails extends Model<SysSocialDetails> {
 	/**
 	 * 类型
 	 */
+	@NotBlank(message = "类型不能为空")
 	private String type;
 	/**
 	 * 描述
@@ -55,10 +57,12 @@ public class SysSocialDetails extends Model<SysSocialDetails> {
 	/**
 	 * appid
 	 */
+	@NotBlank(message = "账号不能为空")
 	private String appId;
 	/**
 	 * app_secret
 	 */
+	@NotBlank(message = "密钥不能为空")
 	private String appSecret;
 	/**
 	 * 回调地址

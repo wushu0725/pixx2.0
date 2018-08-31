@@ -27,6 +27,8 @@ import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -48,11 +50,13 @@ public class SysMenu extends Model<SysMenu> {
 	/**
 	 * 菜单ID
 	 */
+	@NotNull(message = "菜单ID不能为空")
 	@TableId(value = "menu_id", type = IdType.INPUT)
 	private Integer menuId;
 	/**
 	 * 菜单名称
 	 */
+	@NotBlank(message = "菜单名称不能为空")
 	private String name;
 	/**
 	 * 菜单权限标识

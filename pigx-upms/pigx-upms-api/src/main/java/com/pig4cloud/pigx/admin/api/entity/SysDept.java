@@ -27,6 +27,7 @@ import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -50,6 +51,7 @@ public class SysDept extends Model<SysDept> {
 	/**
 	 * 部门名称
 	 */
+	@NotBlank(message = "部门名称不能为空")
 	private String name;
 	/**
 	 * 排序

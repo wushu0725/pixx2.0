@@ -27,6 +27,7 @@ import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -47,9 +48,16 @@ public class SysRole extends Model<SysRole> {
 
 	@TableId(value = "role_id", type = IdType.AUTO)
 	private Integer roleId;
+
+	@NotBlank(message = "角色名称 不能为空")
 	private String roleName;
+
+	@NotBlank(message = "角色标识 不能为空")
 	private String roleCode;
+
+	@NotBlank(message = "角色描述 不能为空")
 	private String roleDesc;
+
 	private LocalDateTime createTime;
 	private LocalDateTime updateTime;
 	/**

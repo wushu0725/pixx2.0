@@ -43,6 +43,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 /**
@@ -117,8 +118,8 @@ public class UserController {
 	@PreAuthorize("@pms.hasPermission('sys_user_add')")
 	public R<Boolean> user(@RequestBody UserDTO userDto) {
 		SysUser deletedUser = userService.selectDeletedUserByUsername(userDto.getUsername());
-		if ( deletedUser!= null) {
-			userService.deleteSysUserByUsernameAndUserId(userDto.getUsername(),deletedUser.getUserId());
+		if (deletedUser != null) {
+			userService.deleteSysUserByUsernameAndUserId(userDto.getUsername(), deletedUser.getUserId());
 		}
 		SysUser sysUser = new SysUser();
 		BeanUtils.copyProperties(userDto, sysUser);
@@ -142,7 +143,7 @@ public class UserController {
 	 */
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_user_edit')")
-	public R<Boolean> userUpdate(@RequestBody UserDTO userDto) {
+	public R<Boolean> userUpdate(@Valid @RequestBody UserDTO userDto) {
 		SysUser user = userService.selectById(userDto.getUserId());
 		return new R<>(userService.updateUser(userDto, user.getUsername()));
 	}
@@ -165,7 +166,7 @@ public class UserController {
 	 * @return success/false
 	 */
 	@PutMapping("/editInfo")
-	public R<Boolean> editInfo(@RequestBody UserDTO userDto) {
+	public R<Boolean> editInfo(@Valid @RequestBody UserDTO userDto) {
 		return userService.updateUserInfo(userDto, SecurityUtils.getUser().getUsername());
 	}
 }

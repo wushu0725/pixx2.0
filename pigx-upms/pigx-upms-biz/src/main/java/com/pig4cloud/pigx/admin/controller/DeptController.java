@@ -29,6 +29,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -78,7 +79,7 @@ public class DeptController {
 	 */
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_dept_add')")
-	public R<Boolean> add(@RequestBody SysDept sysDept) {
+	public R<Boolean> add(@Valid @RequestBody SysDept sysDept) {
 		return new R<>(sysDeptService.insertDept(sysDept));
 	}
 
@@ -102,7 +103,7 @@ public class DeptController {
 	 */
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_dept_edit')")
-	public Boolean edit(@RequestBody SysDept sysDept) {
+	public Boolean edit(@Valid @RequestBody SysDept sysDept) {
 		sysDept.setUpdateTime(LocalDateTime.now());
 		return sysDeptService.updateDeptById(sysDept);
 	}

@@ -1,5 +1,5 @@
 <p align="center">
- <img src="https://img.shields.io/circleci/project/vuejs/vue/dev.svg" alt="Build Status">
+ <img src="https://img.shields.io/badge/Avue-1.5.4.RC1-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/Spring%20Cloud-Finchley.RELEASE-blue.svg" alt="Coverage Status">
   <img src="https://img.shields.io/badge/Spring%20Boot-2.0.3.RELEASE-blue.svg" alt="Downloads">
 </p>

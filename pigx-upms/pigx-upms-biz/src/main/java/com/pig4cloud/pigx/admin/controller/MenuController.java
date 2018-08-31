@@ -33,6 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.*;
 
 /**
@@ -123,7 +124,7 @@ public class MenuController {
 	 */
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_menu_add')")
-	public R<Boolean> menu(@RequestBody SysMenu sysMenu) {
+	public R<Boolean> menu(@Valid @RequestBody SysMenu sysMenu) {
 		return new R<>(sysMenuService.insert(sysMenu));
 	}
 
@@ -142,7 +143,7 @@ public class MenuController {
 
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_menu_edit')")
-	public R<Boolean> menuUpdate(@RequestBody SysMenu sysMenu) {
+	public R<Boolean> menuUpdate(@Valid @RequestBody SysMenu sysMenu) {
 		return new R<>(sysMenuService.updateMenuById(sysMenu));
 	}
 

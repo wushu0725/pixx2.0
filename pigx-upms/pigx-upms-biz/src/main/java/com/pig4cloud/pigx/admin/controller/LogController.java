@@ -32,6 +32,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -80,7 +81,7 @@ public class LogController {
 	 * @return success/false
 	 */
 	@PostMapping
-	public R<Boolean> save(@RequestBody SysLog sysLog) {
+	public R<Boolean> save(@Valid @RequestBody SysLog sysLog) {
 		return new R<>(sysLogService.insert(sysLog));
 	}
 

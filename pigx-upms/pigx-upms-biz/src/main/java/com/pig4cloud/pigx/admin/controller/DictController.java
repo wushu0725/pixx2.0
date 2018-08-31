@@ -34,6 +34,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -99,7 +100,7 @@ public class DictController {
 	@PostMapping
 	@CacheEvict(value = "dict_details", key = "#sysDict.type")
 	@PreAuthorize("@pms.hasPermission('sys_dict_add')")
-	public R<Boolean> dict(@RequestBody SysDict sysDict) {
+	public R<Boolean> dict(@Valid @RequestBody SysDict sysDict) {
 		return new R<>(sysDictService.insert(sysDict));
 	}
 
@@ -128,7 +129,7 @@ public class DictController {
 	@SysLog("修改字典")
 	@CacheEvict(value = "dict_details", key = "#sysDict.type")
 	@PreAuthorize("@pms.hasPermission('sys_dict_edit')")
-	public R<Boolean> editDict(@RequestBody SysDict sysDict) {
+	public R<Boolean> editDict(@Valid @RequestBody SysDict sysDict) {
 		return new R<>(sysDictService.updateById(sysDict));
 	}
 }

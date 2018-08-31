@@ -28,7 +28,7 @@ import com.pig4cloud.pigx.common.core.util.R;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import javax.validation.Valid;
 import java.util.Map;
 
 
@@ -77,7 +77,7 @@ public class SysSocialDetailsController {
 	 * @return R
 	 */
 	@PostMapping
-	public R save(@RequestBody SysSocialDetails sysSocialDetails) {
+	public R save(@Valid @RequestBody SysSocialDetails sysSocialDetails) {
 		sysSocialDetailsService.insert(sysSocialDetails);
 		return new R<>(Boolean.TRUE);
 	}
@@ -89,7 +89,7 @@ public class SysSocialDetailsController {
 	 * @return R
 	 */
 	@PutMapping
-	public R update(@RequestBody SysSocialDetails sysSocialDetails) {
+	public R update(@Valid @RequestBody SysSocialDetails sysSocialDetails) {
 		sysSocialDetailsService.updateById(sysSocialDetails);
 		return new R<>(Boolean.TRUE);
 	}
@@ -101,7 +101,7 @@ public class SysSocialDetailsController {
 	 * @return R
 	 */
 	@DeleteMapping("/{id}")
-	public R delete(@PathVariable Integer id ) {
+	public R delete(@PathVariable Integer id) {
 		return new R<>(sysSocialDetailsService.deleteById(id));
 	}
 
@@ -113,7 +113,7 @@ public class SysSocialDetailsController {
 	 */
 	@GetMapping("/info/{inStr}")
 	public R<UserInfo> social(@PathVariable String inStr) {
-		Map<String,String> result = sysSocialDetailsService.findOpenId(inStr);
+		Map<String, String> result = sysSocialDetailsService.findOpenId(inStr);
 		return new R<>(sysUserService.findUserInfo(result.get("type"), result.get("openId")));
 	}
 

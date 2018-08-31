@@ -27,6 +27,7 @@ import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -54,14 +55,17 @@ public class SysDict extends Model<SysDict> {
 	/**
 	 * 数据值
 	 */
+	@NotBlank(message = "字典项数据值不能为空")
 	private String value;
 	/**
 	 * 标签名
 	 */
+	@NotBlank(message = "字典项标签不能为空")
 	private String label;
 	/**
 	 * 类型
 	 */
+	@NotBlank(message = "字典项数据类型不能为空")
 	private String type;
 	/**
 	 * 描述

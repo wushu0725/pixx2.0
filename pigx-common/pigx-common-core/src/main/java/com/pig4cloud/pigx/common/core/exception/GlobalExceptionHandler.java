@@ -20,10 +20,14 @@ package com.pig4cloud.pigx.common.core.exception;
 import com.pig4cloud.pigx.common.core.util.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.List;
 
 /**
  * @author lengleng
@@ -41,9 +45,25 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	@ResponseBody
 	public R exception(Exception e) {
-		log.info("全局异常信息 ex={}", e.getMessage(), e);
+		log.error("全局异常信息 ex={}", e.getMessage(), e);
 		return new R<>(e);
 	}
+
+	/**
+	 * validation Exception
+	 *
+	 * @param exception
+	 * @return R
+	 */
+	@ExceptionHandler({MethodArgumentNotValidException.class, BindException.class})
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public R bodyValidExceptionHandler(MethodArgumentNotValidException exception) {
+		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
+		R result = new R();
+		result.setMsg(fieldErrors.get(0).getDefaultMessage());
+		log.warn(fieldErrors.get(0).getDefaultMessage());
+		return result;
+	}
+
 }

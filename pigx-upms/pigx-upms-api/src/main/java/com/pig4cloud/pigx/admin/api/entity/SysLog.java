@@ -24,6 +24,7 @@ import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -48,10 +49,12 @@ public class SysLog implements Serializable {
 	/**
 	 * 日志类型
 	 */
+	@NotBlank(message = "日志类型不能为空")
 	private String type;
 	/**
 	 * 日志标题
 	 */
+	@NotBlank(message = "日志标题不能为空")
 	private String title;
 	/**
 	 * 创建者

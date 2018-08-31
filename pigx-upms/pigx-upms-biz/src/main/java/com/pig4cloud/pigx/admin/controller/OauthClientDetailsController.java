@@ -29,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 /**
@@ -76,7 +77,7 @@ public class OauthClientDetailsController {
 	 */
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_client_add')")
-	public R<Boolean> add(@RequestBody SysOauthClientDetails sysOauthClientDetails) {
+	public R<Boolean> add(@Valid @RequestBody SysOauthClientDetails sysOauthClientDetails) {
 		return new R<>(sysOauthClientDetailsService.insert(sysOauthClientDetails));
 	}
 
@@ -102,7 +103,7 @@ public class OauthClientDetailsController {
 	 */
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_client_edit')")
-	public R<Boolean> edit(@RequestBody SysOauthClientDetails sysOauthClientDetails) {
+	public R<Boolean> edit(@Valid @RequestBody SysOauthClientDetails sysOauthClientDetails) {
 		return new R<>(sysOauthClientDetailsService.updateById(sysOauthClientDetails));
 	}
 }
