@@ -20,7 +20,7 @@
 package com.pig4cloud.pigx.admin.api.feign;
 
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
-import com.pig4cloud.pigx.admin.api.feign.fallback.RemoteUserServiceFallbackImpl;
+import com.pig4cloud.pigx.admin.api.feign.factory.RemoteUserServiceFallbackFactory;
 import com.pig4cloud.pigx.common.core.constant.ServiceNameConstant;
 import com.pig4cloud.pigx.common.core.util.R;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
  * @author lengleng
  * @date 2018/6/22
  */
-@FeignClient(value = ServiceNameConstant.UMPS_SERVICE, fallback = RemoteUserServiceFallbackImpl.class)
+@FeignClient(value = ServiceNameConstant.UMPS_SERVICE, fallbackFactory = RemoteUserServiceFallbackFactory.class)
 public interface RemoteUserService {
 	/**
 	 * 通过用户名查询用户、角色信息

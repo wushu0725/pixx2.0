@@ -22,6 +22,7 @@ package com.pig4cloud.pigx.admin.api.feign.fallback;
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 import com.pig4cloud.pigx.admin.api.feign.RemoteUserService;
 import com.pig4cloud.pigx.common.core.util.R;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -32,6 +33,9 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class RemoteUserServiceFallbackImpl implements RemoteUserService {
+	@Setter
+	private Throwable cause;
+
 	/**
 	 * 通过用户名查询用户、角色信息
 	 *
@@ -41,7 +45,7 @@ public class RemoteUserServiceFallbackImpl implements RemoteUserService {
 	 */
 	@Override
 	public R<UserInfo> info(String username, String from) {
-		log.error("feign 查询用户信息失败:{}", username);
+		log.error("feign 查询用户信息失败:{}", username, cause);
 		return null;
 	}
 
@@ -53,7 +57,7 @@ public class RemoteUserServiceFallbackImpl implements RemoteUserService {
 	 */
 	@Override
 	public R<UserInfo> social(String inStr) {
-		log.error("feign 查询用户信息失败:{}", inStr);
+		log.error("feign 查询用户信息失败:{}", inStr, cause);
 		return null;
 	}
 }
