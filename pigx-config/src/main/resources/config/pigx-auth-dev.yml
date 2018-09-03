@@ -4,5 +4,5 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password:  root
+    password: root
     url: jdbc:mysql://127.0.0.1:3306/pigx?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
