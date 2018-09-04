@@ -20,7 +20,7 @@
 package com.pig4cloud.pigx.admin.api.feign;
 
 import com.pig4cloud.pigx.admin.api.entity.SysLog;
-import com.pig4cloud.pigx.admin.api.feign.fallback.RemoteLogServiceFallbackImpl;
+import com.pig4cloud.pigx.admin.api.feign.factory.RemoteLogServiceFallbackFactory;
 import com.pig4cloud.pigx.common.core.constant.ServiceNameConstant;
 import com.pig4cloud.pigx.common.core.util.R;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author lengleng
  * @date 2018/6/28
  */
-@FeignClient(value = ServiceNameConstant.UMPS_SERVICE, fallback = RemoteLogServiceFallbackImpl.class)
+@FeignClient(value = ServiceNameConstant.UMPS_SERVICE, fallbackFactory = RemoteLogServiceFallbackFactory.class)
 public interface RemoteLogService {
 	/**
 	 * 保存日志

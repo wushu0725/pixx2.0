@@ -87,6 +87,7 @@ public interface SysUserService extends IService<SysUser> {
 
 	/**
 	 * 通过用户名查找已经删除的用户
+	 *
 	 * @param username 用户名
 	 * @return
 	 */
@@ -94,10 +95,12 @@ public interface SysUserService extends IService<SysUser> {
 
 	/**
 	 * 根据用户名删除用户（真实删除）
-	 * @param username
+	 *
+	 * @param username username
+	 * @param userId   userId
 	 * @return
 	 */
-	Boolean deleteSysUserByUsernameAndUserId(String username,Integer userId);
+	Boolean deleteSysUserByUsernameAndUserId(String username, Integer userId);
 
 
 }

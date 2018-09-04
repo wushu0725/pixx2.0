@@ -13,7 +13,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password:  Bjyjht2017!@#
-    url: jdbc:mysql://114.116.30.176:3306/pigx?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    url: jdbc:mysql://114.116.21.191:3306/pigx?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
