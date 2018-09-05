@@ -20,9 +20,9 @@
 package com.pig4cloud.pigx.auth;
 
 
+import com.pig4cloud.pigx.common.security.feign.EnablePigxFeignClients;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @author lengleng
@@ -30,7 +30,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * 认证授权中心
  */
 @SpringCloudApplication
-@EnableFeignClients({"com.pig4cloud.pigx.admin.api.feign"})
+@EnablePigxFeignClients
 public class PigxAuthApplication {
 
 	public static void main(String[] args) {
