@@ -20,6 +20,7 @@
 package com.pig4cloud.pigx.admin.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.entity.SysRoleMenu;
@@ -59,11 +60,14 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 		SysRoleMenu condition = new SysRoleMenu();
 		condition.setRoleId(roleId);
 		this.delete(new EntityWrapper<>(condition));
-		List<SysRoleMenu> roleMenuList = new ArrayList<>();
-		List<String> menuIdList = Arrays.asList(menuIds.split(","));
-		if (CollUtil.isEmpty(menuIdList)) {
+
+		if (StrUtil.isBlank(menuIds)) {
 			return Boolean.TRUE;
 		}
+
+		List<SysRoleMenu> roleMenuList = new ArrayList<>();
+		List<String> menuIdList = Arrays.asList(menuIds.split(","));
+
 		for (String menuId : menuIdList) {
 			SysRoleMenu roleMenu = new SysRoleMenu();
 			roleMenu.setRoleId(roleId);
