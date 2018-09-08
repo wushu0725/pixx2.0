@@ -72,8 +72,10 @@
 		</dependency>
 		<!--jacksonJSR310规范-->
 		<dependency>
-			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-jsr310</artifactId>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-modules-java8</artifactId>
+			<version>${jackson.modules}</version>
+			<type>pom</type>
 		</dependency>
 	</dependencies>
 </project>

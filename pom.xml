@@ -55,6 +55,7 @@
 		<jasypt.version>2.1.0</jasypt.version>
 		<elastic-job-lite.version>2.1.5</elastic-job-lite.version>
 		<security.oauth.version>2.3.3.RELEASE</security.oauth.version>
+		<jackson.modules>2.9.6</jackson.modules>
 		<docker.url>http://192.168.0.13:4243</docker.url>
 		<registry.url>192.168.0.13:5000</registry.url>
 	</properties>
