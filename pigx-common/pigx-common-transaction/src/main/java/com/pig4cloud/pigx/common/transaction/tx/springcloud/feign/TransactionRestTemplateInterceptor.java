@@ -21,8 +21,6 @@ import com.codingapi.tx.aop.bean.TxTransactionLocal;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *@author LCN on 2017/6/26.
