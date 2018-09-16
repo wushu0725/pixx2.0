@@ -47,17 +47,6 @@ public class MenuController {
 	private SysMenuService sysMenuService;
 
 	/**
-	 * 通过角色名称查询用户菜单
-	 *
-	 * @param role 角色名称
-	 * @return 菜单列表
-	 */
-	@GetMapping("/findMenuByRole/{role}")
-	public List<MenuVO> findMenuByRole(@PathVariable String role) {
-		return sysMenuService.findMenuByRoleCode(role);
-	}
-
-	/**
 	 * 返回当前用户的树形菜单集合
 	 *
 	 * @return 当前用户的树形菜单
@@ -66,7 +55,7 @@ public class MenuController {
 	public List<MenuTree> userMenu() {
 		// 获取符合条件得菜单
 		Set<MenuVO> all = new HashSet<>();
-		SecurityUtils.getRoles().forEach(roleName -> all.addAll(sysMenuService.findMenuByRoleCode(roleName)));
+		SecurityUtils.getRoles().forEach(roleId -> all.addAll(sysMenuService.findMenuByRoleId(roleId)));
 		List<MenuTree> menuTreeList = new ArrayList<>();
 		all.forEach(menuVo -> {
 			if (CommonConstant.MENU.equals(menuVo.getType())) {
@@ -92,12 +81,12 @@ public class MenuController {
 	/**
 	 * 返回角色的菜单集合
 	 *
-	 * @param roleName 角色名称
+	 * @param roleId 角色ID
 	 * @return 属性集合
 	 */
-	@GetMapping("/roleTree/{roleName}")
-	public List<Integer> roleTree(@PathVariable String roleName) {
-		List<MenuVO> menus = sysMenuService.findMenuByRoleCode(roleName);
+	@GetMapping("/roleTree/{roleId}")
+	public List<Integer> roleTree(@PathVariable Integer roleId) {
+		List<MenuVO> menus = sysMenuService.findMenuByRoleId(roleId);
 		List<Integer> menuList = new ArrayList<>();
 		for (MenuVO menuVo : menus) {
 			menuList.add(menuVo.getMenuId());

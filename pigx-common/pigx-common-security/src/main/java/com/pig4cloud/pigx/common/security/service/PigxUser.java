@@ -42,11 +42,18 @@ public class PigxUser extends User {
 	private Integer deptId;
 
 	/**
+	 * 租户ID
+	 */
+	@Getter
+	private Integer tenantId;
+
+	/**
 	 * Construct the <code>User</code> with the details required by
 	 * {@link DaoAuthenticationProvider}.
 	 *
 	 * @param id                    用户ID
 	 * @param deptId                部门ID
+	 * @param tenantId              租户ID
 	 * @param username              the username presented to the
 	 *                              <code>DaoAuthenticationProvider</code>
 	 * @param password              the password that should be presented to the
@@ -61,9 +68,10 @@ public class PigxUser extends User {
 	 * @throws IllegalArgumentException if a <code>null</code> value was passed either as
 	 *                                  a parameter or as an element in the <code>GrantedAuthority</code> collection
 	 */
-	public PigxUser(Integer id, Integer deptId, String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+	public PigxUser(Integer id, Integer deptId, Integer tenantId, String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 		this.id = id;
-		this.deptId = id;
+		this.deptId = deptId;
+		this.tenantId = tenantId;
 	}
 }

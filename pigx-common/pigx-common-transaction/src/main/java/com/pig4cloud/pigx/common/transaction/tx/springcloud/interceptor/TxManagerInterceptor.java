@@ -28,8 +28,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *@author LCN on 2017/6/7.
- *
+ * @author LCN on 2017/6/7.
  * @author LCN
  * @since 4.1.0
  */
@@ -41,13 +40,9 @@ public class TxManagerInterceptor {
 	private AspectBeforeService aspectBeforeService;
 
 	public Object around(ProceedingJoinPoint point) throws Throwable {
-		String groupId = null;
-		try {
-			RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
-			HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
-			groupId = request.getHeader("tx-group");
-		} catch (Exception e) {
-		}
+		RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+		HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
+		String groupId = request.getHeader("tx-group");
 		return aspectBeforeService.around(groupId, point);
 	}
 }

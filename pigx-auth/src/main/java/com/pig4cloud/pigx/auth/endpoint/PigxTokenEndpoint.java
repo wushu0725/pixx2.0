@@ -24,6 +24,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.security.service.PigxUser;
+import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.data.redis.core.ConvertingCursor;
 import org.springframework.data.redis.core.Cursor;
@@ -128,19 +129,14 @@ public class PigxTokenEndpoint {
 
 			if (authentication instanceof UsernamePasswordAuthenticationToken) {
 				UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) authentication;
-
-				if (authenticationToken.getPrincipal() instanceof PigxUser) {
-					PigxUser user = (PigxUser) authenticationToken.getPrincipal();
-					map.put("user_id", user.getId() + "");
-					map.put("user_name", user.getUsername() + "");
+				if (extractToken(map, authenticationToken.getPrincipal())) {
+					continue;
 				}
 			} else if (authentication instanceof PreAuthenticatedAuthenticationToken) {
 				//刷新token方式
 				PreAuthenticatedAuthenticationToken authenticationToken = (PreAuthenticatedAuthenticationToken) authentication;
-				if (authenticationToken.getPrincipal() instanceof PigxUser) {
-					PigxUser user = (PigxUser) authenticationToken.getPrincipal();
-					map.put("user_id", user.getId() + "");
-					map.put("user_name", user.getUsername() + "");
+				if (extractToken(map, authenticationToken.getPrincipal())) {
+					continue;
 				}
 			}
 			list.add(map);
@@ -152,12 +148,22 @@ public class PigxTokenEndpoint {
 		return result;
 	}
 
+	private boolean extractToken(Map<String, String> map, Object principal) {
+		if (principal instanceof PigxUser) {
+			PigxUser user = (PigxUser) principal;
+			if (!user.getTenantId().equals(SecurityUtils.getTenantId())) {
+				return true;
+			}
+			map.put("user_id", user.getId() + "");
+			map.put("user_name", user.getUsername() + "");
+		}
+		return false;
+	}
+
 	private List<String> findKeysForPage(String patternKey, int pageNum, int pageSize) {
 		ScanOptions options = ScanOptions.scanOptions().match(patternKey).build();
 		RedisSerializer<String> redisSerializer = (RedisSerializer<String>) redisTemplate.getKeySerializer();
-		Cursor cursor = (Cursor) redisTemplate.executeWithStickyConnection(redisConnection -> {
-			return new ConvertingCursor<>(redisConnection.scan(options), redisSerializer::deserialize);
-		});
+		Cursor cursor = (Cursor) redisTemplate.executeWithStickyConnection(redisConnection -> new ConvertingCursor<>(redisConnection.scan(options), redisSerializer::deserialize));
 		List<String> result = new ArrayList<>();
 		int tmpIndex = 0;
 		int startIndex = (pageNum - 1) * pageSize;

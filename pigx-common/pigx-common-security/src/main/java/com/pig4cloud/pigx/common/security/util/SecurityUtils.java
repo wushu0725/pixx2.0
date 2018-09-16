@@ -21,6 +21,7 @@ package com.pig4cloud.pigx.common.security.util;
 
 
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.ttl.TransmittableThreadLocal;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import com.pig4cloud.pigx.common.security.service.PigxUser;
 import org.springframework.security.core.Authentication;
@@ -38,6 +39,7 @@ import java.util.List;
  * @author L.cm
  */
 public class SecurityUtils {
+	private static final ThreadLocal<Integer> THREAD_LOCAL_TENANT = new TransmittableThreadLocal<>();
 
 	/**
 	 * 获取Authentication
@@ -82,14 +84,35 @@ public class SecurityUtils {
 	 *
 	 * @return 角色集合
 	 */
-	public static List<String> getRoles() {
+	public static List<Integer> getRoles() {
 		Authentication authentication = getAuthentication();
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-		List<String> roles = new ArrayList<>();
+		List<Integer> roleIds = new ArrayList<>();
 		authorities.stream()
 			.filter(granted -> StrUtil.startWith(granted.getAuthority(), SecurityConstants.ROLE))
-			.forEach(granted -> roles.add(StrUtil.removePrefix(granted.getAuthority(), SecurityConstants.ROLE)));
-		return roles;
+			.forEach(granted -> {
+				String id = StrUtil.removePrefix(granted.getAuthority(), SecurityConstants.ROLE);
+				roleIds.add(Integer.parseInt(id));
+			});
+		return roleIds;
+	}
+
+	/**
+	 * TTL 设置租户ID
+	 *
+	 * @param tenantId
+	 */
+	public static void setTenantId(Integer tenantId) {
+		THREAD_LOCAL_TENANT.set(tenantId);
+	}
+
+	/**
+	 * 获取TTL中的租户ID
+	 *
+	 * @return
+	 */
+	public static Integer getTenantId() {
+		return THREAD_LOCAL_TENANT.get();
 	}
 }

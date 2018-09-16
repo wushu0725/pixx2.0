@@ -25,19 +25,9 @@ package com.pig4cloud.pigx.common.core.constant;
  */
 public interface CommonConstant {
 	/**
-	 * token请求头名称
+	 * header 中租户ID
 	 */
-	String REQ_HEADER = "Authorization";
-
-	/**
-	 * token分割符
-	 */
-	String TOKEN_SPLIT = "Bearer ";
-
-	/**
-	 * jwt签名
-	 */
-	String SIGN_KEY = "PIG";
+	String TENANT_ID = "TENANT_ID";
 	/**
 	 * 删除
 	 */
@@ -76,14 +66,4 @@ public interface CommonConstant {
 	 * JSON 资源
 	 */
 	String CONTENT_TYPE = "application/json; charset=utf-8";
-
-	/**
-	 * 阿里大鱼
-	 */
-	String ALIYUN_SMS = "aliyun_sms";
-
-	/**
-	 * 路由信息Redis保存的key
-	 */
-	String ROUTE_KEY = "_ROUTE_KEY";
 }

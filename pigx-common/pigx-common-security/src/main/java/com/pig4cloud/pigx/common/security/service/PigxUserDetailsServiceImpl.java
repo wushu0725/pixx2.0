@@ -90,7 +90,7 @@ public class PigxUserDetailsServiceImpl implements PigxUserDetailsService {
 		Set<String> dbAuthsSet = new HashSet<>();
 		if (ArrayUtil.isNotEmpty(info.getRoles())) {
 			// 获取角色
-			Arrays.stream(info.getRoles()).forEach(role -> dbAuthsSet.add(SecurityConstants.ROLE + role));
+			Arrays.stream(info.getRoles()).forEach(roleId -> dbAuthsSet.add(SecurityConstants.ROLE + roleId));
 			// 获取资源
 			dbAuthsSet.addAll(Arrays.asList(info.getPermissions()));
 
@@ -101,7 +101,7 @@ public class PigxUserDetailsServiceImpl implements PigxUserDetailsService {
 		boolean enabled = StrUtil.equals(user.getDelFlag(), CommonConstant.STATUS_NORMAL);
 		// 构造security用户
 
-		return new PigxUser(user.getUserId(), user.getDeptId(), user.getUsername(), SecurityConstants.BCRYPT + user.getPassword(), enabled,
+		return new PigxUser(user.getUserId(), user.getDeptId(), user.getTenantId(), user.getUsername(), SecurityConstants.BCRYPT + user.getPassword(), enabled,
 			true, true, true, authorities);
 	}
 }

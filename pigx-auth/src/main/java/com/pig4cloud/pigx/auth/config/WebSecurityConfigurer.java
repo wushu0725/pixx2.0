@@ -20,6 +20,7 @@
 package com.pig4cloud.pigx.auth.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pig4cloud.pigx.common.security.filter.TenantIdTtlFilter;
 import com.pig4cloud.pigx.common.security.mobile.MobileLoginSuccessHandler;
 import com.pig4cloud.pigx.common.security.mobile.MobileSecurityConfigurer;
 import com.pig4cloud.pigx.common.security.service.PigxUserDetailsService;
@@ -35,6 +36,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 

@@ -88,6 +88,11 @@ public class SysUser implements Serializable {
 	private Integer deptId;
 
 	/**
+	 * 租户ID
+	 */
+	private Integer tenantId;
+
+	/**
 	 * 微信openid
 	 */
 	private String wxOpenid;

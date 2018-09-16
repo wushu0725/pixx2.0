@@ -46,7 +46,7 @@ public class UserInfo implements Serializable {
 	/**
 	 * 角色集合
 	 */
-	private String[] roles;
+	private Integer[] roles;
 
 	public SysUser getSysUser() {
 		return sysUser;
@@ -64,11 +64,11 @@ public class UserInfo implements Serializable {
 		this.permissions = permissions;
 	}
 
-	public String[] getRoles() {
+	public Integer[] getRoles() {
 		return roles;
 	}
 
-	public void setRoles(String[] roles) {
+	public void setRoles(Integer[] roles) {
 		this.roles = roles;
 	}
 }

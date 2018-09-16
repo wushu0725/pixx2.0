@@ -53,6 +53,7 @@
 		<velocity.version>1.7</velocity.version>
 		<lcn.version>4.1.0</lcn.version>
 		<jasypt.version>2.1.0</jasypt.version>
+		<ttl.version>2.6.1</ttl.version>
 		<elastic-job-lite.version>2.1.5</elastic-job-lite.version>
 		<security.oauth.version>2.3.3.RELEASE</security.oauth.version>
 		<jackson.modules>2.9.6</jackson.modules>

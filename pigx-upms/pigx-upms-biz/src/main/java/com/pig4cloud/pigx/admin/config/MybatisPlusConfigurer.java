@@ -19,19 +19,33 @@
 
 package com.pig4cloud.pigx.admin.config;
 
+import cn.hutool.core.util.ArrayUtil;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.plugins.parser.ISqlParser;
+import com.baomidou.mybatisplus.plugins.parser.tenant.TenantHandler;
+import com.baomidou.mybatisplus.plugins.parser.tenant.TenantSqlParser;
 import com.pig4cloud.pigx.common.core.datascope.DataScopeInterceptor;
+import com.pig4cloud.pigx.common.security.util.SecurityUtils;
+import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.expression.Expression;
+import net.sf.jsqlparser.expression.LongValue;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author lengleng
  * @date 2017/10/29
  */
+@Slf4j
 @Configuration
 @MapperScan("com.pig4cloud.pigx.admin.mapper")
 public class MybatisPlusConfigurer {
+	private static final String[] IGNORETABLES = new String[]{"sys_dept_relation", "sys_role_dept", "sys_role_menu", "sys_user_role"};
+
 	/**
 	 * 分页插件
 	 *
@@ -39,7 +53,31 @@ public class MybatisPlusConfigurer {
 	 */
 	@Bean
 	public PaginationInterceptor paginationInterceptor() {
-		return new PaginationInterceptor();
+		PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+		List<ISqlParser> sqlParserList = new ArrayList<>();
+		TenantSqlParser tenantSqlParser = new TenantSqlParser();
+		tenantSqlParser.setTenantHandler(new TenantHandler() {
+			@Override
+			public Expression getTenantId() {
+				Integer tenantId = SecurityUtils.getTenantId();
+				log.error("当前租户为 >> {}", tenantId);
+				return new LongValue(tenantId);
+			}
+
+			@Override
+			public String getTenantIdColumn() {
+				return "tenant_id";
+			}
+
+			@Override
+			public boolean doTableFilter(String tableName) {
+				log.error("当前租户表为 >> {}", tableName);
+				return ArrayUtil.contains(IGNORETABLES, tableName);
+			}
+		});
+		sqlParserList.add(tenantSqlParser);
+		paginationInterceptor.setSqlParserList(sqlParserList);
+		return paginationInterceptor;
 	}
 
 	/**

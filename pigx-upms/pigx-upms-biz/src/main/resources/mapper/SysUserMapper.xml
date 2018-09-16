@@ -29,6 +29,7 @@
 		<result column="avatar" property="avatar"/>
 		<result column="salt" property="salt"/>
 		<result column="dept_id" property="deptId"/>
+		<result column="tenant_id" property="tenantId"/>
 		<result column="wx_openid" property="wxOpenid"/>
 		<result column="qq_openid" property="qqOpenid"/>
 		<result column="create_time" property="createTime"/>
@@ -50,6 +51,7 @@
 		<result column="uupdate_time" property="updateTime"/>
 		<result column="udel_flag" property="delFlag"/>
 		<result column="deptId" property="deptId"/>
+		<result column="tenantId" property="tenantId"/>
 		<result column="deptName" property="deptName"/>
 		<collection property="roleList" ofType="com.pig4cloud.pigx.admin.api.entity.SysRole">
 			<id column="role_id" property="roleId"/>
@@ -76,6 +78,7 @@
             `user`.update_time AS uupdate_time,
             `user`.del_flag AS udel_flag,
             `user`.dept_id AS deptId,
+            `user`.tenant_id AS tenantId,
             r.role_id,
             r.role_name,
             r.role_code,
@@ -106,6 +109,7 @@
             `user`.create_time AS ucreate_time,
             `user`.update_time AS uupdate_time,
             `user`.del_flag AS udel_flag,
+            `user`.tenant_id AS tenantId,
             r.role_id,
             r.role_name,
             r.role_code,
@@ -136,6 +140,7 @@
 		`user`.create_time AS ucreate_time,
 		`user`.update_time AS uupdate_time,
 		`user`.del_flag AS udel_flag,
+		`user`.tenant_id AS tenantId,
 		r.role_id,
 		r.role_name,
 		r.role_code,
@@ -165,6 +170,7 @@
 		 	   avatar,
 		 	   salt,
 		 	   dept_id,
+		 	   tenant_id,
 		 	   wx_openid,
 		 	   qq_openid,
 		 	   create_time,

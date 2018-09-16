@@ -38,10 +38,10 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
 	/**
 	 * 通过角色编号查询菜单
 	 *
-	 * @param role 角色编号
+	 * @param roleId 角色ID
 	 * @return
 	 */
-	List<MenuVO> findMenuByRoleCode(String role);
+	List<MenuVO> findMenuByRoleId(Integer roleId);
 
 	/**
 	 * 通过角色ID查询权限

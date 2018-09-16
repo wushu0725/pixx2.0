@@ -23,6 +23,7 @@ package com.pig4cloud.pigx.admin.service;
 import com.baomidou.mybatisplus.service.IService;
 import com.pig4cloud.pigx.admin.api.entity.SysMenu;
 import com.pig4cloud.pigx.admin.api.vo.MenuVO;
+import io.swagger.models.auth.In;
 
 import java.util.List;
 
@@ -38,10 +39,10 @@ public interface SysMenuService extends IService<SysMenu> {
 	/**
 	 * 通过角色编号查询URL 权限
 	 *
-	 * @param role 角色编号
+	 * @param roleId 角色ID
 	 * @return 菜单列表
 	 */
-	List<MenuVO> findMenuByRoleCode(String role);
+	List<MenuVO> findMenuByRoleId(Integer roleId);
 
 	/**
 	 * 级联删除菜单

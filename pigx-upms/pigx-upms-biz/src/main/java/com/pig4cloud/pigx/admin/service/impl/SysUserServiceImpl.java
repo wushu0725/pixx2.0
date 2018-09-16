@@ -78,7 +78,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	 * @return
 	 */
 	@Override
-	@Cacheable(value = "user_details", key = "#username",unless = "#result == null")
+	@Cacheable(value = "user_details", key = "#username", unless="#result == null")
 	public UserInfo findUserInfo(String type, String username) {
 		SysUser condition = new SysUser();
 		if (EnumLoginType.PWD.getType().equals(type)) {
@@ -91,22 +91,22 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		SysUser sysUser = this.selectOne(new EntityWrapper<>(condition));
 		if (sysUser == null) {
 			return null;
-		}
+		} 
 
 		UserInfo userInfo = new UserInfo();
 		userInfo.setSysUser(sysUser);
-		//设置角色列表
+		//设置角色列表  （ID）
 		List<SysRole> roleList = sysRoleService.findRolesByUserId(sysUser.getUserId());
-		List<String> roleCodes = new ArrayList<>();
+		List<Integer> roleIds = new ArrayList<>();
 		if (CollUtil.isNotEmpty(roleList)) {
-			roleList.forEach(sysRole -> roleCodes.add(sysRole.getRoleCode()));
+			roleList.forEach(sysRole -> roleIds.add(sysRole.getRoleId()));
 		}
-		userInfo.setRoles(ArrayUtil.toArray(roleCodes, String.class));
+		userInfo.setRoles(ArrayUtil.toArray(roleIds, Integer.class));
 
 		//设置权限列表（menu.permission）
 		Set<MenuVO> menuVoSet = new HashSet<>();
-		for (String role : roleCodes) {
-			List<MenuVO> menuVos = sysMenuService.findMenuByRoleCode(role);
+		for (Integer roleId : roleIds) {
+			List<MenuVO> menuVos = sysMenuService.findMenuByRoleId(roleId);
 			menuVoSet.addAll(menuVos);
 		}
 		Set<String> permissions = new HashSet<>();
