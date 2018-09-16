@@ -20,10 +20,10 @@
 package com.pig4cloud.pigx.admin;
 
 
+import com.pig4cloud.pigx.common.security.feign.EnablePigxFeignClients;
 import com.pig4cloud.pigx.common.swagger.annotation.EnablePigxSwagger2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @author lengleng
@@ -32,7 +32,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @EnablePigxSwagger2
 @SpringCloudApplication
-@EnableFeignClients({"com.pig4cloud.pigx.admin.api.feign"})
+@EnablePigxFeignClients
 public class PigxAdminApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PigxAdminApplication.class, args);

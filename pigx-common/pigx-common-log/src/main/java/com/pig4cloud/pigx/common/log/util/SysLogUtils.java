@@ -19,7 +19,6 @@
 
 package com.pig4cloud.pigx.common.log.util;
 
-import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.http.HttpUtil;
 import com.pig4cloud.pigx.admin.api.entity.SysLog;
@@ -36,22 +35,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author L.cm
  */
 public class SysLogUtils {
-
-	private static final String PASSWORD = "password";
-
 	public static SysLog getSysLog() {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-		StringBuilder params = new StringBuilder();
-		request.getParameterMap().forEach((key, values) -> {
-			params.append(key).append("＝");
-			if (PASSWORD.equalsIgnoreCase(key)) {
-				params.append("******");
-			} else {
-				params.append(ArrayUtil.toString(values));
-			}
-			params.append("＆");
-		});
-
 		SysLog sysLog = new SysLog();
 		sysLog.setCreateBy(SecurityUtils.getUser().getUsername());
 		sysLog.setType(CommonConstant.STATUS_NORMAL);

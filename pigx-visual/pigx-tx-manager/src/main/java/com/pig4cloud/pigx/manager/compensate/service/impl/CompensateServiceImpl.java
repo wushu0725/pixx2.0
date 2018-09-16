@@ -131,7 +131,7 @@ public class CompensateServiceImpl implements CompensateService {
 		logger.info("Auto Compensate->" + json);
 		//自动补偿业务执行...
 		final int tryTime = configReader.getCompensateTryTime();
-		boolean autoExecuteRes = false;
+		boolean autoExecuteRes;
 		try {
 			int executeCount = 0;
 			autoExecuteRes = executeCompensate_(json);

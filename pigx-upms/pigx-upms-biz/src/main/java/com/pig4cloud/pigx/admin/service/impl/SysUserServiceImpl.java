@@ -78,7 +78,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	 * @return
 	 */
 	@Override
-	@Cacheable(value = "user_details", key = "#username")
+	@Cacheable(value = "user_details", key = "#username",unless = "#result == null")
 	public UserInfo findUserInfo(String type, String username) {
 		SysUser condition = new SysUser();
 		if (EnumLoginType.PWD.getType().equals(type)) {

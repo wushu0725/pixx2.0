@@ -48,8 +48,8 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 	/**
 	 * 分页查询用户信息（含角色）
 	 *
-	 * @param query    查询条件
-	 * @param username 用户名
+	 * @param query     查询条件
+	 * @param username  用户名
 	 * @param dataScope
 	 * @return list
 	 */
@@ -65,16 +65,19 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 
 	/**
 	 * 通过用户名查找已经删除的用户
+	 *
 	 * @param username 用户名
 	 * @return 用户对象
 	 */
-	SysUser selectDeletedUserByUsername(@Param("username")String username);
+	SysUser selectDeletedUserByUsername(@Param("username") String username);
 
 	/**
 	 * 根据用户名删除用户（真实删除）
-	 * @param username
+	 *
+	 * @param username username
+	 * @param userId   userId
 	 * @return
 	 */
-	Boolean deleteSysUserByUsernameAndUserId(@Param("username")String username,@Param("userId")Integer userId);
+	Boolean deleteSysUserByUsernameAndUserId(@Param("username") String username, @Param("userId") Integer userId);
 
 }

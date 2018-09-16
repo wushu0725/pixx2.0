@@ -18,6 +18,7 @@
 package com.pig4cloud.pigx.codegen.mapper;
 
 import com.pig4cloud.pigx.common.core.util.Query;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -34,20 +35,14 @@ public interface SysGeneratorMapper {
 	 * 分页查询表格
 	 *
 	 * @param params
+	 * @param tableName
 	 * @return
 	 */
-	List<Map<String, Object>> queryList(Query params);
-
-	/**
-	 * 查询表数量
-	 *
-	 * @param query
-	 * @return
-	 */
-	int queryTotal(Map query);
+	List<Map<String, Object>> queryList(Query params, @Param("tableName") Object tableName);
 
 	/**
 	 * 查询表信息
+	 *
 	 * @param tableName 表名称
 	 * @return
 	 */
@@ -55,6 +50,7 @@ public interface SysGeneratorMapper {
 
 	/**
 	 * 查询表列信息
+	 *
 	 * @param tableName 表名称
 	 * @return
 	 */

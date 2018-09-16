@@ -20,7 +20,8 @@ https://pig4cloud.com
 
 ### 使用说明  
 
-[目录](doc/md/catalog.md)
+请参考VIP群共享 《从零开始部署pigx》
+[>> 目录](doc/md/catalog.md)
 
 ## 协议和授权
 

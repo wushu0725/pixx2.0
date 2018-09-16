@@ -50,8 +50,9 @@ public class SysGeneratorServiceImpl implements SysGeneratorService {
 	 * @return
 	 */
 	@Override
-	public List<Map<String,Object>> queryPage(Query query) {
-		return sysGeneratorMapper.queryList(query);
+	public List<Map<String, Object>> queryPage(Query query) {
+		Object tableName = query.getCondition().get("tableName");
+		return sysGeneratorMapper.queryList(query, tableName);
 	}
 
 	/**

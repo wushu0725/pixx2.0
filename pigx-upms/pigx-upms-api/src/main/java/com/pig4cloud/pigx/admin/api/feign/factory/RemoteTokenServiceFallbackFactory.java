@@ -15,33 +15,24 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.common.transaction.tx.springcloud.feign;
+package com.pig4cloud.pigx.admin.api.feign.factory;
 
-import com.codingapi.tx.aop.bean.TxTransactionLocal;
-import feign.RequestInterceptor;
-import feign.RequestTemplate;
-import lombok.extern.slf4j.Slf4j;
+import com.pig4cloud.pigx.admin.api.feign.RemoteTokenService;
+import com.pig4cloud.pigx.admin.api.feign.fallback.RemoteTokenServiceFallbackImpl;
+import feign.hystrix.FallbackFactory;
+import org.springframework.stereotype.Component;
 
 /**
- *@author LCN on 2017/6/26.
- *
- * @author LCN
- * @since 4.1.0
+ * @author lengleng
+ * @date 2018/9/4
  */
-@Slf4j
-public class TransactionRestTemplateInterceptor implements RequestInterceptor {
+@Component
+public class RemoteTokenServiceFallbackFactory implements FallbackFactory<RemoteTokenService> {
 
 	@Override
-	public void apply(RequestTemplate requestTemplate) {
-
-		TxTransactionLocal txTransactionLocal = TxTransactionLocal.current();
-		String groupId = txTransactionLocal == null ? null : txTransactionLocal.getGroupId();
-
-		log.info("LCN-SpringCloud TxGroup info -> groupId:" + groupId);
-
-		if (txTransactionLocal != null) {
-			requestTemplate.header("tx-group", groupId);
-		}
+	public RemoteTokenService create(Throwable throwable) {
+		RemoteTokenServiceFallbackImpl remoteTokenServiceFallback = new RemoteTokenServiceFallbackImpl();
+		remoteTokenServiceFallback.setCause(throwable);
+		return remoteTokenServiceFallback;
 	}
-
 }
