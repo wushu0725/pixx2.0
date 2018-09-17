@@ -28,7 +28,6 @@
 	</parent>
 
 	<artifactId>pigx-visual</artifactId>
-	<name>pigx-visual</name>
 	<description>pigx 图形化功能模块</description>
 	<packaging>pom</packaging>
 

@@ -29,7 +29,7 @@
 
 	<artifactId>pigx-common-job</artifactId>
 	<packaging>jar</packaging>
-	<name>pigx-common-job</name>
+
 	<description>pigx 定时任务</description>
 
 	<dependencies>
