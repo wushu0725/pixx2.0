@@ -29,7 +29,7 @@
 
 	<artifactId>pigx-common-core</artifactId>
 	<packaging>jar</packaging>
-	<name>pigx-common-core</name>
+
 	<description>pigx 公共工具类核心包</description>
 
 

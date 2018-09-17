@@ -29,7 +29,7 @@
 
 	<artifactId>pigx-common-swagger</artifactId>
 	<packaging>jar</packaging>
-	<name>pigx-common-swagger</name>
+
 	<description>pigx 接口文档</description>
 
 

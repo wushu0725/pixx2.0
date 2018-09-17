@@ -29,7 +29,7 @@
 
 	<artifactId>pigx-common-security</artifactId>
 	<packaging>jar</packaging>
-	<name>pigx-common-security</name>
+
 	<description>pigx 安全工具类</description>
 
 

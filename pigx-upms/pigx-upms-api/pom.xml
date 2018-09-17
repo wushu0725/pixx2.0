@@ -29,7 +29,7 @@
 
 	<artifactId>pigx-upms-api</artifactId>
 	<packaging>jar</packaging>
-	<name>pigx-upms-api</name>
+
 	<description>pigx 通用用户权限管理系统公共api模块</description>
 
 
