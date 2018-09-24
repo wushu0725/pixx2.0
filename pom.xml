@@ -37,7 +37,7 @@
 	</parent>
 
 	<properties>
-		<pigx.version>1.6.1</pigx.version>
+		<pigx.version>1.6.2</pigx.version>
 		<spring-boot.version>2.0.4.RELEASE</spring-boot.version>
 		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
 		<spring-platform.version>Cairo-SR2</spring-platform.version>
