@@ -72,25 +72,22 @@ mybatis-plus:
 
 #swagger公共信息
 swagger:
-  title: 'PigX Swagger API'
-  description: '全宇宙最牛逼的Spring Cloud微服务开发脚手架'
-  version: '1.4.0'
-  license: 'Powered By PigX'
-  licenseUrl: 'https://gitee.com/log4j/pig/wikis'
-  terms-of-service-url: 'https://gitee.wang/pig/pigx'
-  exclude-path:
-    - /actuator/**
-    - /error
+  title: PigX Swagger API
+  description: 全宇宙最牛逼的Spring Cloud微服务开发脚手架
+  version: 1.6.2
+  license: Powered By PigX
+  licenseUrl: https://pig4cloud.com/
+  terms-of-service-url: https://pig4cloud.com/
   contact:
-    name: '冷冷'
-    email: 'wangiegie@gmail.com'
-    url: 'https://gitee.wang/pig/pigx'
+    name: 冷冷
+    email: wangiegie@gmail.com
+    url: https://pig4cloud.com/about.html
   authorization:
-    name: 'pigX OAuth'
-    auth-regex: '^.*$'
+    name: pigX OAuth
+    auth-regex: ^.*$
     authorization-scope-list:
-      - scope: 'server'
-        description: 'server all'
+      - scope: server
+        description: server all
     token-url-list:
       - ${security.auth.server}/token
 
