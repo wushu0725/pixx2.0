@@ -29,18 +29,11 @@
 	<packaging>pom</packaging>
 	<url>https://www.pig4cloud.com</url>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.4.RELEASE</version>
-		<relativePath/>
-	</parent>
-
 	<properties>
 		<pigx.version>1.6.2</pigx.version>
 		<spring-boot.version>2.0.4.RELEASE</spring-boot.version>
 		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
-		<spring-platform.version>Cairo-SR2</spring-platform.version>
+		<spring-platform.version>Cairo-SR3</spring-platform.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -122,6 +115,13 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
 				<groupId>io.spring.platform</groupId>
 				<artifactId>platform-bom</artifactId>
 				<version>${spring-platform.version}</version>
@@ -139,6 +139,7 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>${project.name}</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -151,7 +152,7 @@
 					<executions>
 						<execution>
 							<goals>
-								<goal>build-info</goal>
+								<goal>repackage</goal>
 							</goals>
 						</execution>
 					</executions>
@@ -181,8 +182,8 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<target>${java.version}</target>
-					<source>${java.version}</source>
+					<target>${maven.compiler.target}</target>
+					<source>${maven.compiler.source}</source>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
