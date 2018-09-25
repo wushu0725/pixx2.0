@@ -53,6 +53,10 @@ public class PigxFeignClientInterceptor extends OAuth2FeignRequestInterceptor {
 	 */
 	@Override
 	public void apply(RequestTemplate template) {
+		if (template.headers().isEmpty()) {
+			return;
+		}
+
 		if (oAuth2ClientContext != null
 			&& oAuth2ClientContext.getAccessToken() != null) {
 			super.apply(template);
