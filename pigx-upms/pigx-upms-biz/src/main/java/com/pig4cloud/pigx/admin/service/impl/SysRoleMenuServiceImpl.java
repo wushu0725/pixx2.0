@@ -55,7 +55,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 	 * @return
 	 */
 	@Override
-	@CacheEvict(value = "menu_details", key = "#role + '_menu'")
+	@CacheEvict(value = "menu_details", key = "#roleId + '_menu'")
 	public Boolean insertRoleMenus(String role, Integer roleId, String menuIds) {
 		SysRoleMenu condition = new SysRoleMenu();
 		condition.setRoleId(roleId);

@@ -20,7 +20,7 @@ eureka:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://pig:pig@localhost:1025/eureka/
+      defaultZone: http://pig:pig@192.168.0.20:1025/eureka/
 logging:
   level:
     root: info

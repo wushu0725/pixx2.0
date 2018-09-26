@@ -32,6 +32,7 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>pigx-activiti</module>
 		<module>pigx-codegen</module>
 		<module>pigx-daemon</module>
 		<module>pigx-monitor</module>

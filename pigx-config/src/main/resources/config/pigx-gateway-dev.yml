@@ -60,6 +60,13 @@ spring:
         - Path=/tx/**
         filters:
         - StripPrefix=1
+      # 工作流管理模块
+      - id: pigx-activiti
+        uri: lb://pigx-activiti
+        predicates:
+        - Path=/act/**
+        filters:
+        - StripPrefix=1
 security:
   encode:
     # 前端密码密钥，必须16位
