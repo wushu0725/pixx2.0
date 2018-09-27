@@ -78,12 +78,12 @@ public interface CommonConstant {
 	String CONTENT_TYPE = "application/json; charset=utf-8";
 
 	/**
-	 * 阿里大鱼
+	 * 前端工程名
 	 */
-	String ALIYUN_SMS = "aliyun_sms";
+	String FRONT_END_PROJECT = "pigx-ui";
 
 	/**
-	 * 路由信息Redis保存的key
+	 * 后端工程名
 	 */
-	String ROUTE_KEY = "_ROUTE_KEY";
+	String BACK_END_PROJECT = "pigx";
 }
