@@ -97,7 +97,7 @@ swagger:
 ## spring security 配置
 security:
   auth:
-    server: http://localhost:9999/auth/oauth
+    server: http://192.168.0.20:9999/auth/oauth
   oauth2:
     resource:
       token-info-uri: ${security.auth.server}/check_token

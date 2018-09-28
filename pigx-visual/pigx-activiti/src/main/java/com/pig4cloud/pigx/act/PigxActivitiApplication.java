@@ -15,29 +15,26 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.act.dto;
+package com.pig4cloud.pigx.act;
 
-import lombok.Data;
-
-import java.util.Date;
-import java.util.List;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * @author lengleng
  * @date 2018/9/25
+ * 工作流管理模块
  */
-@Data
-public class TaskDTO {
-	private String applicant;
-	private String taskId;
-	private String taskName;
-	private String title;
-	private String pdName;
-	private String version;
-	private Date time;
-	private String processInstanceId;
-	private String status;
-	private String nodeKey;
-	private String processDefKey;
-	private String category;
+@EnableDiscoveryClient
+@EnableCircuitBreaker
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class,org.activiti.spring.boot.SecurityAutoConfiguration.class})
+public class PigxActivitiApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(PigxActivitiApplication.class, args);
+	}
+
 }

@@ -3,6 +3,7 @@ package ${package}.${moduleName}.entity;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
   #if(${hasBigDecimal})
@@ -28,7 +29,7 @@ public class ${className} extends Model<${className}> {
 	 * $column.comments
 	 */
 	#if($column.columnName == $pk.columnName)
-@TableId
+@TableId(type = IdType.AUTO)
 	#end
 private $column.attrType $column.lowerAttrName;
 #end

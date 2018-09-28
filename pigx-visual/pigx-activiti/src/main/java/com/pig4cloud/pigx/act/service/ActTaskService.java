@@ -17,7 +17,13 @@
 
 package com.pig4cloud.pigx.act.service;
 
-import com.pig4cloud.pigx.act.dto.DataTable;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.pig4cloud.pigx.act.dto.CommentDto;
+import com.pig4cloud.pigx.act.dto.LeaveBillDto;
+import com.pig4cloud.pigx.act.dto.ProcessDefDTO;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author lengleng
@@ -25,11 +31,45 @@ import com.pig4cloud.pigx.act.dto.DataTable;
  */
 public interface ActTaskService {
 
+
 	/**
-	 * 获取代办列表
+	 * 获取用户代办列表
 	 *
-	 * @param dt
+	 * @param params
+	 * @param name
 	 * @return
 	 */
-	DataTable getTodoTasks(DataTable dt);
+	Page findTaskByName(Map<String, Object> params, String name);
+
+	/**
+	 * 通过任务ID查询任务信息关联申请单信息
+	 *
+	 * @param id
+	 * @return
+	 */
+	LeaveBillDto findTaskByTaskId(String id);
+
+	/**
+	 * 提交任务
+	 *
+	 * @param leaveBillDto
+	 * @return
+	 */
+	Boolean submitTask(LeaveBillDto leaveBillDto);
+
+	/**
+	 * 根据 taskId 查询 流程定义 （活动任务坐标）
+	 *
+	 * @param taskId
+	 * @return
+	 */
+	ProcessDefDTO findProcessDefinitionByTaskId(String taskId);
+
+	/**
+	 * 通过任务ID 查询批注信息
+	 *
+	 * @param taskId 任务ID
+	 * @return
+	 */
+	List<CommentDto> findCommentByTaskId(String taskId);
 }

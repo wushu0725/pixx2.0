@@ -17,27 +17,30 @@
 
 package com.pig4cloud.pigx.act.dto;
 
+import com.pig4cloud.pigx.act.entity.LeaveBill;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author lengleng
- * @date 2018/9/25
+ * @date 2018/9/28
+ * LeaveBillDto
  */
 @Data
-public class TaskDTO {
-	private String applicant;
+public class LeaveBillDto extends LeaveBill {
+	/**
+	 * 任务ID
+	 */
 	private String taskId;
-	private String taskName;
-	private String title;
-	private String pdName;
-	private String version;
+
+	/**
+	 * 任务提交时间
+	 */
 	private Date time;
-	private String processInstanceId;
-	private String status;
-	private String nodeKey;
-	private String processDefKey;
-	private String category;
+
+	/**
+	 * 批准信息
+	 */
+	private String comment;
 }

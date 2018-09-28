@@ -25,7 +25,6 @@ import lombok.AllArgsConstructor;
 import org.activiti.engine.repository.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Map;
 
@@ -38,12 +37,6 @@ import java.util.Map;
 @AllArgsConstructor
 public class ModelController {
 	private final ModelService modelService;
-
-	@GetMapping
-	public String list(org.springframework.ui.Model model, HttpServletRequest request) {
-		model.addAttribute("url", request.getContextPath() + "/model/");
-		return "model/list";
-	}
 
 	@PostMapping(value = "/insert")
 	public R<Boolean> insertForm(@RequestBody @Valid ModelForm form) {
@@ -58,7 +51,7 @@ public class ModelController {
 		return model.getId();
 	}
 
-	@GetMapping(value = "/list")
+	@GetMapping
 	public Page<Model> list(@RequestParam Map<String, Object> params) {
 		return modelService.selectPage(params);
 	}

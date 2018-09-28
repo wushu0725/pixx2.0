@@ -20,24 +20,46 @@ package com.pig4cloud.pigx.act.dto;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author lengleng
- * @date 2018/9/25
+ * @date 2018/9/28
+ * 批注Dto
  */
 @Data
-public class TaskDTO {
-	private String applicant;
-	private String taskId;
-	private String taskName;
-	private String title;
-	private String pdName;
-	private String version;
+public class CommentDto {
+	/**
+	 * unique identifier for this comment
+	 */
+	private String id;
+
+	/**
+	 * reference to the user that made the comment
+	 */
+	private String userId;
+
+	/**
+	 * time and date when the user made the comment
+	 */
 	private Date time;
+
+	/**
+	 * reference to the task on which this comment was made
+	 */
+	private String taskId;
+
+	/**
+	 * reference to the process instance on which this comment was made
+	 */
 	private String processInstanceId;
-	private String status;
-	private String nodeKey;
-	private String processDefKey;
-	private String category;
+
+	/**
+	 * reference to the type given to the comment
+	 */
+	private String type;
+
+	/**
+	 * the full comment message the user had related to the task and/or process instance
+	 */
+	private String fullMessage;
 }

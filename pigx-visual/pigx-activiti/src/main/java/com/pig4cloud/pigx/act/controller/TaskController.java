@@ -17,43 +17,48 @@
 
 package com.pig4cloud.pigx.act.controller;
 
-import com.pig4cloud.pigx.act.dto.DataTable;
-import com.pig4cloud.pigx.act.dto.StartTaskForm;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.pig4cloud.pigx.act.dto.LeaveBillDto;
 import com.pig4cloud.pigx.act.service.ActTaskService;
 import com.pig4cloud.pigx.common.core.util.R;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @author lengleng
- * @date 2018/9/25
+ * @date 2018/9/28
  */
-@Controller
+@RestController
+@AllArgsConstructor
 @RequestMapping("/task")
 public class TaskController {
+	private final ActTaskService actTaskService;
 
-    @Autowired
-	ActTaskService taskService;
+	@GetMapping("/todo")
+	public Page todo(@RequestParam Map<String, Object> params) {
+		return actTaskService.findTaskByName(params, "lengleng");
+	}
 
-    @GetMapping(value = "/todo")
-    public String list(Model model, HttpServletRequest request) {
-        model.addAttribute("url", request.getContextPath()+"/task/todo/");
-        return "task/todoList";
-    }
+	@GetMapping("/{id}")
+	public R task(@PathVariable String id) {
+		return new R(actTaskService.findTaskByTaskId(id));
+	}
 
-    @PostMapping("/todo/list")
-    @ResponseBody
-    public DataTable todoList(@RequestBody DataTable dt) {
-        return taskService.getTodoTasks(dt);
-    }
+	@PostMapping
+	public R task(@RequestBody LeaveBillDto leaveBillDto) {
+		return new R(actTaskService.submitTask(leaveBillDto));
+	}
 
-    @PostMapping("/todo/start")
-    public R<Boolean> start(@RequestBody StartTaskForm form, BindingResult result) {
-        return new R<>(Boolean.TRUE);
-    }
+	@GetMapping("/view/{id}")
+	public R viewCurrentImage(@PathVariable String id) {
+		return new R(actTaskService.findProcessDefinitionByTaskId(id));
+	}
+
+	@GetMapping("/comment/{id}")
+	public R commitList(@PathVariable String id) {
+		return new R(actTaskService.findCommentByTaskId(id));
+	}
+
 }

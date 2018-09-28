@@ -59,8 +59,16 @@ public interface ProcessService {
 	/**
 	 * 删除流程实例
 	 *
-	 * @param procInsId
+	 * @param deploymentId
 	 * @return
 	 */
-	Boolean deleteProcIns(String procInsId);
+	Boolean deleteProcIns(String deploymentId);
+
+	/**
+	 * 启动流程、更新请假单状态
+	 *
+	 * @param leaveId
+	 * @return
+	 */
+	Boolean saveStartProcess(Integer leaveId);
 }

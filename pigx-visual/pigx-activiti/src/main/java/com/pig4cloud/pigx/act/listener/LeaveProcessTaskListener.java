@@ -15,29 +15,19 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.act.dto;
+package com.pig4cloud.pigx.act.listener;
 
-import lombok.Data;
-
-import java.util.Date;
-import java.util.List;
+import org.activiti.engine.delegate.DelegateTask;
+import org.activiti.engine.delegate.TaskListener;
 
 /**
  * @author lengleng
- * @date 2018/9/25
+ * @date 2018/9/27
+ * 请假流程监听器对于
  */
-@Data
-public class TaskDTO {
-	private String applicant;
-	private String taskId;
-	private String taskName;
-	private String title;
-	private String pdName;
-	private String version;
-	private Date time;
-	private String processInstanceId;
-	private String status;
-	private String nodeKey;
-	private String processDefKey;
-	private String category;
+public class LeaveProcessTaskListener implements TaskListener {
+	@Override
+	public void notify(DelegateTask delegateTask) {
+		delegateTask.addCandidateUser("lengleng");
+	}
 }

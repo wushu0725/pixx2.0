@@ -15,29 +15,19 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.act.dto;
+package com.pig4cloud.pigx.act.service.impl;
 
-import lombok.Data;
-
-import java.util.Date;
-import java.util.List;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.pig4cloud.pigx.act.entity.LeaveBill;
+import com.pig4cloud.pigx.act.mapper.LeaveBillMapper;
+import com.pig4cloud.pigx.act.service.LeaveBillService;
+import org.springframework.stereotype.Service;
 
 /**
  * @author lengleng
- * @date 2018/9/25
+ * @date 2018-09-27
  */
-@Data
-public class TaskDTO {
-	private String applicant;
-	private String taskId;
-	private String taskName;
-	private String title;
-	private String pdName;
-	private String version;
-	private Date time;
-	private String processInstanceId;
-	private String status;
-	private String nodeKey;
-	private String processDefKey;
-	private String category;
+@Service("leaveBillService")
+public class LeaveBillServiceImpl extends ServiceImpl<LeaveBillMapper, LeaveBill> implements LeaveBillService {
+
 }

@@ -154,6 +154,7 @@
         type: 'success'
       })
       done()
+      this.getList()
     })
     },
     /**
@@ -171,6 +172,7 @@
         type: 'success'
       })
       done()
+      this.getList()
     })
     },
     /**

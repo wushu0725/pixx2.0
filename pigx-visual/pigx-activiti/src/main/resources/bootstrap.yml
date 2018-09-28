@@ -1,0 +1,30 @@
+server:
+  port: 5002
+
+spring:
+  application:
+    name: pigx-activiti
+  #配置中心
+  cloud:
+    config:
+      fail-fast: true
+      name: ${spring.application.name}
+      profile: dev
+      discovery:
+        enabled: true
+        service-id: pigx-config
+  datasource:
+    url: jdbc:mysql://114.116.21.191:3306/ac?characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: Bjyjht2017!@#
+    driver-class-name: com.mysql.jdbc.Driver
+  activiti:
+    check-process-definitions: false
+
+# 注册中心配置
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://pig:pig@192.168.0.20:1025/eureka/

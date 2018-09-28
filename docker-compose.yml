@@ -83,6 +83,15 @@ services:
       dockerfile: ./pigx-visual/pigx-codegen/Dockerfile
     restart: always
 
+  pigx-activiti:
+    links:
+      - pigx-eureka
+      - pigx-redis
+    build:
+      context: ./
+      dockerfile: ./pigx-visual/pigx-activiti/Dockerfile
+    restart: always
+
   pigx-tx-manager:
     links:
       - pigx-eureka

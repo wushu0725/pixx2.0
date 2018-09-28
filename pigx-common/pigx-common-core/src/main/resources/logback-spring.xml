@@ -46,7 +46,7 @@
 		</filter>
 	</appender>
 
-	<logger name="com.pig4cloud.pigx.admin.mapper" level="DEBUG">
+	<logger name="org.activiti.engine.impl.db" level="DEBUG">
 		<appender-ref ref="debug" />
 	</logger>
 

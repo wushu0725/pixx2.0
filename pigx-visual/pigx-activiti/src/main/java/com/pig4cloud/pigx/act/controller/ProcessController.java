@@ -62,13 +62,13 @@ public class ProcessController {
 		}
 	}
 
-	@PostMapping("/status")
-	public R<Boolean> updateState(@RequestParam String status, @RequestParam String procDefId) {
+	@PutMapping("/status/{procDefId}/{status}")
+	public R<Boolean> updateState(@PathVariable String procDefId, @PathVariable String status) {
 		return new R<>(processService.updateStatus(status, procDefId));
 	}
 
-	@DeleteMapping
-	public R<Boolean> deleteProcIns(@RequestParam String procInsId) {
-		return new R<>(processService.deleteProcIns(procInsId));
+	@DeleteMapping("/{deploymentId}")
+	public R<Boolean> deleteProcIns(@PathVariable String deploymentId) {
+		return new R<>(processService.deleteProcIns(deploymentId));
 	}
 }

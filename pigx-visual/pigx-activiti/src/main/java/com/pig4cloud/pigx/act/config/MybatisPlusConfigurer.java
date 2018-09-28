@@ -15,29 +15,28 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.act.dto;
+package com.pig4cloud.pigx.act.config;
 
-import lombok.Data;
-
-import java.util.Date;
-import java.util.List;
+import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author lengleng
- * @date 2018/9/25
+ * @date 2018/9/27
+ * mybatis-plus 配置
  */
-@Data
-public class TaskDTO {
-	private String applicant;
-	private String taskId;
-	private String taskName;
-	private String title;
-	private String pdName;
-	private String version;
-	private Date time;
-	private String processInstanceId;
-	private String status;
-	private String nodeKey;
-	private String processDefKey;
-	private String category;
+@Configuration
+@MapperScan("com.pig4cloud.pigx.act.mapper")
+public class MybatisPlusConfigurer {
+	/**
+	 * 分页插件
+	 *
+	 * @return PaginationInterceptor
+	 */
+	@Bean
+	public PaginationInterceptor paginationInterceptor() {
+		return new PaginationInterceptor();
+	}
 }
