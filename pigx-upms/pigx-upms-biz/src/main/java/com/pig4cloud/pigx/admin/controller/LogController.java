@@ -25,7 +25,6 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.pig4cloud.pigx.admin.api.entity.SysLog;
 import com.pig4cloud.pigx.admin.api.vo.PreLogVo;
 import com.pig4cloud.pigx.admin.service.SysLogService;
-import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 import lombok.AllArgsConstructor;
@@ -58,7 +57,6 @@ public class LogController {
 	 */
 	@GetMapping("/logPage")
 	public Page logPage(@RequestParam Map<String, Object> params) {
-		params.put(CommonConstant.DEL_FLAG, CommonConstant.STATUS_NORMAL);
 		return sysLogService.selectPage(new Query<>(params), new EntityWrapper<>());
 	}
 

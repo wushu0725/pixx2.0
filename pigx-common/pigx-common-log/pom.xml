@@ -29,7 +29,7 @@
 
 	<artifactId>pigx-common-log</artifactId>
 	<packaging>jar</packaging>
-	<name>pigx-common-log</name>
+
 	<description>pigx 日志服务</description>
 
 

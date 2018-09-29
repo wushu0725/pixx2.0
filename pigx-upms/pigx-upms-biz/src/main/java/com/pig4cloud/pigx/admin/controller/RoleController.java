@@ -110,7 +110,6 @@ public class RoleController {
 	 */
 	@GetMapping("/rolePage")
 	public Page rolePage(@RequestParam Map<String, Object> params) {
-		params.put(CommonConstant.DEL_FLAG, CommonConstant.STATUS_NORMAL);
 		return sysRoleService.selectwithDeptPage(new Query<>(params), new EntityWrapper<>());
 	}
 

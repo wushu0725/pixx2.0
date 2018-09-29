@@ -71,7 +71,6 @@ public class DictController {
 	 */
 	@GetMapping("/dictPage")
 	public Page dictPage(@RequestParam Map<String, Object> params) {
-		params.put(CommonConstant.DEL_FLAG, CommonConstant.STATUS_NORMAL);
 		return sysDictService.selectPage(new Query<>(params), new EntityWrapper<>());
 	}
 

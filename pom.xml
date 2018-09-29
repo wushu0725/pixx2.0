@@ -25,26 +25,20 @@
 	<groupId>com.pig4cloud</groupId>
 	<artifactId>pigx</artifactId>
 	<version>${pigx.version}</version>
-	<name>pigx</name>
+	<name>${project.artifactId}</name>
 	<packaging>pom</packaging>
 	<url>https://www.pig4cloud.com</url>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.4.RELEASE</version>
-		<relativePath/>
-	</parent>
-
 	<properties>
-		<pigx.version>1.6.1</pigx.version>
+		<pigx.version>1.6.2</pigx.version>
 		<spring-boot.version>2.0.4.RELEASE</spring-boot.version>
 		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
+		<spring-platform.version>Cairo-SR3</spring-platform.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<monitor.version>2.0.2</monitor.version>
-		<hutool.version>4.1.7</hutool.version>
+		<hutool.version>4.1.13</hutool.version>
 		<mbp.boot.version>2.3</mbp.boot.version>
 		<kaptcha.version>0.0.9</kaptcha.version>
 		<swagger.version>2.9.2</swagger.version>
@@ -105,7 +99,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 
 	<modules>
@@ -121,9 +114,16 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
 				<groupId>io.spring.platform</groupId>
 				<artifactId>platform-bom</artifactId>
-				<version>Cairo-SR2</version>
+				<version>${spring-platform.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -138,31 +138,54 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>${project.name}</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
 					<version>${spring-boot.version}</version>
+					<configuration>
+						<finalName>${project.build.finalName}</finalName>
+					</configuration>
 					<executions>
 						<execution>
 							<goals>
-								<goal>build-info</goal>
+								<goal>repackage</goal>
 							</goals>
 						</execution>
 					</executions>
 				</plugin>
 				<plugin>
-					<artifactId>maven-compiler-plugin</artifactId>
+					<groupId>com.spotify</groupId>
+					<artifactId>docker-maven-plugin</artifactId>
+					<version>0.4.12</version>
 					<configuration>
-						<target>${java.version}</target>
-						<source>${java.version}</source>
-						<encoding>UTF-8</encoding>
+						<imageName>${registry.url}/${project.name}:0.0.1</imageName>
+						<dockerHost>${docker.url}</dockerHost>
+						<dockerDirectory>${project.basedir}</dockerDirectory>
+						<resources>
+							<resource>
+								<targetPath>/</targetPath>
+								<directory>${project.build.directory}</directory>
+								<include>${project.build.finalName}.jar</include>
+							</resource>
+						</resources>
+						<serverId>docker-hub</serverId>
+						<registryUrl>https://index.docker.io/v1/</registryUrl>
 					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<target>${maven.compiler.target}</target>
+					<source>${maven.compiler.source}</source>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>pl.project13.maven</groupId>
 				<artifactId>git-commit-id-plugin</artifactId>
@@ -170,17 +193,17 @@
 		</plugins>
 	</build>
 
-	<!-- 使用aliyun镜像 -->
 	<repositories>
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/libs-milestone</url>
-		</repository>
+		<!--使用阿里云镜像-->
 		<repository>
 			<id>aliyun</id>
 			<name>aliyun</name>
 			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/libs-milestone</url>
 		</repository>
 	</repositories>
 </project>

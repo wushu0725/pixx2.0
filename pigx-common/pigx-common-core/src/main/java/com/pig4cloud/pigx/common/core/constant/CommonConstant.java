@@ -25,20 +25,6 @@ package com.pig4cloud.pigx.common.core.constant;
  */
 public interface CommonConstant {
 	/**
-	 * token请求头名称
-	 */
-	String REQ_HEADER = "Authorization";
-
-	/**
-	 * token分割符
-	 */
-	String TOKEN_SPLIT = "Bearer ";
-
-	/**
-	 * jwt签名
-	 */
-	String SIGN_KEY = "PIG";
-	/**
 	 * 删除
 	 */
 	String STATUS_DEL = "1";
@@ -58,16 +44,6 @@ public interface CommonConstant {
 	String MENU = "0";
 
 	/**
-	 * 按钮
-	 */
-	String BUTTON = "1";
-
-	/**
-	 * 删除标记
-	 */
-	String DEL_FLAG = "del_flag";
-
-	/**
 	 * 编码
 	 */
 	String UTF8 = "UTF-8";
@@ -78,12 +54,12 @@ public interface CommonConstant {
 	String CONTENT_TYPE = "application/json; charset=utf-8";
 
 	/**
-	 * 阿里大鱼
+	 * 前端工程名
 	 */
-	String ALIYUN_SMS = "aliyun_sms";
+	String FRONT_END_PROJECT = "pigx-ui";
 
 	/**
-	 * 路由信息Redis保存的key
+	 * 后端工程名
 	 */
-	String ROUTE_KEY = "_ROUTE_KEY";
+	String BACK_END_PROJECT = "pigx";
 }

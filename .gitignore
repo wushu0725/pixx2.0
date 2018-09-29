@@ -37,10 +37,10 @@ target/
 *.tar.gz
 
 ### logs ####
-logs
+/logs/
+*.log
 
 ### temp ignore ###
-*.log
 *.cache
 *.diff
 *.patch

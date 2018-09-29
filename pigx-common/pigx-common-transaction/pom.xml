@@ -10,7 +10,7 @@
 
 	<artifactId>pigx-common-transaction</artifactId>
 	<packaging>jar</packaging>
-	<name>pigx-common-transaction</name>
+
 	<description>pigx lcn transaction</description>
 
 	<dependencies>

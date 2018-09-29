@@ -98,10 +98,9 @@ public class PigxUserDetailsServiceImpl implements PigxUserDetailsService {
 		Collection<? extends GrantedAuthority> authorities
 			= AuthorityUtils.createAuthorityList(dbAuthsSet.toArray(new String[0]));
 		SysUser user = info.getSysUser();
-		boolean enabled = StrUtil.equals(user.getDelFlag(), CommonConstant.STATUS_NORMAL);
-		// 构造security用户
 
-		return new PigxUser(user.getUserId(), user.getDeptId(), user.getUsername(), SecurityConstants.BCRYPT + user.getPassword(), enabled,
-			true, true, true, authorities);
+		// 构造security用户
+		return new PigxUser(user.getUserId(), user.getDeptId(), user.getUsername(), SecurityConstants.BCRYPT + user.getPassword(),
+			StrUtil.equals(user.getDelFlag(), CommonConstant.STATUS_NORMAL),true, true, true, authorities);
 	}
 }
