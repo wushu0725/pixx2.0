@@ -15,10 +15,6 @@ spring:
     password: root
     url: jdbc:mysql://127.0.0.1:3306/pigx?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
 
-# mybaits 模块配置
-mybatis-plus:
-  typeAliasesPackage: com.pig4cloud.pigx.admin.api.entity
-
 # swagger相关配置,覆盖全局配置
 swagger:
   authorization:

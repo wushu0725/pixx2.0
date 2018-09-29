@@ -19,8 +19,3 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
   resources:
     static-locations: classpath:/static/,classpath:/views/
-
-# mybaits 模块配置
-mybatis-plus:
-  typeAliasesPackage: com.pig4cloud.pigx.codegen.entity
-
