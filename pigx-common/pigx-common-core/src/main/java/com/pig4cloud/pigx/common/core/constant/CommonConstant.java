@@ -25,20 +25,6 @@ package com.pig4cloud.pigx.common.core.constant;
  */
 public interface CommonConstant {
 	/**
-	 * token请求头名称
-	 */
-	String REQ_HEADER = "Authorization";
-
-	/**
-	 * token分割符
-	 */
-	String TOKEN_SPLIT = "Bearer ";
-
-	/**
-	 * jwt签名
-	 */
-	String SIGN_KEY = "PIG";
-	/**
 	 * 删除
 	 */
 	String STATUS_DEL = "1";
@@ -56,16 +42,6 @@ public interface CommonConstant {
 	 * 菜单
 	 */
 	String MENU = "0";
-
-	/**
-	 * 按钮
-	 */
-	String BUTTON = "1";
-
-	/**
-	 * 删除标记
-	 */
-	String DEL_FLAG = "del_flag";
 
 	/**
 	 * 编码
