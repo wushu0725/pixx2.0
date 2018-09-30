@@ -22,6 +22,7 @@ package com.pig4cloud.pigx.auth.endpoint;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.security.service.PigxUser;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
@@ -54,7 +55,7 @@ import java.util.Map;
 @AllArgsConstructor
 @RequestMapping("/oauth")
 public class PigxTokenEndpoint {
-	private static final String PIGX_OAUTH_ACCESS = "pigx_oauth:access:";
+	private static final String PIGX_OAUTH_ACCESS = SecurityConstants.PIGX_PREFIX + SecurityConstants.OAUTH_PREFIX + "access:";
 	private final TokenStore tokenStore;
 	private final RedisTemplate redisTemplate;
 

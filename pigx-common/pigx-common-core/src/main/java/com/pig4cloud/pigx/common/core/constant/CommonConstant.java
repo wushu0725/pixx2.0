@@ -48,16 +48,6 @@ public interface CommonConstant {
 	String MENU = "0";
 
 	/**
-	 * 按钮
-	 */
-	String BUTTON = "1";
-
-	/**
-	 * 删除标记
-	 */
-	String DEL_FLAG = "del_flag";
-
-	/**
 	 * 编码
 	 */
 	String UTF8 = "UTF-8";
@@ -66,4 +56,14 @@ public interface CommonConstant {
 	 * JSON 资源
 	 */
 	String CONTENT_TYPE = "application/json; charset=utf-8";
+
+	/**
+	 * 前端工程名
+	 */
+	String FRONT_END_PROJECT = "pigx-ui";
+
+	/**
+	 * 后端工程名
+	 */
+	String BACK_END_PROJECT = "pigx";
 }

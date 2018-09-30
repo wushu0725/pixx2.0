@@ -24,6 +24,8 @@ import com.pig4cloud.pigx.act.dto.ProcessDefDTO;
 import com.pig4cloud.pigx.act.entity.LeaveBill;
 import com.pig4cloud.pigx.act.mapper.LeaveBillMapper;
 import com.pig4cloud.pigx.act.service.ProcessService;
+import com.pig4cloud.pigx.common.core.constant.enums.EnumProcessStatus;
+import com.pig4cloud.pigx.common.core.constant.enums.EnumResourceType;
 import lombok.AllArgsConstructor;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
@@ -35,7 +37,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -94,19 +95,26 @@ public class ProcessServiceImpl implements ProcessService {
 	public InputStream resourceRead(String procDefId, String proInsId, String resType) {
 
 		if (StrUtil.isBlank(procDefId)) {
-			ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(proInsId).singleResult();
+			ProcessInstance processInstance = runtimeService
+				.createProcessInstanceQuery()
+				.processInstanceId(proInsId)
+				.singleResult();
 			procDefId = processInstance.getProcessDefinitionId();
 		}
-		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(procDefId).singleResult();
+		ProcessDefinition processDefinition = repositoryService
+			.createProcessDefinitionQuery()
+			.processDefinitionId(procDefId)
+			.singleResult();
 
 		String resourceName = "";
-		if (resType.equals("image")) {
+		if (EnumResourceType.IMAGE.getType().equals(resType)) {
 			resourceName = processDefinition.getDiagramResourceName();
-		} else if (resType.equals("xml")) {
+		} else if (EnumResourceType.XML.getType().equals(resType)) {
 			resourceName = processDefinition.getResourceName();
 		}
 
-		InputStream resourceAsStream = repositoryService.getResourceAsStream(processDefinition.getDeploymentId(), resourceName);
+		InputStream resourceAsStream = repositoryService
+			.getResourceAsStream(processDefinition.getDeploymentId(), resourceName);
 		return resourceAsStream;
 	}
 
@@ -119,9 +127,9 @@ public class ProcessServiceImpl implements ProcessService {
 	 */
 	@Override
 	public Boolean updateStatus(String status, String procDefId) {
-		if (status.equals("active")) {
+		if (EnumProcessStatus.ACTIVE.getStatus().equals(status)) {
 			repositoryService.activateProcessDefinitionById(procDefId, true, null);
-		} else if (status.equals("suspend")) {
+		} else if (EnumProcessStatus.SUSPEND.getStatus().equals(status)) {
 			repositoryService.suspendProcessDefinitionById(procDefId, true, null);
 		}
 		return Boolean.TRUE;
@@ -150,25 +158,12 @@ public class ProcessServiceImpl implements ProcessService {
 		//1：获取请假单ID，使用请假单ID，查询请假单的对象LeaveBill
 		LeaveBill leaveBill = leaveBillMapper.selectById(leaveId);
 		leaveBill.setState("1");
-		//3：使用当前对象获取到流程定义的key（对象的名称就是流程定义的key）
+		//2：使用当前对象获取到流程定义的key（对象的名称就是流程定义的key）
 		String key = leaveBill.getClass().getSimpleName();
-		/**
-		 * 4：从Session中获取当前任务的办理人，使用流程变量设置下一个任务的办理人
-		 * inputUser是流程变量的名称，
-		 * 获取的办理人是流程变量的值
-		 */
-		Map<String, Object> variables = new HashMap<>(1);
-		variables.put("aaaaaaa", "lengleng");
-		/**
-		 * 5：
-		 * (1)使用流程变量设置字符串（格式：LeaveBill.id的形式），通过设置，让启动的流程（流程实例）关联业务
-		 * (2)使用正在执行对象表中的一个字段BUSINESS_KEY（Activiti提供的一个字段），让启动的流程（流程实例）关联业务
-		 */
-		//格式：LeaveBill.id的形式（使用流程变量）
-		String objId = key + "." + leaveBill.getLeaveId();
-		variables.put("objId", objId);
-		//6：使用流程定义的key，启动流程实例，同时设置流程变量，同时向正在执行的执行对象表中的字段BUSINESS_KEY添加业务数据，同时让流程关联业务
-		runtimeService.startProcessInstanceByKey(key, objId, variables);
+		//3: 格式：LeaveBill_id的形式（使用流程变量）
+		String businessKey = key + "_" + leaveBill.getLeaveId();
+		//4：使用流程定义的key，启动流程实例，正在执行的执行对象表中的字段BUSINESS_KEY添加业务数据，同时让流程关联业务
+		runtimeService.startProcessInstanceByKey(key, businessKey);
 		leaveBillMapper.updateById(leaveBill);
 		return Boolean.TRUE;
 	}

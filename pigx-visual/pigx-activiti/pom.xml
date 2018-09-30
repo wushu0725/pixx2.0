@@ -59,12 +59,32 @@
 			<groupId>org.activiti</groupId>
 			<artifactId>activiti-modeler</artifactId>
 			<version>${activiti.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-config</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-web</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
 			<groupId>org.activiti</groupId>
 			<artifactId>activiti-diagram-rest</artifactId>
 			<version>${activiti.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-config</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-web</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!--web 模块-->
 		<dependency>
@@ -77,6 +97,11 @@
 					<groupId>org.springframework.boot</groupId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.pig4cloud</groupId>
+			<artifactId>pigx-common-swagger</artifactId>
+			<version>${pigx.version}</version>
 		</dependency>
 		<!--undertow容器-->
 		<dependency>

@@ -28,6 +28,6 @@ import org.activiti.engine.delegate.TaskListener;
 public class LeaveProcessTaskListener implements TaskListener {
 	@Override
 	public void notify(DelegateTask delegateTask) {
-		delegateTask.addCandidateUser("lengleng");
+		delegateTask.addCandidateUser("admin");
 	}
 }

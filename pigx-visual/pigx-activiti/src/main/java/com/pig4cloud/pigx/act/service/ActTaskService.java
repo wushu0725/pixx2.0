@@ -20,8 +20,8 @@ package com.pig4cloud.pigx.act.service;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.pig4cloud.pigx.act.dto.CommentDto;
 import com.pig4cloud.pigx.act.dto.LeaveBillDto;
-import com.pig4cloud.pigx.act.dto.ProcessDefDTO;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -58,18 +58,18 @@ public interface ActTaskService {
 	Boolean submitTask(LeaveBillDto leaveBillDto);
 
 	/**
-	 * 根据 taskId 查询 流程定义 （活动任务坐标）
-	 *
-	 * @param taskId
-	 * @return
-	 */
-	ProcessDefDTO findProcessDefinitionByTaskId(String taskId);
-
-	/**
 	 * 通过任务ID 查询批注信息
 	 *
 	 * @param taskId 任务ID
 	 * @return
 	 */
 	List<CommentDto> findCommentByTaskId(String taskId);
+
+	/**
+	 * 追踪图片节点
+	 *
+	 * @param id
+	 * @return
+	 */
+	InputStream viewByTaskId(String id);
 }

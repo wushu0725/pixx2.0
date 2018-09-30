@@ -15,26 +15,35 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.act;
+package com.pig4cloud.pigx.common.core.constant.enums;
 
-import org.activiti.spring.boot.SecurityAutoConfiguration;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * @author lengleng
- * @date 2018/9/25
- * 工作流管理模块
+ * @date 2018/9/30
+ * 资源类型
  */
-@EnableCircuitBreaker
-@EnableDiscoveryClient
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
-public class PigxActivitiApplication {
+@Getter
+@AllArgsConstructor
+public enum EnumResourceType {
+	/**
+	 * 图片资源
+	 */
+	IMAGE("image", "图片资源"),
 
-	public static void main(String[] args) {
-		SpringApplication.run(PigxActivitiApplication.class, args);
-	}
+	/**
+	 * xml资源
+	 */
+	XML("xml", "xml资源");
 
+	/**
+	 * 类型
+	 */
+	private final String type;
+	/**
+	 * 描述
+	 */
+	private final String description;
 }

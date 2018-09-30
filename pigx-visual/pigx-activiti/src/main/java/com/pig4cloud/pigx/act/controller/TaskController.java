@@ -21,9 +21,13 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.pig4cloud.pigx.act.dto.LeaveBillDto;
 import com.pig4cloud.pigx.act.service.ActTaskService;
 import com.pig4cloud.pigx.common.core.util.R;
+import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
 /**
@@ -38,7 +42,7 @@ public class TaskController {
 
 	@GetMapping("/todo")
 	public Page todo(@RequestParam Map<String, Object> params) {
-		return actTaskService.findTaskByName(params, "lengleng");
+		return actTaskService.findTaskByName(params, SecurityUtils.getUsername());
 	}
 
 	@GetMapping("/{id}")
@@ -52,13 +56,19 @@ public class TaskController {
 	}
 
 	@GetMapping("/view/{id}")
-	public R viewCurrentImage(@PathVariable String id) {
-		return new R(actTaskService.findProcessDefinitionByTaskId(id));
+	public void viewCurrentImage(@PathVariable String id, HttpServletResponse resp) throws IOException {
+		InputStream imageStream = actTaskService.viewByTaskId(id);
+		byte[] b = new byte[1024];
+		int len;
+		while ((len = imageStream.read(b, 0, 1024)) != -1) {
+			resp.getOutputStream().write(b, 0, len);
+		}
 	}
 
 	@GetMapping("/comment/{id}")
 	public R commitList(@PathVariable String id) {
 		return new R(actTaskService.findCommentByTaskId(id));
 	}
+
 
 }

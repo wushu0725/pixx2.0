@@ -112,15 +112,7 @@ public class EditorServiceImpl implements EditorService {
 			model.setName(name);
 			repositoryService.saveModel(model);
 			repositoryService.addModelEditorSource(model.getId(), jsonXml.getBytes(CharsetUtil.UTF_8));
-			InputStream svgStream = new ByteArrayInputStream(svgXml.getBytes(CharsetUtil.UTF_8));
-			TranscoderInput input = new TranscoderInput(svgStream);
-
-			// Setup output
 			ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-			TranscoderOutput output = new TranscoderOutput(outStream);
-//            PNGTranscoder transcoder = new PNGTranscoder();
-			// Do the transformation
-//            transcoder.transcode(input, output);
 			final byte[] result = outStream.toByteArray();
 			repositoryService.addModelEditorSourceExtra(model.getId(), result);
 			outStream.close();

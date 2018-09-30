@@ -50,6 +50,15 @@ public class SecurityUtils {
 
 	/**
 	 * 获取用户
+	 *
+	 * @param authentication
+	 * @return PigxUser
+	 * <p>
+	 * 获取当前用户的全部信息
+	 * 每次check—token 后根据用户名调用 remoteService 查询用户信息，效率比较低。
+	 * 建议长链路调用不要使用，重写configure() 例如  codegen 模块ResourceServerConfigurer
+	 * 1.前提使用继承BaseResourceServerConfigurerAdapter
+	 * 2. 使用默认 configure（）
 	 */
 	public static PigxUser getUser(Authentication authentication) {
 		Object principal = authentication.getPrincipal();
@@ -58,6 +67,20 @@ public class SecurityUtils {
 		}
 		return null;
 	}
+
+	/**
+	 * 获取当前用名
+	 *
+	 * @return String
+	 */
+	public static String getUsername() {
+		Object principal = getAuthentication().getPrincipal();
+		if (principal instanceof String) {
+			return principal.toString();
+		}
+		return null;
+	}
+
 
 	public static String getClientId() {
 		Authentication authentication = getAuthentication();

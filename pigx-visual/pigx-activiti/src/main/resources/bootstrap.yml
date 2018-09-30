@@ -28,3 +28,21 @@ eureka:
   client:
     service-url:
       defaultZone: http://pig:pig@192.168.0.20:1025/eureka/
+
+## spring security 配置
+security:
+  oauth2:
+    client:
+      client-id: ENC(gPFcUOmJm8WqM3k3eSqS0Q==)
+      client-secret: ENC(gPFcUOmJm8WqM3k3eSqS0Q==)
+      scope: server
+    resource:
+      token-info-uri: ${security.auth.server}/check_token
+  auth:
+    server: http://192.168.0.20:9999/auth/oauth
+
+# 加解密根密码
+jasypt:
+  encryptor:
+    password: pigx #根密码
+# redis 相关

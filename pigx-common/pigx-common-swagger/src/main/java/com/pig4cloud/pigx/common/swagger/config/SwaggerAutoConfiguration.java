@@ -17,7 +17,6 @@
 package com.pig4cloud.pigx.common.swagger.config;
 
 
-import cn.hutool.core.collection.CollUtil;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -34,6 +33,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -46,7 +46,10 @@ import java.util.List;
 @EnableAutoConfiguration
 public class SwaggerAutoConfiguration {
 
-	private static final String DEFAULT_EXCLUDE_PATH = "/error";
+	/**
+	 * 	默认的排除路径，排除Spring Boot默认的错误处理路径和端点
+	 */
+	private static final List<String> DEFAULT_EXCLUDE_PATH = Arrays.asList("/error","/actuator/**");
 	private static final String BASE_PATH = "/**";
 
 	@Bean
@@ -58,7 +61,7 @@ public class SwaggerAutoConfiguration {
 	@Bean
 	public Docket api(SwaggerProperties swaggerProperties) {
 		// base-path处理
-		if (CollUtil.isEmpty(swaggerProperties.getBasePath())) {
+		if (swaggerProperties.getBasePath().isEmpty()) {
 			swaggerProperties.getBasePath().add(BASE_PATH);
 		}
 		//noinspection unchecked
@@ -66,8 +69,8 @@ public class SwaggerAutoConfiguration {
 		swaggerProperties.getBasePath().forEach(path -> basePath.add(PathSelectors.ant(path)));
 
 		// exclude-path处理
-		if (CollUtil.isEmpty(swaggerProperties.getExcludePath())) {
-			swaggerProperties.getExcludePath().add(DEFAULT_EXCLUDE_PATH);
+		if (swaggerProperties.getExcludePath().isEmpty()) {
+			swaggerProperties.getExcludePath().addAll(DEFAULT_EXCLUDE_PATH);
 		}
 		List<Predicate<String>> excludePath = new ArrayList<>();
 		swaggerProperties.getExcludePath().forEach(path -> excludePath.add(PathSelectors.ant(path)));

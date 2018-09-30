@@ -22,30 +22,32 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.pig4cloud.pigx.act.dto.CommentDto;
 import com.pig4cloud.pigx.act.dto.LeaveBillDto;
-import com.pig4cloud.pigx.act.dto.ProcessDefDTO;
 import com.pig4cloud.pigx.act.dto.TaskDTO;
 import com.pig4cloud.pigx.act.entity.LeaveBill;
 import com.pig4cloud.pigx.act.mapper.LeaveBillMapper;
 import com.pig4cloud.pigx.act.service.ActTaskService;
+import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.engine.*;
+import org.activiti.engine.history.HistoricActivityInstance;
+import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.activiti.engine.impl.context.Context;
 import org.activiti.engine.impl.identity.Authentication;
-import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
-import org.activiti.engine.impl.pvm.process.ActivityImpl;
-import org.activiti.engine.repository.Deployment;
-import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
+import org.activiti.image.ProcessDiagramGenerator;
+import org.activiti.spring.ProcessEngineFactoryBean;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -61,6 +63,8 @@ public class ActTaskServiceImpl implements ActTaskService {
 	private final TaskService taskService;
 	private final RuntimeService runtimeService;
 	private final RepositoryService repositoryService;
+	private final HistoryService historyService;
+	private final ProcessEngineFactoryBean processEngine;
 
 	@Override
 	public Page findTaskByName(Map<String, Object> params, String name) {
@@ -107,15 +111,14 @@ public class ActTaskServiceImpl implements ActTaskService {
 			.processInstanceId(processInstanceId)
 			.singleResult();
 		//4：使用流程实例对象获取BUSINESS_KEY
-		String buniness_key = pi.getBusinessKey();
+		String businessKey = pi.getBusinessKey();
 		//5：获取BUSINESS_KEY对应的主键ID，使用主键ID，查询请假单对象（LeaveBill.1）
-		String id = "";
-		if (StrUtil.isNotBlank(buniness_key)) {
+		if (StrUtil.isNotBlank(businessKey)) {
 			//截取字符串，取buniness_key小数点的第2个值
-			id = buniness_key.split("\\.")[1];
+			businessKey = businessKey.split("_")[1];
 		}
 		//查询请假单对象
-		LeaveBill leaveBill = leaveBillMapper.selectById(id);
+		LeaveBill leaveBill = leaveBillMapper.selectById(businessKey);
 
 		LeaveBillDto leaveBillDto = new LeaveBillDto();
 		BeanUtils.copyProperties(leaveBill, leaveBillDto);
@@ -138,7 +141,7 @@ public class ActTaskServiceImpl implements ActTaskService {
 		String message = leaveBillDto.getComment();
 		//获取请假单ID
 		Integer id = leaveBillDto.getLeaveId();
-		//1：在完成之前，添加一个批注信息，向act_hi_comment表中添加数据，用于记录对当前申请人的一些审核信息
+		//添加一个批注信息，向act_hi_comment表中添加数据，用于记录对当前申请人的一些审核信息
 		Task task = taskService.createTaskQuery()
 			.taskId(taskId)
 			.singleResult();
@@ -146,28 +149,13 @@ public class ActTaskServiceImpl implements ActTaskService {
 		String processInstanceId = task.getProcessInstanceId();
 
 		// 设置批注用户
-		Authentication.setAuthenticatedUserId("lengleng");
+		Authentication.setAuthenticatedUserId(SecurityUtils.getUsername());
 		taskService.addComment(taskId, processInstanceId, message);
-		/**
-		 * 2：如果连线的名称是“默认提交”，那么就不需要设置，如果不是，就需要设置流程变量
-		 * 在完成任务之前，设置流程变量，按照连线的名称，去完成任务
-		 流程变量的名称：outcome
-		 流程变量的值：连线的名称
-		 */
-		Map<String, Object> variables = new HashMap<String, Object>();
-		String outcome = "";
-		if (outcome != null && !outcome.equals("默认提交")) {
-			variables.put("outcome", outcome);
-		}
 
-		//3：使用任务ID，完成当前人的个人任务，同时流程变量
-		taskService.complete(taskId, variables);
-		//4：当任务完成之后，需要指定下一个任务的办理人（使用类）-----已经开发完成
+		//使用任务ID，完成当前人的个人任务
+		taskService.complete(taskId);
 
-		/**
-		 * 5：在完成任务之后，判断流程是否结束
-		 如果流程结束了，更新请假单表的状态从1变成2（审核中-->审核完成）
-		 */
+		//在完成任务之后，判断流程是否结束
 		ProcessInstance pi = runtimeService.createProcessInstanceQuery()
 			.processInstanceId(processInstanceId)
 			.singleResult();
@@ -179,47 +167,6 @@ public class ActTaskServiceImpl implements ActTaskService {
 			leaveBillMapper.updateById(bill);
 		}
 		return null;
-	}
-
-	/**
-	 * 根据 taskId 查询 流程定义 （活动任务坐标）
-	 *
-	 * @param taskId
-	 * @return
-	 */
-	@Override
-	public ProcessDefDTO findProcessDefinitionByTaskId(String taskId) {
-		//使用任务ID，查询任务对象
-		Task task = taskService.createTaskQuery()
-			.taskId(taskId)
-			.singleResult();
-		//获取流程定义ID
-		String processDefinitionId = task.getProcessDefinitionId();
-		//查询流程定义的对象act_re_procdef
-		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-			.processDefinitionId(processDefinitionId)
-			.singleResult();
-
-		//获取流程定义的实体对象（对应.bpmn文件中的数据）
-		ProcessDefinitionEntity processDefinitionEntity =
-			(ProcessDefinitionEntity) repositoryService.getProcessDefinition(processDefinitionId);
-
-		//使用流程实例ID，查询正在执行的执行对象表，获取当前活动对应的流程实例对象
-		ProcessInstance pi = runtimeService.createProcessInstanceQuery()
-			.processInstanceId(task.getProcessInstanceId())
-			.singleResult();
-
-		//获取当前活动对象
-		ActivityImpl activityImpl = processDefinitionEntity.findActivity(pi.getActivityId());
-
-		Deployment deployment = repositoryService.createDeploymentQuery()
-			.deploymentId(processDefinition.getDeploymentId()).singleResult();
-		ProcessDefDTO processDefDTO = ProcessDefDTO.toProcessDefDTO(processDefinition, deployment);
-		processDefDTO.setXAxis(activityImpl.getX());
-		processDefDTO.setYAxis(activityImpl.getY());
-		processDefDTO.setWidth(activityImpl.getWidth());
-		processDefDTO.setHeight(activityImpl.getWidth());
-		return processDefDTO;
 	}
 
 	@Override
@@ -247,4 +194,48 @@ public class ActTaskServiceImpl implements ActTaskService {
 		return commentDtoList;
 	}
 
+	/**
+	 * 追踪图片节点
+	 *
+	 * @param id
+	 */
+	@Override
+	public InputStream viewByTaskId(String id) {
+		//使用当前任务ID，获取当前任务对象
+		Task task = taskService.createTaskQuery()
+			.taskId(id)
+			.singleResult();
+
+		String processInstanceId = task.getProcessInstanceId();
+		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
+		HistoricProcessInstance historicProcessInstance =
+			historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
+		String processDefinitionId = null;
+		List<String> executedActivityIdList = new ArrayList<>();
+		if (processInstance != null) {
+			processDefinitionId = processInstance.getProcessDefinitionId();
+			executedActivityIdList = this.runtimeService.getActiveActivityIds(processInstance.getId());
+		} else if (historicProcessInstance != null) {
+			processDefinitionId = historicProcessInstance.getProcessDefinitionId();
+			List<HistoricActivityInstance> historicActivityInstanceList =
+				historyService.createHistoricActivityInstanceQuery().processInstanceId(processInstanceId).orderByHistoricActivityInstanceId().asc().list();
+			for (HistoricActivityInstance activityInstance : historicActivityInstanceList) {
+				executedActivityIdList.add(activityInstance.getActivityId());
+			}
+		}
+
+		BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
+		ProcessEngineConfiguration processEngineConfiguration = processEngine.getProcessEngineConfiguration();
+		Context.setProcessEngineConfiguration((ProcessEngineConfigurationImpl) processEngineConfiguration);
+		ProcessDiagramGenerator diagramGenerator = processEngineConfiguration.getProcessDiagramGenerator();
+
+		return diagramGenerator.generateDiagram(
+			bpmnModel, "png",
+			executedActivityIdList, Collections.emptyList(),
+			processEngine.getProcessEngineConfiguration().getActivityFontName(),
+			processEngine.getProcessEngineConfiguration().getLabelFontName(),
+			"宋体",
+			null, 1.0);
+
+	}
 }

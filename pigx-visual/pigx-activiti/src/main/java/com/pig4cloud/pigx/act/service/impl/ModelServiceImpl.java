@@ -48,6 +48,7 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public class ModelServiceImpl implements ModelService {
+	private static final String BPMN20_XML = ".bpmn20.xml";
 	private final RepositoryService repositoryService;
 	private final ObjectMapper objectMapper;
 
@@ -77,7 +78,9 @@ public class ModelServiceImpl implements ModelService {
 			model.setKey(key);
 			model.setName(name);
 			model.setCategory(category);
-			model.setVersion(Integer.parseInt(String.valueOf(repositoryService.createModelQuery().modelKey(model.getKey()).count() + 1)));
+			model.setVersion(Integer.parseInt(
+				String.valueOf(repositoryService.createModelQuery()
+					.modelKey(model.getKey()).count() + 1)));
 
 			ObjectNode modelObjectNode = objectMapper.createObjectNode();
 			modelObjectNode.put(ModelDataJsonConstants.MODEL_NAME, name);
@@ -144,11 +147,12 @@ public class ModelServiceImpl implements ModelService {
 			BpmnModel bpmnModel = new BpmnJsonConverter().convertToBpmnModel(objectNode);
 
 			String processName = model.getName();
-			if (!StrUtil.endWithIgnoreCase(processName, ".bpmn20.xml")) {
-				processName += ".bpmn20.xml";
+			if (!StrUtil.endWithIgnoreCase(processName, BPMN20_XML)) {
+				processName += BPMN20_XML;
 			}
 			// 部署流程
-			Deployment deployment = repositoryService.createDeployment().name(model.getName())
+			Deployment deployment = repositoryService
+				.createDeployment().name(model.getName())
 				.addBpmnModel(processName, bpmnModel)
 				.deploy();
 
@@ -158,7 +162,7 @@ public class ModelServiceImpl implements ModelService {
 			list.stream().forEach(processDefinition ->
 				repositoryService.setProcessDefinitionCategory(processDefinition.getId(), model.getCategory()));
 		} catch (Exception e) {
-			log.error("部署失败，异常",e);
+			log.error("部署失败，异常", e);
 		}
 		return Boolean.TRUE;
 	}
