@@ -28,6 +28,8 @@ import com.pig4cloud.pigx.admin.api.vo.UserVO;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 
+import java.util.List;
+
 /**
  * @author lengleng
  * @date 2017/10/31
@@ -102,5 +104,11 @@ public interface SysUserService extends IService<SysUser> {
 	 */
 	Boolean deleteSysUserByUsernameAndUserId(String username, Integer userId);
 
-
+	/**
+	 * 查询上级部门的用户信息
+	 *
+	 * @param username 用户名
+	 * @return R
+	 */
+	List<SysUser> ancestorUsers(String username);
 }

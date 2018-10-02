@@ -4,7 +4,7 @@
  Source Server         : RDS本地使用
  Source Server Type    : MySQL
  Source Server Version : 50721
- Source Host           : 114.116.21.191
+ Source Host           : 127.0.0.1
  Source Database       : pigxx
 
  Target Server Type    : MySQL

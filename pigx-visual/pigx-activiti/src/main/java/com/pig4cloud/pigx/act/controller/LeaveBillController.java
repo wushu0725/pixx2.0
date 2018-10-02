@@ -23,8 +23,10 @@ import com.pig4cloud.pigx.act.entity.LeaveBill;
 import com.pig4cloud.pigx.act.service.ActTaskService;
 import com.pig4cloud.pigx.act.service.LeaveBillService;
 import com.pig4cloud.pigx.act.service.ProcessService;
+import com.pig4cloud.pigx.common.core.constant.enums.EnumTaskStatus;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
+import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -78,6 +80,8 @@ public class LeaveBillController {
 	 */
 	@PostMapping
 	public R save(@RequestBody LeaveBill leaveBill) {
+		leaveBill.setUsername(SecurityUtils.getUsername());
+		leaveBill.setState(EnumTaskStatus.UNSUBMIT.getStatus());
 		return new R<>(leaveBillService.insert(leaveBill));
 	}
 

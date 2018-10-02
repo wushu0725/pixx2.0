@@ -6,7 +6,7 @@ jasypt:
 spring:
   redis:
     password:
-    host: 192.168.0.22
+    host: localhost
 # 暴露监控端点
 management:
   endpoints:
@@ -94,7 +94,7 @@ swagger:
 ## spring security 配置
 security:
   auth:
-    server: http://192.168.0.20:9999/auth/oauth
+    server: http://localhost:9999/auth/oauth
   oauth2:
     resource:
       token-info-uri: ${security.auth.server}/check_token

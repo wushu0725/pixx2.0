@@ -26,6 +26,7 @@ import com.pig4cloud.pigx.act.mapper.LeaveBillMapper;
 import com.pig4cloud.pigx.act.service.ProcessService;
 import com.pig4cloud.pigx.common.core.constant.enums.EnumProcessStatus;
 import com.pig4cloud.pigx.common.core.constant.enums.EnumResourceType;
+import com.pig4cloud.pigx.common.core.constant.enums.EnumTaskStatus;
 import lombok.AllArgsConstructor;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
@@ -157,7 +158,7 @@ public class ProcessServiceImpl implements ProcessService {
 	public Boolean saveStartProcess(Integer leaveId) {
 		//1：获取请假单ID，使用请假单ID，查询请假单的对象LeaveBill
 		LeaveBill leaveBill = leaveBillMapper.selectById(leaveId);
-		leaveBill.setState("1");
+		leaveBill.setState(EnumTaskStatus.CHECK.getStatus());
 		//2：使用当前对象获取到流程定义的key（对象的名称就是流程定义的key）
 		String key = leaveBill.getClass().getSimpleName();
 		//3: 格式：LeaveBill_id的形式（使用流程变量）

@@ -15,40 +15,45 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.act.dto;
+package com.pig4cloud.pigx.common.core.constant.enums;
 
-import com.pig4cloud.pigx.act.entity.LeaveBill;
-import lombok.Data;
-
-import java.util.Date;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * @author lengleng
- * @date 2018/9/28
- * LeaveBillDto
+ * @date 2018/9/30
+ * 流程状态
  */
-@Data
-public class LeaveBillDto extends LeaveBill {
+@Getter
+@AllArgsConstructor
+public enum EnumTaskStatus {
 	/**
-	 * 任务ID
+	 * 未提交
 	 */
-	private String taskId;
+	UNSUBMIT("0", "未提交"),
 
 	/**
-	 * 任务提交时间
+	 * 审核中
 	 */
-	private Date time;
+	CHECK("1", "审核中"),
 
 	/**
-	 * 批准信息
+	 * 已完成
 	 */
-	private String comment;
+	COMPLETED("2", "已完成"),
 
 	/**
-	 * 连线信息
+	 * 驳回
 	 */
-	private List<String> flagList;
+	OVERRULE("9", "驳回");
 
-	private String taskFlag;
+	/**
+	 * 类型
+	 */
+	private final String status;
+	/**
+	 * 描述
+	 */
+	private final String description;
 }

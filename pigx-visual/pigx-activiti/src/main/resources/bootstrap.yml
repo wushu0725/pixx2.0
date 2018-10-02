@@ -14,9 +14,9 @@ spring:
         enabled: true
         service-id: pigx-config
   datasource:
-    url: jdbc:mysql://114.116.21.191:3306/ac?characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/ac?characterEncoding=UTF-8&useSSL=false
     username: root
-    password: Bjyjht2017!@#
+    password: 123456
     driver-class-name: com.mysql.jdbc.Driver
   activiti:
     check-process-definitions: false
@@ -27,7 +27,7 @@ eureka:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://pig:pig@192.168.0.20:1025/eureka/
+      defaultZone: http://pig:pig@localhost:1025/eureka/
 
 ## spring security 配置
 security:
@@ -39,7 +39,7 @@ security:
     resource:
       token-info-uri: ${security.auth.server}/check_token
   auth:
-    server: http://192.168.0.20:9999/auth/oauth
+    server: http://localhost:9999/auth/oauth
 
 # 加解密根密码
 jasypt:

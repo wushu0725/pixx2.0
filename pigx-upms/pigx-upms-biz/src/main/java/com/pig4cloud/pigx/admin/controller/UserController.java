@@ -36,14 +36,15 @@ import com.pig4cloud.pigx.common.log.annotation.SysLog;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,11 +52,11 @@ import java.util.Map;
  * @date 2017/10/28
  */
 @RestController
+@AllArgsConstructor
 @RequestMapping("/user")
 public class UserController {
 	private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
-	@Autowired
-	private SysUserService userService;
+	private final SysUserService userService;
 
 	/**
 	 * 获取当前用户信息（角色、权限）
@@ -124,7 +125,7 @@ public class UserController {
 		SysUser sysUser = new SysUser();
 		BeanUtils.copyProperties(userDto, sysUser);
 		sysUser.setDelFlag(CommonConstant.STATUS_NORMAL);
-		sysUser.setPassword(ENCODER.encode(userDto.getNewpassword1()));
+		sysUser.setPassword(ENCODER.encode(userDto.getPassword()));
 		userService.insert(sysUser);
 		userDto.getRole().forEach(roleId -> {
 			SysUserRole userRole = new SysUserRole();
@@ -168,5 +169,14 @@ public class UserController {
 	@PutMapping("/editInfo")
 	public R<Boolean> editInfo(@Valid @RequestBody UserDTO userDto) {
 		return userService.updateUserInfo(userDto, SecurityUtils.getUser().getUsername());
+	}
+
+	/**
+	 * @param username 用户名称
+	 * @return
+	 */
+	@GetMapping("/ancestorUsers/{username}")
+	public R<List<SysUser>> ancestorUsers(@PathVariable String username) {
+		return new R<>(userService.ancestorUsers(username));
 	}
 }

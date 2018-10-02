@@ -27,10 +27,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.dto.UserDTO;
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
-import com.pig4cloud.pigx.admin.api.entity.SysDeptRelation;
-import com.pig4cloud.pigx.admin.api.entity.SysRole;
-import com.pig4cloud.pigx.admin.api.entity.SysUser;
-import com.pig4cloud.pigx.admin.api.entity.SysUserRole;
+import com.pig4cloud.pigx.admin.api.entity.*;
 import com.pig4cloud.pigx.admin.api.vo.MenuVO;
 import com.pig4cloud.pigx.admin.api.vo.UserVO;
 import com.pig4cloud.pigx.admin.mapper.SysUserMapper;
@@ -68,6 +65,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	private final SysMenuService sysMenuService;
 	private final SysUserMapper sysUserMapper;
 	private final SysRoleService sysRoleService;
+	private final SysDeptService sysDeptService;
 	private final SysUserRoleService sysUserRoleService;
 	private final SysDeptRelationService sysDeptRelationService;
 
@@ -78,7 +76,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	 * @return
 	 */
 	@Override
-	@Cacheable(value = "user_details", key = "#username", unless="#result == null")
+	@Cacheable(value = "user_details", key = "#username", unless = "#result == null")
 	public UserInfo findUserInfo(String type, String username) {
 		SysUser condition = new SysUser();
 		if (EnumLoginType.PWD.getType().equals(type)) {
@@ -91,7 +89,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		SysUser sysUser = this.selectOne(new EntityWrapper<>(condition));
 		if (sysUser == null) {
 			return null;
-		} 
+		}
 
 		UserInfo userInfo = new UserInfo();
 		userInfo.setSysUser(sysUser);
@@ -222,6 +220,30 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 			userRole.insert();
 		});
 		return Boolean.TRUE;
+	}
+
+	/**
+	 * 查询上级部门的用户信息
+	 *
+	 * @param username 用户名
+	 * @return R
+	 */
+	@Override
+	public List<SysUser> ancestorUsers(String username) {
+		SysUser condition = new SysUser();
+		condition.setUsername(username);
+		SysUser sysUser = this.selectOne(new EntityWrapper<>(condition));
+
+		Integer deptId = sysUser.getDeptId();
+		SysDept sysDept = sysDeptService.selectById(deptId);
+		if (sysDept == null) {
+			return null;
+		}
+
+		Integer parentId = sysDept.getParentId();
+		SysUser condition2 = new SysUser();
+		condition2.setDeptId(parentId);
+		return this.selectList(new EntityWrapper<>(condition2));
 	}
 
 	/**

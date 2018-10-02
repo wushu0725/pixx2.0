@@ -20,11 +20,14 @@
 package com.pig4cloud.pigx.admin.api.feign.fallback;
 
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
+import com.pig4cloud.pigx.admin.api.entity.SysUser;
 import com.pig4cloud.pigx.admin.api.feign.RemoteUserService;
 import com.pig4cloud.pigx.common.core.util.R;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author lengleng
@@ -58,6 +61,19 @@ public class RemoteUserServiceFallbackImpl implements RemoteUserService {
 	@Override
 	public R<UserInfo> social(String inStr) {
 		log.error("feign 查询用户信息失败:{}", inStr, cause);
+		return null;
+	}
+
+	/**
+	 * 查询上级部门的用户信息
+	 *
+	 * @param username 用户名
+	 * @param from     调用标志
+	 * @return R
+	 */
+	@Override
+	public R<List<SysUser>> ancestorUsers(String username, String from) {
+		log.error("feign 查询用户上级部门用户列失败:{}", username, cause);
 		return null;
 	}
 }

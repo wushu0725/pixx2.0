@@ -26,6 +26,7 @@ import com.pig4cloud.pigx.act.dto.TaskDTO;
 import com.pig4cloud.pigx.act.entity.LeaveBill;
 import com.pig4cloud.pigx.act.mapper.LeaveBillMapper;
 import com.pig4cloud.pigx.act.service.ActTaskService;
+import com.pig4cloud.pigx.common.core.constant.enums.EnumTaskStatus;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,8 @@ import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.activiti.engine.impl.context.Context;
 import org.activiti.engine.impl.identity.Authentication;
+import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
+import org.activiti.engine.impl.pvm.process.ActivityImpl;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
@@ -46,10 +49,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author lengleng
@@ -59,6 +59,7 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public class ActTaskServiceImpl implements ActTaskService {
+	private static final String FLAG = "审批";
 	private final LeaveBillMapper leaveBillMapper;
 	private final TaskService taskService;
 	private final RuntimeService runtimeService;
@@ -117,6 +118,8 @@ public class ActTaskServiceImpl implements ActTaskService {
 			//截取字符串，取buniness_key小数点的第2个值
 			businessKey = businessKey.split("_")[1];
 		}
+
+		List<String> comeList = findOutFlagListByTaskId(task, pi);
 		//查询请假单对象
 		LeaveBill leaveBill = leaveBillMapper.selectById(businessKey);
 
@@ -124,6 +127,7 @@ public class ActTaskServiceImpl implements ActTaskService {
 		BeanUtils.copyProperties(leaveBill, leaveBillDto);
 		leaveBillDto.setTaskId(taskId);
 		leaveBillDto.setTime(task.getCreateTime());
+		leaveBillDto.setFlagList(comeList);
 		return leaveBillDto;
 	}
 
@@ -152,8 +156,13 @@ public class ActTaskServiceImpl implements ActTaskService {
 		Authentication.setAuthenticatedUserId(SecurityUtils.getUsername());
 		taskService.addComment(taskId, processInstanceId, message);
 
+		Map<String, Object> variables = new HashMap<>(1);
+
+		if (!StrUtil.equals(FLAG, leaveBillDto.getTaskFlag())) {
+			variables.put("flag", leaveBillDto.getTaskFlag());
+		}
 		//使用任务ID，完成当前人的个人任务
-		taskService.complete(taskId);
+		taskService.complete(taskId, variables);
 
 		//在完成任务之后，判断流程是否结束
 		ProcessInstance pi = runtimeService.createProcessInstanceQuery()
@@ -163,7 +172,9 @@ public class ActTaskServiceImpl implements ActTaskService {
 		if (pi == null) {
 			LeaveBill bill = new LeaveBill();
 			bill.setLeaveId(id);
-			bill.setState("2");
+			bill.setState(StrUtil.equals(EnumTaskStatus.OVERRULE.getDescription()
+				, leaveBillDto.getTaskFlag()) ? EnumTaskStatus.OVERRULE.getStatus()
+				: EnumTaskStatus.COMPLETED.getStatus());
 			leaveBillMapper.updateById(bill);
 		}
 		return null;
@@ -237,5 +248,21 @@ public class ActTaskServiceImpl implements ActTaskService {
 			"宋体",
 			null, 1.0);
 
+	}
+
+	private List<String> findOutFlagListByTaskId(Task task, ProcessInstance pi) {
+		//返回存放连线的名称集合
+		List<String> list = new ArrayList<>();
+		//查询ProcessDefinitionEntiy对象
+		ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity) repositoryService
+			.getProcessDefinition(task.getProcessDefinitionId());
+
+		ActivityImpl activityImpl = processDefinitionEntity.findActivity(pi.getActivityId());
+		//获取当前活动完成之后连线的名称
+		activityImpl.getOutgoingTransitions().forEach(pvm -> {
+			String name = (String) pvm.getProperty("name");
+			list.add(StrUtil.isNotBlank(name) ? name : FLAG);
+		});
+		return list;
 	}
 }

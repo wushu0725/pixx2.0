@@ -20,6 +20,7 @@
 package com.pig4cloud.pigx.admin.api.feign;
 
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
+import com.pig4cloud.pigx.admin.api.entity.SysUser;
 import com.pig4cloud.pigx.admin.api.feign.factory.RemoteUserServiceFallbackFactory;
 import com.pig4cloud.pigx.common.core.constant.ServiceNameConstant;
 import com.pig4cloud.pigx.common.core.util.R;
@@ -27,6 +28,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
+
+import java.util.List;
 
 /**
  * @author lengleng
@@ -53,4 +56,15 @@ public interface RemoteUserService {
 	 */
 	@GetMapping("/social/info/{inStr}")
 	R<UserInfo> social(@PathVariable("inStr") String inStr);
+
+	/**
+	 * 查询上级部门的用户信息
+	 *
+	 * @param username 用户名
+	 * @param from     调用标志
+	 * @return R
+	 */
+	@GetMapping("/user/ancestorUsers/{username}")
+	R<List<SysUser>> ancestorUsers(@PathVariable("username") String username
+		, @RequestHeader("from") String from);
 }

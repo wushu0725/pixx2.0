@@ -17,6 +17,7 @@
 
 package com.pig4cloud.pigx.act;
 
+import com.pig4cloud.pigx.common.security.feign.EnablePigxFeignClients;
 import org.activiti.spring.boot.SecurityAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,6 +31,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @EnableCircuitBreaker
 @EnableDiscoveryClient
+@EnablePigxFeignClients
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class PigxActivitiApplication {
 
