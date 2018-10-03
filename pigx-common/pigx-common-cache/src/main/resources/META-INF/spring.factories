@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    com.pig4cloud.pigx.common.cache.RedisTemplateConfig,\
+    com.pig4cloud.pigx.common.cache.RedisCacheManagerConfig,\
+    com.pig4cloud.pigx.common.cache.RedisCacheAutoConfiguration
+

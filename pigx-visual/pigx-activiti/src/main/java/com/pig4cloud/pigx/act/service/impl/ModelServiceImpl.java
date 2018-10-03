@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.pig4cloud.pigx.act.service.ModelService;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
+import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.bpmn.model.BpmnModel;
@@ -87,6 +88,7 @@ public class ModelServiceImpl implements ModelService {
 			modelObjectNode.put(ModelDataJsonConstants.MODEL_REVISION, model.getVersion());
 			modelObjectNode.put(ModelDataJsonConstants.MODEL_DESCRIPTION, desc);
 			model.setMetaInfo(modelObjectNode.toString());
+			model.setTenantId(String.valueOf(SecurityUtils.getTenantId()));
 
 			repositoryService.saveModel(model);
 			repositoryService.addModelEditorSource(model.getId(), editorNode.toString().getBytes("utf-8"));
@@ -154,10 +156,13 @@ public class ModelServiceImpl implements ModelService {
 			Deployment deployment = repositoryService
 				.createDeployment().name(model.getName())
 				.addBpmnModel(processName, bpmnModel)
+				.tenantId(String.valueOf(SecurityUtils.getTenantId()))
 				.deploy();
 
 			// 设置流程分类
-			List<ProcessDefinition> list = repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).list();
+			List<ProcessDefinition> list = repositoryService.createProcessDefinitionQuery()
+				.deploymentId(deployment.getId())
+				.list();
 
 			list.stream().forEach(processDefinition ->
 				repositoryService.setProcessDefinitionCategory(processDefinition.getId(), model.getCategory()));

@@ -21,6 +21,7 @@ import cn.hutool.core.util.CharsetUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.pig4cloud.pigx.act.service.EditorService;
+import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.activiti.engine.ActivitiException;
 import org.activiti.engine.RepositoryService;
@@ -110,6 +111,8 @@ public class EditorServiceImpl implements EditorService {
 			modelJson.put(MODEL_DESCRIPTION, description);
 			model.setMetaInfo(modelJson.toString());
 			model.setName(name);
+			model.setTenantId(String.valueOf(SecurityUtils.getTenantId()));
+			
 			repositoryService.saveModel(model);
 			repositoryService.addModelEditorSource(model.getId(), jsonXml.getBytes(CharsetUtil.UTF_8));
 			ByteArrayOutputStream outStream = new ByteArrayOutputStream();

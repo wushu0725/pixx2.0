@@ -24,7 +24,8 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-  import java.io.Serializable;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -74,11 +75,16 @@ public class LeaveBill extends Model<LeaveBill> {
 	@TableLogic
 	private String delFlag;
 
-  /**
-   * 主键值
-   */
-  @Override
-  protected Serializable pkVal() {
-    return this.leaveId;
-  }
+	/**
+	 * 租户ID
+	 */
+	private Integer tenantId;
+
+	/**
+	 * 主键值
+	 */
+	@Override
+	protected Serializable pkVal() {
+		return this.leaveId;
+	}
 }

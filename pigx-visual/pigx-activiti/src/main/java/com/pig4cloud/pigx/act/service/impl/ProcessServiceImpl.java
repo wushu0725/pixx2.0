@@ -27,6 +27,7 @@ import com.pig4cloud.pigx.act.service.ProcessService;
 import com.pig4cloud.pigx.common.core.constant.enums.EnumProcessStatus;
 import com.pig4cloud.pigx.common.core.constant.enums.EnumResourceType;
 import com.pig4cloud.pigx.common.core.constant.enums.EnumTaskStatus;
+import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
@@ -164,7 +165,7 @@ public class ProcessServiceImpl implements ProcessService {
 		//3: 格式：LeaveBill_id的形式（使用流程变量）
 		String businessKey = key + "_" + leaveBill.getLeaveId();
 		//4：使用流程定义的key，启动流程实例，正在执行的执行对象表中的字段BUSINESS_KEY添加业务数据，同时让流程关联业务
-		runtimeService.startProcessInstanceByKey(key, businessKey);
+		runtimeService.startProcessInstanceByKeyAndTenantId(key, businessKey, String.valueOf(SecurityUtils.getTenantId()));
 		leaveBillMapper.updateById(leaveBill);
 		return Boolean.TRUE;
 	}
