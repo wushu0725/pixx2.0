@@ -18,7 +18,7 @@
 package com.pig4cloud.pigx.common.cache;
 
 import cn.hutool.core.util.StrUtil;
-import com.pig4cloud.pigx.common.security.util.SecurityUtils;
+import com.pig4cloud.pigx.common.core.util.TenantUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;
 import org.springframework.data.redis.cache.RedisCache;
@@ -57,7 +57,7 @@ public class RedisAutoCacheManager extends RedisCacheManager {
 		if (cacheArray.length < 2) {
 			return super.createRedisCache(name, cacheConfig);
 		}
-		String cacheName = cacheArray[0] + ":" + SecurityUtils.getTenantId();
+		String cacheName = cacheArray[0] + ":" + TenantUtils.getTenantId();
 		if (cacheConfig != null) {
 			long cacheAge = Long.getLong(cacheArray[1], -1);
 			cacheConfig = cacheConfig.entryTtl(Duration.ofSeconds(cacheAge));
@@ -67,6 +67,6 @@ public class RedisAutoCacheManager extends RedisCacheManager {
 
 	@Override
 	public Cache getCache(String name) {
-		return super.getCache(name + ":" + SecurityUtils.getTenantId());
+		return super.getCache(name + ":" + TenantUtils.getTenantId());
 	}
 }

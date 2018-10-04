@@ -37,7 +37,7 @@
 		<!--工具类核心包 要从线程中获取租户ID-->
 		<dependency>
 			<groupId>com.pig4cloud</groupId>
-			<artifactId>pigx-common-security</artifactId>
+			<artifactId>pigx-common-core</artifactId>
 			<version>${pigx.version}</version>
 		</dependency>
 		<!--缓存依赖-->

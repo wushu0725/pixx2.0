@@ -77,5 +77,11 @@
 			<version>${jackson.modules}</version>
 			<type>pom</type>
 		</dependency>
+		<!--TTL-->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>transmittable-thread-local</artifactId>
+			<version>${ttl.version}</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -19,7 +19,7 @@ package com.pig4cloud.pigx.common.security.filter;
 
 import cn.hutool.core.util.StrUtil;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
-import com.pig4cloud.pigx.common.security.util.SecurityUtils;
+import com.pig4cloud.pigx.common.core.util.TenantUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -52,9 +52,9 @@ public class TenantIdTtlFilter extends GenericFilterBean {
 		log.debug("获取header中的租户ID为:{}", tenantId);
 
 		if (StrUtil.isNotBlank(tenantId)) {
-			SecurityUtils.setTenantId(Integer.parseInt(tenantId));
+			TenantUtils.setTenantId(Integer.parseInt(tenantId));
 		} else {
-			SecurityUtils.setTenantId(1);
+			TenantUtils.setTenantId(1);
 		}
 
 		filterChain.doFilter(request, response);

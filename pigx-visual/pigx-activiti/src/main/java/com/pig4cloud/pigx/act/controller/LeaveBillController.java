@@ -20,7 +20,6 @@ package com.pig4cloud.pigx.act.controller;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.pig4cloud.pigx.act.entity.LeaveBill;
-import com.pig4cloud.pigx.act.service.ActTaskService;
 import com.pig4cloud.pigx.act.service.LeaveBillService;
 import com.pig4cloud.pigx.act.service.ProcessService;
 import com.pig4cloud.pigx.common.core.constant.enums.EnumTaskStatus;
@@ -45,8 +44,6 @@ import java.util.Map;
 public class LeaveBillController {
 	private final LeaveBillService leaveBillService;
 	private final ProcessService processService;
-	private final ActTaskService actTaskService;
-
 
 	/**
 	 * 列表

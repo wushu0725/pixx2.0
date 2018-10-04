@@ -15,26 +15,35 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.common.security.feign;
+package com.pig4cloud.pigx.common.core.util;
 
-import com.pig4cloud.pigx.common.core.constant.CommonConstant;
-import com.pig4cloud.pigx.common.core.util.TenantUtils;
-import feign.RequestInterceptor;
-import feign.RequestTemplate;
-import lombok.extern.slf4j.Slf4j;
+import com.alibaba.ttl.TransmittableThreadLocal;
 
 /**
  * @author lengleng
- * @date 2018/9/14
+ * @date 2018/10/4
+ * 租户工具类
  */
-@Slf4j
-public class PigxFeignTenantInterceptor implements RequestInterceptor {
-	@Override
-	public void apply(RequestTemplate requestTemplate) {
-		if (TenantUtils.getTenantId() == null) {
-			log.error("TTL 中的 租户ID为空，feign拦截器 >> 增强失败");
-			return;
-		}
-		requestTemplate.header(CommonConstant.TENANT_ID, TenantUtils.getTenantId().toString());
+public class TenantUtils {
+
+	private static final ThreadLocal<Integer> THREAD_LOCAL_TENANT = new TransmittableThreadLocal<>();
+
+
+	/**
+	 * TTL 设置租户ID
+	 *
+	 * @param tenantId
+	 */
+	public static void setTenantId(Integer tenantId) {
+		THREAD_LOCAL_TENANT.set(tenantId);
+	}
+
+	/**
+	 * 获取TTL中的租户ID
+	 *
+	 * @return
+	 */
+	public static Integer getTenantId() {
+		return THREAD_LOCAL_TENANT.get();
 	}
 }

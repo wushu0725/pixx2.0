@@ -21,7 +21,6 @@ package com.pig4cloud.pigx.common.security.util;
 
 
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.ttl.TransmittableThreadLocal;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import com.pig4cloud.pigx.common.security.service.PigxUser;
 import org.springframework.security.core.Authentication;
@@ -39,8 +38,6 @@ import java.util.List;
  * @author L.cm
  */
 public class SecurityUtils {
-	private static final ThreadLocal<Integer> THREAD_LOCAL_TENANT = new TransmittableThreadLocal<>();
-
 	/**
 	 * 获取Authentication
 	 */
@@ -121,21 +118,4 @@ public class SecurityUtils {
 		return roleIds;
 	}
 
-	/**
-	 * TTL 设置租户ID
-	 *
-	 * @param tenantId
-	 */
-	public static void setTenantId(Integer tenantId) {
-		THREAD_LOCAL_TENANT.set(tenantId);
-	}
-
-	/**
-	 * 获取TTL中的租户ID
-	 *
-	 * @return
-	 */
-	public static Integer getTenantId() {
-		return THREAD_LOCAL_TENANT.get();
-	}
 }

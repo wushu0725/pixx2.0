@@ -27,7 +27,7 @@ import com.pig4cloud.pigx.act.service.ProcessService;
 import com.pig4cloud.pigx.common.core.constant.enums.EnumProcessStatus;
 import com.pig4cloud.pigx.common.core.constant.enums.EnumResourceType;
 import com.pig4cloud.pigx.common.core.constant.enums.EnumTaskStatus;
-import com.pig4cloud.pigx.common.security.util.SecurityUtils;
+import com.pig4cloud.pigx.common.core.util.TenantUtils;
 import lombok.AllArgsConstructor;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
@@ -157,15 +157,12 @@ public class ProcessServiceImpl implements ProcessService {
 	 */
 	@Override
 	public Boolean saveStartProcess(Integer leaveId) {
-		//1：获取请假单ID，使用请假单ID，查询请假单的对象LeaveBill
 		LeaveBill leaveBill = leaveBillMapper.selectById(leaveId);
 		leaveBill.setState(EnumTaskStatus.CHECK.getStatus());
-		//2：使用当前对象获取到流程定义的key（对象的名称就是流程定义的key）
+
 		String key = leaveBill.getClass().getSimpleName();
-		//3: 格式：LeaveBill_id的形式（使用流程变量）
 		String businessKey = key + "_" + leaveBill.getLeaveId();
-		//4：使用流程定义的key，启动流程实例，正在执行的执行对象表中的字段BUSINESS_KEY添加业务数据，同时让流程关联业务
-		runtimeService.startProcessInstanceByKeyAndTenantId(key, businessKey, String.valueOf(SecurityUtils.getTenantId()));
+		runtimeService.startProcessInstanceByKeyAndTenantId(key, businessKey, String.valueOf(TenantUtils.getTenantId()));
 		leaveBillMapper.updateById(leaveBill);
 		return Boolean.TRUE;
 	}

@@ -208,6 +208,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		SysUser sysUser = new SysUser();
 		BeanUtils.copyProperties(userDto, sysUser);
 		sysUser.setUpdateTime(LocalDateTime.now());
+
+		if (StrUtil.isNotBlank(userDto.getPassword())) {
+			sysUser.setPassword(ENCODER.encode(userDto.getPassword()));
+		}
 		this.updateById(sysUser);
 
 		SysUserRole condition = new SysUserRole();

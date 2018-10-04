@@ -51,11 +51,5 @@
 			<artifactId>pigx-upms-api</artifactId>
 			<version>${pigx.version}</version>
 		</dependency>
-		<!--TTL-->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>transmittable-thread-local</artifactId>
-			<version>${ttl.version}</version>
-		</dependency>
 	</dependencies>
 </project>

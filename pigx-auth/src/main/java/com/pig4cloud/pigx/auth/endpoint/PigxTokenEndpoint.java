@@ -24,6 +24,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import com.pig4cloud.pigx.common.core.util.R;
+import com.pig4cloud.pigx.common.core.util.TenantUtils;
 import com.pig4cloud.pigx.common.security.service.PigxUser;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
@@ -152,7 +153,7 @@ public class PigxTokenEndpoint {
 	private boolean extractToken(Map<String, String> map, Object principal) {
 		if (principal instanceof PigxUser) {
 			PigxUser user = (PigxUser) principal;
-			if (!user.getTenantId().equals(SecurityUtils.getTenantId())) {
+			if (!user.getTenantId().equals(TenantUtils.getTenantId())) {
 				return true;
 			}
 			map.put("user_id", user.getId() + "");

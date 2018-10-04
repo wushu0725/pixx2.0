@@ -17,14 +17,19 @@
 
 package com.pig4cloud.pigx.act.controller;
 
+import cn.hutool.core.io.IoUtil;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.pig4cloud.pigx.act.dto.ProcessDefDTO;
 import com.pig4cloud.pigx.act.service.ProcessService;
+import com.pig4cloud.pigx.common.core.constant.enums.EnumResourceType;
 import com.pig4cloud.pigx.common.core.util.R;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.util.Map;
 
@@ -44,22 +49,18 @@ public class ProcessController {
 	}
 
 	@GetMapping(value = "/resource/{proInsId}/{procDefId}/{resType}")
-	public void resourceRead(@PathVariable String procDefId, @PathVariable String proInsId, @PathVariable String resType, HttpServletResponse response) {
-		if ("xml".equals(resType)) {
-			response.setContentType("application/xml");
+	public ResponseEntity resourceRead(@PathVariable String procDefId, @PathVariable String proInsId, @PathVariable String resType) {
+
+		HttpHeaders headers = new HttpHeaders();
+
+		if (EnumResourceType.XML.getType().equals(resType)) {
+			headers.setContentType(MediaType.APPLICATION_XML);
 		} else {
-			response.setContentType("image/png");
+			headers.setContentType(MediaType.IMAGE_PNG);
 		}
 
-		try {
-			InputStream resourceAsStream = processService.resourceRead(procDefId, proInsId, resType);
-			byte[] b = new byte[1024];
-			int len = -1;
-			while ((len = resourceAsStream.read(b, 0, 1024)) != -1) {
-				response.getOutputStream().write(b, 0, len);
-			}
-		} catch (Exception e) {
-		}
+		InputStream resourceAsStream = processService.resourceRead(procDefId, proInsId, resType);
+		return new ResponseEntity(IoUtil.readBytes(resourceAsStream), headers, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/status/{procDefId}/{status}")

@@ -101,26 +101,20 @@ public class ActTaskServiceImpl implements ActTaskService {
 	 */
 	@Override
 	public LeaveBillDto findTaskByTaskId(String taskId) {
-		//1：使用任务ID，查询任务对象Task
 		Task task = taskService.createTaskQuery()
 			.taskId(taskId)
 			.singleResult();
-		//2：使用任务对象Task获取流程实例ID
-		String processInstanceId = task.getProcessInstanceId();
-		//3：使用流程实例ID，查询正在执行的执行对象表，返回流程实例对象
+
 		ProcessInstance pi = runtimeService.createProcessInstanceQuery()
-			.processInstanceId(processInstanceId)
+			.processInstanceId(task.getProcessInstanceId())
 			.singleResult();
-		//4：使用流程实例对象获取BUSINESS_KEY
+
 		String businessKey = pi.getBusinessKey();
-		//5：获取BUSINESS_KEY对应的主键ID，使用主键ID，查询请假单对象（LeaveBill.1）
 		if (StrUtil.isNotBlank(businessKey)) {
-			//截取字符串，取buniness_key小数点的第2个值
 			businessKey = businessKey.split("_")[1];
 		}
 
 		List<String> comeList = findOutFlagListByTaskId(task, pi);
-		//查询请假单对象
 		LeaveBill leaveBill = leaveBillMapper.selectById(businessKey);
 
 		LeaveBillDto leaveBillDto = new LeaveBillDto();
@@ -139,20 +133,15 @@ public class ActTaskServiceImpl implements ActTaskService {
 	 */
 	@Override
 	public Boolean submitTask(LeaveBillDto leaveBillDto) {
-		//获取任务ID
 		String taskId = leaveBillDto.getTaskId();
-		//批注信息
 		String message = leaveBillDto.getComment();
-		//获取请假单ID
 		Integer id = leaveBillDto.getLeaveId();
-		//添加一个批注信息，向act_hi_comment表中添加数据，用于记录对当前申请人的一些审核信息
+
 		Task task = taskService.createTaskQuery()
 			.taskId(taskId)
 			.singleResult();
-		//获取流程实例ID
-		String processInstanceId = task.getProcessInstanceId();
 
-		// 设置批注用户
+		String processInstanceId = task.getProcessInstanceId();
 		Authentication.setAuthenticatedUserId(SecurityUtils.getUsername());
 		taskService.addComment(taskId, processInstanceId, message);
 
@@ -161,14 +150,12 @@ public class ActTaskServiceImpl implements ActTaskService {
 		if (!StrUtil.equals(FLAG, leaveBillDto.getTaskFlag())) {
 			variables.put("flag", leaveBillDto.getTaskFlag());
 		}
-		//使用任务ID，完成当前人的个人任务
-		taskService.complete(taskId, variables);
 
-		//在完成任务之后，判断流程是否结束
+		taskService.complete(taskId, variables);
 		ProcessInstance pi = runtimeService.createProcessInstanceQuery()
 			.processInstanceId(processInstanceId)
 			.singleResult();
-		//流程结束了
+
 		if (pi == null) {
 			LeaveBill bill = new LeaveBill();
 			bill.setLeaveId(id);

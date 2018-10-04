@@ -21,18 +21,16 @@ import cn.hutool.core.util.CharsetUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.pig4cloud.pigx.act.service.EditorService;
-import com.pig4cloud.pigx.common.security.util.SecurityUtils;
+import com.pig4cloud.pigx.common.core.util.TenantUtils;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.ActivitiException;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Model;
-import org.apache.batik.transcoder.TranscoderInput;
-import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
@@ -42,6 +40,7 @@ import static org.activiti.editor.constants.ModelDataJsonConstants.*;
  * @author lengleng
  * @date 2018/9/25
  */
+@Slf4j
 @Service
 @AllArgsConstructor
 public class EditorServiceImpl implements EditorService {
@@ -57,8 +56,9 @@ public class EditorServiceImpl implements EditorService {
 	public Object getStencilset() {
 		InputStream stencilsetStream = this.getClass().getClassLoader().getResourceAsStream("stencilset.json");
 		try {
-			return IOUtils.toString(stencilsetStream, "utf-8");
+			return IOUtils.toString(stencilsetStream, CharsetUtil.UTF_8);
 		} catch (Exception e) {
+			log.error("Error while loading stencil set", e);
 			throw new ActivitiException("Error while loading stencil set", e);
 		}
 	}
@@ -71,7 +71,7 @@ public class EditorServiceImpl implements EditorService {
 	 */
 	@Override
 	public Object getEditorJson(String modelId) {
-		ObjectNode modelNode = null;
+		ObjectNode modelNode;
 		Model model = repositoryService.getModel(modelId);
 		if (model != null) {
 			try {
@@ -83,10 +83,11 @@ public class EditorServiceImpl implements EditorService {
 				}
 				byte[] source = repositoryService.getModelEditorSource(model.getId());
 				modelNode.put(MODEL_ID, model.getId());
-				ObjectNode editorJsonNode = (ObjectNode) objectMapper.readTree(new String(source, "utf-8"));
+				ObjectNode editorJsonNode = (ObjectNode) objectMapper.readTree(new String(source, CharsetUtil.UTF_8));
 				modelNode.set("model", editorJsonNode);
 				return modelNode;
 			} catch (Exception e) {
+				log.error("Error creating model JSON", e);
 				throw new ActivitiException("Error creating model JSON", e);
 			}
 		}
@@ -111,8 +112,8 @@ public class EditorServiceImpl implements EditorService {
 			modelJson.put(MODEL_DESCRIPTION, description);
 			model.setMetaInfo(modelJson.toString());
 			model.setName(name);
-			model.setTenantId(String.valueOf(SecurityUtils.getTenantId()));
-			
+			model.setTenantId(String.valueOf(TenantUtils.getTenantId()));
+
 			repositoryService.saveModel(model);
 			repositoryService.addModelEditorSource(model.getId(), jsonXml.getBytes(CharsetUtil.UTF_8));
 			ByteArrayOutputStream outStream = new ByteArrayOutputStream();
@@ -120,6 +121,7 @@ public class EditorServiceImpl implements EditorService {
 			repositoryService.addModelEditorSourceExtra(model.getId(), result);
 			outStream.close();
 		} catch (Exception e) {
+			log.error("Error saving model", e);
 			throw new ActivitiException("Error saving model", e);
 		}
 	}
