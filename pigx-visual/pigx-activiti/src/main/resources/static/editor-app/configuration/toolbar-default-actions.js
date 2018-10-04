@@ -377,12 +377,20 @@ var SaveModelCtrl = [ '$rootScope', '$scope', '$http', '$route', '$location',
             description: $scope.saveDialog.description
         };
 
+        var tenantId  = 1
+        if (sessionStorage.getItem('tenantId')) {
+          tenantId = sessionStorage.getItem('tenantId')
+        }
+
         // Update
-        $http({    method: 'PUT',
+          $http({    method: 'PUT',
             data: params,
             ignoreErrors: true,
-            headers: {'Accept': 'application/json',
-                      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+            headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                      'TENANT_ID': tenantId
+            },
             transformRequest: function (obj) {
                 var str = [];
                 for (var p in obj) {

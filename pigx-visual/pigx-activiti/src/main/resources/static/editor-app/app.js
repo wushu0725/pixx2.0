@@ -1,7 +1,7 @@
 /*
  * Activiti Modeler component part of the Activiti project
  * Copyright 2005-2014 Alfresco Software, Ltd. All rights reserved.
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -24,7 +24,7 @@ var activitiModeler = angular.module('activitiModeler', [
   'ngSanitize',
   'ngRoute',
   'ngDragDrop',
-  'mgcrea.ngStrap', 
+  'mgcrea.ngStrap',
   'ngGrid',
   'ngAnimate',
   'pascalprecht.translate',
@@ -41,7 +41,7 @@ activitiModeler
       angular.extend($selectProvider.defaults, {
           caretHtml: '&nbsp;<i class="icon icon-caret-down"></i>'
       });
-        
+
         // Initialize angular-translate
         $translateProvider.useStaticFilesLoader({
             prefix: './editor-app/i18n/',
@@ -52,23 +52,23 @@ activitiModeler
 
         // remember language
         $translateProvider.useCookieStorage();
-        
+
   }])
   .run(['$rootScope', '$timeout', '$modal', '$translate', '$location', '$window', '$http', '$q',
         function($rootScope, $timeout, $modal, $translate, $location, $window, $http, $q) {
-	  
+
 			  $rootScope.config = ACTIVITI.CONFIG;
-			  
+
 			  $rootScope.editorInitialized = false;
-		      
+
 		      $rootScope.editorFactory = $q.defer();
-		
+
 		      $rootScope.forceSelectionRefresh = false;
-		
+
 		      $rootScope.ignoreChanges = false; // by default never ignore changes
-		      
+
 		      $rootScope.validationErrors = [];
-		      
+
 		      $rootScope.staticIncludeVersion = Date.now();
 
 			  /**
@@ -84,8 +84,8 @@ activitiModeler
 		              this.$apply(fn);
 		          }
 		      };
-	  
-	  
+
+
             /**
              * Initialize the event bus: couple all Oryx events with a dispatch of the
              * event of the event bus. This way, it gets much easier to attach custom logic
@@ -94,10 +94,19 @@ activitiModeler
 
             /* Helper method to fetch model from server (always needed) */
             function fetchModel(modelId) {
+                var tenantId  = 1
+                if (sessionStorage.getItem('tenantId')) {
+                  tenantId = sessionStorage.getItem('tenantId')
+                }
 
                 var modelUrl = KISBPM.URL.getModel(modelId);
 
-                $http({method: 'GET', url: modelUrl}).
+                $http({method: 'GET',
+                    url: modelUrl,
+                   headers: {
+                    'TENANT_ID': tenantId
+                   }
+                }).
                     success(function (data, status, headers, config) {
                         $rootScope.editor = new ORYX.Editor(data);
                         $rootScope.modelData = angular.fromJson(data);
@@ -128,7 +137,7 @@ activitiModeler
                     	$rootScope.orginalOryxButtonStyle = obj.style.display;
                     	obj.style.display = 'none';
                     });
-                    
+
                     jQuery('.resizer_southeast').each(function(i, obj) {
                     	$rootScope.orginalResizerSEStyle = obj.style.display;
                         obj.style.display = 'none';
@@ -160,7 +169,7 @@ activitiModeler
                     jQuery('.Oryx_button').each(function(i, obj) {
                         handleDisplayProperty(obj);
                     });
-                    
+
                     jQuery('.resizer_southeast').each(function(i, obj) {
                         handleDisplayProperty(obj);
                     });
@@ -178,21 +187,21 @@ activitiModeler
 	            if (!$rootScope.editorInitialized) {
 
 	            	ORYX._loadPlugins();
-	
+
 	                var modelId = EDITOR.UTIL.getParameterByName('modelId');
 	                fetchModel(modelId);
-	
+
 	                $rootScope.window = {};
 	                var updateWindowSize = function() {
 	                    $rootScope.window.width = $window.innerWidth;
 	                    $rootScope.window.height  = $window.innerHeight;
 	                };
-	
+
 	                // Window resize hook
 	                angular.element($window).bind('resize', function() {
 	                    $rootScope.safeApply(updateWindowSize());
 	                });
-	
+
 	                $rootScope.$watch('window.forceRefresh', function(newValue) {
 	                    if(newValue) {
 	                        $timeout(function() {
@@ -201,7 +210,7 @@ activitiModeler
 	                        });
 	                    }
 	                });
-	
+
 	                updateWindowSize();
 
 	                // Hook in resizing of main panels when window resizes
@@ -219,18 +228,18 @@ activitiModeler
 	                        || canvas === undefined || canvas === null || mainHeader === null) {
 	                        return;
 	                    }
-	                    
+
 	                    if ($rootScope.editor)
 	                	{
 	        	        	var selectedElements = $rootScope.editor.selection;
 	        	            var subSelectionElements = $rootScope.editor._subSelection;
-	        	
+
 	        	            $rootScope.selectedElements = selectedElements;
 	        	            $rootScope.subSelectionElements = subSelectionElements;
 	        	            if (selectedElements && selectedElements.length > 0)
 	        	            {
 	        	            	$rootScope.selectedElementBeforeScrolling = selectedElements[0];
-	        	            	
+
 	        	            	$rootScope.editor.setSelection([]); // needed cause it checks for element changes and does nothing if the elements are the same
 	        	                $rootScope.editor.setSelection($rootScope.selectedElements, $rootScope.subSelectionElements);
 	        	                $rootScope.selectedElements = undefined;
@@ -317,10 +326,10 @@ activitiModeler
 	                        $this.data('scrollTimeout', setTimeout(callback,50,self));
 	                    });
 	                };
-	                
+
 	                // Always needed, cause the DOM element on which the scroll event listeners are attached are changed for every new model
 	                initScrollHandling();
-	                
+
 	                $rootScope.editorInitialized = true;
 	            }
             });
@@ -348,7 +357,7 @@ activitiModeler
                         KISBPM.eventBus.dispatch(eventMapping.kisBpmType, event);
                     });
                 });
-                
+
                 $rootScope.editor.registerOnEvent(ORYX.CONFIG.EVENT_SHAPEREMOVED, function (event) {
     	    		var validateButton = document.getElementById(event.shape.resourceId + "-validate-button");
     	    		if (validateButton)
@@ -362,12 +371,12 @@ activitiModeler
                 KISBPM.eventBus.dispatch(KISBPM.eventBus.EVENT_TYPE_EDITOR_READY, {type : KISBPM.eventBus.EVENT_TYPE_EDITOR_READY});
 
             });
-            
+
             // Alerts
             $rootScope.alerts = {
                 queue: []
             };
-          
+
             $rootScope.showAlert = function(alert) {
                 if(alert.queue.length > 0) {
                     alert.current = alert.queue.shift();
@@ -384,7 +393,7 @@ activitiModeler
                     $rootScope.alerts.current = undefined;
                 }
             };
-          
+
             $rootScope.addAlert = function(message, type) {
                 var newAlert = {message: message, type: type};
                 if (!$rootScope.alerts.timeout) {
@@ -395,7 +404,7 @@ activitiModeler
                     $rootScope.alerts.queue.push(newAlert);
                 }
             };
-          
+
             $rootScope.dismissAlert = function() {
                 if (!$rootScope.alerts.timeout) {
                     $rootScope.alerts.current = undefined;
@@ -405,7 +414,7 @@ activitiModeler
                     $rootScope.showAlert($rootScope.alerts);
                 }
             };
-          
+
             $rootScope.addAlertPromise = function(promise, type) {
                 if (promise) {
                     promise.then(function(data) {
@@ -413,7 +422,7 @@ activitiModeler
                     });
                 }
             };
-          
+
         }
   ])
 
