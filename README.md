@@ -1,27 +1,12 @@
-<p align="center">
- <img src="https://img.shields.io/badge/Avue-1.5.4.RC1-green.svg" alt="Build Status">
-  <img src="https://img.shields.io/badge/Spring%20Cloud-Finchley.RELEASE-blue.svg" alt="Coverage Status">
-  <img src="https://img.shields.io/badge/Spring%20Boot-2.0.3.RELEASE-blue.svg" alt="Downloads">
-</p>
-
-<h2 align="center">Supporting Pig Developer Team</h2> 
-
-## 项目官网
-https://pig4cloud.com
-
-### 配套代码
-<a href="https://gitee.wang/pig/pigx-ui" target="_blank">pigx-ui</a>
-
-### pigx 和 pig 区别
-
-- 基于最新的Spring Cloud  Finchley.RELEASE 版本
-- 完整的oAuth 流程，资源服务器控制权限
-- 去除了部分对于开发不友好的中间件
-
 ### 使用说明  
 
-请参考VIP群共享 《从零开始部署pigx》
-[>> 目录](doc/md/catalog.md)
+请参考VIP群共享 《从零开始部署pigx》  
+[>> 文档](doc/md/catalog.md)   
+
+视频 | ppt
+---|---
+[>> 环境准备、运行pigx](https://www.bilibili.com/video/av33200189)|  [PPT](https://slides.com/lengleng/pigx-springcloud-6)
+
 
 ## 协议和授权
 
