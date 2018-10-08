@@ -5,8 +5,9 @@
 
 视频 | ppt
 ---|---
-[>> 环境准备、运行pigx](https://www.bilibili.com/video/av33200189)|  [PPT](https://slides.com/lengleng/pigx-springcloud-6)
-
+[>> 环境准备、运行pigx](https://www.bilibili.com/video/av33200189)|  [PPT](https://slides.com/lengleng/pigx-springcloud-6/fullscreen#/)
+[>> pigx定时任务、运维平台使用](https://www.bilibili.com/video/av33268288)|  [PPT](https://slides.com/lengleng/pigx-springcloud-7/fullscreen#/)
+[>> pigx 配置文件加解密原理和选择](https://www.bilibili.com/video/av33315412)|  [PPT](https://slides.com/lengleng/pigx-springcloud-6-8/fullscreen#/)
 
 ## 协议和授权
 
