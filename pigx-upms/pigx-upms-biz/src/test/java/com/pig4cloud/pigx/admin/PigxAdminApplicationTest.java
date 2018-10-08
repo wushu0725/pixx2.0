@@ -36,7 +36,7 @@ public class PigxAdminApplicationTest {
 		StringEncryptor stringEncryptor = new DefaultLazyEncryptor(new StandardEnvironment());
 
 		//加密方法
-		System.out.println(stringEncryptor.encrypt("pig"));
+		System.out.println(stringEncryptor.encrypt("pigx"));
 
 		//解密方法
 		System.out.println(stringEncryptor.decrypt("ltJPpR50wT0oIY9kfOe1Iw==="));
