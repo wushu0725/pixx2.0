@@ -14,7 +14,7 @@
  * this software without specific prior written permission.
  * Author: lengleng (wangiegie@gmail.com)
  */
-package com.pig4cloud.pigx.common.security.handle;
+package com.pig4cloud.pigx.common.security.handler;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.CharsetUtil;

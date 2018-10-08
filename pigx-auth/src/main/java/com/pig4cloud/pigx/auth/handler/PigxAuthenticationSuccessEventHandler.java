@@ -15,28 +15,20 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.common.security.handle;
+package com.pig4cloud.pigx.auth.handler;
 
-import org.springframework.context.ApplicationListener;
-import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
+import com.pig4cloud.pigx.common.security.handler.AuthenticationSuccessEventHandler;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 
 /**
  * @author lengleng
  * @date 2018/10/8
- * 认证成功事件处理器
  */
-public abstract class AuthenticationSuccessEventHandler implements ApplicationListener<AuthenticationSuccessEvent> {
-	/**
-	 * Handle an application event.
-	 *
-	 * @param event the event to respond to
-	 */
-	@Override
-	public void onApplicationEvent(AuthenticationSuccessEvent event) {
-		Authentication authentication = (Authentication) event.getSource();
-		handle(authentication);
-	}
+@Slf4j
+@Component
+public class PigxAuthenticationSuccessEventHandler extends AuthenticationSuccessEventHandler {
 
 	/**
 	 * 处理登录成功方法
@@ -45,5 +37,8 @@ public abstract class AuthenticationSuccessEventHandler implements ApplicationLi
 	 *
 	 * @param authentication 登录对象
 	 */
-	public abstract void handle(Authentication authentication);
+	@Override
+	public void handle(Authentication authentication) {
+		log.info("用户：{} 登录成功", authentication.getPrincipal());
+	}
 }

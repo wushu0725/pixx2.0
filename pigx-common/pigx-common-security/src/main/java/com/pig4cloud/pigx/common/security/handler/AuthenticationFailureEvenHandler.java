@@ -15,7 +15,7 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.common.security.handle;
+package com.pig4cloud.pigx.common.security.handler;
 
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AbstractAuthenticationFailureEvent;

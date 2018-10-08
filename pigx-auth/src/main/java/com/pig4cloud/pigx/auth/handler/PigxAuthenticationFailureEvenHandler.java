@@ -15,9 +15,9 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.auth.handle;
+package com.pig4cloud.pigx.auth.handler;
 
-import com.pig4cloud.pigx.common.security.handle.AuthenticationFailureEvenHandler;
+import com.pig4cloud.pigx.common.security.handler.AuthenticationFailureEvenHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
