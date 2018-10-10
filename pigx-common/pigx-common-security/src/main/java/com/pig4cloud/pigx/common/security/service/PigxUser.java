@@ -64,6 +64,6 @@ public class PigxUser extends User {
 	public PigxUser(Integer id, Integer deptId, String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 		this.id = id;
-		this.deptId = id;
+		this.deptId = deptId;
 	}
 }
