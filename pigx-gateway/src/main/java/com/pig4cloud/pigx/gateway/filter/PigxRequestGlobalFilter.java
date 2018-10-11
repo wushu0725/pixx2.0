@@ -74,7 +74,7 @@ public class PigxRequestGlobalFilter implements GlobalFilter, Ordered {
 		exchange.getAttributes().put(GATEWAY_REQUEST_URL_ATTR, newRequest.getURI());
 
 		// 3. 支持swagger添加X-Forwarded-Prefix header
-		String path = newRequest.getURI().getPath();
+		String path = request.getURI().getPath();
 		if (!StringUtils.endsWithIgnoreCase(path, SwaggerProvider.API_URI)) {
 			return chain.filter(exchange.mutate().request(newRequest).build());
 		}
