@@ -24,13 +24,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 /**
  * WebSecurityConfigurer
  *
- * @author: lishangbu
- * @date: 2018/10/8
+ * @author lishangbu
+ * @date 2018/10/8
  */
 @Configuration
 public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
@@ -43,24 +42,24 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// @formatter:off
-        SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
-        successHandler.setTargetUrlParameter("redirectTo");
-        successHandler.setDefaultTargetUrl(adminContextPath + "/");
+		SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
+		successHandler.setTargetUrlParameter("redirectTo");
+		successHandler.setDefaultTargetUrl(adminContextPath + "/");
 
-        http.authorizeRequests()
-            .antMatchers(adminContextPath + "/assets/**").permitAll()
-            .antMatchers(adminContextPath + "/login").permitAll()
-            .anyRequest().authenticated()
-            .and()
-        .formLogin().loginPage(adminContextPath + "/login").successHandler(successHandler).and()
-        .logout().logoutUrl(adminContextPath + "/logout").and()
-        .httpBasic().and()
-        .csrf()
-            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-            .ignoringAntMatchers(
-                adminContextPath + "/instances",
-                adminContextPath + "/actuator/**"
-            );
-        // @formatter:on
+		http.authorizeRequests()
+			.antMatchers(adminContextPath + "/assets/**"
+				, adminContextPath + "/login"
+				, adminContextPath + "/actuator/**"
+			).permitAll()
+			.anyRequest().authenticated()
+			.and()
+			.formLogin().loginPage(adminContextPath + "/login")
+			.successHandler(successHandler).and()
+			.logout().logoutUrl(adminContextPath + "/logout")
+			.and()
+			.httpBasic().and()
+			.csrf()
+			.disable();
+		// @formatter:on
 	}
 }
