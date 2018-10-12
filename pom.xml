@@ -30,14 +30,14 @@
 	<url>https://www.pig4cloud.com</url>
 
 	<properties>
-		<pigx.version>1.6.2</pigx.version>
+		<pigx.version>1.6.3</pigx.version>
 		<spring-boot.version>2.0.4.RELEASE</spring-boot.version>
 		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
 		<spring-platform.version>Cairo-SR3</spring-platform.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<monitor.version>2.0.2</monitor.version>
+		<monitor.version>2.0.3</monitor.version>
 		<hutool.version>4.1.13</hutool.version>
 		<mbp.boot.version>2.3</mbp.boot.version>
 		<kaptcha.version>0.0.9</kaptcha.version>
@@ -182,6 +182,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
 				<configuration>
 					<target>${maven.compiler.target}</target>
 					<source>${maven.compiler.source}</source>
@@ -191,6 +192,7 @@
 			<plugin>
 				<groupId>pl.project13.maven</groupId>
 				<artifactId>git-commit-id-plugin</artifactId>
+				<version>2.2.5</version>
 			</plugin>
 		</plugins>
 	</build>

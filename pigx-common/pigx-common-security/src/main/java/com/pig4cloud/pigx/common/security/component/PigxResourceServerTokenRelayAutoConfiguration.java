@@ -2,15 +2,13 @@ package com.pig4cloud.pigx.common.security.component;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.condition.AllNestedConditions;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.autoconfigure.condition.*;
 import org.springframework.boot.autoconfigure.security.oauth2.OAuth2AutoConfiguration;
 import org.springframework.cloud.security.oauth2.client.AccessTokenContextRelay;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.config.annotation.web.configuration.OAuth2ClientConfiguration;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfiguration;
@@ -36,28 +34,6 @@ public class PigxResourceServerTokenRelayAutoConfiguration {
 	@Bean
 	public AccessTokenContextRelay accessTokenContextRelay(OAuth2ClientContext context) {
 		return new AccessTokenContextRelay(context);
-	}
-
-	@Configuration
-	public static class ResourceServerTokenRelayRegistrationAutoConfiguration implements WebMvcConfigurer {
-		@Autowired
-		AccessTokenContextRelay accessTokenContextRelay;
-
-		@Override
-		public void addInterceptors(InterceptorRegistry registry) {
-			registry.addInterceptor(
-				new HandlerInterceptorAdapter() {
-					@Override
-					public boolean preHandle(HttpServletRequest request,
-											 HttpServletResponse response, Object handler) throws Exception {
-						accessTokenContextRelay.copyToken();
-						return true;
-					}
-				}
-
-			);
-		}
-
 	}
 
 	@Target({ElementType.TYPE, ElementType.METHOD})

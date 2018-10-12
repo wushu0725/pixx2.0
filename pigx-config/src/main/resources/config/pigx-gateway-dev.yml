@@ -14,26 +14,18 @@ spring:
         - ImageCodeGatewayFilter
           # 前端密码解密
         - PasswordDecoderFilter
-        - StripPrefix=1
       #UPMS 模块
       - id: pigx-upms
         uri: lb://pigx-upms
         predicates:
         - Path=/admin/**
         filters:
-          # Swagger请求头处理
-        - SwaggerHeaderFilter
-          # 请求头清理避免不合法请求头
-        - name: RemoveRequestHeader
-          args:
-            name: from
           # 限流配置
         - name: RequestRateLimiter
           args:
             key-resolver: '#{@remoteAddrKeyResolver}'
             redis-rate-limiter.replenishRate: 10
             redis-rate-limiter.burstCapacity: 20
-        - StripPrefix=1
           # 降级配置
         - name: Hystrix
           args:
@@ -44,29 +36,21 @@ spring:
         uri: lb://pigx-codegen
         predicates:
         - Path=/gen/**
-        filters:
-        - StripPrefix=1
       # 定时任务模块
       - id: pigx-daemon
         uri: lb://pigx-daemon
         predicates:
         - Path=/daemon/**
-        filters:
-        - StripPrefix=1
       # 分布式事务管理模块
       - id: pigx-tx-manager
         uri: lb://pigx-tx-manager
         predicates:
         - Path=/tx/**
-        filters:
-        - StripPrefix=1
       # 工作流管理模块
       - id: pigx-activiti
         uri: lb://pigx-activiti
         predicates:
         - Path=/act/**
-        filters:
-        - StripPrefix=1
 security:
   encode:
     # 前端密码密钥，必须16位

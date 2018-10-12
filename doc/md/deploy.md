@@ -40,7 +40,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: lengleng
-    url: jdbc:mysql://127.0.0.1:3306/pigx?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    url: jdbc:mysql://mysql:3306/pigx?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
 ```
 
 

@@ -1,0 +1,6 @@
+spring:
+  # 安全配置
+  security:
+    user:
+      name: ENC(rZHA4LW5hHmhLAAzJoFNag==)
+      password: ENC(bjeyh+Aeii3kHXkoo00ZUw==)

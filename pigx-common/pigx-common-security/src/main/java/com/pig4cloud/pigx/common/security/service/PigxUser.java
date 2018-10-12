@@ -72,6 +72,7 @@ public class PigxUser extends User {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 		this.id = id;
 		this.deptId = deptId;
+		this.deptId = deptId;
 		this.tenantId = tenantId;
 	}
 }

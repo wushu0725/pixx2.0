@@ -21,6 +21,7 @@ package com.pig4cloud.pigx.auth.config;
 
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import com.pig4cloud.pigx.common.security.component.PigxWebResponseExceptionTranslator;
+import com.pig4cloud.pigx.common.security.service.PigxUserDetailsService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,6 +53,7 @@ import java.util.Map;
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 	private final DataSource dataSource;
+	private final PigxUserDetailsService pigxUserDetailsService;
 	private final AuthenticationManager authenticationManager;
 	private final RedisConnectionFactory redisConnectionFactory;
 
@@ -76,6 +78,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
 			.tokenStore(tokenStore())
 			.tokenEnhancer(tokenEnhancer())
+			.userDetailsService(pigxUserDetailsService)
 			.authenticationManager(authenticationManager)
 			.reuseRefreshTokens(false)
 			.exceptionTranslator(new PigxWebResponseExceptionTranslator());
