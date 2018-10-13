@@ -46,7 +46,9 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 		successHandler.setTargetUrlParameter("redirectTo");
 		successHandler.setDefaultTargetUrl(adminContextPath + "/");
 
-		http.authorizeRequests()
+		http
+			.headers().frameOptions().disable()
+			.and().authorizeRequests()
 			.antMatchers(adminContextPath + "/assets/**"
 				, adminContextPath + "/login"
 				, adminContextPath + "/actuator/**"
