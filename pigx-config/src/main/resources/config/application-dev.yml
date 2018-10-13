@@ -6,7 +6,7 @@ jasypt:
 spring:
   redis:
     password:
-    host: localhost
+    host: redis
 # 暴露监控端点
 management:
   endpoints:

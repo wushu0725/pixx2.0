@@ -48,6 +48,11 @@ public interface SecurityConstants {
 	String FROM_IN = "Y";
 
 	/**
+	 * 标志
+	 */
+	String FROM = "from";
+
+	/**
 	 * {bcrypt} 加密的特征码
 	 */
 	String BCRYPT = "{bcrypt}";
