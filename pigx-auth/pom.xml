@@ -50,6 +50,12 @@
 			<artifactId>pigx-common-security</artifactId>
 			<version>${pigx.version}</version>
 		</dependency>
+		<!--缓存操作相关-->
+		<dependency>
+			<groupId>com.pig4cloud</groupId>
+			<artifactId>pigx-common-cache</artifactId>
+			<version>${pigx.version}</version>
+		</dependency>
 		<!--spring security 、oauth、jwt依赖-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
