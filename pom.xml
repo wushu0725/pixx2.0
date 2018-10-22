@@ -134,6 +134,14 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<!--jacksonJSR310规范-->
+			<dependency>
+				<groupId>com.fasterxml.jackson.module</groupId>
+				<artifactId>jackson-modules-java8</artifactId>
+				<version>${jackson.modules}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

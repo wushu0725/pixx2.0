@@ -7,6 +7,10 @@ spring:
   redis:
     password:
     host: redis
+  # Jackson配置
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
 # 暴露监控端点
 management:
   endpoints:
