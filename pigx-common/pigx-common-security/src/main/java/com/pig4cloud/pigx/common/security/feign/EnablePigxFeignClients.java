@@ -17,8 +17,6 @@
 
 package com.pig4cloud.pigx.common.security.feign;
 
-import com.pig4cloud.pigx.admin.api.feign.RemoteLogService;
-import com.pig4cloud.pigx.admin.api.feign.RemoteUserService;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 import java.lang.annotation.*;
@@ -51,7 +49,7 @@ public @interface EnablePigxFeignClients {
 	 *
 	 * @return the array of 'basePackages'.
 	 */
-	String[] basePackages() default {};
+	String[] basePackages() default {"com.pig4cloud.pigx"};
 
 	/**
 	 * Type-safe alternative to {@link #basePackages()} for specifying the packages to
@@ -78,5 +76,5 @@ public @interface EnablePigxFeignClients {
 	 *
 	 * @return
 	 */
-	Class<?>[] clients() default {RemoteUserService.class, RemoteLogService.class};
+	Class<?>[] clients() default {};
 }
