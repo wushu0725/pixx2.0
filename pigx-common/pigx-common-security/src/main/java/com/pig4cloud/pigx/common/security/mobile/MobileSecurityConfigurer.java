@@ -18,7 +18,10 @@
 package com.pig4cloud.pigx.common.security.mobile;
 
 import com.pig4cloud.pigx.common.security.service.PigxUserDetailsService;
-import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,9 +35,12 @@ import org.springframework.stereotype.Component;
  * @date 2018/8/5
  * 手机号登录配置入口
  */
+@Getter
+@Setter
 @Component
-@AllArgsConstructor
 public class MobileSecurityConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
+	@Autowired
+	private AuthenticationEventPublisher defaultAuthenticationEventPublisher;
 	private AuthenticationSuccessHandler mobileLoginSuccessHandler;
 	private PigxUserDetailsService userDetailsService;
 
@@ -43,6 +49,7 @@ public class MobileSecurityConfigurer extends SecurityConfigurerAdapter<DefaultS
 		MobileAuthenticationFilter mobileAuthenticationFilter = new MobileAuthenticationFilter();
 		mobileAuthenticationFilter.setAuthenticationManager(http.getSharedObject(AuthenticationManager.class));
 		mobileAuthenticationFilter.setAuthenticationSuccessHandler(mobileLoginSuccessHandler);
+		mobileAuthenticationFilter.setEventPublisher(defaultAuthenticationEventPublisher);
 
 		MobileAuthenticationProvider mobileAuthenticationProvider = new MobileAuthenticationProvider();
 		mobileAuthenticationProvider.setUserDetailsService(userDetailsService);

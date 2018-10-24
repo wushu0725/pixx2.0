@@ -89,8 +89,10 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public MobileSecurityConfigurer mobileSecurityConfigurer() {
-		return new MobileSecurityConfigurer(mobileLoginSuccessHandler()
-			, userDetailsService);
+		MobileSecurityConfigurer mobileSecurityConfigurer = new MobileSecurityConfigurer();
+		mobileSecurityConfigurer.setMobileLoginSuccessHandler(mobileLoginSuccessHandler());
+		mobileSecurityConfigurer.setUserDetailsService(userDetailsService);
+		return mobileSecurityConfigurer;
 	}
 
 
