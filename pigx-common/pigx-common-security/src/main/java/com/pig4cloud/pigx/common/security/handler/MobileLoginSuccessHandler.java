@@ -99,6 +99,7 @@ public class MobileLoginSuccessHandler implements AuthenticationSuccessHandler {
 			throw new BadCredentialsException(
 				"Failed to decode basic authentication token");
 		}
+
 	}
 
 

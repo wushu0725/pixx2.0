@@ -7,6 +7,10 @@ spring:
   redis:
     password:
     host: redis
+  # Jackson配置
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
 # 暴露监控端点
 management:
   endpoints:
@@ -94,7 +98,7 @@ swagger:
 ## spring security 配置
 security:
   auth:
-    server: http://localhost:9999/auth/oauth
+    server: http://lengleng:9999/auth/oauth
   oauth2:
     resource:
       token-info-uri: ${security.auth.server}/check_token
