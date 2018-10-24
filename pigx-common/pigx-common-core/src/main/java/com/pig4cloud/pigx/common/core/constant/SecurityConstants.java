@@ -53,6 +53,32 @@ public interface SecurityConstants {
 	String FROM = "from";
 
 	/**
+	 * 手机号登录URL
+	 */
+	String MOBILE_TOKEN_URL = "/mobile/token";
+
+	/**
+	 * 默认登录URL
+	 */
+	String OAUTH_TOKEN_URL = "/oauth/token";
+
+	/**
+	 * grant_type
+	 */
+	String REFRESH_TOKEN = "refresh_token";
+
+	/**
+	 * oauth 客户端信息
+	 */
+	String CLIENT_DETAILS_KEY = "pigx_oauth:client:details";
+
+	/**
+	 * 微信获取OPENID
+	 */
+	String WX_AUTHORIZATION_CODE_URL = "https://api.weixin.qq.com/sns/oauth2/access_token" +
+		"?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
+
+	/**
 	 * {bcrypt} 加密的特征码
 	 */
 	String BCRYPT = "{bcrypt}";
@@ -79,14 +105,4 @@ public interface SecurityConstants {
 	 */
 	String DEFAULT_SELECT_STATEMENT = BASE_FIND_STATEMENT + " where client_id = ?";
 
-	/**
-	 * 手机号登录URL
-	 */
-	String MOBILE_TOKEN_URL = "/mobile/token";
-
-	/**
-	 * 微信获取OPENID
-	 */
-	String WX_AUTHORIZATION_CODE_URL = "https://api.weixin.qq.com/sns/oauth2/access_token" +
-		"?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
 }
