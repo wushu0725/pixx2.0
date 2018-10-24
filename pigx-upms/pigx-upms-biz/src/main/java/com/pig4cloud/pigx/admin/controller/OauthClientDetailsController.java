@@ -90,9 +90,7 @@ public class OauthClientDetailsController {
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_client_del')")
 	public R<Boolean> delete(@PathVariable String id) {
-		SysOauthClientDetails sysOauthClientDetails = new SysOauthClientDetails();
-		sysOauthClientDetails.setClientId(id);
-		return new R<>(sysOauthClientDetailsService.deleteById(sysOauthClientDetails));
+		return new R<>(sysOauthClientDetailsService.deleteClientDetailsById(id));
 	}
 
 	/**
@@ -104,6 +102,6 @@ public class OauthClientDetailsController {
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_client_edit')")
 	public R<Boolean> edit(@Valid @RequestBody SysOauthClientDetails sysOauthClientDetails) {
-		return new R<>(sysOauthClientDetailsService.updateById(sysOauthClientDetails));
+		return new R<>(sysOauthClientDetailsService.updateClientDetailsById(sysOauthClientDetails));
 	}
 }
