@@ -30,7 +30,7 @@
 	<url>https://www.pig4cloud.com</url>
 
 	<properties>
-		<pigx.version>1.6.3</pigx.version>
+		<pigx.version>1.6.4</pigx.version>
 		<spring-boot.version>2.0.4.RELEASE</spring-boot.version>
 		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
 		<spring-platform.version>Cairo-SR3</spring-platform.version>
