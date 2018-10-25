@@ -31,13 +31,13 @@
 
 	<properties>
 		<pigx.version>1.6.4</pigx.version>
-		<spring-boot.version>2.0.4.RELEASE</spring-boot.version>
-		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
+		<spring-boot.version>2.0.6.RELEASE</spring-boot.version>
+		<spring-cloud.version>Finchley.SR2</spring-cloud.version>
 		<spring-platform.version>Cairo-SR3</spring-platform.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<monitor.version>2.0.3</monitor.version>
+		<monitor.version>2.0.4</monitor.version>
 		<hutool.version>4.1.13</hutool.version>
 		<mbp.boot.version>2.3</mbp.boot.version>
 		<kaptcha.version>0.0.9</kaptcha.version>
