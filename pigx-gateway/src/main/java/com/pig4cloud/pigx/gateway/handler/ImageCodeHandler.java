@@ -18,7 +18,7 @@
 package com.pig4cloud.pigx.gateway.handler;
 
 import com.google.code.kaptcha.Producer;
-import com.pig4cloud.pigx.gateway.filter.ImageCodeGatewayFilter;
+import com.pig4cloud.pigx.gateway.filter.ValidateCodeGatewayFilter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ByteArrayResource;
@@ -58,7 +58,7 @@ public class ImageCodeHandler implements HandlerFunction<ServerResponse> {
 
 		//保存验证码信息
 		String randomStr = serverRequest.queryParam("randomStr").get();
-		redisTemplate.opsForValue().set(ImageCodeGatewayFilter.DEFAULT_CODE_KEY + randomStr, text, 60, TimeUnit.SECONDS);
+		redisTemplate.opsForValue().set(ValidateCodeGatewayFilter.DEFAULT_CODE_KEY + randomStr, text, 60, TimeUnit.SECONDS);
 
 		// 转换流信息写出
 		FastByteArrayOutputStream os = new FastByteArrayOutputStream();

@@ -11,7 +11,7 @@ spring:
         - Path=/auth/**
         filters:
           # 验证码处理
-        - ImageCodeGatewayFilter
+        - ValidateCodeGatewayFilter
           # 前端密码解密
         - PasswordDecoderFilter
       #UPMS 模块

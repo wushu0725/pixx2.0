@@ -1,10 +1,18 @@
 version: '2'
 services:
+  pigx-zookeeper:
+    image: zookeeper:3.4.13
+    ports:
+      - 2181:2181
+    restart: always
+    container_name: pigx-zookeeper
+
   pigx-redis:
     image: redis:4.0.10
     ports:
       - 6379:6379
     restart: always
+    container_name: pigx-redis
 
   pigx-eureka:
     build:
@@ -13,6 +21,7 @@ services:
     restart: always
     ports:
       - 1025:1025
+    container_name: pigx-eureka
 
   pigx-config:
     links:
@@ -21,6 +30,7 @@ services:
       context: ./
       dockerfile: ./pigx-config/Dockerfile
     restart: always
+    container_name: pigx-config
 
   pigx-gateway:
     links:
@@ -32,6 +42,7 @@ services:
     restart: always
     ports:
       - 9999:9999
+    container_name: pigx-gateway
 
   pigx-auth:
     links:
@@ -41,6 +52,7 @@ services:
       context: ./
       dockerfile: ./pigx-auth/Dockerfile
     restart: always
+    container_name: pigx-auth
 
   pigx-upms:
     links:
@@ -51,6 +63,7 @@ services:
       context: ./
       dockerfile: ./pigx-upms/pigx-upms-biz/Dockerfile
     restart: always
+    container_name: pigx-upms
 
   pigx-monitor:
     links:
@@ -62,6 +75,7 @@ services:
     restart: always
     ports:
       - 5001:5001
+    container_name: pigx-monitor
 
   pigx-daemon:
     links:
@@ -73,6 +87,7 @@ services:
     restart: always
     ports:
       - 5002:5002
+    container_name: pigx-daemon
 
   pigx-codegen:
     links:
@@ -82,6 +97,7 @@ services:
       context: ./
       dockerfile: ./pigx-visual/pigx-codegen/Dockerfile
     restart: always
+    container_name: pigx-codegen
 
   pigx-tx-manager:
     links:
@@ -94,3 +110,4 @@ services:
     ports:
       - 5004:5004
       - 9998:9998
+    container_name: pigx-tx-manager
