@@ -44,13 +44,12 @@ public class ResourceServerConfigurer extends BaseResourceServerConfigurerAdapte
 	}
 
 	/**
-	 * 重写抽象类实现，不需要调用feign 获取 userdetils
+	 * 重写抽象类实现，不需要调用feign 获取 userDetailsService
 	 *
 	 * @param resources
 	 */
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) {
-		resources.authenticationEntryPoint(resourceAuthExceptionEntryPoint)
-			.accessDeniedHandler(pigAccessDeniedHandler);
+		notGetUser(resources);
 	}
 }
