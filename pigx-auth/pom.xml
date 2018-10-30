@@ -50,6 +50,11 @@
 			<artifactId>pigx-common-security</artifactId>
 			<version>${pigx.version}</version>
 		</dependency>
+		<!--JDBC相关-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
 		<!--spring security 、oauth、jwt依赖-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
