@@ -50,7 +50,6 @@ public class ResourceServerConfigurer extends BaseResourceServerConfigurerAdapte
 	 */
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) {
-		resources.authenticationEntryPoint(resourceAuthExceptionEntryPoint)
-			.accessDeniedHandler(pigAccessDeniedHandler);
+		notGetUser(resources);
 	}
 }

@@ -42,7 +42,7 @@ import java.io.IOException;
  */
 @Slf4j
 @Component
-public class ImageCodeGatewayFilter extends AbstractGatewayFilterFactory {
+public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
 	public static final String DEFAULT_CODE_KEY = "DEFAULT_CODE_KEY";
 	public static final String OAUTH_TOKEN_URL = "/oauth/token";
 	private static final String BASIC_ = "Basic ";

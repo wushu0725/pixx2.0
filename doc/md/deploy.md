@@ -40,11 +40,23 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: lengleng
-    url: jdbc:mysql://mysql:3306/pigxx?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    url: jdbc:pigx-mysql://mysql:3306/pigx?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
 ```
 
+### 四、配置本地hosts
 
-### 四、pigx-ui：
+从1.6.3开始，项目采用HOSTS配置ip的方式，所以开始运行项目前确保你的本机hosts文件中存在以下片段（以完全本机开发为例）：
+
+```
+# 本地测试环境
+127.0.0.1   pigx-mysql
+127.0.0.1	  pigx-zookeeper
+127.0.0.1		pigx-redis
+127.0.0.1	pigx-gateway
+127.0.0.1	pigx-eureka
+```
+
+### 五、pigx-ui：
 
 ```
 git clone https://www.gitee.wang/pig/pigx-ui.git

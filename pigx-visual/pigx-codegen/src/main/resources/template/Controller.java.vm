@@ -1,7 +1,5 @@
 package ${package}.${moduleName}.controller;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -10,6 +8,7 @@ import com.pig4cloud.pigx.common.core.util.Query;
 import ${package}.${moduleName}.entity.${className};
 import ${package}.${moduleName}.service.${className}Service;
 import com.pig4cloud.pigx.common.core.util.R;
+import java.util.Map;
 
 
 /**

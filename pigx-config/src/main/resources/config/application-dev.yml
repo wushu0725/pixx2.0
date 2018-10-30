@@ -6,7 +6,7 @@ jasypt:
 spring:
   redis:
     password:
-    host: redis
+    host: pigx-redis
   # Jackson配置
   jackson:
     time-zone: GMT+8
@@ -78,7 +78,7 @@ mybatis-plus:
 swagger:
   title: PigX Swagger API
   description: 全宇宙最牛逼的Spring Cloud微服务开发脚手架
-  version: 1.6.2
+  version: 1.7.0
   license: Powered By PigX
   licenseUrl: https://pig4cloud.com/
   terms-of-service-url: https://pig4cloud.com/
@@ -93,12 +93,17 @@ swagger:
       - scope: server
         description: server all
     token-url-list:
-      - ${security.auth.server}/token
+      - http://pigx-gateway:9999/auth/oauth/token
 
 ## spring security 配置
 security:
-  auth:
-    server: http://lengleng:9999/auth/oauth
   oauth2:
     resource:
-      token-info-uri: ${security.auth.server}/check_token
+      loadBalanced: true
+      token-info-uri: http://pigx-auth/oauth/check_token
+
+# log配置
+logging:
+  level:
+    root: warn
+    com.pig4cloud.pigx: info

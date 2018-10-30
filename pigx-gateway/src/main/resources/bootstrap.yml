@@ -22,6 +22,6 @@ eureka:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://pig:pig@lengleng:1025/eureka/
+      defaultZone: http://pig:pig@pigx-eureka:1025/eureka/
 
 

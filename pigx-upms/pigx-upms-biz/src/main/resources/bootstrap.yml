@@ -16,9 +16,6 @@ spring:
       discovery:
         enabled: true
         service-id: pigx-config
-  datasource:
-    url:
-    type: com.zaxxer.hikari.HikariDataSource
 
 # 注册中心配置
 eureka:
@@ -26,4 +23,4 @@ eureka:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://pig:pig@lengleng:1025/eureka/
+      defaultZone: http://pig:pig@pigx-eureka:1025/eureka/
