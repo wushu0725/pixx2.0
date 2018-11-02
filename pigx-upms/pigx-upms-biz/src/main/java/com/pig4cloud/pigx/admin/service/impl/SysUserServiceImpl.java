@@ -19,7 +19,6 @@
 
 package com.pig4cloud.pigx.admin.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -51,10 +50,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author lengleng
@@ -78,7 +75,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	 * @return
 	 */
 	@Override
-	@Cacheable(value = "user_details", key = "#username",unless = "#result == null")
+	@Cacheable(value = "user_details", key = "#username", unless = "#result == null" )
 	public UserInfo findUserInfo(String type, String username) {
 		SysUser condition = new SysUser();
 		if (EnumLoginType.PWD.getType().equals(type)) {
@@ -97,25 +94,20 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		userInfo.setSysUser(sysUser);
 		//设置角色列表
 		List<SysRole> roleList = sysRoleService.findRolesByUserId(sysUser.getUserId());
-		List<String> roleCodes = new ArrayList<>();
-		if (CollUtil.isNotEmpty(roleList)) {
-			roleList.forEach(sysRole -> roleCodes.add(sysRole.getRoleCode()));
-		}
-		userInfo.setRoles(ArrayUtil.toArray(roleCodes, String.class));
+		//设置角色列表
+		List<String> roleCodes = roleList.stream().map(SysRole::getRoleCode).collect(Collectors.toList());
+		String[] roles = ArrayUtil.toArray(roleCodes, String.class);
+		userInfo.setRoles(roles);
 
 		//设置权限列表（menu.permission）
-		Set<MenuVO> menuVoSet = new HashSet<>();
-		for (String role : roleCodes) {
-			List<MenuVO> menuVos = sysMenuService.findMenuByRoleCode(role);
-			menuVoSet.addAll(menuVos);
-		}
 		Set<String> permissions = new HashSet<>();
-		for (MenuVO menuVo : menuVoSet) {
-			if (StringUtils.isNotEmpty(menuVo.getPermission())) {
-				String permission = menuVo.getPermission();
-				permissions.add(permission);
-			}
-		}
+		Arrays.stream(roles).forEach(role -> {
+			List<MenuVO> menuVos = sysMenuService.findMenuByRoleCode(role);
+			List<String> permissionList = menuVos.stream()
+				.filter(menuVo -> StringUtils.isNotEmpty(menuVo.getPermission()))
+				.map(MenuVO::getPermission).collect(Collectors.toList());
+			permissions.addAll(permissionList);
+		});
 		userInfo.setPermissions(ArrayUtil.toArray(permissions, String.class));
 		return userInfo;
 	}
@@ -123,10 +115,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	@Override
 	public Page selectWithRolePage(Query query) {
 		DataScope dataScope = new DataScope();
-		dataScope.setScopeName("deptId");
+		dataScope.setScopeName("deptId" );
 		dataScope.setIsOnly(true);
 		dataScope.setDeptIds(getChildDepts());
-		Object username = query.getCondition().get("username");
+		Object username = query.getCondition().get("username" );
 		query.setRecords(sysUserMapper.selectUserVoPage(query, username, dataScope));
 		return query;
 	}
@@ -177,7 +169,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	 * @return Boolean
 	 */
 	@Override
-	@CacheEvict(value = "user_details", key = "#sysUser.username")
+	@CacheEvict(value = "user_details", key = "#sysUser.username" )
 	public Boolean deleteUserById(SysUser sysUser) {
 		sysUserRoleService.deleteByUserId(sysUser.getUserId());
 		this.deleteById(sysUser.getUserId());
@@ -185,7 +177,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	}
 
 	@Override
-	@CacheEvict(value = "user_details", key = "#username")
+	@CacheEvict(value = "user_details", key = "#username" )
 	public R<Boolean> updateUserInfo(UserDTO userDto, String username) {
 		UserVO userVO = sysUserMapper.selectUserVoByUsername(username);
 		SysUser sysUser = new SysUser();
@@ -195,7 +187,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 				sysUser.setPassword(ENCODER.encode(userDto.getNewpassword1()));
 			} else {
 				log.warn("原密码错误，修改密码失败:{}", username);
-				return new R<>(Boolean.FALSE, "原密码错误，修改失败");
+				return new R<>(Boolean.FALSE, "原密码错误，修改失败" );
 			}
 		}
 		sysUser.setPhone(userDto.getPhone());
@@ -205,7 +197,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	}
 
 	@Override
-	@CacheEvict(value = "user_details", key = "#username")
+	@CacheEvict(value = "user_details", key = "#username" )
 	public Boolean updateUser(UserDTO userDto, String username) {
 		SysUser sysUser = new SysUser();
 		BeanUtils.copyProperties(userDto, sysUser);

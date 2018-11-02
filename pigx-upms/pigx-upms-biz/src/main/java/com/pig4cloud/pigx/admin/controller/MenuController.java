@@ -19,7 +19,6 @@
 
 package com.pig4cloud.pigx.admin.controller;
 
-import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.pig4cloud.pigx.admin.api.dto.MenuTree;
 import com.pig4cloud.pigx.admin.api.entity.SysMenu;
@@ -34,14 +33,18 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author lengleng
  * @date 2017/10/31
  */
 @RestController
-@RequestMapping("/menu")
+@RequestMapping("/menu" )
 public class MenuController {
 	@Autowired
 	private SysMenuService sysMenuService;
@@ -52,7 +55,7 @@ public class MenuController {
 	 * @param role 角色名称
 	 * @return 菜单列表
 	 */
-	@GetMapping("/findMenuByRole/{role}")
+	@GetMapping("/findMenuByRole/{role}" )
 	public List<MenuVO> findMenuByRole(@PathVariable String role) {
 		return sysMenuService.findMenuByRoleCode(role);
 	}
@@ -62,18 +65,17 @@ public class MenuController {
 	 *
 	 * @return 当前用户的树形菜单
 	 */
-	@GetMapping(value = "/userMenu")
+	@GetMapping(value = "/userMenu" )
 	public List<MenuTree> userMenu() {
 		// 获取符合条件得菜单
 		Set<MenuVO> all = new HashSet<>();
-		SecurityUtils.getRoles().forEach(roleName -> all.addAll(sysMenuService.findMenuByRoleCode(roleName)));
-		List<MenuTree> menuTreeList = new ArrayList<>();
-		all.forEach(menuVo -> {
-			if (CommonConstant.MENU.equals(menuVo.getType())) {
-				menuTreeList.add(new MenuTree(menuVo));
-			}
-		});
-		CollUtil.sort(menuTreeList, Comparator.comparingInt(MenuTree::getSort));
+		SecurityUtils.getRoles().forEach(roleCode -> all.addAll(sysMenuService.findMenuByRoleCode(roleCode)));
+
+		List<MenuTree> menuTreeList = all.stream().filter(vo -> CommonConstant.MENU
+			.equals(vo.getType()))
+			.map(MenuTree::new)
+			.sorted(Comparator.comparingInt(MenuTree::getSort))
+			.collect(Collectors.toList());
 		return TreeUtil.bulid(menuTreeList, -1);
 	}
 
@@ -82,7 +84,7 @@ public class MenuController {
 	 *
 	 * @return 树形菜单
 	 */
-	@GetMapping(value = "/allTree")
+	@GetMapping(value = "/allTree" )
 	public List<MenuTree> getTree() {
 		SysMenu condition = new SysMenu();
 		condition.setDelFlag(CommonConstant.STATUS_NORMAL);
@@ -95,14 +97,11 @@ public class MenuController {
 	 * @param roleName 角色名称
 	 * @return 属性集合
 	 */
-	@GetMapping("/roleTree/{roleName}")
+	@GetMapping("/roleTree/{roleName}" )
 	public List<Integer> roleTree(@PathVariable String roleName) {
-		List<MenuVO> menus = sysMenuService.findMenuByRoleCode(roleName);
-		List<Integer> menuList = new ArrayList<>();
-		for (MenuVO menuVo : menus) {
-			menuList.add(menuVo.getMenuId());
-		}
-		return menuList;
+		return sysMenuService.findMenuByRoleCode(roleName)
+			.stream().map(MenuVO::getMenuId)
+			.collect(Collectors.toList());
 	}
 
 	/**
@@ -111,7 +110,7 @@ public class MenuController {
 	 * @param id 菜单ID
 	 * @return 菜单详细信息
 	 */
-	@GetMapping("/{id}")
+	@GetMapping("/{id}" )
 	public SysMenu menu(@PathVariable Integer id) {
 		return sysMenuService.selectById(id);
 	}
@@ -123,7 +122,7 @@ public class MenuController {
 	 * @return success/false
 	 */
 	@PostMapping
-	@PreAuthorize("@pms.hasPermission('sys_menu_add')")
+	@PreAuthorize("@pms.hasPermission('sys_menu_add')" )
 	public R<Boolean> menu(@Valid @RequestBody SysMenu sysMenu) {
 		return new R<>(sysMenuService.insert(sysMenu));
 	}
@@ -135,14 +134,14 @@ public class MenuController {
 	 * @return success/false
 	 * TODO  级联删除下级节点
 	 */
-	@DeleteMapping("/{id}")
-	@PreAuthorize("@pms.hasPermission('sys_menu_del')")
+	@DeleteMapping("/{id}" )
+	@PreAuthorize("@pms.hasPermission('sys_menu_del')" )
 	public R<Boolean> menuDel(@PathVariable Integer id) {
 		return new R<>(sysMenuService.deleteMenu(id));
 	}
 
 	@PutMapping
-	@PreAuthorize("@pms.hasPermission('sys_menu_edit')")
+	@PreAuthorize("@pms.hasPermission('sys_menu_edit')" )
 	public R<Boolean> menuUpdate(@Valid @RequestBody SysMenu sysMenu) {
 		return new R<>(sysMenuService.updateMenuById(sysMenu));
 	}
