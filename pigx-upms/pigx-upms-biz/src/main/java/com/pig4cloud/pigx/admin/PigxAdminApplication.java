@@ -22,7 +22,6 @@ package com.pig4cloud.pigx.admin;
 
 import com.pig4cloud.pigx.common.security.feign.EnablePigxFeignClients;
 import com.pig4cloud.pigx.common.swagger.annotation.EnablePigxSwagger2;
-import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 

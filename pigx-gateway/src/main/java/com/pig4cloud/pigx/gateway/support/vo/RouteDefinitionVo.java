@@ -15,51 +15,18 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.act.service;
+package com.pig4cloud.pigx.gateway.support.vo;
 
-import com.baomidou.mybatisplus.plugins.Page;
-import org.activiti.engine.repository.Model;
+import org.springframework.cloud.gateway.route.RouteDefinition;
 
-import java.util.Map;
+import java.io.Serializable;
 
 /**
  * @author lengleng
- * @date 2018/9/25
+ * @date 2018/10/31
+ * <p>
+ * 扩展此类支持序列化a
+ * See RouteDefinition.class
  */
-public interface ModelService {
-
-	/**
-	 * 创建流程
-	 *
-	 * @param name
-	 * @param key
-	 * @param desc
-	 * @param category
-	 * @return
-	 */
-	Model create(String name, String key, String desc, String category);
-
-	/**
-	 * 分页获取流程
-	 *
-	 * @param params
-	 * @return
-	 */
-	Page<Model> selectPage(Map<String, Object> params);
-
-	/**
-	 * 删除流程
-	 *
-	 * @param id
-	 * @return
-	 */
-	Boolean delete(String id);
-
-	/**
-	 * 部署流程
-	 *
-	 * @param id
-	 * @return
-	 */
-	Boolean deploy(String id);
+public class RouteDefinitionVo extends RouteDefinition implements Serializable {
 }

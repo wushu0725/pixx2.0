@@ -1,7 +1,7 @@
 package com.pig4cloud.pigx.act.mapper;
 
-import com.pig4cloud.pigx.act.entity.LeaveBill;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.pig4cloud.pigx.act.entity.LeaveBill;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

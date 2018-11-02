@@ -20,7 +20,6 @@ package com.pig4cloud.pigx.act.dto;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author lengleng

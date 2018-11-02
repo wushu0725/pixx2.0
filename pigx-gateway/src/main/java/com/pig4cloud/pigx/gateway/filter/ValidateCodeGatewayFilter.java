@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -89,7 +90,7 @@ public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
 	 */
 	public static String[] extractAndDecodeHeader(ServerHttpRequest request)
 		throws IOException, CheckedException {
-		String header = request.getHeaders().getFirst("Authorization");
+		String header = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
 
 		if (header == null || !header.startsWith(BASIC_)) {
 			throw new CheckedException("请求头中client信息为空");

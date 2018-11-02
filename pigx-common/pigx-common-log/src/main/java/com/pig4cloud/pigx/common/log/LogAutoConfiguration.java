@@ -22,9 +22,9 @@ package com.pig4cloud.pigx.common.log;
 import com.pig4cloud.pigx.admin.api.feign.RemoteLogService;
 import com.pig4cloud.pigx.common.log.aspect.SysLogAspect;
 import com.pig4cloud.pigx.common.log.event.SysLogListener;
+import com.pig4cloud.pigx.common.security.feign.EnablePigxFeignClients;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -35,8 +35,8 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @AllArgsConstructor
+@EnablePigxFeignClients
 @ConditionalOnWebApplication
-@EnableFeignClients({"com.pig4cloud.pigx.admin.api.feign"})
 public class LogAutoConfiguration {
 	private final RemoteLogService remoteLogService;
 

@@ -66,4 +66,9 @@ public interface CommonConstant {
 	 * 后端工程名
 	 */
 	String BACK_END_PROJECT = "pigx";
+
+	/**
+	 * 路由存放
+	 */
+	String ROUTE_KEY = "gateway_route_key";
 }

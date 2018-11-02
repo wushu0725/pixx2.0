@@ -59,6 +59,12 @@
 			<artifactId>pigx-common-core</artifactId>
 			<version>${pigx.version}</version>
 		</dependency>
+		<!--缓存-->
+		<dependency>
+			<groupId>com.pig4cloud</groupId>
+			<artifactId>pigx-common-cache</artifactId>
+			<version>${pigx.version}</version>
+		</dependency>
 		<!--接口文档-->
 		<dependency>
 			<groupId>io.springfox</groupId>

@@ -59,7 +59,7 @@ public abstract class BaseResourceServerConfigurerAdapter extends ResourceServer
 	/**
 	 * 提供子类重写
 	 * <p>
-	 * 1. 不重写，默认支持获取雍熙
+	 * 1. 不重写，默认支持获取用户名
 	 * 2. 重写notGetUser，提供性能
 	 * <p>
 	 * see codegen ResourceServerConfigurer
