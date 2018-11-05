@@ -42,6 +42,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis-reactive</artifactId>
 		</dependency>
+		<!--动态路由组件-->
+		<dependency>
+			<groupId>com.pig4cloud</groupId>
+			<artifactId>pigx-common-gateway</artifactId>
+			<version>${pigx.version}</version>
+		</dependency>
 		<!--配置中心客户端-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

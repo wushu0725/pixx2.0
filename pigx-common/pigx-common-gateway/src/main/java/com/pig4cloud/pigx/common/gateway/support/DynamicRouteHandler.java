@@ -15,12 +15,12 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.gateway.support;
+package com.pig4cloud.pigx.common.gateway.support;
 
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
-import com.pig4cloud.pigx.gateway.support.vo.RouteDefinitionVo;
+import com.pig4cloud.pigx.common.gateway.vo.RouteDefinitionVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.filter.FilterDefinition;

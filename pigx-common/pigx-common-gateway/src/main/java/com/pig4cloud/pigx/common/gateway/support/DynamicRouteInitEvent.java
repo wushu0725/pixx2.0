@@ -15,18 +15,18 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.gateway.support.vo;
+package com.pig4cloud.pigx.common.gateway.support;
 
-import org.springframework.cloud.gateway.route.RouteDefinition;
-
-import java.io.Serializable;
+import org.springframework.context.ApplicationEvent;
 
 /**
  * @author lengleng
- * @date 2018/10/31
+ * @date 2018/11/5
  * <p>
- * 扩展此类支持序列化a
- * See RouteDefinition.class
+ * 路由初始化事件
  */
-public class RouteDefinitionVo extends RouteDefinition implements Serializable {
+public class DynamicRouteInitEvent extends ApplicationEvent {
+	public DynamicRouteInitEvent(Object source) {
+		super(source);
+	}
 }

@@ -23,23 +23,24 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.pig4cloud</groupId>
-		<artifactId>pigx</artifactId>
+		<artifactId>pigx-common</artifactId>
 		<version>${pigx.version}</version>
 	</parent>
 
-	<artifactId>pigx-common</artifactId>
-	<packaging>pom</packaging>
+	<artifactId>pigx-common-gateway</artifactId>
+	<packaging>jar</packaging>
 
-	<description>pigx 公共聚合模块</description>
+	<description>pigx gateway</description>
 
-	<modules>
-		<module>pigx-common-cache</module>
-		<module>pigx-common-core</module>
-		<module>pigx-common-job</module>
-		<module>pigx-common-gateway</module>
-		<module>pigx-common-log</module>
-		<module>pigx-common-security</module>
-		<module>pigx-common-swagger</module>
-		<module>pigx-common-transaction</module>
-	</modules>
+	<dependencies>
+		<dependency>
+			<groupId>com.pig4cloud</groupId>
+			<artifactId>pigx-common-core</artifactId>
+			<version>${pigx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-gateway-core</artifactId>
+		</dependency>
+	</dependencies>
 </project>

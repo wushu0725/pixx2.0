@@ -15,10 +15,10 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.gateway.support;
+package com.pig4cloud.pigx.common.gateway.support;
 
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
-import com.pig4cloud.pigx.gateway.support.vo.RouteDefinitionVo;
+import com.pig4cloud.pigx.common.gateway.vo.RouteDefinitionVo;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;

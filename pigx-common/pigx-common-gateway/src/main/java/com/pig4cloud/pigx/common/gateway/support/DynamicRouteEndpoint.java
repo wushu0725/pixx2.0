@@ -15,7 +15,7 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.gateway.support;
+package com.pig4cloud.pigx.common.gateway.support;
 
 import cn.hutool.json.JSONObject;
 import com.pig4cloud.pigx.common.core.util.R;
