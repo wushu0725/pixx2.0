@@ -30,9 +30,9 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -64,15 +64,14 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 			return Boolean.TRUE;
 		}
 
-		List<SysRoleMenu> roleMenuList = new ArrayList<>();
-		List<String> menuIdList = Arrays.asList(menuIds.split(","));
-
-		for (String menuId : menuIdList) {
-			SysRoleMenu roleMenu = new SysRoleMenu();
-			roleMenu.setRoleId(roleId);
-			roleMenu.setMenuId(Integer.valueOf(menuId));
-			roleMenuList.add(roleMenu);
-		}
+		List<SysRoleMenu> roleMenuList = Arrays
+			.stream(menuIds.split(","))
+			.map(menuId -> {
+				SysRoleMenu roleMenu = new SysRoleMenu();
+				roleMenu.setRoleId(roleId);
+				roleMenu.setMenuId(Integer.valueOf(menuId));
+				return roleMenu;
+			}).collect(Collectors.toList());
 
 		//清空userinfo
 		cacheManager.getCache("user_details").clear();

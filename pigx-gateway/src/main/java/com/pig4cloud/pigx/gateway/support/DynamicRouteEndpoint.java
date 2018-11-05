@@ -17,6 +17,7 @@
 
 package com.pig4cloud.pigx.gateway.support;
 
+import cn.hutool.json.JSONObject;
 import com.pig4cloud.pigx.common.core.util.R;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,36 +51,23 @@ public class DynamicRouteEndpoint {
 	}
 
 	/**
-	 * 新增路由
-	 *
-	 * @param route 路由定义
-	 * @return
-	 */
-	@PostMapping
-	public Mono<R> save(@RequestBody Mono<RouteDefinition> route) {
-		return Mono.just(new R(dynamicRouteHandler.addRoute(route)));
-	}
-
-	/**
-	 * 删除路由
-	 *
-	 * @param id 路由定义ID
-	 * @return
-	 */
-	@DeleteMapping("/{id}")
-	public Mono<R> delete(@PathVariable String id) {
-		return Mono.just(new R(dynamicRouteHandler.deleteRoute(id)));
-
-	}
-
-	/**
 	 * 修改路由
 	 *
-	 * @param routeDefinition 路由定义
+	 * @param routes 路由定义
 	 * @return
 	 */
 	@PutMapping
-	public R edit(@RequestBody RouteDefinition routeDefinition) {
-		return new R();
+	public R edit(@RequestBody JSONObject routes) {
+		return new R(dynamicRouteHandler.editRoutes(routes));
+	}
+
+	/**
+	 * 回滚初始化配置
+	 *
+	 * @return
+	 */
+	@GetMapping("/fallback")
+	public Mono<R> fallback() {
+		return Mono.just(new R(dynamicRouteHandler.fallback()));
 	}
 }

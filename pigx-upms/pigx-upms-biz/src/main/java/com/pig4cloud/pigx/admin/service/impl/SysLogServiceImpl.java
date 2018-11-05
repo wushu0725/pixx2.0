@@ -28,8 +28,8 @@ import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -60,18 +60,19 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
 	 */
 	@Override
 	public Boolean insertLogs(List<PreLogVo> preLogVoList) {
-		List<SysLog> sysLogs = new ArrayList<>();
-		preLogVoList.forEach(pre -> {
-			SysLog log = new SysLog();
-			log.setType(CommonConstant.STATUS_LOCK);
-			log.setTitle(pre.getInfo());
-			log.setException(pre.getStack());
-			log.setParams(pre.getMessage());
-			log.setCreateTime(LocalDateTime.now());
-			log.setRequestUri(pre.getUrl());
-			log.setCreateBy(pre.getUser());
-			sysLogs.add(log);
-		});
+		List<SysLog> sysLogs = preLogVoList.stream()
+			.map(pre -> {
+				SysLog log = new SysLog();
+				log.setType(CommonConstant.STATUS_LOCK);
+				log.setTitle(pre.getInfo());
+				log.setException(pre.getStack());
+				log.setParams(pre.getMessage());
+				log.setCreateTime(LocalDateTime.now());
+				log.setRequestUri(pre.getUrl());
+				log.setCreateBy(pre.getUser());
+				return log;
+			})
+			.collect(Collectors.toList());
 		return this.insertBatch(sysLogs);
 	}
 }

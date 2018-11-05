@@ -19,7 +19,6 @@
 
 package com.pig4cloud.pigx.admin.controller;
 
-import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.pig4cloud.pigx.admin.api.dto.MenuTree;
 import com.pig4cloud.pigx.admin.api.entity.SysMenu;
@@ -34,7 +33,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author lengleng
@@ -55,14 +58,13 @@ public class MenuController {
 	public List<MenuTree> userMenu() {
 		// 获取符合条件得菜单
 		Set<MenuVO> all = new HashSet<>();
-		SecurityUtils.getRoles().forEach(roleId -> all.addAll(sysMenuService.findMenuByRoleId(roleId)));
-		List<MenuTree> menuTreeList = new ArrayList<>();
-		all.forEach(menuVo -> {
-			if (CommonConstant.MENU.equals(menuVo.getType())) {
-				menuTreeList.add(new MenuTree(menuVo));
-			}
-		});
-		CollUtil.sort(menuTreeList, Comparator.comparingInt(MenuTree::getSort));
+		SecurityUtils.getRoles()
+			.forEach(roleId -> all.addAll(sysMenuService.findMenuByRoleId(roleId)));
+		List<MenuTree> menuTreeList = all.stream()
+			.filter(menuVo -> CommonConstant.MENU.equals(menuVo.getType()))
+			.map(MenuTree::new)
+			.sorted(Comparator.comparingInt(MenuTree::getSort))
+			.collect(Collectors.toList());
 		return TreeUtil.bulid(menuTreeList, -1);
 	}
 
@@ -86,12 +88,10 @@ public class MenuController {
 	 */
 	@GetMapping("/roleTree/{roleId}")
 	public List<Integer> roleTree(@PathVariable Integer roleId) {
-		List<MenuVO> menus = sysMenuService.findMenuByRoleId(roleId);
-		List<Integer> menuList = new ArrayList<>();
-		for (MenuVO menuVo : menus) {
-			menuList.add(menuVo.getMenuId());
-		}
-		return menuList;
+		return sysMenuService.findMenuByRoleId(roleId)
+			.stream()
+			.map(MenuVO::getMenuId)
+			.collect(Collectors.toList());
 	}
 
 	/**

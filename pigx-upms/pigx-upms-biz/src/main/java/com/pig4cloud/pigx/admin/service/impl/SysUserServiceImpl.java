@@ -19,7 +19,6 @@
 
 package com.pig4cloud.pigx.admin.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -48,10 +47,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author lengleng
@@ -94,26 +93,22 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		UserInfo userInfo = new UserInfo();
 		userInfo.setSysUser(sysUser);
 		//设置角色列表  （ID）
-		List<SysRole> roleList = sysRoleService.findRolesByUserId(sysUser.getUserId());
-		List<Integer> roleIds = new ArrayList<>();
-		if (CollUtil.isNotEmpty(roleList)) {
-			roleList.forEach(sysRole -> roleIds.add(sysRole.getRoleId()));
-		}
+		List<Integer> roleIds = sysRoleService.findRolesByUserId(sysUser.getUserId())
+			.stream()
+			.map(SysRole::getRoleId)
+			.collect(Collectors.toList());
 		userInfo.setRoles(ArrayUtil.toArray(roleIds, Integer.class));
 
 		//设置权限列表（menu.permission）
-		Set<MenuVO> menuVoSet = new HashSet<>();
-		for (Integer roleId : roleIds) {
-			List<MenuVO> menuVos = sysMenuService.findMenuByRoleId(roleId);
-			menuVoSet.addAll(menuVos);
-		}
 		Set<String> permissions = new HashSet<>();
-		for (MenuVO menuVo : menuVoSet) {
-			if (StringUtils.isNotEmpty(menuVo.getPermission())) {
-				String permission = menuVo.getPermission();
-				permissions.add(permission);
-			}
-		}
+		roleIds.forEach(roleId -> {
+			List<String> permissionList = sysMenuService.findMenuByRoleId(roleId)
+				.stream()
+				.filter(menuVo -> StringUtils.isNotEmpty(menuVo.getPermission()))
+				.map(MenuVO::getPermission)
+				.collect(Collectors.toList());
+			permissions.addAll(permissionList);
+		});
 		userInfo.setPermissions(ArrayUtil.toArray(permissions, String.class));
 		return userInfo;
 	}
@@ -160,7 +155,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	 */
 	@Override
 	public Boolean deleteSysUserByUsernameAndUserId(String username, Integer userId) {
-
 		sysUserMapper.deleteSysUserByUsernameAndUserId(username, userId);
 		SysUserRole condition = new SysUserRole();
 		condition.setUserId(userId);
@@ -257,14 +251,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	 */
 	private List<Integer> getChildDepts() {
 		Integer deptId = SecurityUtils.getUser().getDeptId();
-
 		//获取当前部门的子部门
-		SysDeptRelation deptRelation = new SysDeptRelation();
-		deptRelation.setAncestor(deptId);
-		List<SysDeptRelation> deptRelationList = sysDeptRelationService.selectList(new EntityWrapper<>(deptRelation));
-		List<Integer> deptIds = new ArrayList<>();
-		deptRelationList.forEach(sysDeptRelation -> deptIds.add(sysDeptRelation.getDescendant()));
-		return deptIds;
+		SysDeptRelation condition = new SysDeptRelation();
+		condition.setAncestor(deptId);
+		return sysDeptRelationService
+			.selectList(new EntityWrapper<>(condition))
+			.stream()
+			.map(SysDeptRelation::getDescendant)
+			.collect(Collectors.toList());
 	}
 
 }

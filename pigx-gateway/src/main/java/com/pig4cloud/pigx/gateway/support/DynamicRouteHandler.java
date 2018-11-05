@@ -17,16 +17,25 @@
 
 package com.pig4cloud.pigx.gateway.support;
 
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
+import com.pig4cloud.pigx.common.core.constant.CommonConstant;
+import com.pig4cloud.pigx.gateway.support.vo.RouteDefinitionVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
+import org.springframework.cloud.gateway.filter.FilterDefinition;
+import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
-import org.springframework.cloud.gateway.route.RouteDefinitionWriter;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+import java.net.URI;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,13 +48,13 @@ import java.util.Map;
 @Slf4j
 @Service
 public class DynamicRouteHandler implements ApplicationEventPublisherAware {
-	private final RouteDefinitionWriter routeDefinitionWriter;
 	private final RouteDefinitionLocator routeDefinitionLocator;
+	private final RedisTemplate redisTemplate;
 	private ApplicationEventPublisher applicationEventPublisher;
 
-	public DynamicRouteHandler(RouteDefinitionWriter routeDefinitionWriter
+	public DynamicRouteHandler(RedisTemplate redisTemplate
 		, RouteDefinitionLocator routeDefinitionLocator) {
-		this.routeDefinitionWriter = routeDefinitionWriter;
+		this.redisTemplate = redisTemplate;
 		this.routeDefinitionLocator = routeDefinitionLocator;
 	}
 
@@ -63,19 +72,67 @@ public class DynamicRouteHandler implements ApplicationEventPublisherAware {
 	}
 
 	/**
-	 * 添加路由
+	 * 更新路由信息
 	 *
-	 * @param route 路由定义
+	 * @param routes 路由信息
 	 * @return
 	 */
-	public Mono<Void> addRoute(Mono<RouteDefinition> route) {
+	public Mono<Void> editRoutes(JSONObject routes) {
+		Boolean result = redisTemplate.delete(CommonConstant.ROUTE_KEY);
+		log.info("清空网关路由 {} ", result);
+
+		routes.forEach((key, value) -> {
+			log.info("更新路由 -> {} ->{}", key, value);
+			RouteDefinitionVo vo = new RouteDefinitionVo();
+			Map<String, Object> map = (Map) value;
+
+			Object id = map.get("id");
+			if (id != null) {
+				vo.setId(String.valueOf(id));
+			}
+
+			Object predicates = map.get("predicates");
+			if (predicates != null) {
+				JSONArray predicatesArray = (JSONArray) predicates;
+				List<PredicateDefinition> predicateDefinitionList =
+					predicatesArray.toList(PredicateDefinition.class);
+				vo.setPredicates(predicateDefinitionList);
+			}
+
+			Object filters = map.get("filters");
+			if (filters != null) {
+				JSONArray filtersArray = (JSONArray) filters;
+				List<FilterDefinition> filterDefinitionList
+					= filtersArray.toList(FilterDefinition.class);
+				vo.setFilters(filterDefinitionList);
+			}
+
+			Object uri = map.get("uri");
+			if (uri != null) {
+				vo.setUri(URI.create(String.valueOf(uri)));
+			}
+
+			Object order = map.get("order");
+			if (order != null) {
+				vo.setOrder(Integer.parseInt(String.valueOf(order)));
+			}
+
+			redisTemplate.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(RouteDefinitionVo.class));
+			redisTemplate.opsForHash().put(CommonConstant.ROUTE_KEY, key, vo);
+		});
+		log.debug("更新网关路由结束 ");
 		this.applicationEventPublisher.publishEvent(new RefreshRoutesEvent(this));
-		return routeDefinitionWriter.save(route);
+		return Mono.empty();
 	}
 
-	public Mono<Void> deleteRoute(String id) {
-		this.applicationEventPublisher.publishEvent(new RefreshRoutesEvent(this));
-		return routeDefinitionWriter.delete(Mono.just(id));
+	/**
+	 * 回滚路由
+	 *
+	 * @return
+	 */
+	public Mono<Void> fallback() {
+		this.applicationEventPublisher.publishEvent(new DynamicRouteInitEvent(this));
+		return Mono.empty();
 	}
 
 	@Override

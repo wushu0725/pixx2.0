@@ -48,7 +48,7 @@ public class DynamicRouteInitRunner {
 
 	@Async
 	@Order
-	@EventListener(WebServerInitializedEvent.class)
+	@EventListener({WebServerInitializedEvent.class, DynamicRouteInitEvent.class})
 	public void initRoute() {
 		Boolean result = redisTemplate.delete(CommonConstant.ROUTE_KEY);
 		log.info("初始化网关路由 {} ", result);
