@@ -19,8 +19,8 @@ import java.time.LocalDateTime;
  * @date ${datetime}
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @TableName("${tableName}")
+@EqualsAndHashCode(callSuper = true)
 public class ${className} extends Model<${className}> {
 	private static final long serialVersionUID = 1L;
 

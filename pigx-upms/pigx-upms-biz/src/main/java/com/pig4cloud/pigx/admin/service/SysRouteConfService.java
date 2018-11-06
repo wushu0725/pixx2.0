@@ -15,22 +15,39 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.manager;
+package com.pig4cloud.pigx.admin.service;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.cloud.client.SpringCloudApplication;
+import cn.hutool.json.JSONArray;
+import com.baomidou.mybatisplus.service.IService;
+import com.pig4cloud.pigx.admin.api.entity.SysRouteConf;
+import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 /**
- * @author LCN
+ * 路由
+ *
  * @author lengleng
- * tx-manager ，进行了代码逻辑和代码规范重构
+ * @date 2018-11-06 10:17:18
  */
-@SpringCloudApplication
-public class PigxTxManagerApplication {
+public interface SysRouteConfService extends IService<SysRouteConf> {
 
+	/**
+	 * 获取全部路由
+	 * <p>
+	 * RedisRouteDefinitionWriter.java
+	 * PropertiesRouteDefinitionLocator.java
+	 *
+	 * @return
+	 */
+	List<SysRouteConf> routes();
 
-	public static void main(String[] args) {
-		SpringApplication.run(PigxTxManagerApplication.class, args);
-	}
-
+	/**
+	 * 更新路由信息
+	 *
+	 * @param routes 路由信息
+	 * @return
+	 */
+	Mono<Void> editRoutes(JSONArray routes);
 }
+

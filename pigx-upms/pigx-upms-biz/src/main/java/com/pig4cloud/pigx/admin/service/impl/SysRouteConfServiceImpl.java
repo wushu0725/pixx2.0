@@ -15,48 +15,46 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.common.gateway.support;
+package com.pig4cloud.pigx.admin.service.impl;
 
 import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.pig4cloud.pigx.admin.api.entity.SysRouteConf;
+import com.pig4cloud.pigx.admin.mapper.SysRouteConfMapper;
+import com.pig4cloud.pigx.admin.service.SysRouteConfService;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.gateway.vo.RouteDefinitionVo;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.filter.FilterDefinition;
 import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
-import org.springframework.cloud.gateway.route.RouteDefinition;
-import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author lengleng
- * @date 2018/10/31
+ * @date 2018年11月06日10:27:55
  * <p>
- * 动态路由操作类
- * see GatewayControllerEndpoint.java
+ * 动态路由处理类
  */
 @Slf4j
-@Service
-public class DynamicRouteHandler implements ApplicationEventPublisherAware {
-	private final RouteDefinitionLocator routeDefinitionLocator;
+@AllArgsConstructor
+@Service("sysRouteConfService")
+public class SysRouteConfServiceImpl extends ServiceImpl<SysRouteConfMapper, SysRouteConf> implements SysRouteConfService {
 	private final RedisTemplate redisTemplate;
-	private ApplicationEventPublisher applicationEventPublisher;
+	private final ApplicationEventPublisher applicationEventPublisher;
 
-	public DynamicRouteHandler(RedisTemplate redisTemplate
-		, RouteDefinitionLocator routeDefinitionLocator) {
-		this.redisTemplate = redisTemplate;
-		this.routeDefinitionLocator = routeDefinitionLocator;
-	}
 
 	/**
 	 * 获取全部路由
@@ -66,9 +64,11 @@ public class DynamicRouteHandler implements ApplicationEventPublisherAware {
 	 *
 	 * @return
 	 */
-	public Mono<Map<String, RouteDefinition>> routes() {
-		return routeDefinitionLocator.getRouteDefinitions()
-			.collectMap(RouteDefinition::getId);
+	@Override
+	public List<SysRouteConf> routes() {
+		SysRouteConf condition = new SysRouteConf();
+		condition.setDelFlag(CommonConstant.STATUS_NORMAL);
+		return baseMapper.selectList(new EntityWrapper<>(condition));
 	}
 
 	/**
@@ -77,16 +77,20 @@ public class DynamicRouteHandler implements ApplicationEventPublisherAware {
 	 * @param routes 路由信息
 	 * @return
 	 */
-	public Mono<Void> editRoutes(JSONObject routes) {
+	@Override
+	public Mono<Void> editRoutes(JSONArray routes) {
+		// 清空Redis 缓存
 		Boolean result = redisTemplate.delete(CommonConstant.ROUTE_KEY);
 		log.info("清空网关路由 {} ", result);
 
-		routes.forEach((key, value) -> {
-			log.info("更新路由 -> {} ->{}", key, value);
+		// 遍历修改的routes，保存到Redis
+		List<RouteDefinitionVo> routeDefinitionVoList = new ArrayList<>();
+		routes.forEach(value -> {
+			log.info("更新路由 ->{}", value);
 			RouteDefinitionVo vo = new RouteDefinitionVo();
 			Map<String, Object> map = (Map) value;
 
-			Object id = map.get("id");
+			Object id = map.get("routeId");
 			if (id != null) {
 				vo.setId(String.valueOf(id));
 			}
@@ -118,25 +122,24 @@ public class DynamicRouteHandler implements ApplicationEventPublisherAware {
 			}
 
 			redisTemplate.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(RouteDefinitionVo.class));
-			redisTemplate.opsForHash().put(CommonConstant.ROUTE_KEY, key, vo);
+			redisTemplate.opsForHash().put(CommonConstant.ROUTE_KEY, vo.getId(), vo);
+			routeDefinitionVoList.add(vo);
+		});
+
+		// 更新或保存routes，保存到DB
+		routeDefinitionVoList.forEach(vo -> {
+			SysRouteConf routeConf = new SysRouteConf();
+			routeConf.setRouteId(vo.getId());
+			routeConf.setFilters(JSONUtil.toJsonStr(vo.getFilters()));
+			routeConf.setPredicates(JSONUtil.toJsonStr(vo.getPredicates()));
+			routeConf.setOrder(vo.getOrder());
+			routeConf.setUri(vo.getUri().toString());
+			this.insertOrUpdate(routeConf);
 		});
 		log.debug("更新网关路由结束 ");
+
 		this.applicationEventPublisher.publishEvent(new RefreshRoutesEvent(this));
 		return Mono.empty();
 	}
 
-	/**
-	 * 回滚路由
-	 *
-	 * @return
-	 */
-	public Mono<Void> fallback() {
-		this.applicationEventPublisher.publishEvent(new DynamicRouteInitEvent(this));
-		return Mono.empty();
-	}
-
-	@Override
-	public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
-		this.applicationEventPublisher = applicationEventPublisher;
-	}
 }

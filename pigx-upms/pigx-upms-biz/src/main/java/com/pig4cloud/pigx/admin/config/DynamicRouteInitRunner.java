@@ -15,16 +15,21 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.common.gateway.support;
+package com.pig4cloud.pigx.admin.config;
 
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONUtil;
+import com.pig4cloud.pigx.admin.service.SysRouteConfService;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
+import com.pig4cloud.pigx.common.gateway.support.DynamicRouteInitEvent;
 import com.pig4cloud.pigx.common.gateway.vo.RouteDefinitionVo;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.cloud.gateway.config.PropertiesRouteDefinitionLocator;
+import org.springframework.cloud.gateway.filter.FilterDefinition;
+import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
@@ -32,6 +37,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.scheduling.annotation.Async;
+
+import java.net.URI;
 
 /**
  * @author lengleng
@@ -44,7 +51,7 @@ import org.springframework.scheduling.annotation.Async;
 @AllArgsConstructor
 public class DynamicRouteInitRunner {
 	private final RedisTemplate redisTemplate;
-	private final GatewayProperties gatewayProperties;
+	private final SysRouteConfService routeConfService;
 
 	@Async
 	@Order
@@ -53,12 +60,20 @@ public class DynamicRouteInitRunner {
 		Boolean result = redisTemplate.delete(CommonConstant.ROUTE_KEY);
 		log.info("初始化网关路由 {} ", result);
 
-		gatewayProperties.getRoutes().forEach(route -> {
+		routeConfService.routes().forEach(route -> {
 			RouteDefinitionVo vo = new RouteDefinitionVo();
-			BeanUtils.copyProperties(route, vo);
-			log.info("加载路由ID：{},{}", route.getId(), vo);
+			vo.setId(route.getRouteId());
+			vo.setUri(URI.create(route.getUri()));
+			vo.setOrder(route.getOrder());
+
+			JSONArray filterObj = JSONUtil.parseArray(route.getFilters());
+			vo.setFilters(filterObj.toList(FilterDefinition.class));
+			JSONArray predicateObj = JSONUtil.parseArray(route.getPredicates());
+			vo.setPredicates(predicateObj.toList(PredicateDefinition.class));
+
+			log.info("加载路由ID：{},{}", route.getRouteId(), vo);
 			redisTemplate.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(RouteDefinitionVo.class));
-			redisTemplate.opsForHash().put(CommonConstant.ROUTE_KEY, route.getId(), vo);
+			redisTemplate.opsForHash().put(CommonConstant.ROUTE_KEY, route.getRouteId(), vo);
 		});
 		log.debug("初始化网关路由结束 ");
 	}

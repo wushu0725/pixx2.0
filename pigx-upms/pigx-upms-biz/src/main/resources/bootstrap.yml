@@ -16,6 +16,8 @@ spring:
       discovery:
         enabled: true
         service-id: pigx-config
+  autoconfigure:
+    exclude: org.springframework.cloud.gateway.config.GatewayClassPathWarningAutoConfiguration
 
 # 注册中心配置
 eureka:

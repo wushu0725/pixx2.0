@@ -15,22 +15,19 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.manager;
+package com.pig4cloud.pigx.admin.mapper;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.cloud.client.SpringCloudApplication;
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.pig4cloud.pigx.admin.api.entity.SysRouteConf;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
- * @author LCN
+ * 路由
+ *
  * @author lengleng
- * tx-manager ，进行了代码逻辑和代码规范重构
+ * @date 2018-11-06 10:17:18
  */
-@SpringCloudApplication
-public class PigxTxManagerApplication {
-
-
-	public static void main(String[] args) {
-		SpringApplication.run(PigxTxManagerApplication.class, args);
-	}
+@Mapper
+public interface SysRouteConfMapper extends BaseMapper<SysRouteConf> {
 
 }

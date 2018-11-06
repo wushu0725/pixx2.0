@@ -15,39 +15,36 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.common.gateway.support;
+package com.pig4cloud.pigx.admin.controller;
 
-import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONArray;
+import com.pig4cloud.pigx.admin.service.SysRouteConfService;
 import com.pig4cloud.pigx.common.core.util.R;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Mono;
 
-import java.util.Map;
 
 /**
+ * 路由
+ *
  * @author lengleng
- * @date 2018/10/31
- * <p>
- * 动态路由业务端点
+ * @date 2018-11-06 10:17:18
  */
-@Slf4j
 @RestController
 @AllArgsConstructor
 @RequestMapping("/route")
-public class DynamicRouteEndpoint {
-	private final DynamicRouteHandler dynamicRouteHandler;
+public class SysRouteConfController {
+	private final SysRouteConfService sysRouteConfService;
+
 
 	/**
 	 * 获取当前定义的路由信息
 	 *
-	 * @return {"id"："RouteDefinition"}
+	 * @return
 	 */
 	@GetMapping
-	public Mono<Map<String, RouteDefinition>> routes() {
-		return dynamicRouteHandler.routes();
+	public R routes() {
+		return new R<>(sysRouteConfService.routes());
 	}
 
 	/**
@@ -57,17 +54,8 @@ public class DynamicRouteEndpoint {
 	 * @return
 	 */
 	@PutMapping
-	public R edit(@RequestBody JSONObject routes) {
-		return new R(dynamicRouteHandler.editRoutes(routes));
+	public R edit(@RequestBody JSONArray routes) {
+		return new R(sysRouteConfService.editRoutes(routes));
 	}
 
-	/**
-	 * 回滚初始化配置
-	 *
-	 * @return
-	 */
-	@GetMapping("/fallback")
-	public Mono<R> fallback() {
-		return Mono.just(new R(dynamicRouteHandler.fallback()));
-	}
 }

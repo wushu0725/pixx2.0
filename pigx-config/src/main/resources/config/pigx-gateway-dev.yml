@@ -3,54 +3,7 @@ spring:
     gateway:
       locator:
         enabled: true
-      routes:
-      # 认证中心
-      - id: pigx-auth
-        uri: lb://pigx-auth
-        predicates:
-        - Path=/auth/**
-        filters:
-          # 验证码处理
-        - ValidateCodeGatewayFilter
-          # 前端密码解密
-        - PasswordDecoderFilter
-      #UPMS 模块
-      - id: pigx-upms
-        uri: lb://pigx-upms
-        predicates:
-        - Path=/admin/**
-        filters:
-          # 限流配置
-        - name: RequestRateLimiter
-          args:
-            key-resolver: '#{@remoteAddrKeyResolver}'
-            redis-rate-limiter.replenishRate: 10
-            redis-rate-limiter.burstCapacity: 20
-          # 降级配置
-        - name: Hystrix
-          args:
-            name: default
-            fallbackUri: 'forward:/fallback'
-      # 代码生成模块
-      - id: pigx-codegen
-        uri: lb://pigx-codegen
-        predicates:
-        - Path=/gen/**
-      # 定时任务模块
-      - id: pigx-daemon
-        uri: lb://pigx-daemon
-        predicates:
-        - Path=/daemon/**
-      # 分布式事务管理模块
-      - id: pigx-tx-manager
-        uri: lb://pigx-tx-manager
-        predicates:
-        - Path=/tx/**
-      # 工作流管理模块
-      - id: pigx-activiti
-        uri: lb://pigx-activiti
-        predicates:
-        - Path=/act/**
+
 security:
   encode:
     # 前端密码密钥，必须16位

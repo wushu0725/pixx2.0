@@ -25,6 +25,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -65,8 +66,14 @@ public class RedisRouteDefinitionWriter implements RouteDefinitionRepository {
 	}
 
 
+	/**
+	 * 动态路由入口
+	 *
+	 * @return
+	 */
 	@Override
 	public Flux<RouteDefinition> getRouteDefinitions() {
+		redisTemplate.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(RouteDefinitionVo.class));
 		List<RouteDefinitionVo> values = redisTemplate.opsForHash().values(CommonConstant.ROUTE_KEY);
 		List<RouteDefinition> definitionList = new ArrayList<>();
 		values.forEach(vo -> {
