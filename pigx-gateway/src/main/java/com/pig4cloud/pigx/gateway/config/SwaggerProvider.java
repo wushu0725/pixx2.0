@@ -18,8 +18,8 @@
 package com.pig4cloud.pigx.gateway.config;
 
 import lombok.AllArgsConstructor;
-import org.springframework.cloud.gateway.config.GatewayProperties;
-import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.RouteDefinition;
+import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
 import org.springframework.cloud.gateway.support.NameUtils;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -38,22 +38,21 @@ import java.util.List;
 @AllArgsConstructor
 public class SwaggerProvider implements SwaggerResourcesProvider {
 	private static final String API_URI = "/v2/api-docs";
-	private final RouteLocator routeLocator;
-	private final GatewayProperties gatewayProperties;
+	private final RouteDefinitionRepository routeDefinitionRepository;
 
 
 	@Override
 	public List<SwaggerResource> get() {
 		List<SwaggerResource> resources = new ArrayList<>();
-		List<String> routes = new ArrayList<>();
-		routeLocator.getRoutes().subscribe(route -> routes.add(route.getId()));
-		gatewayProperties.getRoutes().stream().filter(routeDefinition -> routes.contains(routeDefinition.getId()))
-			.forEach(routeDefinition -> routeDefinition.getPredicates().stream()
-				.filter(predicateDefinition -> "Path".equalsIgnoreCase(predicateDefinition.getName()))
-				.filter(predicateDefinition -> !"pigx-auth".equalsIgnoreCase(routeDefinition.getId()))
-				.forEach(predicateDefinition -> resources.add(swaggerResource(routeDefinition.getId(),
-					predicateDefinition.getArgs().get(NameUtils.GENERATED_NAME_PREFIX + "0")
-						.replace("/**", API_URI)))));
+		List<RouteDefinition> routes = new ArrayList<>();
+		routeDefinitionRepository.getRouteDefinitions().subscribe(route -> routes.add(route));
+		routes.forEach(routeDefinition -> routeDefinition.getPredicates().stream()
+			.filter(predicateDefinition -> "Path".equalsIgnoreCase(predicateDefinition.getName()))
+			.filter(predicateDefinition -> !"pigx-auth".equalsIgnoreCase(routeDefinition.getId()))
+			.forEach(predicateDefinition -> resources.add(swaggerResource(routeDefinition.getId(),
+				predicateDefinition.getArgs().get(NameUtils.GENERATED_NAME_PREFIX + "0")
+					.replace("/**", API_URI)))));
+
 		return resources;
 	}
 

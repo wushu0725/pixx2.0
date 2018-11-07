@@ -41,6 +41,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author lengleng
@@ -126,16 +127,22 @@ public class SysRouteConfServiceImpl extends ServiceImpl<SysRouteConfMapper, Sys
 			routeDefinitionVoList.add(vo);
 		});
 
-		// 更新或保存routes，保存到DB
-		routeDefinitionVoList.forEach(vo -> {
+		// 逻辑删除全部
+		SysRouteConf condition = new SysRouteConf();
+		condition.setDelFlag(CommonConstant.STATUS_NORMAL);
+		this.delete(new EntityWrapper<>(condition));
+
+		//插入生效路由
+		List<SysRouteConf> routeConfList = routeDefinitionVoList.stream().map(vo -> {
 			SysRouteConf routeConf = new SysRouteConf();
 			routeConf.setRouteId(vo.getId());
 			routeConf.setFilters(JSONUtil.toJsonStr(vo.getFilters()));
 			routeConf.setPredicates(JSONUtil.toJsonStr(vo.getPredicates()));
 			routeConf.setOrder(vo.getOrder());
 			routeConf.setUri(vo.getUri().toString());
-			this.insertOrUpdate(routeConf);
-		});
+			return routeConf;
+		}).collect(Collectors.toList());
+		this.insertBatch(routeConfList);
 		log.debug("更新网关路由结束 ");
 
 		this.applicationEventPublisher.publishEvent(new RefreshRoutesEvent(this));

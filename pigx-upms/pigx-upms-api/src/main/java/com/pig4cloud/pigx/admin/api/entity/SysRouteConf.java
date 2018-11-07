@@ -19,8 +19,10 @@ package com.pig4cloud.pigx.admin.api.entity;
 
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -38,11 +40,12 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 public class SysRouteConf extends Model<SysRouteConf> {
 	private static final long serialVersionUID = 1L;
-
+	@JsonIgnore
+	@TableId(type = IdType.AUTO)
+	private Integer id;
 	/**
 	 * 路由ID
 	 */
-	@TableId(type = IdType.INPUT)
 	private String routeId;
 	/**
 	 * 断言
@@ -69,8 +72,9 @@ public class SysRouteConf extends Model<SysRouteConf> {
 	 */
 	private LocalDateTime updateTime;
 	/**
-	 * 删除标记
+	 * 删除标识（0-正常,1-删除）
 	 */
+	@TableLogic
 	private String delFlag;
 
 	/**
