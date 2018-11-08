@@ -60,7 +60,7 @@ public class PigxRequestGlobalFilter implements GlobalFilter, Ordered {
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		// 1. 清洗请求头中from 参数
 		ServerHttpRequest request = exchange.getRequest().mutate()
-			.headers(httpHeaders -> httpHeaders.remove(SecurityConstants.FROM_IN))
+			.headers(httpHeaders -> httpHeaders.remove(SecurityConstants.FROM))
 			.build();
 
 		// 2. 重写StripPrefix
