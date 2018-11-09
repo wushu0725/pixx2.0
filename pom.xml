@@ -24,13 +24,12 @@
 
 	<groupId>com.pig4cloud</groupId>
 	<artifactId>pigx</artifactId>
-	<version>${pigx.version}</version>
+	<version>1.7.0</version>
 	<name>${project.artifactId}</name>
 	<packaging>pom</packaging>
 	<url>https://www.pig4cloud.com</url>
 
 	<properties>
-		<pigx.version>1.7.0</pigx.version>
 		<spring-boot.version>2.0.6.RELEASE</spring-boot.version>
 		<spring-cloud.version>Finchley.SR2</spring-cloud.version>
 		<spring-platform.version>Cairo-SR3</spring-platform.version>

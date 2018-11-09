@@ -24,7 +24,7 @@
 	<parent>
 		<groupId>com.pig4cloud</groupId>
 		<artifactId>pigx-common</artifactId>
-		<version>${pigx.version}</version>
+		<version>1.7.0</version>
 	</parent>
 
 	<artifactId>pigx-common-job</artifactId>
@@ -33,12 +33,6 @@
 	<description>pigx 定时任务</description>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
-
 		<!-- import elastic-job lite core -->
 		<dependency>
 			<groupId>com.dangdang</groupId>

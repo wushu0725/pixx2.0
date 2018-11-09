@@ -7,8 +7,10 @@ spring:
       name: pig
       password: pig
   application:
-    name: pigx-eureka
-
+    name: pig-eureka
+  cloud:
+    config:
+      enabled: false
 # docker-compose部署时候 hostname 换成pigx-eureka
 # 类似的 redis 使用pigx-redis ,gateway 换成 pigx-gateway
 eureka:
