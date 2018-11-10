@@ -24,7 +24,7 @@
 	<parent>
 		<groupId>com.pig4cloud</groupId>
 		<artifactId>pigx-common</artifactId>
-		<version>${pigx.version}</version>
+		<version>1.7.0</version>
 	</parent>
 
 	<artifactId>pigx-common-security</artifactId>
@@ -38,22 +38,18 @@
 		<dependency>
 			<groupId>com.pig4cloud</groupId>
 			<artifactId>pigx-common-core</artifactId>
-			<version>${pigx.version}</version>
+			<version>1.7.0</version>
 		</dependency>
 		<!--安全模块-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-security</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jdbc</artifactId>
-		</dependency>
 		<!--UPMS API-->
 		<dependency>
 			<groupId>com.pig4cloud</groupId>
 			<artifactId>pigx-upms-api</artifactId>
-			<version>${pigx.version}</version>
+			<version>1.7.0</version>
 		</dependency>
 	</dependencies>
 </project>

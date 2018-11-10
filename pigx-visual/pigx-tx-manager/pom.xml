@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.pig4cloud</groupId>
 		<artifactId>pigx-visual</artifactId>
-		<version>${pigx.version}</version>
+		<version>1.7.0</version>
 	</parent>
 
 	<artifactId>pigx-tx-manager</artifactId>
@@ -63,7 +63,7 @@
 		<dependency>
 			<groupId>com.pig4cloud</groupId>
 			<artifactId>pigx-common-core</artifactId>
-			<version>${pigx.version}</version>
+			<version>1.7.0</version>
 		</dependency>
 	</dependencies>
 	<build>

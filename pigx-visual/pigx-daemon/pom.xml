@@ -23,7 +23,7 @@
 	<parent>
 		<groupId>com.pig4cloud</groupId>
 		<artifactId>pigx-visual</artifactId>
-		<version>${pigx.version}</version>
+		<version>1.7.0</version>
 	</parent>
 
 	<artifactId>pigx-daemon</artifactId>
@@ -41,7 +41,7 @@
 		<dependency>
 			<groupId>com.pig4cloud</groupId>
 			<artifactId>pigx-common-job</artifactId>
-			<version>${pigx.version}</version>
+			<version>1.7.0</version>
 		</dependency>
 		<!--mybatis-->
 		<dependency>
@@ -64,11 +64,17 @@
 			<artifactId>curator-recipes</artifactId>
 			<version>${curator.version}</version>
 		</dependency>
-		<!--swagger 内置安全模块-->
+		<!--swagger -->
 		<dependency>
 			<groupId>com.pig4cloud</groupId>
 			<artifactId>pigx-common-swagger</artifactId>
-			<version>${pigx.version}</version>
+			<version>1.7.0</version>
+		</dependency>
+		<!-- 安全模块-->
+		<dependency>
+			<groupId>com.pig4cloud</groupId>
+			<artifactId>pigx-common-security</artifactId>
+			<version>1.7.0</version>
 		</dependency>
 		<!--web 模块-->
 		<dependency>

@@ -26,7 +26,7 @@ import com.pig4cloud.pigx.admin.api.entity.SysDept;
 import com.pig4cloud.pigx.admin.api.entity.SysDeptRelation;
 import com.pig4cloud.pigx.admin.api.vo.TreeUtil;
 import com.pig4cloud.pigx.admin.mapper.SysDeptMapper;
-import com.pig4cloud.pigx.admin.mapper.SysDeptRelationMapper;
+import com.pig4cloud.pigx.admin.service.SysDeptRelationService;
 import com.pig4cloud.pigx.admin.service.SysDeptService;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import lombok.AllArgsConstructor;
@@ -34,8 +34,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -48,8 +48,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> implements SysDeptService {
-	private final SysDeptMapper sysDeptMapper;
-	private final SysDeptRelationMapper sysDeptRelationMapper;
+	private final SysDeptRelationService sysDeptRelationService;
 
 	/**
 	 * 添加信息部门
@@ -62,30 +61,10 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 		SysDept sysDept = new SysDept();
 		BeanUtils.copyProperties(dept, sysDept);
 		this.insert(sysDept);
-		this.insertDeptRelation(sysDept);
+		sysDeptRelationService.insertDeptRelation(sysDept);
 		return Boolean.TRUE;
 	}
 
-	/**
-	 * 维护部门关系
-	 *
-	 * @param sysDept 部门
-	 */
-	private void insertDeptRelation(SysDept sysDept) {
-		//增加部门关系表
-		SysDeptRelation deptRelation = new SysDeptRelation();
-		deptRelation.setDescendant(sysDept.getParentId());
-		List<SysDeptRelation> deptRelationList = sysDeptRelationMapper.selectList(new EntityWrapper<>(deptRelation));
-		for (SysDeptRelation sysDeptRelation : deptRelationList) {
-			sysDeptRelation.setDescendant(sysDept.getDeptId());
-			sysDeptRelationMapper.insert(sysDeptRelation);
-		}
-		//自己也要维护到关系表中
-		SysDeptRelation own = new SysDeptRelation();
-		own.setDescendant(sysDept.getDeptId());
-		own.setAncestor(sysDept.getDeptId());
-		sysDeptRelationMapper.insert(own);
-	}
 
 	/**
 	 * 删除部门
@@ -100,7 +79,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 		sysDept.setUpdateTime(LocalDateTime.now());
 		sysDept.setDelFlag(CommonConstant.STATUS_DEL);
 		this.deleteById(sysDept);
-		sysDeptRelationMapper.deleteAllDeptRealtion(id);
+		sysDeptRelationService.deleteAllDeptRealtion(id);
 		return Boolean.TRUE;
 	}
 
@@ -118,7 +97,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 		SysDeptRelation relation = new SysDeptRelation();
 		relation.setAncestor(sysDept.getParentId());
 		relation.setDescendant(sysDept.getDeptId());
-		sysDeptRelationMapper.updateDeptRealtion(relation);
+		sysDeptRelationService.updateDeptRealtion(relation);
 		return Boolean.TRUE;
 	}
 
@@ -131,7 +110,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 	@Override
 	public List<DeptTree> selectListTree(EntityWrapper<SysDept> sysDeptEntityWrapper) {
 		sysDeptEntityWrapper.orderBy("order_num", false);
-		return getDeptTree(this.selectList(sysDeptEntityWrapper), 0);
+		return getDeptTree(this.selectList(sysDeptEntityWrapper));
 	}
 
 
@@ -139,22 +118,19 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 	 * 构建部门树
 	 *
 	 * @param depts 部门
-	 * @param root  根节点
 	 * @return
 	 */
-	private List<DeptTree> getDeptTree(List<SysDept> depts, int root) {
-		List<DeptTree> trees = new ArrayList<>();
-		DeptTree node;
-		for (SysDept dept : depts) {
-			if (dept.getParentId().equals(dept.getDeptId())) {
-				continue;
-			}
-			node = new DeptTree();
-			node.setId(dept.getDeptId());
-			node.setParentId(dept.getParentId());
-			node.setName(dept.getName());
-			trees.add(node);
-		}
-		return TreeUtil.bulid(trees, root);
+	private List<DeptTree> getDeptTree(List<SysDept> depts) {
+
+		List<DeptTree> treeList = depts.stream()
+			.filter(dept -> !dept.getDeptId().equals(dept.getParentId()))
+			.map(dept -> {
+				DeptTree node = new DeptTree();
+				node.setId(dept.getDeptId());
+				node.setParentId(dept.getParentId());
+				node.setName(dept.getName());
+				return node;
+			}).collect(Collectors.toList());
+		return TreeUtil.bulid(treeList, 0);
 	}
 }

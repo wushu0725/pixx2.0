@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.pig4cloud</groupId>
 		<artifactId>pigx-visual</artifactId>
-		<version>${pigx.version}</version>
+		<version>1.7.0</version>
 	</parent>
 
 	<artifactId>pigx-codegen</artifactId>
@@ -34,13 +34,19 @@
 		<dependency>
 			<groupId>com.pig4cloud</groupId>
 			<artifactId>pigx-common-core</artifactId>
-			<version>${pigx.version}</version>
+			<version>1.7.0</version>
 		</dependency>
-		<!--swagger 内置安全模块-->
+		<!--swagger-->
 		<dependency>
 			<groupId>com.pig4cloud</groupId>
 			<artifactId>pigx-common-swagger</artifactId>
-			<version>${pigx.version}</version>
+			<version>1.7.0</version>
+		</dependency>
+		<!--安全模块-->
+		<dependency>
+			<groupId>com.pig4cloud</groupId>
+			<artifactId>pigx-common-security</artifactId>
+			<version>1.7.0</version>
 		</dependency>
 		<!--代码生成模板引擎-->
 		<dependency>

@@ -15,24 +15,26 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.codegen;
+package com.pig4cloud.pigx.common.security.component;
 
-import com.pig4cloud.pigx.common.security.feign.EnablePigxFeignClients;
-import com.pig4cloud.pigx.common.swagger.annotation.EnablePigxSwagger2;
-import org.springframework.boot.SpringApplication;
-import org.springframework.cloud.client.SpringCloudApplication;
+import lombok.Data;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author lengleng
- * @date 2018/07/29
- * 代码生成模块
+ * @date 2018/11/10
+ * <p>
+ * 资源服务器对外直接暴露URL
  */
-@EnablePigxSwagger2
-@SpringCloudApplication
-@EnablePigxFeignClients
-public class PigxCodeGenApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(PigxCodeGenApplication.class, args);
-	}
+@Data
+@Configuration
+@ConditionalOnExpression("!'${ignore}'.isEmpty()")
+@ConfigurationProperties(prefix = "ignore")
+public class PermitAllUrlProperties {
+	private List<String> urls = new ArrayList<>();
 }
