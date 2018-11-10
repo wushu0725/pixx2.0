@@ -2,52 +2,23 @@
 security:
   oauth2:
     client:
-      client-id: ENC(tz2NM4GcmnE7sNJTYL8ZSg==)
-      client-secret: ENC(tz2NM4GcmnE7sNJTYL8ZSg==)
+      client-id: ENC(gPFcUOmJm8WqM3k3eSqS0Q==)
+      client-secret: ENC(gPFcUOmJm8WqM3k3eSqS0Q==)
       scope: server
-
-## 定时任务
+      ignore-urls:
+        - '/service/**'
+        - '/editor-app/**'
+        - '/task/view/*'
+        - '/process/resource/**'
+        - '/modeler.html'
 spring:
-  # 保存定时任务的数据源
+  autoconfigure:
+    exclude: org.activiti.spring.boot.SecurityAutoConfiguration
+  activiti:
+    check-process-definitions: false
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password:  root
     url: jdbc:mysql://pigx-mysql:3306/pigxx?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
-  elasticjob:
-    # 分布式任务协调依赖zookeeper
-    zookeeper:
-      server-lists: pigx-zookeeper:2181
-      namespace: pigx-daemon
-    # 普通任务
-    simples:
-      spring-simple-job:
-        job-class: com.pig4cloud.pigx.daemon.job.PigxSimpleJob
-        cron: 0 0 0/1 * * ?
-        sharding-total-count: 3
-        sharding-item-parameters: 0=service1,1=service2,2=service3
-        eventTraceRdbDataSource: 'dataSource'
-        listener:
-          listener-class: com.pig4cloud.pigx.daemon.listener.PigxElasticJobListener
-      spring-simple-job2:
-        job-class: com.pig4cloud.pigx.daemon.job.PigxSimpleJob2
-        cron: 0 0 0/1 * * ?
-        sharding-total-count: 3
-        sharding-item-parameters: 0=service1,1=service2,2=service3
-        eventTraceRdbDataSource: 'dataSource'
-        listener:
-          listener-class: com.pig4cloud.pigx.daemon.listener.PigxElasticJobListener
-    # 简单任务
-    dataflows:
-      spring-dataflow-job:
-        job-class: com.pig4cloud.pigx.daemon.job.PigxDataflowJob
-        cron: 0 0 0/1 * * ?
-        sharding-total-count: 3
-        sharding-item-parameters: 0=service1,1=service2,2=service3
-        streaming-process: true
-        eventTraceRdbDataSource: 'dataSource'
-        listener:
-          distributed-listener-class: com.pig4cloud.pigx.daemon.listener.PigxDistributeElasticJobListener
-          started-timeout-milliseconds: 5000
-          completed-timeout-milliseconds: 10000

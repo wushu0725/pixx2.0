@@ -18,6 +18,8 @@
 package com.pig4cloud.pigx.daemon;
 
 import com.pig4cloud.pigx.common.job.annotation.EnablePigxJob;
+import com.pig4cloud.pigx.common.security.annotation.EnablePigxResourceServer;
+import com.pig4cloud.pigx.common.security.feign.EnablePigxFeignClients;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 
@@ -27,7 +29,9 @@ import org.springframework.cloud.client.SpringCloudApplication;
  * 分布式任务调度模块
  */
 @EnablePigxJob
+@EnablePigxFeignClients
 @SpringCloudApplication
+@EnablePigxResourceServer
 public class PigxDaemonApplication {
 
 	public static void main(String[] args) {

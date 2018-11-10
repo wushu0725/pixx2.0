@@ -5,6 +5,10 @@ security:
       client-id: ENC(ltJPpR50wT0oIY9kfOe1Iw==)
       client-secret: ENC(ltJPpR50wT0oIY9kfOe1Iw==)
       scope: server
+      ignore-urls:
+        - '/user/info/*'
+        - '/social/info/**'
+        - '/log/**'
 
 # 数据源
 spring:

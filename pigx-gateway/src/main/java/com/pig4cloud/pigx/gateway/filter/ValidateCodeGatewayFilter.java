@@ -23,8 +23,8 @@ import cn.hutool.core.util.StrUtil;
 import com.pig4cloud.pigx.common.core.exception.CheckedException;
 import com.pig4cloud.pigx.common.core.exception.ValidateCodeException;
 import com.pig4cloud.pigx.gateway.config.FilterIgnorePropertiesConfig;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -43,14 +43,13 @@ import java.io.IOException;
  */
 @Slf4j
 @Component
+@AllArgsConstructor
 public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
 	public static final String DEFAULT_CODE_KEY = "DEFAULT_CODE_KEY";
 	public static final String OAUTH_TOKEN_URL = "/oauth/token";
 	private static final String BASIC_ = "Basic ";
-	@Autowired
-	private RedisTemplate redisTemplate;
-	@Autowired
-	private FilterIgnorePropertiesConfig filterIgnorePropertiesConfig;
+	private final RedisTemplate redisTemplate;
+	private final FilterIgnorePropertiesConfig filterIgnorePropertiesConfig;
 
 	/**
 	 * 从header 请求中的clientId/clientsecect

@@ -33,8 +33,8 @@ import java.util.List;
  */
 @Data
 @Configuration
-@ConditionalOnExpression("!'${ignore}'.isEmpty()")
-@ConfigurationProperties(prefix = "ignore")
+@ConditionalOnExpression("!'${security.oauth2.client.ignore-urls}'.isEmpty()")
+@ConfigurationProperties(prefix = "security.oauth2.client")
 public class PermitAllUrlProperties {
-	private List<String> urls = new ArrayList<>();
+	private List<String> ignoreUrls = new ArrayList<>();
 }

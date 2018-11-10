@@ -4,22 +4,17 @@ server:
 spring:
   application:
     name: pigx-activiti
-  #配置中心
+  # 配置中心
   cloud:
     config:
       fail-fast: true
       name: ${spring.application.name}
-      profile: dev
+      profile: ${spring.profiles.active}
       discovery:
         enabled: true
         service-id: pigx-config
-  datasource:
-    url: jdbc:mysql://lengleng:3306/ac?characterEncoding=UTF-8&useSSL=false
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.jdbc.Driver
-  activiti:
-    check-process-definitions: false
+  profiles:
+    active: dev
 
 # 注册中心配置
 eureka:
@@ -29,20 +24,3 @@ eureka:
     service-url:
       defaultZone: http://pig:pig@lengleng:1025/eureka/
 
-## spring security 配置
-security:
-  oauth2:
-    client:
-      client-id: ENC(gPFcUOmJm8WqM3k3eSqS0Q==)
-      client-secret: ENC(gPFcUOmJm8WqM3k3eSqS0Q==)
-      scope: server
-    resource:
-      token-info-uri: ${security.auth.server}/check_token
-  auth:
-    server: http://lengleng:9999/auth/oauth
-
-# 加解密根密码
-jasypt:
-  encryptor:
-    password: pigx #根密码
-# redis 相关

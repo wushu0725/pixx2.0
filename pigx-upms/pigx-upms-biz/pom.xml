@@ -49,7 +49,7 @@
 		<dependency>
 			<groupId>com.pig4cloud</groupId>
 			<artifactId>pigx-common-cache</artifactId>
-			<version>${pigx.version}</version>
+			<version>1.7.0</version>
 		</dependency>
 		<!--swagger-->
 		<dependency>
@@ -77,7 +77,7 @@
 		<dependency>
 			<groupId>com.pig4cloud</groupId>
 			<artifactId>pigx-common-gateway</artifactId>
-			<version>${pigx.version}</version>
+			<version>1.7.0</version>
 		</dependency>
 		<!--mybatis-->
 		<dependency>

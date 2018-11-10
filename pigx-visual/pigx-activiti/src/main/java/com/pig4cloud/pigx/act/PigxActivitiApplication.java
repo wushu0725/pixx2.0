@@ -17,22 +17,19 @@
 
 package com.pig4cloud.pigx.act;
 
+import com.pig4cloud.pigx.common.security.annotation.EnablePigxResourceServer;
 import com.pig4cloud.pigx.common.security.feign.EnablePigxFeignClients;
-import org.activiti.spring.boot.SecurityAutoConfiguration;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.SpringCloudApplication;
 
 /**
  * @author lengleng
  * @date 2018/9/25
  * 工作流管理模块
  */
-@EnableCircuitBreaker
-@EnableDiscoveryClient
 @EnablePigxFeignClients
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
+@EnablePigxResourceServer
+@SpringCloudApplication
 public class PigxActivitiApplication {
 
 	public static void main(String[] args) {

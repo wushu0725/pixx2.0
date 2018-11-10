@@ -18,11 +18,7 @@
 package com.pig4cloud.pigx.act.config;
 
 import com.pig4cloud.pigx.common.security.component.BaseResourceServerConfigurerAdapter;
-import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 
 /**
@@ -30,29 +26,10 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
  * @date 2018/6/22
  */
 @Configuration
-@EnableResourceServer
-@AllArgsConstructor
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class ResourceServerConfigurer extends BaseResourceServerConfigurerAdapter {
-
-	@Override
-	public void configure(HttpSecurity http) throws Exception {
-		http
-			.headers().frameOptions().disable()
-			.and().authorizeRequests()
-			.antMatchers("/actuator/**"
-				, "/v2/api-docs"
-				, "/service/**"
-				, "/editor-app/**"
-				,"/task/view/*"
-				,"/process/resource/*/*/image"
-				, "/modeler.html").permitAll()
-			.anyRequest().authenticated()
-			.and().csrf().disable();
-	}
+public class  ResourceServerConfigurer extends BaseResourceServerConfigurerAdapter {
 
 	/**
-	 * 重写抽象类实现，不需要调用feign 获取 userdetils
+	 * 重写不需要调用feign 获取 userdetils
 	 *
 	 * @param resources
 	 */
