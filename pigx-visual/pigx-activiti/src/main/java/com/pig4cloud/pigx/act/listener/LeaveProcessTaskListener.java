@@ -20,7 +20,6 @@ package com.pig4cloud.pigx.act.listener;
 import cn.hutool.core.collection.CollUtil;
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
 import com.pig4cloud.pigx.admin.api.feign.RemoteUserService;
-import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.core.util.SpringContextHolder;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
@@ -48,8 +47,7 @@ public class LeaveProcessTaskListener implements TaskListener {
 	public void notify(DelegateTask delegateTask) {
 		RemoteUserService userService = SpringContextHolder.getBean(RemoteUserService.class);
 
-		R<List<SysUser>> result = userService.ancestorUsers(
-			SecurityUtils.getUsername(), SecurityConstants.FROM_IN);
+		R<List<SysUser>> result = userService.ancestorUsers(SecurityUtils.getUsername());
 
 		if (CollUtil.isEmpty(result.getData())) {
 			log.debug("用户 {} 不存在上级,任务单由当前用户审批", SecurityUtils.getUsername());

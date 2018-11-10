@@ -146,10 +146,7 @@ public class ActTaskServiceImpl implements ActTaskService {
 		taskService.addComment(taskId, processInstanceId, message);
 
 		Map<String, Object> variables = new HashMap<>(1);
-
-		if (!StrUtil.equals(FLAG, leaveBillDto.getTaskFlag())) {
-			variables.put("flag", leaveBillDto.getTaskFlag());
-		}
+		variables.put("flag", leaveBillDto.getTaskFlag());
 
 		taskService.complete(taskId, variables);
 		ProcessInstance pi = runtimeService.createProcessInstanceQuery()

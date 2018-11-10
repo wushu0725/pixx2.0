@@ -26,7 +26,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
  * @date 2018/6/22
  */
 @Configuration
-public class  ResourceServerConfigurer extends BaseResourceServerConfigurerAdapter {
+public class ResourceServerConfigurer extends BaseResourceServerConfigurerAdapter {
 
 	/**
 	 * 重写不需要调用feign 获取 userdetils
@@ -35,7 +35,6 @@ public class  ResourceServerConfigurer extends BaseResourceServerConfigurerAdapt
 	 */
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) {
-		resources.authenticationEntryPoint(resourceAuthExceptionEntryPoint)
-			.accessDeniedHandler(pigAccessDeniedHandler);
+		notGetUser(resources);
 	}
 }

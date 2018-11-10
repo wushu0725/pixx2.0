@@ -62,7 +62,11 @@ public class LeaveBill extends Model<LeaveBill> {
 	 */
 	private String state;
 	/**
-	 * 请假时间
+	 * 提交时间
+	 */
+	private LocalDateTime leaveTime;
+	/**
+	 * 提交时间
 	 */
 	private LocalDateTime createTime;
 	/**

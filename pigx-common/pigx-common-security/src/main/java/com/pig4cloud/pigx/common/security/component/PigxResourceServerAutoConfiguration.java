@@ -17,7 +17,13 @@
 
 package com.pig4cloud.pigx.common.security.component;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Primary;
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * @author lengleng
@@ -25,4 +31,16 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @ComponentScan("com.pig4cloud.pigx.common.security")
 public class PigxResourceServerAutoConfiguration {
+	@Bean
+	@Primary
+	@LoadBalanced
+	public RestTemplate lbRestTemplate() {
+		return new RestTemplate();
+	}
+
+	@Bean
+	@ConditionalOnMissingBean(ResourceServerConfigurerAdapter.class)
+	public ResourceServerConfigurerAdapter resourceServerConfigurerAdapter() {
+		return new BaseResourceServerConfigurerAdapter();
+	}
 }

@@ -68,11 +68,10 @@ public class RemoteUserServiceFallbackImpl implements RemoteUserService {
 	 * 查询上级部门的用户信息
 	 *
 	 * @param username 用户名
-	 * @param from     调用标志
 	 * @return R
 	 */
 	@Override
-	public R<List<SysUser>> ancestorUsers(String username, String from) {
+	public R<List<SysUser>> ancestorUsers(String username) {
 		log.error("feign 查询用户上级部门用户列失败:{}", username, cause);
 		return null;
 	}

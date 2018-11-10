@@ -98,10 +98,6 @@ swagger:
 ## spring security 配置
 security:
   oauth2:
-    client:
-      ignore-urls:
-        - '/actuator/**'
-        - '/v2/api-docs'
     resource:
       loadBalanced: true
       token-info-uri: http://pigx-auth/oauth/check_token

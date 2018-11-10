@@ -6,6 +6,8 @@ security:
       client-secret: ENC(ltJPpR50wT0oIY9kfOe1Iw==)
       scope: server
       ignore-urls:
+        - '/actuator/**'
+        - '/v2/api-docs'
         - '/user/info/*'
         - '/social/info/**'
         - '/log/**'

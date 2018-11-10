@@ -19,6 +19,8 @@ package com.pig4cloud.pigx.common.security.annotation;
 
 import com.pig4cloud.pigx.common.security.component.PigxResourceServerAutoConfiguration;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 import java.lang.annotation.*;
 
@@ -32,6 +34,8 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
+@EnableResourceServer
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Import(PigxResourceServerAutoConfiguration.class)
 public @interface EnablePigxResourceServer {
 }

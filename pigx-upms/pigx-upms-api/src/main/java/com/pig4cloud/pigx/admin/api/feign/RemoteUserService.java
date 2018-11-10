@@ -61,10 +61,8 @@ public interface RemoteUserService {
 	 * 查询上级部门的用户信息
 	 *
 	 * @param username 用户名
-	 * @param from     调用标志
 	 * @return R
 	 */
 	@GetMapping("/user/ancestorUsers/{username}")
-	R<List<SysUser>> ancestorUsers(@PathVariable("username") String username
-		, @RequestHeader("from") String from);
+	R<List<SysUser>> ancestorUsers(@PathVariable("username") String username);
 }

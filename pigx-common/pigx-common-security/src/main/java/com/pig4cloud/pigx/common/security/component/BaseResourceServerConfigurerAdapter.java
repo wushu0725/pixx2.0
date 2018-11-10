@@ -19,14 +19,9 @@ package com.pig4cloud.pigx.common.security.component;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
@@ -42,9 +37,6 @@ import org.springframework.web.client.RestTemplate;
  * 2. 支持 获取用户全部信息
  */
 @Slf4j
-@Configuration
-@EnableResourceServer
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class BaseResourceServerConfigurerAdapter extends ResourceServerConfigurerAdapter {
 	@Autowired
 	protected ResourceAuthExceptionEntryPoint resourceAuthExceptionEntryPoint;
@@ -56,6 +48,8 @@ public class BaseResourceServerConfigurerAdapter extends ResourceServerConfigure
 	protected UserDetailsService userDetailsService;
 	@Autowired
 	private PermitAllUrlProperties permitAllUrlProperties;
+	@Autowired
+	private RestTemplate lbRestTemplate;
 
 
 	/**
@@ -92,12 +86,6 @@ public class BaseResourceServerConfigurerAdapter extends ResourceServerConfigure
 		canGetUser(resources);
 	}
 
-	@Bean
-	@LoadBalanced
-	public RestTemplate lbRestTemplate() {
-		return new RestTemplate();
-	}
-
 
 	/**
 	 * 不获取用户详细 只有用户名
@@ -109,7 +97,7 @@ public class BaseResourceServerConfigurerAdapter extends ResourceServerConfigure
 		DefaultUserAuthenticationConverter userTokenConverter = new DefaultUserAuthenticationConverter();
 		accessTokenConverter.setUserTokenConverter(userTokenConverter);
 
-		remoteTokenServices.setRestTemplate(lbRestTemplate());
+		remoteTokenServices.setRestTemplate(lbRestTemplate);
 		remoteTokenServices.setAccessTokenConverter(accessTokenConverter);
 		resources.authenticationEntryPoint(resourceAuthExceptionEntryPoint)
 			.accessDeniedHandler(pigAccessDeniedHandler)
@@ -128,7 +116,7 @@ public class BaseResourceServerConfigurerAdapter extends ResourceServerConfigure
 		userTokenConverter.setUserDetailsService(userDetailsService);
 		accessTokenConverter.setUserTokenConverter(userTokenConverter);
 
-		remoteTokenServices.setRestTemplate(lbRestTemplate());
+		remoteTokenServices.setRestTemplate(lbRestTemplate);
 		remoteTokenServices.setAccessTokenConverter(accessTokenConverter);
 		resources.authenticationEntryPoint(resourceAuthExceptionEntryPoint)
 			.accessDeniedHandler(pigAccessDeniedHandler)

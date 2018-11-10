@@ -18,15 +18,26 @@
 package com.pig4cloud.pigx.act.config;
 
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.plugins.parser.ISqlParser;
+import com.baomidou.mybatisplus.plugins.parser.tenant.TenantHandler;
+import com.baomidou.mybatisplus.plugins.parser.tenant.TenantSqlParser;
+import com.pig4cloud.pigx.common.core.util.TenantUtils;
+import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.expression.Expression;
+import net.sf.jsqlparser.expression.LongValue;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author lengleng
  * @date 2018/9/27
  * mybatis-plus 配置
  */
+@Slf4j
 @Configuration
 @MapperScan("com.pig4cloud.pigx.act.mapper")
 public class MybatisPlusConfigurer {
@@ -37,6 +48,29 @@ public class MybatisPlusConfigurer {
 	 */
 	@Bean
 	public PaginationInterceptor paginationInterceptor() {
-		return new PaginationInterceptor();
+		PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+		List<ISqlParser> sqlParserList = new ArrayList<>();
+		TenantSqlParser tenantSqlParser = new TenantSqlParser();
+		tenantSqlParser.setTenantHandler(new TenantHandler() {
+			@Override
+			public Expression getTenantId() {
+				Integer tenantId = TenantUtils.getTenantId();
+				log.debug("当前租户为 >> {}", tenantId);
+				return new LongValue(tenantId);
+			}
+
+			@Override
+			public String getTenantIdColumn() {
+				return "tenant_id";
+			}
+
+			@Override
+			public boolean doTableFilter(String tableName) {
+				return false;
+			}
+		});
+		sqlParserList.add(tenantSqlParser);
+		paginationInterceptor.setSqlParserList(sqlParserList);
+		return paginationInterceptor;
 	}
 }
