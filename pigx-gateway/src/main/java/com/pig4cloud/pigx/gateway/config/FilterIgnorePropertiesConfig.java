@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * @author lengleng
  * @date 2018/7/22
- * 网关不简要终端配置
+ * 网关不校验终端配置
  */
 @Data
 @Configuration
