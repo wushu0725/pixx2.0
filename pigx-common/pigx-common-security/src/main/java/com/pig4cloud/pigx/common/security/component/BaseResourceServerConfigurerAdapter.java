@@ -19,6 +19,7 @@ package com.pig4cloud.pigx.common.security.component;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -37,6 +38,7 @@ import org.springframework.web.client.RestTemplate;
  * 2. 支持 获取用户全部信息
  */
 @Slf4j
+@Configuration
 public class BaseResourceServerConfigurerAdapter extends ResourceServerConfigurerAdapter {
 	@Autowired
 	protected ResourceAuthExceptionEntryPoint resourceAuthExceptionEntryPoint;

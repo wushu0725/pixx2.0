@@ -5,9 +5,6 @@ security:
       client-id: ENC(tz2NM4GcmnE7sNJTYL8ZSg==)
       client-secret: ENC(tz2NM4GcmnE7sNJTYL8ZSg==)
       scope: server
-      ignore-urls:
-        - '/actuator/**'
-        - '/v2/api-docs'
 ## 定时任务
 spring:
   # 保存定时任务的数据源

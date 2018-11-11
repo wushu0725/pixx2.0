@@ -6,6 +6,8 @@ security:
       client-secret: ENC(gPFcUOmJm8WqM3k3eSqS0Q==)
       scope: server
       ignore-urls:
+        - '/actuator/**'
+        - '/v2/api-docs'
         - '/service/**'
         - '/editor-app/**'
         - '/task/view/*'

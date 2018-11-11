@@ -98,6 +98,11 @@ swagger:
 ## spring security 配置
 security:
   oauth2:
+    client:
+      # 默认放行url,如果子模块重写这里的配置就会被覆盖
+      ignore-urls:
+        - '/actuator/**'
+        - '/v2/api-docs'
     resource:
       loadBalanced: true
       token-info-uri: http://pigx-auth/oauth/check_token
@@ -105,5 +110,5 @@ security:
 # log配置
 logging:
   level:
-    root: warn
+    root: error
     com.pig4cloud.pigx: info

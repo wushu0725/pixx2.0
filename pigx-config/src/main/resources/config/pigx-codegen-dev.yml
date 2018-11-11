@@ -5,10 +5,6 @@ security:
       client-id: ENC(gPFcUOmJm8WqM3k3eSqS0Q==)
       client-secret: ENC(gPFcUOmJm8WqM3k3eSqS0Q==)
       scope: server
-      ignore-urls:
-        - '/actuator/**'
-        - '/v2/api-docs'
-
 # 数据源配置
 spring:
   datasource:
