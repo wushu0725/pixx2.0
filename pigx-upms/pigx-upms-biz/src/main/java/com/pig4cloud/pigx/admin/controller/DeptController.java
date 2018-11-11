@@ -42,8 +42,8 @@ import java.util.List;
  * @since 2018-01-20
  */
 @RestController
-@RequestMapping("/dept")
 @AllArgsConstructor
+@RequestMapping("/dept")
 public class DeptController {
 	private final SysDeptService sysDeptService;
 

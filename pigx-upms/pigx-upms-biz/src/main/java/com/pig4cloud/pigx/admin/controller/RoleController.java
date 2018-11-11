@@ -21,14 +21,13 @@ package com.pig4cloud.pigx.admin.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.pig4cloud.pigx.admin.api.dto.RoleDTO;
 import com.pig4cloud.pigx.admin.api.entity.SysRole;
 import com.pig4cloud.pigx.admin.service.SysRoleMenuService;
 import com.pig4cloud.pigx.admin.service.SysRoleService;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,12 +39,11 @@ import java.util.Map;
  * @date 2017/11/5
  */
 @RestController
+@AllArgsConstructor
 @RequestMapping("/role")
 public class RoleController {
-	@Autowired
-	private SysRoleService sysRoleService;
-	@Autowired
-	private SysRoleMenuService sysRoleMenuService;
+	private final SysRoleService sysRoleService;
+	private final SysRoleMenuService sysRoleMenuService;
 
 	/**
 	 * 通过ID查询角色信息
@@ -61,25 +59,25 @@ public class RoleController {
 	/**
 	 * 添加角色
 	 *
-	 * @param roleDto 角色信息
+	 * @param sysRole 角色信息
 	 * @return success、false
 	 */
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_role_add')")
-	public R<Boolean> role(@RequestBody RoleDTO roleDto) {
-		return new R<>(sysRoleService.insertRole(roleDto));
+	public R<Boolean> role(@RequestBody SysRole sysRole) {
+		return new R<>(sysRoleService.insert(sysRole));
 	}
 
 	/**
 	 * 修改角色
 	 *
-	 * @param roleDto 角色信息
+	 * @param sysRole 角色信息
 	 * @return success/false
 	 */
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_role_edit')")
-	public R<Boolean> roleUpdate(@RequestBody RoleDTO roleDto) {
-		return new R<>(sysRoleService.updateRoleById(roleDto));
+	public R<Boolean> roleUpdate(@RequestBody SysRole sysRole) {
+		return new R<>(sysRoleService.updateById(sysRole));
 	}
 
 	@DeleteMapping("/{id}")
@@ -93,12 +91,11 @@ public class RoleController {
 	/**
 	 * 获取角色列表
 	 *
-	 * @param deptId 部门ID
 	 * @return 角色列表
 	 */
-	@GetMapping("/roleList/{deptId}")
-	public List<SysRole> roleList(@PathVariable Integer deptId) {
-		return sysRoleService.selectListByDeptId(deptId);
+	@GetMapping("/roleList")
+	public List<SysRole> roleList() {
+		return sysRoleService.selectList(new EntityWrapper<>());
 
 	}
 
@@ -110,7 +107,7 @@ public class RoleController {
 	 */
 	@GetMapping("/rolePage")
 	public Page rolePage(@RequestParam Map<String, Object> params) {
-		return sysRoleService.selectwithDeptPage(new Query<>(params), new EntityWrapper<>());
+		return sysRoleService.selectPage(new Query<>(params), new EntityWrapper<>());
 	}
 
 	/**

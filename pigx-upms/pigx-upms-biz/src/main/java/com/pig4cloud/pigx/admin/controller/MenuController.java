@@ -28,7 +28,7 @@ import com.pig4cloud.pigx.admin.service.SysMenuService;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,10 +44,10 @@ import java.util.stream.Collectors;
  * @date 2017/10/31
  */
 @RestController
+@AllArgsConstructor
 @RequestMapping("/menu")
 public class MenuController {
-	@Autowired
-	private SysMenuService sysMenuService;
+	private final SysMenuService sysMenuService;
 
 	/**
 	 * 返回当前用户的树形菜单集合

@@ -161,27 +161,4 @@
 		</if>
 		ORDER BY `user`.create_time DESC
 	</select>
-
-	<select id="selectDeletedUserByUsername" resultMap="baseResultMap">
-		SELECT user_id,
-		 	   username,
-		 	   password,
-		 	   phone,
-		 	   avatar,
-		 	   salt,
-		 	   dept_id,
-		 	   tenant_id,
-		 	   wx_openid,
-		 	   qq_openid,
-		 	   create_time,
-		 	   update_time,
-		 	   del_flag
-		FROM sys_user
-			WHERE username = #{username}
-			AND del_flag = 1
-	</select>
-
-	<delete id="deleteSysUserByUsernameAndUserId">
-		DELETE FROM sys_user WHERE username=#{username} AND user_id=#{userId};
-	</delete>
 </mapper>

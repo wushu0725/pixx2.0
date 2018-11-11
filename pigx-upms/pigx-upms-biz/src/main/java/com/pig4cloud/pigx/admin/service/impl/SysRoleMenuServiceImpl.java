@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRoleMenu> implements SysRoleMenuService {
-	private CacheManager cacheManager;
+	private final CacheManager cacheManager;
 
 	/**
 	 * @param role

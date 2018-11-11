@@ -28,7 +28,7 @@ import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.log.annotation.SysLog;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,10 +47,10 @@ import java.util.Map;
  * @since 2017-11-19
  */
 @RestController
+@AllArgsConstructor
 @RequestMapping("/dict" )
 public class DictController {
-	@Autowired
-	private SysDictService sysDictService;
+	private final SysDictService sysDictService;
 
 	/**
 	 * 通过ID查询字典信息

@@ -20,6 +20,7 @@
 package com.pig4cloud.pigx.admin.controller;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.pig4cloud.pigx.admin.api.dto.UserDTO;
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
@@ -93,6 +94,19 @@ public class UserController {
 	}
 
 	/**
+	 * 根据用户名查询用户信息
+	 *
+	 * @param username 用户名
+	 * @return
+	 */
+	@GetMapping("/details/{username}")
+	public R<SysUser> user(@PathVariable String username) {
+		SysUser condition = new SysUser();
+		condition.setUsername(username);
+		return new R<>(userService.selectOne(new EntityWrapper<>(condition)));
+	}
+
+	/**
 	 * 删除用户信息
 	 *
 	 * @param id ID
@@ -110,7 +124,6 @@ public class UserController {
 
 	/**
 	 * 添加用户
-	 * TODO  什么鬼逻辑，先删除再增加？？？
 	 *
 	 * @param userDto 用户信息
 	 * @return success/false
@@ -119,10 +132,6 @@ public class UserController {
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_user_add')")
 	public R<Boolean> user(@RequestBody UserDTO userDto) {
-		SysUser deletedUser = userService.selectDeletedUserByUsername(userDto.getUsername());
-		if (deletedUser != null) {
-			userService.deleteSysUserByUsernameAndUserId(userDto.getUsername(), deletedUser.getUserId());
-		}
 		SysUser sysUser = new SysUser();
 		BeanUtils.copyProperties(userDto, sysUser);
 		sysUser.setDelFlag(CommonConstant.STATUS_NORMAL);

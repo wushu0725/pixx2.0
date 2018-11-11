@@ -62,7 +62,6 @@ import java.util.stream.Collectors;
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 	private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
 	private final SysMenuService sysMenuService;
-	private final SysUserMapper sysUserMapper;
 	private final SysRoleService sysRoleService;
 	private final SysDeptService sysDeptService;
 	private final SysUserRoleService sysUserRoleService;
@@ -120,7 +119,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		dataScope.setIsOnly(true);
 		dataScope.setDeptIds(getChildDepts());
 		Object username = query.getCondition().get("username");
-		query.setRecords(sysUserMapper.selectUserVoPage(query, username, dataScope));
+		query.setRecords(baseMapper.selectUserVoPage(query, username, dataScope));
 		return query;
 	}
 
@@ -133,33 +132,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	 */
 	@Override
 	public UserVO selectUserVoById(Integer id) {
-		return sysUserMapper.selectUserVoById(id);
-	}
-
-	/**
-	 * 通过用户名查找已经删除的用户
-	 *
-	 * @param username 用户名
-	 * @return 用户对象
-	 */
-	@Override
-	public SysUser selectDeletedUserByUsername(String username) {
-		return sysUserMapper.selectDeletedUserByUsername(username);
-	}
-
-	/**
-	 * 根据用户名删除用户（真实删除）
-	 *
-	 * @param username
-	 * @return
-	 */
-	@Override
-	public Boolean deleteSysUserByUsernameAndUserId(String username, Integer userId) {
-		sysUserMapper.deleteSysUserByUsernameAndUserId(username, userId);
-		SysUserRole condition = new SysUserRole();
-		condition.setUserId(userId);
-		sysUserRoleService.delete(new EntityWrapper<>(condition));
-		return Boolean.TRUE;
+		return baseMapper.selectUserVoById(id);
 	}
 
 	/**
@@ -179,7 +152,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	@Override
 	@CacheEvict(value = "user_details", key = "#username")
 	public R<Boolean> updateUserInfo(UserDTO userDto, String username) {
-		UserVO userVO = sysUserMapper.selectUserVoByUsername(username);
+		UserVO userVO = baseMapper.selectUserVoByUsername(username);
 		SysUser sysUser = new SysUser();
 		if (StrUtil.isNotBlank(userDto.getPassword())
 			&& StrUtil.isNotBlank(userDto.getNewpassword1())) {

@@ -88,23 +88,6 @@ public interface SysUserService extends IService<SysUser> {
 	UserVO selectUserVoById(Integer id);
 
 	/**
-	 * 通过用户名查找已经删除的用户
-	 *
-	 * @param username 用户名
-	 * @return
-	 */
-	SysUser selectDeletedUserByUsername(String username);
-
-	/**
-	 * 根据用户名删除用户（真实删除）
-	 *
-	 * @param username username
-	 * @param userId   userId
-	 * @return
-	 */
-	Boolean deleteSysUserByUsernameAndUserId(String username, Integer userId);
-
-	/**
 	 * 查询上级部门的用户信息
 	 *
 	 * @param username 用户名

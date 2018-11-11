@@ -26,7 +26,6 @@ import com.pig4cloud.pigx.admin.api.vo.MenuVO;
 import com.pig4cloud.pigx.admin.mapper.SysMenuMapper;
 import com.pig4cloud.pigx.admin.service.SysMenuService;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -43,13 +42,11 @@ import java.util.List;
  */
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService {
-	@Autowired
-	private SysMenuMapper sysMenuMapper;
 
 	@Override
 	@Cacheable(value = "menu_details", key = "#roleId  + '_menu'")
 	public List<MenuVO> findMenuByRoleId(Integer roleId) {
-		return sysMenuMapper.findMenuByRoleId(roleId);
+		return baseMapper.findMenuByRoleId(roleId);
 	}
 
 	@Override

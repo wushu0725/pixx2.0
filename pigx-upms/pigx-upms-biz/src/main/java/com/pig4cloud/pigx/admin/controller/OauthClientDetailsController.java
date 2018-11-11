@@ -25,7 +25,7 @@ import com.pig4cloud.pigx.admin.api.entity.SysOauthClientDetails;
 import com.pig4cloud.pigx.admin.service.SysOauthClientDetailsService;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,10 +41,10 @@ import java.util.Map;
  * @since 2018-05-15
  */
 @RestController
+@AllArgsConstructor
 @RequestMapping("/client")
 public class OauthClientDetailsController {
-	@Autowired
-	private SysOauthClientDetailsService sysOauthClientDetailsService;
+	private final SysOauthClientDetailsService sysOauthClientDetailsService;
 
 	/**
 	 * 通过ID查询
