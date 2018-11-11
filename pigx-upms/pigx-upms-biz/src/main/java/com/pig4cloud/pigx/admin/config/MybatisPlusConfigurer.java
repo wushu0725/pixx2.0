@@ -44,7 +44,7 @@ import java.util.List;
 @Configuration
 @MapperScan("com.pig4cloud.pigx.admin.mapper")
 public class MybatisPlusConfigurer {
-	private static final String[] IGNORETABLES = new String[]{"sys_dept_relation", "sys_role_dept", "sys_role_menu", "sys_user_role", "sys_route_conf"};
+	private static final String[] IGNORETABLES = new String[]{"sys_dept_relation", "sys_role_dept", "sys_role_menu", "sys_user_role", "sys_route_conf", "sys_menu"};
 
 	/**
 	 * 分页插件
