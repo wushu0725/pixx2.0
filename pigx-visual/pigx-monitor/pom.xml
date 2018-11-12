@@ -33,11 +33,26 @@
 	<description>pigx 监控模块，基于 spring boot admin</description>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.pig4cloud</groupId>
+			<artifactId>pigx-common-core</artifactId>
+			<version>1.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.pig4cloud</groupId>
+			<artifactId>pigx-common-cache</artifactId>
+			<version>1.7.0</version>
+		</dependency>
 		<!--监控服务端-->
 		<dependency>
 			<groupId>de.codecentric</groupId>
 			<artifactId>spring-boot-admin-starter-server</artifactId>
 			<version>${monitor.version}</version>
+		</dependency>
+		<!--Redis-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis-reactive</artifactId>
 		</dependency>
 		<!--配置中心客户端-->
 		<dependency>

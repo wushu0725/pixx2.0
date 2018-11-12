@@ -20,6 +20,8 @@
 package com.pig4cloud.pigx.admin.api.dto;
 
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
+import lombok.Data;
+import lombok.ToString;
 
 import java.io.Serializable;
 
@@ -33,6 +35,8 @@ import java.io.Serializable;
  * commit('SET_INTRODUCTION', data)
  * commit('SET_PERMISSIONS', data)
  */
+@Data
+@ToString
 public class UserInfo implements Serializable {
 	/**
 	 * 用户基本信息
@@ -47,28 +51,4 @@ public class UserInfo implements Serializable {
 	 * 角色集合
 	 */
 	private Integer[] roles;
-
-	public SysUser getSysUser() {
-		return sysUser;
-	}
-
-	public void setSysUser(SysUser sysUser) {
-		this.sysUser = sysUser;
-	}
-
-	public String[] getPermissions() {
-		return permissions;
-	}
-
-	public void setPermissions(String[] permissions) {
-		this.permissions = permissions;
-	}
-
-	public Integer[] getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Integer[] roles) {
-		this.roles = roles;
-	}
 }
