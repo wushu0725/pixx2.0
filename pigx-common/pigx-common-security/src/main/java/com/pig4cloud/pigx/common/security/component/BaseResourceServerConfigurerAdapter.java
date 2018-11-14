@@ -41,8 +41,6 @@ public class BaseResourceServerConfigurerAdapter extends ResourceServerConfigure
 	@Autowired
 	protected ResourceAuthExceptionEntryPoint resourceAuthExceptionEntryPoint;
 	@Autowired
-	protected PigAccessDeniedHandler pigAccessDeniedHandler;
-	@Autowired
 	protected RemoteTokenServices remoteTokenServices;
 	@Autowired
 	protected UserDetailsService userDetailsService;
@@ -100,7 +98,6 @@ public class BaseResourceServerConfigurerAdapter extends ResourceServerConfigure
 		remoteTokenServices.setRestTemplate(lbRestTemplate);
 		remoteTokenServices.setAccessTokenConverter(accessTokenConverter);
 		resources.authenticationEntryPoint(resourceAuthExceptionEntryPoint)
-			.accessDeniedHandler(pigAccessDeniedHandler)
 			.tokenServices(remoteTokenServices);
 	}
 
@@ -119,7 +116,6 @@ public class BaseResourceServerConfigurerAdapter extends ResourceServerConfigure
 		remoteTokenServices.setRestTemplate(lbRestTemplate);
 		remoteTokenServices.setAccessTokenConverter(accessTokenConverter);
 		resources.authenticationEntryPoint(resourceAuthExceptionEntryPoint)
-			.accessDeniedHandler(pigAccessDeniedHandler)
 			.tokenServices(remoteTokenServices);
 	}
 

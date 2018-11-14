@@ -15,11 +15,13 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.common.core.exception;
+package com.pig4cloud.pigx.common.security.component;
 
 import com.pig4cloud.pigx.common.core.util.R;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -36,7 +38,9 @@ import java.util.List;
  */
 @Slf4j
 @RestControllerAdvice
-public class GlobalExceptionHandler {
+@AllArgsConstructor
+public class GlobalExceptionHandlerResolver {
+
 	/**
 	 * 全局异常.
 	 *
@@ -48,6 +52,18 @@ public class GlobalExceptionHandler {
 	public R exception(Exception e) {
 		log.error("全局异常信息 ex={}", e.getMessage(), e);
 		return new R<>(e);
+	}
+
+	/**
+	 * AccessDeniedException
+	 *
+	 * @param e the e
+	 * @return R
+	 */
+	@ExceptionHandler(AccessDeniedException.class)
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	public R exception(AccessDeniedException e) {
+		return new R<>(e.getLocalizedMessage());
 	}
 
 	/**
