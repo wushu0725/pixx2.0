@@ -1,1 +1,0 @@
-provides: hutool-all, spring-cloud-starter-openfeign, feign-okhttp, spring-boot-starter-data-redis, jackson-datatype-jsr310
