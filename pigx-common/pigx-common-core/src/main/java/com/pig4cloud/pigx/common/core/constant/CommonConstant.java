@@ -76,4 +76,9 @@ public interface CommonConstant {
 	 * spring boot admin 事件key
 	 */
 	String EVENT_KEY = "event_key";
+
+	/**
+	 * 验证码前缀
+	 */
+	String DEFAULT_CODE_KEY = "DEFAULT_CODE_KEY";
 }

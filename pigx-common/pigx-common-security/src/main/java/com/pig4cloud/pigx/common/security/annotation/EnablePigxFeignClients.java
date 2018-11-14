@@ -15,7 +15,7 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.common.security.feign;
+package com.pig4cloud.pigx.common.security.annotation;
 
 import org.springframework.cloud.openfeign.EnableFeignClients;
 

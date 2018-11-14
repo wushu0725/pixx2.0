@@ -28,6 +28,7 @@ import com.pig4cloud.pigx.admin.service.SysMenuService;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +47,7 @@ import java.util.stream.Collectors;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/menu")
+@Api(value = "menu",description = "菜单管理模块")
 public class MenuController {
 	private final SysMenuService sysMenuService;
 

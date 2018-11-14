@@ -17,47 +17,32 @@
 
 package com.pig4cloud.pigx.admin.controller;
 
-import cn.hutool.json.JSONArray;
-import com.pig4cloud.pigx.admin.service.SysRouteConfService;
+import com.pig4cloud.pigx.admin.service.MobileService;
 import com.pig4cloud.pigx.common.core.util.R;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-
 /**
- * 路由
- *
  * @author lengleng
- * @date 2018-11-06 10:17:18
+ * @date 2018/11/14
+ * <p>
+ * 手机验证码
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/route")
-@Api(value = "route",description = "动态路由管理模块")
-public class SysRouteConfController {
-	private final SysRouteConfService sysRouteConfService;
+@RequestMapping("/mobile")
+@Api(value = "mobile",description = "手机管理模块")
+public class MobileController {
+	private final MobileService mobileService;
 
-
-	/**
-	 * 获取当前定义的路由信息
-	 *
-	 * @return
-	 */
-	@GetMapping
-	public R routes() {
-		return new R<>(sysRouteConfService.routes());
+	@ResponseBody
+	@GetMapping("/{mobile}")
+	@ApiOperation(value = "发送手机验证码", httpMethod = "GET")
+	@ApiImplicitParam(name = "mobile", value = "手机号", paramType = "path", type = "string", required = true)
+	public R<Boolean> code(@PathVariable String mobile) {
+		return mobileService.sendSmsCode(mobile);
 	}
-
-	/**
-	 * 修改路由
-	 *
-	 * @param routes 路由定义
-	 * @return
-	 */
-	@PutMapping
-	public R edit(@RequestBody JSONArray routes) {
-		return new R(sysRouteConfService.editRoutes(routes));
-	}
-
 }

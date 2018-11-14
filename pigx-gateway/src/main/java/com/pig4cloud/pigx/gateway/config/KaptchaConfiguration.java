@@ -19,6 +19,7 @@ package com.pig4cloud.pigx.gateway.config;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
+import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -50,10 +51,6 @@ public class KaptchaConfiguration {
 	private static final String DEFAULT_IMAGE_HEIGHT = "40";
 
 	/**
-	 * 默认生成图形验证码长度
-	 */
-	private static final String DEFAULT_IMAGE_LENGTH = "4";
-	/**
 	 * 边框颜色，合法值： r,g,b (and optional alpha) 或者 white,black,blue.
 	 */
 	private static final String DEFAULT_COLOR_FONT = "black";
@@ -80,7 +77,7 @@ public class KaptchaConfiguration {
 		properties.put(KAPTCHA_IMAGE_WIDTH, DEFAULT_IMAGE_WIDTH);
 		properties.put(KAPTCHA_IMAGE_HEIGHT, DEFAULT_IMAGE_HEIGHT);
 		properties.put(KAPTCHA_IMAGE_FONT_SIZE, DEFAULT_IMAGE_FONT_SIZE);
-		properties.put(KAPTCHA_TEXTPRODUCER_CHAR_LENGTH, DEFAULT_IMAGE_LENGTH);
+		properties.put(KAPTCHA_TEXTPRODUCER_CHAR_LENGTH, SecurityConstants.CODE_SIZE);
 		Config config = new Config(properties);
 		DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
 		defaultKaptcha.setConfig(config);

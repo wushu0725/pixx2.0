@@ -20,7 +20,7 @@
 package com.pig4cloud.pigx.auth;
 
 
-import com.pig4cloud.pigx.common.security.feign.EnablePigxFeignClients;
+import com.pig4cloud.pigx.common.security.annotation.EnablePigxFeignClients;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 

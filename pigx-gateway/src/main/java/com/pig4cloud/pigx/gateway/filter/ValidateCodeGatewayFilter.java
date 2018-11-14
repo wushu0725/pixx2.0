@@ -20,6 +20,7 @@ package com.pig4cloud.pigx.gateway.filter;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
+import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.exception.CheckedException;
 import com.pig4cloud.pigx.common.core.exception.ValidateCodeException;
 import com.pig4cloud.pigx.gateway.config.FilterIgnorePropertiesConfig;
@@ -45,8 +46,7 @@ import java.io.IOException;
 @Component
 @AllArgsConstructor
 public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
-	public static final String DEFAULT_CODE_KEY = "DEFAULT_CODE_KEY";
-	public static final String OAUTH_TOKEN_URL = "/oauth/token";
+	static final String OAUTH_TOKEN_URL = "/oauth/token";
 	private static final String BASIC_ = "Basic ";
 	private final RedisTemplate redisTemplate;
 	private final FilterIgnorePropertiesConfig filterIgnorePropertiesConfig;
@@ -157,7 +157,7 @@ public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
 			throw new ValidateCodeException();
 		}
 
-		String key = DEFAULT_CODE_KEY + randomStr;
+		String key = CommonConstant.DEFAULT_CODE_KEY + randomStr;
 		if (!redisTemplate.hasKey(key)) {
 			throw new ValidateCodeException();
 		}

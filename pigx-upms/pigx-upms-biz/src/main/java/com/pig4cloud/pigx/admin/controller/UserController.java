@@ -35,6 +35,7 @@ import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.log.annotation.SysLog;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -55,6 +56,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/user")
+@Api(value = "user", description = "用户管理模块")
 public class UserController {
 	private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
 	private final SysUserService userService;
@@ -116,7 +118,7 @@ public class UserController {
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_user_del')")
 	@ApiOperation(value = "删除用户", notes = "根据ID删除用户")
-	@ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "int", paramType = "path", example = "1000")
+	@ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "int", paramType = "path")
 	public R<Boolean> userDel(@PathVariable Integer id) {
 		SysUser sysUser = userService.selectById(id);
 		return new R<>(userService.deleteUserById(sysUser));

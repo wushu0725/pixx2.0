@@ -23,7 +23,7 @@
 	<parent>
 		<groupId>com.pig4cloud</groupId>
 		<artifactId>pigx-visual</artifactId>
-		<version>1.7.0</version>
+		<version>1.8.0</version>
 	</parent>
 
 	<artifactId>pigx-activiti</artifactId>
@@ -41,12 +41,12 @@
 		<dependency>
 			<groupId>com.pig4cloud</groupId>
 			<artifactId>pigx-common-core</artifactId>
-			<version>1.7.0</version>
+			<version>1.8.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.pig4cloud</groupId>
 			<artifactId>pigx-upms-api</artifactId>
-			<version>1.7.0</version>
+			<version>1.8.0</version>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -111,12 +111,12 @@
 		<dependency>
 			<groupId>com.pig4cloud</groupId>
 			<artifactId>pigx-common-swagger</artifactId>
-			<version>1.7.0</version>
+			<version>1.8.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.pig4cloud</groupId>
 			<artifactId>pigx-common-security</artifactId>
-			<version>1.7.0</version>
+			<version>1.8.0</version>
 		</dependency>
 		<!--undertow容器-->
 		<dependency>

@@ -17,6 +17,7 @@
 
 package com.pig4cloud.pigx.common.security.component;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -48,7 +49,8 @@ public class BaseResourceServerConfigurerAdapter extends ResourceServerConfigure
 	private PermitAllUrlProperties permitAllUrlProperties;
 	@Autowired
 	private RestTemplate lbRestTemplate;
-
+	@Setter
+	private boolean details;
 
 	/**
 	 * 默认的配置，对外暴露
@@ -81,7 +83,11 @@ public class BaseResourceServerConfigurerAdapter extends ResourceServerConfigure
 	 */
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) {
-		canGetUser(resources);
+		if (details) {
+			canGetUser(resources);
+		} else {
+			notGetUser(resources);
+		}
 	}
 
 

@@ -27,6 +27,7 @@ import com.pig4cloud.pigx.admin.api.vo.PreLogVo;
 import com.pig4cloud.pigx.admin.service.SysLogService;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -44,8 +45,9 @@ import java.util.Map;
  * @since 2017-11-20
  */
 @RestController
-@RequestMapping("/log")
 @AllArgsConstructor
+@RequestMapping("/log")
+@Api(value = "log",description = "日志管理模块")
 public class LogController {
 	private final SysLogService sysLogService;
 

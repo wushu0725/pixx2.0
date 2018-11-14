@@ -24,7 +24,7 @@
 	<parent>
 		<groupId>com.pig4cloud</groupId>
 		<artifactId>pigx</artifactId>
-		<version>1.7.1</version>
+		<version>1.8.0</version>
 	</parent>
 
 	<artifactId>pigx-auth</artifactId>
@@ -42,13 +42,13 @@
 		<dependency>
 			<groupId>com.pig4cloud</groupId>
 			<artifactId>pigx-upms-api</artifactId>
-			<version>1.7.1</version>
+			<version>1.8.0</version>
 		</dependency>
 		<!--security-->
 		<dependency>
 			<groupId>com.pig4cloud</groupId>
 			<artifactId>pigx-common-security</artifactId>
-			<version>1.7.1</version>
+			<version>1.8.0</version>
 		</dependency>
 		<!--JDBC相关-->
 		<dependency>
@@ -59,7 +59,7 @@
 		<dependency>
 			<groupId>com.pig4cloud</groupId>
 			<artifactId>pigx-common-cache</artifactId>
-			<version>1.7.0</version>
+			<version>1.8.0</version>
 		</dependency>
 		<!--spring security 、oauth、jwt依赖-->
 		<dependency>

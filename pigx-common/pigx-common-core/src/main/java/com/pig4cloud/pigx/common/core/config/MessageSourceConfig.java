@@ -15,26 +15,27 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.codegen;
+package com.pig4cloud.pigx.common.core.config;
 
-import com.pig4cloud.pigx.common.security.annotation.EnablePigxResourceServer;
-import com.pig4cloud.pigx.common.security.annotation.EnablePigxFeignClients;
-import com.pig4cloud.pigx.common.swagger.annotation.EnablePigxSwagger2;
-import org.springframework.boot.SpringApplication;
-import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 /**
  * @author lengleng
- * @date 2018/07/29
- * 代码生成模块
+ * @date 2018/11/14
+ * <p>
+ * 国际化配置
  */
-@EnablePigxSwagger2
-@SpringCloudApplication
-@EnablePigxFeignClients
-@EnablePigxResourceServer
-public class PigxCodeGenApplication {
+@Configuration
+public class MessageSourceConfig {
 
-	public static void main(String[] args) {
-		SpringApplication.run(PigxCodeGenApplication.class, args);
+	@Bean
+	public MessageSource messageSource() {
+		ReloadableResourceBundleMessageSource messageSource
+			= new ReloadableResourceBundleMessageSource();
+		messageSource.setBasename("classpath:i18n/messages");
+		return messageSource;
 	}
 }

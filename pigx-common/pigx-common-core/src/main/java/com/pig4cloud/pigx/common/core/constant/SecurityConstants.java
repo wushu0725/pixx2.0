@@ -25,6 +25,14 @@ package com.pig4cloud.pigx.common.core.constant;
  */
 public interface SecurityConstants {
 	/**
+	 * 验证码有效期
+	 */
+	int CODE_TIME = 60;
+	/**
+	 * 验证码长度
+	 */
+	int CODE_SIZE = 4;
+	/**
 	 * 角色前缀
 	 */
 	String ROLE = "ROLE_";
@@ -57,15 +65,6 @@ public interface SecurityConstants {
 	 */
 	String MOBILE_TOKEN_URL = "/mobile/token";
 
-	/**
-	 * 默认登录URL
-	 */
-	String OAUTH_TOKEN_URL = "/oauth/token";
-
-	/**
-	 * grant_type
-	 */
-	String REFRESH_TOKEN = "refresh_token";
 
 	/**
 	 * oauth 客户端信息

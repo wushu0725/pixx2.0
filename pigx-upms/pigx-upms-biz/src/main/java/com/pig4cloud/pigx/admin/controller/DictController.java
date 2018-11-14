@@ -28,6 +28,7 @@ import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.log.annotation.SysLog;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -49,6 +50,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/dict" )
+@Api(value = "dict",description = "字典管理模块")
 public class DictController {
 	private final SysDictService sysDictService;
 

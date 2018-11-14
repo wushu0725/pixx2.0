@@ -25,6 +25,7 @@ import com.pig4cloud.pigx.admin.service.SysSocialDetailsService;
 import com.pig4cloud.pigx.admin.service.SysUserService;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +42,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/social")
 @AllArgsConstructor
+@Api(value = "social",description = "三方账号管理模块")
 public class SysSocialDetailsController {
 	private final SysUserService sysUserService;
 	private final SysSocialDetailsService sysSocialDetailsService;

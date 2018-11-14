@@ -25,6 +25,7 @@ import com.pig4cloud.pigx.admin.api.entity.SysDept;
 import com.pig4cloud.pigx.admin.service.SysDeptService;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.util.R;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +45,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/dept")
+@Api(value = "dept", description = "部门管理模块")
 public class DeptController {
 	private final SysDeptService sysDeptService;
 
