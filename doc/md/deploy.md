@@ -40,7 +40,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: lengleng
-    url: jdbc:pigx-mysql://mysql:3306/pigx?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    url: jdbc:pigx-mysql://mysql:3306/pigx?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
 ```
 
 ### 四、配置本地hosts
