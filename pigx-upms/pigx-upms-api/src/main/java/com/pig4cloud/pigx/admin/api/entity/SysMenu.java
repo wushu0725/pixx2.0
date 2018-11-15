@@ -65,6 +65,7 @@ public class SysMenu extends Model<SysMenu> {
 	/**
 	 * 父菜单ID
 	 */
+	@NotNull(message = "菜单父ID不能为空")
 	private Integer parentId;
 	/**
 	 * 图标
@@ -81,6 +82,7 @@ public class SysMenu extends Model<SysMenu> {
 	/**
 	 * 菜单类型 （0菜单 1按钮）
 	 */
+	@NotNull(message = "菜单类型不能为空")
 	private String type;
 	/**
 	 * 创建时间
