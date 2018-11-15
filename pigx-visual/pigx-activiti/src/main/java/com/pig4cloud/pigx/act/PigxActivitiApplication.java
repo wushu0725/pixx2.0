@@ -17,8 +17,8 @@
 
 package com.pig4cloud.pigx.act;
 
+import com.pig4cloud.pigx.common.security.annotation.EnablePigxFeignClients;
 import com.pig4cloud.pigx.common.security.annotation.EnablePigxResourceServer;
-import com.pig4cloud.pigx.common.security.feign.EnablePigxFeignClients;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 
