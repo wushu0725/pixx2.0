@@ -19,6 +19,7 @@ package com.pig4cloud.pigx.admin.api.feign;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.pig4cloud.pigx.admin.api.feign.factory.RemoteTokenServiceFallbackFactory;
+import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import com.pig4cloud.pigx.common.core.constant.ServiceNameConstant;
 import com.pig4cloud.pigx.common.core.util.R;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -40,7 +41,7 @@ public interface RemoteTokenService {
 	 * @return page
 	 */
 	@PostMapping("/oauth/listToken")
-	Page selectPage(@RequestBody Map<String, Object> params, @RequestHeader("from") String from);
+	Page selectPage(@RequestBody Map<String, Object> params, @RequestHeader(SecurityConstants.FROM) String from);
 
 	/**
 	 * 删除token
@@ -50,5 +51,5 @@ public interface RemoteTokenService {
 	 * @return
 	 */
 	@DeleteMapping("/oauth/delToken/{token}")
-	R<Boolean> deleteTokenById(@PathVariable("token") String token, @RequestHeader("from") String from);
+	R<Boolean> deleteTokenById(@PathVariable("token") String token, @RequestHeader(SecurityConstants.FROM) String from);
 }

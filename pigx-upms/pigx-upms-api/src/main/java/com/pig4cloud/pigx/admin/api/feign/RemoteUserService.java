@@ -22,6 +22,7 @@ package com.pig4cloud.pigx.admin.api.feign;
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
 import com.pig4cloud.pigx.admin.api.feign.factory.RemoteUserServiceFallbackFactory;
+import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import com.pig4cloud.pigx.common.core.constant.ServiceNameConstant;
 import com.pig4cloud.pigx.common.core.util.R;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -46,7 +47,7 @@ public interface RemoteUserService {
 	 */
 	@GetMapping("/user/info/{username}")
 	R<UserInfo> info(@PathVariable("username") String username
-		, @RequestHeader("from") String from);
+		, @RequestHeader(SecurityConstants.FROM) String from);
 
 	/**
 	 * 通过社交账号查询用户、角色信息

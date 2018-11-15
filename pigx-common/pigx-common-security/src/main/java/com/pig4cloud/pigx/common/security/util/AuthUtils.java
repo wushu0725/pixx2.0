@@ -20,6 +20,7 @@ package com.pig4cloud.pigx.common.security.util;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -71,7 +72,7 @@ public class AuthUtils {
 	 */
 	public static String[] extractAndDecodeHeader(HttpServletRequest request)
 		throws IOException {
-		String header = request.getHeader("Authorization");
+		String header = request.getHeader(HttpHeaders.AUTHORIZATION);
 
 		if (header == null || !header.startsWith(BASIC_)) {
 			throw new RuntimeException("请求头中client信息为空");

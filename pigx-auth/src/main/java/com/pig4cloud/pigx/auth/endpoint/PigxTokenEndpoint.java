@@ -32,6 +32,7 @@ import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -65,7 +66,7 @@ public class PigxTokenEndpoint {
 	 * @param authHeader Authorization
 	 */
 	@GetMapping("/removeToken")
-	public R<Boolean> logout(@RequestHeader(value = "Authorization", required = false) String authHeader) {
+	public R<Boolean> logout(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
 		if (StringUtils.hasText(authHeader)) {
 			String tokenValue = authHeader.replace("Bearer", "").trim();
 			OAuth2AccessToken accessToken = tokenStore.readAccessToken(tokenValue);
