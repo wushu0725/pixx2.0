@@ -76,7 +76,7 @@ public class PigxTokenEndpoint {
 	 *
 	 * @param authHeader Authorization
 	 */
-	@GetMapping("/removeToken")
+	@DeleteMapping("/token")
 	public R<Boolean> logout(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
 		if (StringUtils.hasText(authHeader)) {
 			String tokenValue = authHeader.replace("Bearer", "").trim();
@@ -97,7 +97,7 @@ public class PigxTokenEndpoint {
 	 * @param from  内部调用标志
 	 * @return
 	 */
-	@DeleteMapping("/delToken/{token}")
+	@DeleteMapping("/token/{token}")
 	public R<Boolean> delToken(@PathVariable("token") String token, @RequestHeader(required = false) String from) {
 		if (StrUtil.isBlank(from)) {
 			return null;
@@ -113,7 +113,7 @@ public class PigxTokenEndpoint {
 	 * @param from   标志
 	 * @return
 	 */
-	@PostMapping("/listToken")
+	@PostMapping("/page")
 	public Page tokenList(@RequestBody Map<String, Object> params, @RequestHeader(required = false) String from) {
 		if (StrUtil.isBlank(from)) {
 			return null;

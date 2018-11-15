@@ -64,6 +64,6 @@ public interface RemoteUserService {
 	 * @param username 用户名
 	 * @return R
 	 */
-	@GetMapping("/user/ancestorUsers/{username}")
+	@GetMapping("/user/ancestor/{username}")
 	R<List<SysUser>> ancestorUsers(@PathVariable("username") String username);
 }

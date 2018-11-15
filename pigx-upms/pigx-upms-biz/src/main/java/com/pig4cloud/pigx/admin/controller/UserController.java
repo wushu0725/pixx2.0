@@ -167,7 +167,7 @@ public class UserController {
 	 * @param params 参数集
 	 * @return 用户集合
 	 */
-	@GetMapping("/userPage")
+	@GetMapping("/page")
 	public Page userPage(@RequestParam Map<String, Object> params) {
 		return userService.selectWithRolePage(new Query(params));
 	}
@@ -178,7 +178,7 @@ public class UserController {
 	 * @param userDto userDto
 	 * @return success/false
 	 */
-	@PutMapping("/editInfo")
+	@PutMapping("/edit")
 	public R<Boolean> editInfo(@Valid @RequestBody UserDTO userDto) {
 		return userService.updateUserInfo(userDto, SecurityUtils.getUser().getUsername());
 	}
@@ -187,7 +187,7 @@ public class UserController {
 	 * @param username 用户名称
 	 * @return
 	 */
-	@GetMapping("/ancestorUsers/{username}")
+	@GetMapping("/ancestor/{username}")
 	public R<List<SysUser>> ancestorUsers(@PathVariable String username) {
 		return new R<>(userService.ancestorUsers(username));
 	}

@@ -49,8 +49,8 @@ import java.util.Map;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/dict" )
-@Api(value = "dict",description = "字典管理模块")
+@RequestMapping("/dict")
+@Api(value = "dict", description = "字典管理模块")
 public class DictController {
 	private final SysDictService sysDictService;
 
@@ -60,7 +60,7 @@ public class DictController {
 	 * @param id ID
 	 * @return 字典信息
 	 */
-	@GetMapping("/{id}" )
+	@GetMapping("/{id}")
 	public SysDict dict(@PathVariable Integer id) {
 		return sysDictService.selectById(id);
 	}
@@ -71,7 +71,7 @@ public class DictController {
 	 * @param params 分页对象
 	 * @return 分页对象
 	 */
-	@GetMapping("/dictPage" )
+	@GetMapping("/page")
 	public Page dictPage(@RequestParam Map<String, Object> params) {
 		return sysDictService.selectPage(new Query<>(params), new EntityWrapper<>());
 	}
@@ -82,8 +82,8 @@ public class DictController {
 	 * @param type 类型
 	 * @return 同类型字典
 	 */
-	@GetMapping("/type/{type}" )
-	@Cacheable(value = "dict_details", key = "#type" )
+	@GetMapping("/type/{type}")
+	@Cacheable(value = "dict_details", key = "#type")
 	public List<SysDict> findDictByType(@PathVariable String type) {
 		SysDict condition = new SysDict();
 		condition.setDelFlag(CommonConstant.STATUS_NORMAL);
@@ -97,10 +97,10 @@ public class DictController {
 	 * @param sysDict 字典信息
 	 * @return success、false
 	 */
-	@SysLog("添加字典" )
+	@SysLog("添加字典")
 	@PostMapping
-	@CacheEvict(value = "dict_details", key = "#sysDict.type" )
-	@PreAuthorize("@pms.hasPermission('sys_dict_add')" )
+	@CacheEvict(value = "dict_details", key = "#sysDict.type")
+	@PreAuthorize("@pms.hasPermission('sys_dict_add')")
 	public R<Boolean> dict(@Valid @RequestBody SysDict sysDict) {
 		return new R<>(sysDictService.insert(sysDict));
 	}
@@ -112,10 +112,10 @@ public class DictController {
 	 * @param type 类型
 	 * @return R
 	 */
-	@SysLog("删除字典" )
-	@DeleteMapping("/{id}/{type}" )
-	@CacheEvict(value = "dict_details", key = "#type" )
-	@PreAuthorize("@pms.hasPermission('sys_dict_del')" )
+	@SysLog("删除字典")
+	@DeleteMapping("/{id}/{type}")
+	@CacheEvict(value = "dict_details", key = "#type")
+	@PreAuthorize("@pms.hasPermission('sys_dict_del')")
 	public R<Boolean> deleteDict(@PathVariable Integer id, @PathVariable String type) {
 		return new R<>(sysDictService.deleteById(id));
 	}
@@ -127,9 +127,9 @@ public class DictController {
 	 * @return success/false
 	 */
 	@PutMapping
-	@SysLog("修改字典" )
-	@CacheEvict(value = "dict_details", key = "#sysDict.type" )
-	@PreAuthorize("@pms.hasPermission('sys_dict_edit')" )
+	@SysLog("修改字典")
+	@CacheEvict(value = "dict_details", key = "#sysDict.type")
+	@PreAuthorize("@pms.hasPermission('sys_dict_edit')")
 	public R<Boolean> editDict(@Valid @RequestBody SysDict sysDict) {
 		return new R<>(sysDictService.updateById(sysDict));
 	}

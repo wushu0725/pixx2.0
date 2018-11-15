@@ -95,7 +95,7 @@ public class RoleController {
 	 *
 	 * @return 角色列表
 	 */
-	@GetMapping("/roleList")
+	@GetMapping("/list")
 	public List<SysRole> roleList() {
 		return sysRoleService.selectList(new EntityWrapper<>());
 
@@ -107,7 +107,7 @@ public class RoleController {
 	 * @param params 分页对象
 	 * @return 分页对象
 	 */
-	@GetMapping("/rolePage")
+	@GetMapping("/page")
 	public Page rolePage(@RequestParam Map<String, Object> params) {
 		return sysRoleService.selectPage(new Query<>(params), new EntityWrapper<>());
 	}
@@ -119,7 +119,7 @@ public class RoleController {
 	 * @param menuIds 菜单ID拼成的字符串，每个id之间根据逗号分隔
 	 * @return success、false
 	 */
-	@PutMapping("/roleMenuUpd")
+	@PutMapping("/upd-menu")
 	@PreAuthorize("@pms.hasPermission('sys_role_perm')")
 	public R<Boolean> roleMenuUpd(Integer roleId, @RequestParam(value = "menuIds", required = false) String menuIds) {
 		SysRole sysRole = sysRoleService.selectById(roleId);

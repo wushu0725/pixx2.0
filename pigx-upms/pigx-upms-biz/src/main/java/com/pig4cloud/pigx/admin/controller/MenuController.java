@@ -56,7 +56,7 @@ public class MenuController {
 	 *
 	 * @return 当前用户的树形菜单
 	 */
-	@GetMapping(value = "/userMenu")
+	@GetMapping
 	public List<MenuTree> userMenu() {
 		// 获取符合条件得菜单
 		Set<MenuVO> all = new HashSet<>();
@@ -75,7 +75,7 @@ public class MenuController {
 	 *
 	 * @return 树形菜单
 	 */
-	@GetMapping(value = "/allTree")
+	@GetMapping(value = "/tree")
 	public List<MenuTree> getTree() {
 		SysMenu condition = new SysMenu();
 		condition.setDelFlag(CommonConstant.STATUS_NORMAL);
@@ -88,7 +88,7 @@ public class MenuController {
 	 * @param roleId 角色ID
 	 * @return 属性集合
 	 */
-	@GetMapping("/roleTree/{roleId}")
+	@GetMapping("/tree/{roleId}")
 	public List<Integer> roleTree(@PathVariable Integer roleId) {
 		return sysMenuService.findMenuByRoleId(roleId)
 			.stream()
