@@ -207,7 +207,7 @@ CREATE TABLE `sys_oauth_client_details` (
 --  Records of `sys_oauth_client_details`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_oauth_client_details` VALUES ('app', null, 'app', 'server', 'password,refresh_token', null, null, null, null, null, 'true', '0'), ('daemon', null, 'daemon', 'server', 'password,refresh_token', null, null, null, null, null, 'true', '0'), ('gen', null, 'gen', 'server', 'password,refresh_token', null, null, null, null, null, 'true', '0'), ('pig', null, 'pig', 'server', 'password,refresh_token', null, null, null, null, null, 'true', '0'), ('test', null, 'test', 'server', 'password,refresh_token', null, null, null, null, null, 'true', '0');
+INSERT INTO `sys_oauth_client_details` VALUES ('app', null, 'app', 'server', 'password,refresh_token', null, null, null, null, null, 'true', '0'), ('daemon', null, 'daemon', 'server', 'password,refresh_token', null, null, null, null, null, 'true', '0'), ('gen', null, 'gen', 'server', 'password,refresh_token', null, null, null, null, null, 'true', '0'), ('pig', null, 'pig', 'server', 'password,refresh_token,authorization_code', 'http://127.0.0.1:4040/sso1/login', null, null, null, null, 'true', '0'), ('test', null, 'test', 'server', 'password,refresh_token', null, null, null, null, null, 'true', '0');
 COMMIT;
 
 -- ----------------------------

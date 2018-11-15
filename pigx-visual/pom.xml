@@ -37,5 +37,6 @@
 		<module>pigx-daemon</module>
 		<module>pigx-monitor</module>
 		<module>pigx-tx-manager</module>
+		<module>pigx-sso-client-demo</module>
 	</modules>
 </project>

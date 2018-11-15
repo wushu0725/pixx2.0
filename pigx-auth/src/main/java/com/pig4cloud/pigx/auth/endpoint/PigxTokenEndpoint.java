@@ -41,6 +41,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,6 +60,16 @@ public class PigxTokenEndpoint {
 	private static final String PIGX_OAUTH_ACCESS = SecurityConstants.PIGX_PREFIX + SecurityConstants.OAUTH_PREFIX + "access:";
 	private final TokenStore tokenStore;
 	private final RedisTemplate redisTemplate;
+
+	/**
+	 * 认证页面
+	 *
+	 * @return ModelAndView
+	 */
+	@GetMapping("/login")
+	public ModelAndView require() {
+		return new ModelAndView("ftl/login");
+	}
 
 	/**
 	 * 退出token
