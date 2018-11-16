@@ -73,7 +73,7 @@ public class MobileServiceImpl implements MobileService {
 			return new R<>(Boolean.FALSE, "手机号未注册");
 		}
 
-		String code = RandomUtil.randomNumbers(4);
+		String code = RandomUtil.randomNumbers(Integer.parseInt(SecurityConstants.CODE_SIZE));
 		log.debug("手机号生成验证码成功:{},{}", mobile, code);
 		redisTemplate.opsForValue().set(CommonConstant.DEFAULT_CODE_KEY + mobile, code
 			, SecurityConstants.CODE_TIME, TimeUnit.SECONDS);

@@ -22,15 +22,19 @@ package com.pig4cloud.pigx.monitor;
 
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
+import org.springframework.cloud.netflix.turbine.EnableTurbine;
 
 /**
  * @author lengleng
  * @date 2018年06月21日
  * 监控中心
  */
+@EnableTurbine
 @EnableAdminServer
-@SpringBootApplication
+@EnableHystrixDashboard
+@SpringCloudApplication
 public class PigxMonitorApplication {
 
 	public static void main(String[] args) {

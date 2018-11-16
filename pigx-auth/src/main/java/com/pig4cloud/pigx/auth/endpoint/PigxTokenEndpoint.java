@@ -76,7 +76,7 @@ public class PigxTokenEndpoint {
 	 *
 	 * @param authHeader Authorization
 	 */
-	@DeleteMapping("/token")
+	@DeleteMapping("/logout")
 	public R<Boolean> logout(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
 		if (StringUtils.hasText(authHeader)) {
 			String tokenValue = authHeader.replace("Bearer", "").trim();

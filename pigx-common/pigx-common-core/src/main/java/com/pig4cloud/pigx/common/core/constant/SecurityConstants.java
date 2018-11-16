@@ -31,7 +31,7 @@ public interface SecurityConstants {
 	/**
 	 * 验证码长度
 	 */
-	int CODE_SIZE = 4;
+	String CODE_SIZE = "4";
 	/**
 	 * 角色前缀
 	 */

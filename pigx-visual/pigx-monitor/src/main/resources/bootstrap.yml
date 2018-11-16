@@ -13,6 +13,10 @@ spring:
       discovery:
         enabled: true
         service-id: pigx-config
+  boot:
+    admin:
+      ui:
+        resource-locations: 'classpath:/ui/,classpath:/static/'
 
 # 注册中心配置
 eureka:
@@ -21,3 +25,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://pig:pig@pigx-eureka:1025/eureka/
+turbine:
+  app-config: pigx-upms,pigx-auth
+  cluster-name-expression: new String("default")
+  combine-host-port: true
