@@ -25,6 +25,7 @@ import com.pig4cloud.pigx.admin.service.SysSocialDetailsService;
 import com.pig4cloud.pigx.admin.service.SysUserService;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
+import com.pig4cloud.pigx.common.log.annotation.SysLog;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/social")
 @AllArgsConstructor
-@Api(value = "social",description = "三方账号管理模块")
+@Api(value = "social", description = "三方账号管理模块")
 public class SysSocialDetailsController {
 	private final SysUserService sysUserService;
 	private final SysSocialDetailsService sysSocialDetailsService;
@@ -78,6 +79,7 @@ public class SysSocialDetailsController {
 	 * @param sysSocialDetails
 	 * @return R
 	 */
+	@SysLog("保存三方信息")
 	@PostMapping
 	public R save(@Valid @RequestBody SysSocialDetails sysSocialDetails) {
 		sysSocialDetailsService.insert(sysSocialDetails);
@@ -90,6 +92,7 @@ public class SysSocialDetailsController {
 	 * @param sysSocialDetails
 	 * @return R
 	 */
+	@SysLog("修改三方信息")
 	@PutMapping
 	public R update(@Valid @RequestBody SysSocialDetails sysSocialDetails) {
 		sysSocialDetailsService.updateById(sysSocialDetails);
@@ -102,6 +105,7 @@ public class SysSocialDetailsController {
 	 * @param id
 	 * @return R
 	 */
+	@SysLog("删除三方信息")
 	@DeleteMapping("/{id}")
 	public R delete(@PathVariable Integer id) {
 		return new R<>(sysSocialDetailsService.deleteById(id));

@@ -27,6 +27,7 @@ import com.pig4cloud.pigx.admin.mapper.SysDeptRelationMapper;
 import com.pig4cloud.pigx.admin.service.SysDeptRelationService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,6 +51,7 @@ public class SysDeptRelationServiceImpl extends ServiceImpl<SysDeptRelationMappe
 	 * @param sysDept 部门
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void insertDeptRelation(SysDept sysDept) {
 		//增加部门关系表
 		SysDeptRelation condition = new SysDeptRelation();

@@ -154,6 +154,7 @@ public class UserController {
 	 * @param userDto 用户信息
 	 * @return R
 	 */
+	@SysLog("更新用户信息")
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_user_edit')")
 	public R<Boolean> userUpdate(@Valid @RequestBody UserDTO userDto) {
@@ -178,6 +179,7 @@ public class UserController {
 	 * @param userDto userDto
 	 * @return success/false
 	 */
+	@SysLog("修改个人信息")
 	@PutMapping("/edit")
 	public R<Boolean> editInfo(@Valid @RequestBody UserDTO userDto) {
 		return userService.updateUserInfo(userDto, SecurityUtils.getUser().getUsername());

@@ -19,11 +19,13 @@ package com.pig4cloud.pigx.admin.controller;
 
 import com.pig4cloud.pigx.admin.service.MobileService;
 import com.pig4cloud.pigx.common.core.util.R;
+import com.pig4cloud.pigx.common.log.annotation.SysLog;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author lengleng
@@ -34,14 +36,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/mobile")
-@Api(value = "mobile",description = "手机管理模块")
+@Api(value = "mobile", description = "手机管理模块")
 public class MobileController {
 	private final MobileService mobileService;
 
-	@ResponseBody
+	@SysLog("发送验证码")
 	@GetMapping("/{mobile}")
-	@ApiOperation(value = "发送手机验证码", httpMethod = "GET")
-	@ApiImplicitParam(name = "mobile", value = "手机号", paramType = "path", type = "string", required = true)
 	public R<Boolean> code(@PathVariable String mobile) {
 		return mobileService.sendSmsCode(mobile);
 	}

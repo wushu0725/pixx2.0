@@ -21,6 +21,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.pig4cloud.pigx.admin.api.feign.RemoteTokenService;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import com.pig4cloud.pigx.common.core.util.R;
+import com.pig4cloud.pigx.common.log.annotation.SysLog;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,7 +37,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/token")
-@Api(value = "token",description = "令牌管理模块")
+@Api(value = "token", description = "令牌管理模块")
 public class TokenController {
 	private final RemoteTokenService remoteTokenService;
 
@@ -57,6 +58,7 @@ public class TokenController {
 	 * @param id ID
 	 * @return success/false
 	 */
+	@SysLog("删除用户token")
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_token_del')")
 	public R<Boolean> delete(@PathVariable String id) {

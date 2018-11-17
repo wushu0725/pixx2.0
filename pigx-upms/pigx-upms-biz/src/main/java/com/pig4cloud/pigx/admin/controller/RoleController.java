@@ -26,6 +26,7 @@ import com.pig4cloud.pigx.admin.service.SysRoleMenuService;
 import com.pig4cloud.pigx.admin.service.SysRoleService;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
+import com.pig4cloud.pigx.common.log.annotation.SysLog;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,7 +42,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/role")
-@Api(value = "role",description = "角色管理模块")
+@Api(value = "role", description = "角色管理模块")
 public class RoleController {
 	private final SysRoleService sysRoleService;
 	private final SysRoleMenuService sysRoleMenuService;
@@ -63,6 +64,7 @@ public class RoleController {
 	 * @param sysRole 角色信息
 	 * @return success、false
 	 */
+	@SysLog("添加角色")
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_role_add')")
 	public R<Boolean> role(@RequestBody SysRole sysRole) {
@@ -75,12 +77,20 @@ public class RoleController {
 	 * @param sysRole 角色信息
 	 * @return success/false
 	 */
+	@SysLog("修改角色")
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_role_edit')")
 	public R<Boolean> roleUpdate(@RequestBody SysRole sysRole) {
 		return new R<>(sysRoleService.updateById(sysRole));
 	}
 
+	/**
+	 * 删除角色
+	 *
+	 * @param id
+	 * @return
+	 */
+	@SysLog("删除角色")
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_role_del')")
 	public R<Boolean> roleDel(@PathVariable Integer id) {
@@ -116,6 +126,7 @@ public class RoleController {
 	 * @param menuIds 菜单ID拼成的字符串，每个id之间根据逗号分隔
 	 * @return success、false
 	 */
+	@SysLog("更新角色菜单")
 	@PutMapping("/upd-menu")
 	@PreAuthorize("@pms.hasPermission('sys_role_perm')")
 	public R<Boolean> roleMenuUpd(Integer roleId, @RequestParam(value = "menuIds", required = false) String menuIds) {

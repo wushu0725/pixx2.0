@@ -35,6 +35,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
@@ -79,6 +80,7 @@ public class SysRouteConfServiceImpl extends ServiceImpl<SysRouteConfMapper, Sys
 	 * @return
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public Mono<Void> editRoutes(JSONArray routes) {
 		// 清空Redis 缓存
 		Boolean result = redisTemplate.delete(CommonConstant.ROUTE_KEY);

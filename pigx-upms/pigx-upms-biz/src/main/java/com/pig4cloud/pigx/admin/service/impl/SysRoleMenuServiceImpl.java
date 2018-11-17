@@ -29,6 +29,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -54,6 +55,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 	 * @return
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	@CacheEvict(value = "menu_details", key = "#roleId + '_menu'")
 	public Boolean insertRoleMenus(String role, Integer roleId, String menuIds) {
 		SysRoleMenu condition = new SysRoleMenu();

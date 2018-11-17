@@ -31,6 +31,7 @@ import com.pig4cloud.pigx.admin.service.SysDeptService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,6 +56,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 	 * @return
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public Boolean insertDept(SysDept dept) {
 		SysDept sysDept = new SysDept();
 		BeanUtils.copyProperties(dept, sysDept);
@@ -71,6 +73,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 	 * @return 成功、失败
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public Boolean deleteDeptById(Integer id) {
 		this.deleteById(id);
 		sysDeptRelationService.deleteAllDeptRealtion(id);
@@ -84,6 +87,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 	 * @return 成功、失败
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public Boolean updateDeptById(SysDept sysDept) {
 		//更新部门状态
 		this.updateById(sysDept);

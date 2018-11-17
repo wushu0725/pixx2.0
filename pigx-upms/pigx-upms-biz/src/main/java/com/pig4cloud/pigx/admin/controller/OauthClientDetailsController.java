@@ -25,6 +25,7 @@ import com.pig4cloud.pigx.admin.api.entity.SysOauthClientDetails;
 import com.pig4cloud.pigx.admin.service.SysOauthClientDetailsService;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
+import com.pig4cloud.pigx.common.log.annotation.SysLog;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,7 +45,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/client")
-@Api(value = "client",description = "客户端管理模块")
+@Api(value = "client", description = "客户端管理模块")
 public class OauthClientDetailsController {
 	private final SysOauthClientDetailsService sysOauthClientDetailsService;
 
@@ -77,6 +78,7 @@ public class OauthClientDetailsController {
 	 * @param sysOauthClientDetails 实体
 	 * @return success/false
 	 */
+	@SysLog("添加终端")
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_client_add')")
 	public R<Boolean> add(@Valid @RequestBody SysOauthClientDetails sysOauthClientDetails) {
@@ -89,6 +91,7 @@ public class OauthClientDetailsController {
 	 * @param id ID
 	 * @return success/false
 	 */
+	@SysLog("删除终端")
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_client_del')")
 	public R<Boolean> delete(@PathVariable String id) {
@@ -101,6 +104,7 @@ public class OauthClientDetailsController {
 	 * @param sysOauthClientDetails 实体
 	 * @return success/false
 	 */
+	@SysLog("编辑终端")
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_client_edit')")
 	public R<Boolean> edit(@Valid @RequestBody SysOauthClientDetails sysOauthClientDetails) {

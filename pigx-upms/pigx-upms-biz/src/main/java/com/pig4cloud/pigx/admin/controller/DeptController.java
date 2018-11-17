@@ -24,6 +24,7 @@ import com.pig4cloud.pigx.admin.api.dto.DeptTree;
 import com.pig4cloud.pigx.admin.api.entity.SysDept;
 import com.pig4cloud.pigx.admin.service.SysDeptService;
 import com.pig4cloud.pigx.common.core.util.R;
+import com.pig4cloud.pigx.common.log.annotation.SysLog;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -77,6 +78,7 @@ public class DeptController {
 	 * @param sysDept 实体
 	 * @return success/false
 	 */
+	@SysLog("添加部门")
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_dept_add')")
 	public R<Boolean> add(@Valid @RequestBody SysDept sysDept) {
@@ -89,6 +91,7 @@ public class DeptController {
 	 * @param id ID
 	 * @return success/false
 	 */
+	@SysLog("删除部门")
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_dept_del')")
 	public R<Boolean> delete(@PathVariable Integer id) {
@@ -101,6 +104,7 @@ public class DeptController {
 	 * @param sysDept 实体
 	 * @return success/false
 	 */
+	@SysLog("编辑部门")
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_dept_edit')")
 	public Boolean edit(@Valid @RequestBody SysDept sysDept) {

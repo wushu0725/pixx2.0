@@ -20,9 +20,12 @@ package com.pig4cloud.pigx.gateway.filter;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.exception.CheckedException;
 import com.pig4cloud.pigx.common.core.exception.ValidateCodeException;
+import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.gateway.config.FilterIgnorePropertiesConfig;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +37,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 
@@ -48,6 +52,7 @@ import java.io.IOException;
 public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
 	static final String OAUTH_TOKEN_URL = "/oauth/token";
 	private static final String BASIC_ = "Basic ";
+	private final ObjectMapper objectMapper;
 	private final RedisTemplate redisTemplate;
 	private final FilterIgnorePropertiesConfig filterIgnorePropertiesConfig;
 
@@ -120,19 +125,18 @@ public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
 				if (filterIgnorePropertiesConfig.getClients().contains(clientInfos[0])) {
 					return chain.filter(exchange);
 				}
+
+				//校验验证码
+				checkCode(request);
 			} catch (Exception e) {
 				ServerHttpResponse response = exchange.getResponse();
 				response.setStatusCode(HttpStatus.PRECONDITION_REQUIRED);
-				return response.setComplete();
-			}
-
-			//校验验证码合法性
-			try {
-				checkCode(request);
-			} catch (ValidateCodeException e) {
-				ServerHttpResponse response = exchange.getResponse();
-				response.setStatusCode(HttpStatus.PRECONDITION_REQUIRED);
-				return response.setComplete();
+				try {
+					return response.writeWith(Mono.just(response.bufferFactory()
+						.wrap(objectMapper.writeValueAsBytes(new R<>(e)))));
+				} catch (JsonProcessingException e1) {
+					log.error("对象输出异常", e1);
+				}
 			}
 
 			return chain.filter(exchange);

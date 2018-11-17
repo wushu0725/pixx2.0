@@ -20,6 +20,7 @@ package com.pig4cloud.pigx.admin.controller;
 import cn.hutool.json.JSONArray;
 import com.pig4cloud.pigx.admin.service.SysRouteConfService;
 import com.pig4cloud.pigx.common.core.util.R;
+import com.pig4cloud.pigx.common.log.annotation.SysLog;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -55,6 +56,7 @@ public class SysRouteConfController {
 	 * @param routes 路由定义
 	 * @return
 	 */
+	@SysLog("修改路由")
 	@PutMapping
 	public R edit(@RequestBody JSONArray routes) {
 		return new R(sysRouteConfService.editRoutes(routes));

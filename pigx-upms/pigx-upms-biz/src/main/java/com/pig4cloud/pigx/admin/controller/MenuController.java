@@ -27,6 +27,7 @@ import com.pig4cloud.pigx.admin.api.vo.TreeUtil;
 import com.pig4cloud.pigx.admin.service.SysMenuService;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.util.R;
+import com.pig4cloud.pigx.common.log.annotation.SysLog;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
@@ -111,6 +112,7 @@ public class MenuController {
 	 * @param sysMenu 菜单信息
 	 * @return success/false
 	 */
+	@SysLog("新增菜单")
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_menu_add')")
 	public R<Boolean> menu(@Valid @RequestBody SysMenu sysMenu) {
@@ -122,14 +124,21 @@ public class MenuController {
 	 *
 	 * @param id 菜单ID
 	 * @return success/false
-	 * TODO  级联删除下级节点
 	 */
+	@SysLog("删除菜单")
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_menu_del')")
 	public R<Boolean> menuDel(@PathVariable Integer id) {
 		return new R<>(sysMenuService.deleteMenu(id));
 	}
 
+	/**
+	 * 更新菜单
+	 *
+	 * @param sysMenu
+	 * @return
+	 */
+	@SysLog("更新菜单")
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_menu_edit')")
 	public R<Boolean> menuUpdate(@Valid @RequestBody SysMenu sysMenu) {

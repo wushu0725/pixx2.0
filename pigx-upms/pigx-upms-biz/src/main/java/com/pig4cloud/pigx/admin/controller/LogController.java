@@ -63,7 +63,7 @@ public class LogController {
 	}
 
 	/**
-	 * 根据ID
+	 * 删除日志
 	 *
 	 * @param id ID
 	 * @return success/false

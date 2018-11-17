@@ -31,6 +31,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,6 +56,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	@CacheEvict(value = "menu_details", allEntries = true)
 	public Boolean deleteMenu(Integer id) {
 		// 查询父节点为当前节点的节点
