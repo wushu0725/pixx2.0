@@ -58,8 +58,8 @@ public class LogController {
 	 * @return 分页对象
 	 */
 	@GetMapping("/page")
-	public Page logPage(@RequestParam Map<String, Object> params) {
-		return sysLogService.selectPage(new Query<>(params), new EntityWrapper<>());
+	public R<Page> logPage(@RequestParam Map<String, Object> params) {
+		return new R<>(sysLogService.selectPage(new Query<>(params), new EntityWrapper<>()));
 	}
 
 	/**

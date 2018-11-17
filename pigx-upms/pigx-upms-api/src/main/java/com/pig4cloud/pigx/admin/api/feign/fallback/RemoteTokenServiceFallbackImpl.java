@@ -45,7 +45,7 @@ public class RemoteTokenServiceFallbackImpl implements RemoteTokenService {
 	 * @return page
 	 */
 	@Override
-	public Page selectPage(Map<String, Object> params, String from) {
+	public R<Page> selectPage(Map<String, Object> params, String from) {
 		log.error("调用认证中心查询token 失败", cause);
 		return null;
 	}

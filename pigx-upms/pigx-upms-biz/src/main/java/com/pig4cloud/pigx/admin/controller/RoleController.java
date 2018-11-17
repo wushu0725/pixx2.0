@@ -54,8 +54,8 @@ public class RoleController {
 	 * @return 角色信息
 	 */
 	@GetMapping("/{id}")
-	public SysRole role(@PathVariable Integer id) {
-		return sysRoleService.selectById(id);
+	public R<SysRole> role(@PathVariable Integer id) {
+		return new R<>(sysRoleService.selectById(id));
 	}
 
 	/**
@@ -103,9 +103,8 @@ public class RoleController {
 	 * @return 角色列表
 	 */
 	@GetMapping("/list")
-	public List<SysRole> roleList() {
-		return sysRoleService.selectList(new EntityWrapper<>());
-
+	public R<List<SysRole>> roleList() {
+		return new R<>(sysRoleService.selectList(new EntityWrapper<>()));
 	}
 
 	/**
@@ -115,8 +114,8 @@ public class RoleController {
 	 * @return 分页对象
 	 */
 	@GetMapping("/page")
-	public Page rolePage(@RequestParam Map<String, Object> params) {
-		return sysRoleService.selectPage(new Query<>(params), new EntityWrapper<>());
+	public R<Page> rolePage(@RequestParam Map<String, Object> params) {
+		return new R<>(sysRoleService.selectPage(new Query<>(params), new EntityWrapper<>()));
 	}
 
 	/**

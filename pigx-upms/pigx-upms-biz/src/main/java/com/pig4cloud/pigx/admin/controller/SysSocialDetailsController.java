@@ -56,8 +56,8 @@ public class SysSocialDetailsController {
 	 * @return
 	 */
 	@GetMapping("/page")
-	public Page page(@RequestParam Map<String, Object> params) {
-		return sysSocialDetailsService.selectPage(new Query<>(params), new EntityWrapper<>());
+	public R<Page> page(@RequestParam Map<String, Object> params) {
+		return new R<>(sysSocialDetailsService.selectPage(new Query<>(params), new EntityWrapper<>()));
 	}
 
 
@@ -68,9 +68,8 @@ public class SysSocialDetailsController {
 	 * @return R
 	 */
 	@GetMapping("/{id}")
-	public R info(@PathVariable("id") Integer id) {
-		SysSocialDetails sysSocialDetails = sysSocialDetailsService.selectById(id);
-		return new R<>(sysSocialDetails);
+	public R<SysSocialDetails> info(@PathVariable("id") Integer id) {
+		return new R<>(sysSocialDetailsService.selectById(id));
 	}
 
 	/**

@@ -22,6 +22,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.pig4cloud.pigx.codegen.entity.GenConfig;
 import com.pig4cloud.pigx.codegen.service.SysGeneratorService;
 import com.pig4cloud.pigx.common.core.util.Query;
+import com.pig4cloud.pigx.common.core.util.R;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,10 +49,9 @@ public class SysGeneratorController {
 	 * @return 数据库表
 	 */
 	@GetMapping("/page")
-	public Page list(@RequestParam Map<String, Object> params) {
+	public R<Page> list(@RequestParam Map<String, Object> params) {
 		Query query = new Query(params);
-		query.setRecords(sysGeneratorService.queryPage(query));
-		return query;
+		return new R<>(query.setRecords(sysGeneratorService.queryPage(query)));
 	}
 
 	/**

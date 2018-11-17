@@ -58,8 +58,8 @@ public class MenuController {
 	 * @return 当前用户的树形菜单
 	 */
 	@GetMapping
-	public List<MenuTree> userMenu() {
-		// 获取符合条件得菜单
+	public R<List<MenuTree>> userMenu() {
+		// 获取符合条件的菜单
 		Set<MenuVO> all = new HashSet<>();
 		SecurityUtils.getRoles()
 			.forEach(roleId -> all.addAll(sysMenuService.findMenuByRoleId(roleId)));
@@ -68,7 +68,7 @@ public class MenuController {
 			.map(MenuTree::new)
 			.sorted(Comparator.comparingInt(MenuTree::getSort))
 			.collect(Collectors.toList());
-		return TreeUtil.bulid(menuTreeList, -1);
+		return new R<>(TreeUtil.bulid(menuTreeList, -1));
 	}
 
 	/**
@@ -77,8 +77,8 @@ public class MenuController {
 	 * @return 树形菜单
 	 */
 	@GetMapping(value = "/tree")
-	public List<MenuTree> getTree() {
-		return TreeUtil.bulidTree(sysMenuService.selectList(new EntityWrapper<>()), -1);
+	public R<List<MenuTree>> getTree() {
+		return new R<>(TreeUtil.bulidTree(sysMenuService.selectList(new EntityWrapper<>()), -1));
 	}
 
 	/**
@@ -102,8 +102,8 @@ public class MenuController {
 	 * @return 菜单详细信息
 	 */
 	@GetMapping("/{id}")
-	public SysMenu menu(@PathVariable Integer id) {
-		return sysMenuService.selectById(id);
+	public R<SysMenu> menu(@PathVariable Integer id) {
+		return new R<>(sysMenuService.selectById(id));
 	}
 
 	/**

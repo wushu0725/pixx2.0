@@ -23,7 +23,7 @@ import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.daemon.entity.ExecutionLog;
 import com.pig4cloud.pigx.daemon.service.ExecutionLogService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -35,9 +35,10 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/executionlog")
+@AllArgsConstructor
 public class ExecutionLogController {
-	@Autowired
-	private ExecutionLogService executionLogService;
+
+	private final ExecutionLogService executionLogService;
 
 
 	/**
@@ -47,8 +48,8 @@ public class ExecutionLogController {
 	 * @return
 	 */
 	@GetMapping("/page")
-	public Page page(@RequestParam Map<String, Object> params) {
-		return executionLogService.selectPage(new Query<>(params), new EntityWrapper<>());
+	public R<Page> page(@RequestParam Map<String, Object> params) {
+		return new R<>(executionLogService.selectPage(new Query<>(params), new EntityWrapper<>()));
 	}
 
 
@@ -59,10 +60,8 @@ public class ExecutionLogController {
 	 * @return R
 	 */
 	@GetMapping("/{id}")
-	public R info(@PathVariable("id") String id) {
-		ExecutionLog executionLog = executionLogService.selectById(id);
-
-		return new R<>(executionLog);
+	public R<ExecutionLog> info(@PathVariable("id") String id) {
+		return new R<>(executionLogService.selectById(id));
 	}
 
 	/**
@@ -71,11 +70,9 @@ public class ExecutionLogController {
 	 * @param executionLog
 	 * @return R
 	 */
-	@PostMapping("/save")
-	public R save(@RequestBody ExecutionLog executionLog) {
-		executionLogService.insert(executionLog);
-
-		return new R<>(Boolean.TRUE);
+	@PostMapping
+	public R<Boolean> save(@RequestBody ExecutionLog executionLog) {
+		return new R<>(executionLogService.insert(executionLog));
 	}
 
 	/**
@@ -84,11 +81,9 @@ public class ExecutionLogController {
 	 * @param executionLog
 	 * @return R
 	 */
-	@PutMapping("/update")
-	public R update(@RequestBody ExecutionLog executionLog) {
-		executionLogService.updateById(executionLog);
-
-		return new R<>(Boolean.TRUE);
+	@PutMapping
+	public R<Boolean> update(@RequestBody ExecutionLog executionLog) {
+		return new R<>(executionLogService.updateById(executionLog));
 	}
 
 	/**
@@ -98,8 +93,7 @@ public class ExecutionLogController {
 	 * @return R
 	 */
 	@DeleteMapping("/{id}")
-	public R delete(@PathVariable String id) {
-
+	public R<Boolean> delete(@PathVariable String id) {
 		return new R<>(executionLogService.deleteById(id));
 	}
 

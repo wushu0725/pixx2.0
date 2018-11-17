@@ -56,8 +56,8 @@ public class DeptController {
 	 * @return SysDept
 	 */
 	@GetMapping("/{id}")
-	public SysDept get(@PathVariable Integer id) {
-		return sysDeptService.selectById(id);
+	public R<SysDept> get(@PathVariable Integer id) {
+		return new R<>(sysDeptService.selectById(id));
 	}
 
 
@@ -67,9 +67,8 @@ public class DeptController {
 	 * @return 树形菜单
 	 */
 	@GetMapping(value = "/tree")
-	public List<DeptTree> getTree() {
-		SysDept condition = new SysDept();
-		return sysDeptService.selectListTree(new EntityWrapper<>(condition));
+	public R<List<DeptTree>> getTree() {
+		return new R<>(sysDeptService.selectListTree(new EntityWrapper<>()));
 	}
 
 	/**
@@ -107,8 +106,8 @@ public class DeptController {
 	@SysLog("编辑部门")
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_dept_edit')")
-	public Boolean edit(@Valid @RequestBody SysDept sysDept) {
+	public R<Boolean> edit(@Valid @RequestBody SysDept sysDept) {
 		sysDept.setUpdateTime(LocalDateTime.now());
-		return sysDeptService.updateDeptById(sysDept);
+		return new R<>(sysDeptService.updateDeptById(sysDept));
 	}
 }

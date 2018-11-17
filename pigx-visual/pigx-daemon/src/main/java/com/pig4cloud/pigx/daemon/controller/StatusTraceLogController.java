@@ -23,7 +23,7 @@ import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.daemon.entity.StatusTraceLog;
 import com.pig4cloud.pigx.daemon.service.StatusTraceLogService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -34,11 +34,10 @@ import java.util.Map;
  * @date 2018-08-03 22:15:45
  */
 @RestController
+@AllArgsConstructor
 @RequestMapping("/statustracelog")
 public class StatusTraceLogController {
-	@Autowired
-	private StatusTraceLogService statusTraceLogService;
-
+	private final StatusTraceLogService statusTraceLogService;
 
 	/**
 	 * 列表
@@ -47,8 +46,8 @@ public class StatusTraceLogController {
 	 * @return
 	 */
 	@GetMapping("/page")
-	public Page page(@RequestParam Map<String, Object> params) {
-		return statusTraceLogService.selectPage(new Query<>(params), new EntityWrapper<>());
+	public R<Page> page(@RequestParam Map<String, Object> params) {
+		return new R<>(statusTraceLogService.selectPage(new Query<>(params), new EntityWrapper<>()));
 	}
 
 
@@ -59,10 +58,8 @@ public class StatusTraceLogController {
 	 * @return R
 	 */
 	@GetMapping("/{id}")
-	public R info(@PathVariable("id") String id) {
-		StatusTraceLog statusTraceLog = statusTraceLogService.selectById(id);
-
-		return new R<>(statusTraceLog);
+	public R<StatusTraceLog> info(@PathVariable("id") String id) {
+		return new R<>(statusTraceLogService.selectById(id));
 	}
 
 	/**
@@ -71,11 +68,9 @@ public class StatusTraceLogController {
 	 * @param statusTraceLog
 	 * @return R
 	 */
-	@PostMapping("/save")
-	public R save(@RequestBody StatusTraceLog statusTraceLog) {
-		statusTraceLogService.insert(statusTraceLog);
-
-		return new R<>(Boolean.TRUE);
+	@PostMapping
+	public R<Boolean> save(@RequestBody StatusTraceLog statusTraceLog) {
+		return new R<>(statusTraceLogService.insert(statusTraceLog));
 	}
 
 	/**
@@ -84,11 +79,9 @@ public class StatusTraceLogController {
 	 * @param statusTraceLog
 	 * @return R
 	 */
-	@PutMapping("/update")
-	public R update(@RequestBody StatusTraceLog statusTraceLog) {
-		statusTraceLogService.updateById(statusTraceLog);
-
-		return new R<>(Boolean.TRUE);
+	@PutMapping
+	public R<Boolean> update(@RequestBody StatusTraceLog statusTraceLog) {
+		return new R<>(statusTraceLogService.updateById(statusTraceLog));
 	}
 
 	/**
@@ -98,7 +91,7 @@ public class StatusTraceLogController {
 	 * @return R
 	 */
 	@DeleteMapping("/{id}")
-	public R delete(@PathVariable("id") String id) {
+	public R<Boolean> delete(@PathVariable("id") String id) {
 		return new R<>(statusTraceLogService.deleteById(id));
 	}
 

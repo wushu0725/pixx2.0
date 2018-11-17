@@ -1,5 +1,6 @@
 package ${package}.${moduleName}.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -19,9 +20,9 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/${pathName}")
+@AllArgsConstructor
 public class ${className}Controller {
-    @Autowired
-    private ${className}Service ${classname}Service;
+    private final  ${className}Service ${classname}Service;
 
 
     /**
@@ -30,8 +31,8 @@ public class ${className}Controller {
     * @return
     */
     @GetMapping("/page")
-    public Page page(@RequestParam Map<String, Object> params) {
-      return  ${classname}Service.selectPage(new Query<>(params), new EntityWrapper<>());
+    public R<Page> page(@RequestParam Map<String, Object> params) {
+      return  new R<>(${classname}Service.selectPage(new Query<>(params), new EntityWrapper<>()));
     }
 
 
@@ -41,9 +42,8 @@ public class ${className}Controller {
      * @return R
      */
     @GetMapping("/{${pk.lowerAttrName}}")
-    public R info(@PathVariable("${pk.lowerAttrName}") ${pk.attrType} ${pk.lowerAttrName}){
-			${className} ${classname} = ${classname}Service.selectById(${pk.lowerAttrName});
-			return new R<>(${classname});
+    public R get${className}ById(@PathVariable("${pk.lowerAttrName}") ${pk.attrType} ${pk.lowerAttrName}){
+			return new R<>(${classname}Service.selectById(${pk.lowerAttrName}));
     }
 
     /**
@@ -52,7 +52,7 @@ public class ${className}Controller {
      * @return R
      */
     @PostMapping
-    public R save(@RequestBody ${className} ${classname}){
+    public R save${className}(@RequestBody ${className} ${classname}){
 			return new R<>(${classname}Service.insert(${classname}));
     }
 
@@ -62,7 +62,7 @@ public class ${className}Controller {
      * @return R
      */
     @PutMapping
-    public R update(@RequestBody ${className} ${classname}){
+    public R update${className}(@RequestBody ${className} ${classname}){
 			${classname}Service.updateById(${classname});
       return new R<>(Boolean.TRUE);
     }
@@ -73,7 +73,7 @@ public class ${className}Controller {
      * @return R
      */
     @DeleteMapping("/{${pk.lowerAttrName}}")
-    public R delete(@PathVariable ${pk.attrType} ${pk.lowerAttrName}){
+    public R delete${className}ById(@PathVariable ${pk.attrType} ${pk.lowerAttrName}){
       return new R<>(${classname}Service.deleteById(${pk.lowerAttrName}));
     }
 

@@ -56,8 +56,8 @@ public class OauthClientDetailsController {
 	 * @return SysOauthClientDetails
 	 */
 	@GetMapping("/{id}")
-	public SysOauthClientDetails get(@PathVariable Integer id) {
-		return sysOauthClientDetailsService.selectById(id);
+	public R<SysOauthClientDetails> get(@PathVariable Integer id) {
+		return new R<>(sysOauthClientDetailsService.selectById(id));
 	}
 
 
@@ -68,8 +68,8 @@ public class OauthClientDetailsController {
 	 * @return 分页对象
 	 */
 	@GetMapping("/page")
-	public Page page(@RequestParam Map<String, Object> params) {
-		return sysOauthClientDetailsService.selectPage(new Query<>(params), new EntityWrapper<>());
+	public R<Page> page(@RequestParam Map<String, Object> params) {
+		return new R<>(sysOauthClientDetailsService.selectPage(new Query<>(params), new EntityWrapper<>()));
 	}
 
 	/**

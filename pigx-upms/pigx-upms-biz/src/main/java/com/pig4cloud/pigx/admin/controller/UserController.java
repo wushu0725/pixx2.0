@@ -91,8 +91,8 @@ public class UserController {
 	 * @return 用户信息
 	 */
 	@GetMapping("/{id}")
-	public UserVO user(@PathVariable Integer id) {
-		return userService.selectUserVoById(id);
+	public R<UserVO> user(@PathVariable Integer id) {
+		return new R<>(userService.selectUserVoById(id));
 	}
 
 	/**
@@ -169,8 +169,8 @@ public class UserController {
 	 * @return 用户集合
 	 */
 	@GetMapping("/page")
-	public Page userPage(@RequestParam Map<String, Object> params) {
-		return userService.selectWithRolePage(new Query(params));
+	public R<Page> userPage(@RequestParam Map<String, Object> params) {
+		return new R<>(userService.selectWithRolePage(new Query(params)));
 	}
 
 	/**

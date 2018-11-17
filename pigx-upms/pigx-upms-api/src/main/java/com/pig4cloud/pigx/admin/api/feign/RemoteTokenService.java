@@ -41,7 +41,7 @@ public interface RemoteTokenService {
 	 * @return page
 	 */
 	@PostMapping("/oauth/page")
-	Page selectPage(@RequestBody Map<String, Object> params, @RequestHeader(SecurityConstants.FROM) String from);
+	R<Page> selectPage(@RequestBody Map<String, Object> params, @RequestHeader(SecurityConstants.FROM) String from);
 
 	/**
 	 * 删除token

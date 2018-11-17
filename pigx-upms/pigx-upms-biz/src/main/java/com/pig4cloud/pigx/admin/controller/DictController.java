@@ -60,8 +60,8 @@ public class DictController {
 	 * @return 字典信息
 	 */
 	@GetMapping("/{id}")
-	public SysDict dict(@PathVariable Integer id) {
-		return sysDictService.selectById(id);
+	public R<SysDict> dict(@PathVariable Integer id) {
+		return new R<>(sysDictService.selectById(id));
 	}
 
 	/**
@@ -71,8 +71,8 @@ public class DictController {
 	 * @return 分页对象
 	 */
 	@GetMapping("/page")
-	public Page dictPage(@RequestParam Map<String, Object> params) {
-		return sysDictService.selectPage(new Query<>(params), new EntityWrapper<>());
+	public R<Page> dictPage(@RequestParam Map<String, Object> params) {
+		return new R<>(sysDictService.selectPage(new Query<>(params), new EntityWrapper<>()));
 	}
 
 	/**
@@ -83,10 +83,10 @@ public class DictController {
 	 */
 	@GetMapping("/type/{type}")
 	@Cacheable(value = "dict_details", key = "#type")
-	public List<SysDict> findDictByType(@PathVariable String type) {
+	public R<List<SysDict>> findDictByType(@PathVariable String type) {
 		SysDict condition = new SysDict();
 		condition.setType(type);
-		return sysDictService.selectList(new EntityWrapper<>(condition));
+		return new R<>(sysDictService.selectList(new EntityWrapper<>(condition)));
 	}
 
 	/**

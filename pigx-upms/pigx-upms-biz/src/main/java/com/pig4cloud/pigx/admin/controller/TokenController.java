@@ -48,7 +48,7 @@ public class TokenController {
 	 * @return token集合
 	 */
 	@GetMapping("/page")
-	public Page token(@RequestParam Map<String, Object> params) {
+	public R<Page> token(@RequestParam Map<String, Object> params) {
 		return remoteTokenService.selectPage(params, SecurityConstants.FROM_IN);
 	}
 

@@ -22,6 +22,7 @@ package com.pig4cloud.pigx.common.core.util;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -32,6 +33,7 @@ import java.io.Serializable;
  * @author lengleng
  */
 @ToString
+@Accessors(chain=true)
 public class R<T> implements Serializable {
 	private static final int SUCCESS = 0;
 	private static final int FAIL = 1;

@@ -120,7 +120,7 @@ public class PigxTokenEndpoint {
 	 * @return
 	 */
 	@PostMapping("/page")
-	public Page tokenList(@RequestBody Map<String, Object> params, @RequestHeader(required = false) String from) {
+	public R<Page> tokenList(@RequestBody Map<String, Object> params, @RequestHeader(required = false) String from) {
 		if (StrUtil.isBlank(from)) {
 			return null;
 		}
@@ -164,7 +164,7 @@ public class PigxTokenEndpoint {
 		Page result = new Page(MapUtil.getInt(params, "page"), MapUtil.getInt(params, "limit"));
 		result.setRecords(list);
 		result.setTotal(redisTemplate.keys(PIGX_OAUTH_ACCESS + "*").size());
-		return result;
+		return new R<>(result);
 	}
 
 	private boolean extractToken(Map<String, String> map, Object principal) {
