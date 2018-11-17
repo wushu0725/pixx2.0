@@ -41,4 +41,12 @@ public interface SysRoleService extends IService<SysRole> {
 	 * @return
 	 */
 	List<SysRole> findRolesByUserId(Integer userId);
+
+	/**
+	 * 通过角色ID，删除角色
+	 *
+	 * @param id
+	 * @return
+	 */
+	Boolean deleteRoleById(Integer id);
 }

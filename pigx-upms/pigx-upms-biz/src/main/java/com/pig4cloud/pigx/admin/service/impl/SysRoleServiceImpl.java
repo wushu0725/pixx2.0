@@ -19,11 +19,17 @@
 
 package com.pig4cloud.pigx.admin.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.entity.SysRole;
+import com.pig4cloud.pigx.admin.api.entity.SysRoleMenu;
 import com.pig4cloud.pigx.admin.mapper.SysRoleMapper;
+import com.pig4cloud.pigx.admin.mapper.SysRoleMenuMapper;
 import com.pig4cloud.pigx.admin.service.SysRoleService;
+import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,7 +42,9 @@ import java.util.List;
  * @since 2017-10-29
  */
 @Service
+@AllArgsConstructor
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements SysRoleService {
+	private SysRoleMenuMapper sysRoleMenuMapper;
 
 	/**
 	 * 通过用户ID，查询角色信息
@@ -47,5 +55,22 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 	@Override
 	public List<SysRole> findRolesByUserId(Integer userId) {
 		return baseMapper.findRolesByUserId(userId);
+	}
+
+	/**
+	 * 通过角色ID，删除角色,并清空角色菜单缓存
+	 *
+	 * @param id
+	 * @return
+	 */
+	@Override
+	@CacheEvict(value = "menu_details", allEntries = true)
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean deleteRoleById(Integer id) {
+		SysRoleMenu condition = new SysRoleMenu();
+		condition.setRoleId(id);
+
+		sysRoleMenuMapper.delete(new EntityWrapper<>(condition));
+		return this.deleteById(id);
 	}
 }

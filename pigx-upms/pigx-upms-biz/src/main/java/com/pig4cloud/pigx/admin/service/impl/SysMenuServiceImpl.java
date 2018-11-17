@@ -22,14 +22,18 @@ package com.pig4cloud.pigx.admin.service.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.entity.SysMenu;
+import com.pig4cloud.pigx.admin.api.entity.SysRoleMenu;
 import com.pig4cloud.pigx.admin.api.vo.MenuVO;
 import com.pig4cloud.pigx.admin.mapper.SysMenuMapper;
+import com.pig4cloud.pigx.admin.mapper.SysRoleMenuMapper;
 import com.pig4cloud.pigx.admin.service.SysMenuService;
+import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -40,7 +44,9 @@ import java.util.List;
  * @since 2017-10-29
  */
 @Service
+@AllArgsConstructor
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService {
+	private final SysRoleMenuMapper sysRoleMenuMapper;
 
 	@Override
 	@Cacheable(value = "menu_details", key = "#roleId  + '_menu'")
@@ -51,13 +57,22 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 	@Override
 	@CacheEvict(value = "menu_details", allEntries = true)
 	public Boolean deleteMenu(Integer id) {
-		// 删除当前节点
-		this.deleteById(id);
+		// 查询父节点为当前节点的节点
+		SysMenu conditon = new SysMenu();
+		conditon.setParentId(id);
+		List<Integer> menuIdList = this.selectList(new EntityWrapper<>(conditon))
+			.stream().map(SysMenu::getMenuId)
+			.collect(Collectors.toList());
+		menuIdList.add(id);
 
-		// 删除父节点为当前节点的节点
-		SysMenu conditon2 = new SysMenu();
-		conditon2.setParentId(id);
-		return this.delete(new EntityWrapper<>(conditon2));
+		//删除关联ROLE_MENU 数据
+		menuIdList.forEach(menu -> {
+			SysRoleMenu conditon2 = new SysRoleMenu();
+			conditon2.setMenuId(menu);
+			sysRoleMenuMapper.delete(new EntityWrapper<>(conditon2));
+		});
+		//删除当前菜单及其子菜单
+		return this.deleteBatchIds(menuIdList);
 	}
 
 	@Override

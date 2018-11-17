@@ -84,7 +84,7 @@ public class RoleController {
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_role_del')")
 	public R<Boolean> roleDel(@PathVariable Integer id) {
-		return new R<>(sysRoleService.deleteById(id));
+		return new R<>(sysRoleService.deleteRoleById(id));
 	}
 
 	/**

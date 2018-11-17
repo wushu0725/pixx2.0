@@ -27,6 +27,7 @@ import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.core.util.TenantUtils;
 import com.pig4cloud.pigx.common.security.service.PigxUser;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.CacheManager;
 import org.springframework.data.redis.core.ConvertingCursor;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -39,7 +40,6 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -60,6 +60,7 @@ public class PigxTokenEndpoint {
 	private static final String PIGX_OAUTH_ACCESS = SecurityConstants.PIGX_PREFIX + SecurityConstants.OAUTH_PREFIX + "access:";
 	private final TokenStore tokenStore;
 	private final RedisTemplate redisTemplate;
+	private final CacheManager cacheManager;
 
 	/**
 	 * 认证页面
@@ -78,15 +79,20 @@ public class PigxTokenEndpoint {
 	 */
 	@DeleteMapping("/logout")
 	public R<Boolean> logout(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
-		if (StringUtils.hasText(authHeader)) {
-			String tokenValue = authHeader.replace("Bearer", "").trim();
-			OAuth2AccessToken accessToken = tokenStore.readAccessToken(tokenValue);
-			if (accessToken == null || StrUtil.isBlank(accessToken.getValue())) {
-				return new R<>(false, "退出失败，token 为空");
-			}
-			tokenStore.removeAccessToken(accessToken);
+		if (StrUtil.isBlank(authHeader)) {
+			return new R<>(false, "退出失败，token 为空");
 		}
 
+		String tokenValue = authHeader.replace("Bearer", "").trim();
+		OAuth2AccessToken accessToken = tokenStore.readAccessToken(tokenValue);
+		if (accessToken == null || StrUtil.isBlank(accessToken.getValue())) {
+			return new R<>(false, "退出失败，token 无效");
+		}
+
+		OAuth2Authentication auth2Authentication = tokenStore.readAuthentication(accessToken);
+		cacheManager.getCache("user_details")
+			.evict(auth2Authentication.getName());
+		tokenStore.removeAccessToken(accessToken);
 		return new R<>(Boolean.TRUE);
 	}
 
