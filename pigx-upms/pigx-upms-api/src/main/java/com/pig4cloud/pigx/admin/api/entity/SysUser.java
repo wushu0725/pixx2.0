@@ -74,6 +74,11 @@ public class SysUser implements Serializable {
 	private String delFlag;
 
 	/**
+	 * 锁定标记
+	 */
+	private String lockFlag;
+
+	/**
 	 * 简介
 	 */
 	private String phone;

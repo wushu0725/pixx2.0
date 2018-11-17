@@ -73,6 +73,11 @@ public class UserVO implements Serializable {
 	 * 0-正常，1-删除
 	 */
 	private String delFlag;
+
+	/**
+	 * 锁定标记
+	 */
+	private String lockFlag;
 	/**
 	 * 简介
 	 */

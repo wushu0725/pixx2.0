@@ -24,7 +24,6 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.pig4cloud.pigx.admin.api.entity.SysRole;
 import com.pig4cloud.pigx.admin.service.SysRoleMenuService;
 import com.pig4cloud.pigx.admin.service.SysRoleService;
-import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 import io.swagger.annotations.Api;
@@ -85,9 +84,7 @@ public class RoleController {
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_role_del')")
 	public R<Boolean> roleDel(@PathVariable Integer id) {
-		SysRole sysRole = sysRoleService.selectById(id);
-		sysRole.setDelFlag(CommonConstant.STATUS_DEL);
-		return new R<>(sysRoleService.updateById(sysRole));
+		return new R<>(sysRoleService.deleteById(id));
 	}
 
 	/**

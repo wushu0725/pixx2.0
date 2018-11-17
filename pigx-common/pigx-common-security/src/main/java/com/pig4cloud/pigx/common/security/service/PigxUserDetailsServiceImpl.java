@@ -102,6 +102,6 @@ public class PigxUserDetailsServiceImpl implements PigxUserDetailsService {
 		// 构造security用户
 
 		return new PigxUser(user.getUserId(), user.getDeptId(), user.getTenantId(), user.getUsername(), SecurityConstants.BCRYPT + user.getPassword(), enabled,
-			true, true, true, authorities);
+			true, true, !CommonConstant.STATUS_LOCK.equals(user.getLockFlag()), authorities);
 	}
 }

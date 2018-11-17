@@ -36,14 +36,6 @@ import java.util.List;
 public interface SysLogService extends IService<SysLog> {
 
 	/**
-	 * 通过ID删除日志（逻辑删除）
-	 *
-	 * @param id 日志ID
-	 * @return true/false
-	 */
-	Boolean updateByLogId(Long id);
-
-	/**
 	 * 批量插入前端错误日志
 	 *
 	 * @param preLogVoList 日志信息

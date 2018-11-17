@@ -24,7 +24,6 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.pig4cloud.pigx.admin.api.entity.SysDict;
 import com.pig4cloud.pigx.admin.service.SysDictService;
-import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.log.annotation.SysLog;
@@ -86,7 +85,6 @@ public class DictController {
 	@Cacheable(value = "dict_details", key = "#type")
 	public List<SysDict> findDictByType(@PathVariable String type) {
 		SysDict condition = new SysDict();
-		condition.setDelFlag(CommonConstant.STATUS_NORMAL);
 		condition.setType(type);
 		return sysDictService.selectList(new EntityWrapper<>(condition));
 	}

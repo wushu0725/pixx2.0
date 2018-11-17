@@ -47,7 +47,7 @@ import java.util.stream.Collectors;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/menu")
-@Api(value = "menu",description = "菜单管理模块")
+@Api(value = "menu", description = "菜单管理模块")
 public class MenuController {
 	private final SysMenuService sysMenuService;
 
@@ -77,9 +77,7 @@ public class MenuController {
 	 */
 	@GetMapping(value = "/tree")
 	public List<MenuTree> getTree() {
-		SysMenu condition = new SysMenu();
-		condition.setDelFlag(CommonConstant.STATUS_NORMAL);
-		return TreeUtil.bulidTree(sysMenuService.selectList(new EntityWrapper<>(condition)), -1);
+		return TreeUtil.bulidTree(sysMenuService.selectList(new EntityWrapper<>()), -1);
 	}
 
 	/**

@@ -15,31 +15,32 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.common.security.exception;
+package com.pig4cloud.pigx.common.security.component;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.pig4cloud.pigx.common.security.component.PigxAuth2ExceptionSerializer;
-import org.springframework.http.HttpStatus;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.pig4cloud.pigx.common.security.exception.PigxAuth2Exception;
+
+import java.io.IOException;
 
 /**
  * @author lengleng
- * @date 2018/7/8
+ * @date 2018/11/16
+ * <p>
+ * OAuth2 异常格式化
  */
-@JsonSerialize(using = PigxAuth2ExceptionSerializer.class)
-public class UnauthorizedException extends PigxAuth2Exception {
-
-	public UnauthorizedException(String msg, Throwable t) {
-		super(msg);
+public class PigxAuth2ExceptionSerializer extends StdSerializer<PigxAuth2Exception> {
+	public PigxAuth2ExceptionSerializer() {
+		super(PigxAuth2Exception.class);
 	}
 
 	@Override
-	public String getOAuth2ErrorCode() {
-		return "unauthorized";
+	public void serialize(PigxAuth2Exception value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+		gen.writeStartObject();
+		gen.writeObjectField("code", 1);
+		gen.writeStringField("message", value.getMessage());
+		gen.writeStringField("data", value.getOAuth2ErrorCode());
+		gen.writeEndObject();
 	}
-
-	@Override
-	public int getHttpErrorCode() {
-		return HttpStatus.UNAUTHORIZED.value();
-	}
-
 }

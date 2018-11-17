@@ -35,6 +35,7 @@
 		<result column="create_time" property="createTime"/>
 		<result column="update_time" property="updateTime"/>
 		<result column="del_flag" property="delFlag"/>
+		<result column="lock_flag" property="lockFlag"/>
 	</resultMap>
 
 	<!-- userVo结果集 -->
@@ -49,6 +50,7 @@
 		<result column="qq_openid" property="qqOpenid"/>
 		<result column="ucreate_time" property="createTime"/>
 		<result column="uupdate_time" property="updateTime"/>
+		<result column="lock_flag" property="lockFlag"/>
 		<result column="udel_flag" property="delFlag"/>
 		<result column="deptId" property="deptId"/>
 		<result column="tenantId" property="tenantId"/>
@@ -77,6 +79,7 @@
             `user`.create_time AS ucreate_time,
             `user`.update_time AS uupdate_time,
             `user`.del_flag AS udel_flag,
+            `user`.lock_flag AS lock_flag,
             `user`.dept_id AS deptId,
             `user`.tenant_id AS tenantId,
             r.role_id,
@@ -109,6 +112,7 @@
             `user`.create_time AS ucreate_time,
             `user`.update_time AS uupdate_time,
             `user`.del_flag AS udel_flag,
+			`user`.lock_flag AS lock_flag,
             `user`.tenant_id AS tenantId,
             r.role_id,
             r.role_name,
@@ -140,6 +144,7 @@
 		`user`.create_time AS ucreate_time,
 		`user`.update_time AS uupdate_time,
 		`user`.del_flag AS udel_flag,
+		`user`.lock_flag AS lock_flag,
 		`user`.tenant_id AS tenantId,
 		r.role_id,
 		r.role_name,

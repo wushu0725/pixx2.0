@@ -23,7 +23,6 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.pig4cloud.pigx.admin.api.dto.DeptTree;
 import com.pig4cloud.pigx.admin.api.entity.SysDept;
 import com.pig4cloud.pigx.admin.service.SysDeptService;
-import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.util.R;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
@@ -69,7 +68,6 @@ public class DeptController {
 	@GetMapping(value = "/tree")
 	public List<DeptTree> getTree() {
 		SysDept condition = new SysDept();
-		condition.setDelFlag(CommonConstant.STATUS_NORMAL);
 		return sysDeptService.selectListTree(new EntityWrapper<>(condition));
 	}
 

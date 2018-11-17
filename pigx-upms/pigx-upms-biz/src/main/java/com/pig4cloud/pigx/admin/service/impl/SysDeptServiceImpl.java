@@ -28,12 +28,10 @@ import com.pig4cloud.pigx.admin.api.vo.TreeUtil;
 import com.pig4cloud.pigx.admin.mapper.SysDeptMapper;
 import com.pig4cloud.pigx.admin.service.SysDeptRelationService;
 import com.pig4cloud.pigx.admin.service.SysDeptService;
-import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,11 +72,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 	 */
 	@Override
 	public Boolean deleteDeptById(Integer id) {
-		SysDept sysDept = new SysDept();
-		sysDept.setDeptId(id);
-		sysDept.setUpdateTime(LocalDateTime.now());
-		sysDept.setDelFlag(CommonConstant.STATUS_DEL);
-		this.deleteById(sysDept);
+		this.deleteById(id);
 		sysDeptRelationService.deleteAllDeptRealtion(id);
 		return Boolean.TRUE;
 	}

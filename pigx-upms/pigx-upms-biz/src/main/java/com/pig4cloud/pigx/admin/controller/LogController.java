@@ -71,7 +71,7 @@ public class LogController {
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_log_del')")
 	public R<Boolean> delete(@PathVariable Long id) {
-		return new R<>(sysLogService.updateByLogId(id));
+		return new R<>(sysLogService.deleteById(id));
 	}
 
 	/**

@@ -42,16 +42,6 @@ import java.util.stream.Collectors;
 @Service
 public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> implements SysLogService {
 
-	@Override
-	public Boolean updateByLogId(Long id) {
-
-		SysLog sysLog = new SysLog();
-		sysLog.setId(id);
-		sysLog.setDelFlag(CommonConstant.STATUS_DEL);
-		sysLog.setUpdateTime(LocalDateTime.now());
-		return updateById(sysLog);
-	}
-
 	/**
 	 * 批量插入前端错误日志
 	 *
