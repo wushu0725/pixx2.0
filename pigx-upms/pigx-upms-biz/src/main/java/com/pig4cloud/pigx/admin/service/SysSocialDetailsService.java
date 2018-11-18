@@ -18,9 +18,8 @@
 package com.pig4cloud.pigx.admin.service;
 
 import com.baomidou.mybatisplus.service.IService;
+import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 import com.pig4cloud.pigx.admin.api.entity.SysSocialDetails;
-
-import java.util.Map;
 
 /**
  * 系统社交登录账号表
@@ -40,11 +39,11 @@ public interface SysSocialDetailsService extends IService<SysSocialDetails> {
 	Boolean bindSocial(String state, String code);
 
 	/**
-	 * 通过客户端信息查询openId
+	 * 根据入参查询用户信息
 	 *
-	 * @param inStr appid @ code
+	 * @param inStr
 	 * @return
 	 */
-	Map<String, String> findOpenId(String inStr);
+	UserInfo findUserInfo(String inStr);
 }
 

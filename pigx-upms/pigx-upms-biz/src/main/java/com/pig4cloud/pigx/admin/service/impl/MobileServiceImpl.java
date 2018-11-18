@@ -25,6 +25,7 @@ import com.pig4cloud.pigx.admin.mapper.SysUserMapper;
 import com.pig4cloud.pigx.admin.service.MobileService;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
+import com.pig4cloud.pigx.common.core.constant.enums.EnumLoginType;
 import com.pig4cloud.pigx.common.core.util.R;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -75,8 +76,9 @@ public class MobileServiceImpl implements MobileService {
 
 		String code = RandomUtil.randomNumbers(Integer.parseInt(SecurityConstants.CODE_SIZE));
 		log.debug("手机号生成验证码成功:{},{}", mobile, code);
-		redisTemplate.opsForValue().set(CommonConstant.DEFAULT_CODE_KEY + mobile, code
-			, SecurityConstants.CODE_TIME, TimeUnit.SECONDS);
+		redisTemplate.opsForValue().set(
+			CommonConstant.DEFAULT_CODE_KEY + EnumLoginType.SMS.getType() + "@" + mobile
+			, code, SecurityConstants.CODE_TIME, TimeUnit.SECONDS);
 		return new R<>(Boolean.TRUE, code);
 	}
 }

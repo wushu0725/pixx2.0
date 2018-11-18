@@ -30,7 +30,6 @@ import com.pig4cloud.pigx.admin.api.vo.UserVO;
 import com.pig4cloud.pigx.admin.service.SysUserService;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
-import com.pig4cloud.pigx.common.core.constant.enums.EnumLoginType;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.log.annotation.SysLog;
@@ -81,7 +80,13 @@ public class UserController {
 			username = SecurityUtils.getUser().getUsername();
 		}
 
-		return new R<>(userService.findUserInfo(EnumLoginType.PWD.getType(), username));
+		SysUser condition = new SysUser();
+		condition.setUsername(username);
+		SysUser sysUser = userService.selectOne(new EntityWrapper<>(condition));
+		if (sysUser == null) {
+			return new R<>();
+		}
+		return new R<>(userService.findUserInfo(sysUser));
 	}
 
 	/**

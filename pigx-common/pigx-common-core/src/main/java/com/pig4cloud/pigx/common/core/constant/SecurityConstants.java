@@ -61,11 +61,18 @@ public interface SecurityConstants {
 	String FROM = "from";
 
 	/**
+	 * OAUTH URL
+	 */
+	String OAUTH_TOKEN_URL = "/oauth/token";
+
+	/**
 	 * 手机号登录URL
 	 */
-	String MOBILE_TOKEN_URL = "/mobile/token";
-
-
+	String SMS_TOKEN_URL = "/mobile/token/sms";
+	/**
+	 * 自定义登录URL
+	 */
+	String MOBILE_TOKEN_URL = "/mobile/token/*";
 	/**
 	 * oauth 客户端信息
 	 */

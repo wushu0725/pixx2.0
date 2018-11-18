@@ -43,7 +43,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class MobileAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 	private static final String SPRING_SECURITY_FORM_MOBILE_KEY = "mobile";
-	private AuthenticationEntryPoint authenticationEntryPoint = new MobileAuthenticationEntryPoint();
 	@Getter
 	@Setter
 	private String mobileParameter = SPRING_SECURITY_FORM_MOBILE_KEY;
@@ -53,6 +52,10 @@ public class MobileAuthenticationFilter extends AbstractAuthenticationProcessing
 	@Getter
 	@Setter
 	private AuthenticationEventPublisher eventPublisher;
+	@Getter
+	@Setter
+	private AuthenticationEntryPoint authenticationEntryPoint;
+
 
 	public MobileAuthenticationFilter() {
 		super(new AntPathRequestMatcher(SecurityConstants.MOBILE_TOKEN_URL, "POST"));

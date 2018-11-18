@@ -38,11 +38,10 @@ public interface SysUserService extends IService<SysUser> {
 	/**
 	 * 查询用户信息
 	 *
-	 * @param type     类型
-	 * @param username 用户名
+	 * @param sysUser 用户
 	 * @return userInfo
 	 */
-	UserInfo findUserInfo(String type, String username);
+	UserInfo findUserInfo(SysUser sysUser);
 
 	/**
 	 * 分页查询用户信息（含有角色信息）

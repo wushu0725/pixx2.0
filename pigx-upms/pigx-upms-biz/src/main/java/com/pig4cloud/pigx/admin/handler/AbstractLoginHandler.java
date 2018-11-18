@@ -15,45 +15,25 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.common.core.constant.enums;
+package com.pig4cloud.pigx.admin.handler;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 
 /**
  * @author lengleng
- * @date 2018/8/15
- * 社交登录类型
+ * @date 2018/11/18
  */
-@Getter
-@AllArgsConstructor
-public enum EnumLoginType {
-	/**
-	 * 账号密码登录
-	 */
-	PWD("PWD", "账号密码登录"),
+public abstract class AbstractLoginHandler implements LoginHandler {
 
 	/**
-	 * 验证码登录
+	 * 处理方法
+	 *
+	 * @param loginStr 登录参数
+	 * @return
 	 */
-	SMS("SMS", "验证码登录"),
-
-	/**
-	 * QQ登录
-	 */
-	QQ("QQ", "QQ登录"),
-
-	/**
-	 * 微信登录
-	 */
-	WECHAT("WX", "微信登录");
-
-	/**
-	 * 类型
-	 */
-	private String type;
-	/**
-	 * 描述
-	 */
-	private String description;
+	@Override
+	public UserInfo handle(String loginStr) {
+		String identify = identify(loginStr);
+		return info(identify);
+	}
 }

@@ -23,6 +23,7 @@ import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
+import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import com.pig4cloud.pigx.common.core.exception.CheckedException;
 import com.pig4cloud.pigx.common.core.exception.ValidateCodeException;
 import com.pig4cloud.pigx.common.core.util.R;
@@ -50,7 +51,6 @@ import java.io.IOException;
 @Component
 @AllArgsConstructor
 public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
-	static final String OAUTH_TOKEN_URL = "/oauth/token";
 	private static final String BASIC_ = "Basic ";
 	private final ObjectMapper objectMapper;
 	private final RedisTemplate redisTemplate;
@@ -109,17 +109,18 @@ public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
 			ServerHttpRequest request = exchange.getRequest();
 
 			// 不是登录请求，直接向下执行
-			if (!StrUtil.containsAnyIgnoreCase(request.getURI().getPath(), OAUTH_TOKEN_URL)) {
+			if (!StrUtil.containsAnyIgnoreCase(request.getURI().getPath()
+				, SecurityConstants.OAUTH_TOKEN_URL, SecurityConstants.SMS_TOKEN_URL)) {
 				return chain.filter(exchange);
 			}
 
 			// 终端设置不校验， 直接向下执行(1. 从请求参数中获取 2.从header取)
 			String clientId = request.getQueryParams().getFirst("client_id");
-			if (StrUtil.isNotBlank(clientId)) {
-				if (filterIgnorePropertiesConfig.getClients().contains(clientId)) {
-					return chain.filter(exchange);
-				}
+			if (StrUtil.isNotBlank(clientId)
+				&& filterIgnorePropertiesConfig.getClients().contains(clientId)) {
+				return chain.filter(exchange);
 			}
+
 			try {
 				String[] clientInfos = extractAndDecodeHeader(request);
 				if (filterIgnorePropertiesConfig.getClients().contains(clientInfos[0])) {
@@ -158,7 +159,7 @@ public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
 
 		String randomStr = request.getQueryParams().getFirst("randomStr");
 		if (StrUtil.isBlank(randomStr)) {
-			throw new ValidateCodeException();
+			randomStr = request.getQueryParams().getFirst("mobile");
 		}
 
 		String key = CommonConstant.DEFAULT_CODE_KEY + randomStr;

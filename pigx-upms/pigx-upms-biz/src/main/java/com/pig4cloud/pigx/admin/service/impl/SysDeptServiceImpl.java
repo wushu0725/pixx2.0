@@ -19,6 +19,7 @@
 
 package com.pig4cloud.pigx.admin.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.dto.DeptTree;
@@ -75,7 +76,20 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean deleteDeptById(Integer id) {
-		this.deleteById(id);
+		//级联删除部门
+		SysDeptRelation condition = new SysDeptRelation();
+		condition.setAncestor(id);
+		List<Integer> idList = sysDeptRelationService
+			.selectList(new EntityWrapper<>(condition))
+			.stream()
+			.map(SysDeptRelation::getDescendant)
+			.collect(Collectors.toList());
+
+		if (CollUtil.isNotEmpty(idList)) {
+			this.deleteBatchIds(idList);
+		}
+
+		//删除部门级联关系
 		sysDeptRelationService.deleteAllDeptRealtion(id);
 		return Boolean.TRUE;
 	}

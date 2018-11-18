@@ -31,7 +31,6 @@ import com.pig4cloud.pigx.admin.api.vo.MenuVO;
 import com.pig4cloud.pigx.admin.api.vo.UserVO;
 import com.pig4cloud.pigx.admin.mapper.SysUserMapper;
 import com.pig4cloud.pigx.admin.service.*;
-import com.pig4cloud.pigx.common.core.constant.enums.EnumLoginType;
 import com.pig4cloud.pigx.common.core.datascope.DataScope;
 import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
@@ -68,23 +67,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	private final SysDeptRelationService sysDeptRelationService;
 
 	/**
-	 * 通过用户名查用户的全部信息
+	 * 通过查用户的全部信息
 	 *
-	 * @param username 用户名
+	 * @param sysUser 用户
 	 * @return
 	 */
 	@Override
-	@Cacheable(value = "user_details", key = "#username", unless = "#result == null")
-	public UserInfo findUserInfo(String type, String username) {
-		SysUser condition = new SysUser();
-		if (EnumLoginType.PWD.getType().equals(type)) {
-			condition.setUsername(username);
-		} else if (EnumLoginType.WECHAT.getType().equals(type)) {
-			condition.setWxOpenid(username);
-		} else {
-			condition.setQqOpenid(username);
-		}
-		SysUser sysUser = this.selectOne(new EntityWrapper<>(condition));
+	@Cacheable(value = "user_details", key = "#sysUser.username", unless = "#result == null")
+	public UserInfo findUserInfo(SysUser sysUser) {
 		if (sysUser == null) {
 			return null;
 		}

@@ -50,7 +50,7 @@ public interface RemoteUserService {
 		, @RequestHeader(SecurityConstants.FROM) String from);
 
 	/**
-	 * 通过社交账号查询用户、角色信息
+	 * 通过社交账号或手机号查询用户、角色信息
 	 *
 	 * @param inStr appid@code
 	 * @return

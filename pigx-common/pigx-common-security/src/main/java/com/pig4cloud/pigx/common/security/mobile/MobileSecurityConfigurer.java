@@ -17,6 +17,8 @@
 
 package com.pig4cloud.pigx.common.security.mobile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pig4cloud.pigx.common.security.component.ResourceAuthExceptionEntryPoint;
 import com.pig4cloud.pigx.common.security.service.PigxUserDetailsService;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,6 +42,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class MobileSecurityConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 	@Autowired
+	private ObjectMapper objectMapper;
+	@Autowired
 	private AuthenticationEventPublisher defaultAuthenticationEventPublisher;
 	private AuthenticationSuccessHandler mobileLoginSuccessHandler;
 	private PigxUserDetailsService userDetailsService;
@@ -50,6 +54,7 @@ public class MobileSecurityConfigurer extends SecurityConfigurerAdapter<DefaultS
 		mobileAuthenticationFilter.setAuthenticationManager(http.getSharedObject(AuthenticationManager.class));
 		mobileAuthenticationFilter.setAuthenticationSuccessHandler(mobileLoginSuccessHandler);
 		mobileAuthenticationFilter.setEventPublisher(defaultAuthenticationEventPublisher);
+		mobileAuthenticationFilter.setAuthenticationEntryPoint(new ResourceAuthExceptionEntryPoint(objectMapper));
 
 		MobileAuthenticationProvider mobileAuthenticationProvider = new MobileAuthenticationProvider();
 		mobileAuthenticationProvider.setUserDetailsService(userDetailsService);

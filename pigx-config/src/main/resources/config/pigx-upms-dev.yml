@@ -11,6 +11,7 @@ security:
         - '/v2/api-docs'
         - '/user/info/*'
         - '/social/info/**'
+        - '/mobile/*'
         - '/log/**'
 
 # 数据源

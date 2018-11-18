@@ -111,15 +111,14 @@ public class SysSocialDetailsController {
 	}
 
 	/**
-	 * 通过社交账号查询用户、角色信息
+	 * 通过社交账号、手机号查询用户、角色信息
 	 *
 	 * @param inStr appid@code
 	 * @return
 	 */
 	@GetMapping("/info/{inStr}")
 	public R<UserInfo> social(@PathVariable String inStr) {
-		Map<String, String> result = sysSocialDetailsService.findOpenId(inStr);
-		return new R<>(sysUserService.findUserInfo(result.get("type"), result.get("openId")));
+		return new R<>(sysSocialDetailsService.findUserInfo(inStr));
 	}
 
 	/**

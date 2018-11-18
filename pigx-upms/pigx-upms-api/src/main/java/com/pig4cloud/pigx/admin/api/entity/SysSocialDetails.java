@@ -82,11 +82,16 @@ public class SysSocialDetails extends Model<SysSocialDetails> {
 	@TableLogic
 	private String delFlag;
 
-  /**
-   * 主键值
-   */
-  @Override
-  protected Serializable pkVal() {
-    return this.id;
-  }
+	/**
+	 * 租户ID
+	 */
+	private Integer tenantId;
+
+	/**
+	 * 主键值
+	 */
+	@Override
+	protected Serializable pkVal() {
+		return this.id;
+	}
 }

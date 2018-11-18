@@ -21,6 +21,7 @@ import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
+import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -65,7 +66,7 @@ public class PasswordDecoderFilter extends AbstractGatewayFilterFactory {
 			ServerHttpRequest request = exchange.getRequest();
 
 			// 不是登录请求，直接向下执行
-			if (!StrUtil.containsAnyIgnoreCase(request.getURI().getPath(), ValidateCodeGatewayFilter.OAUTH_TOKEN_URL)) {
+			if (!StrUtil.containsAnyIgnoreCase(request.getURI().getPath(), SecurityConstants.OAUTH_TOKEN_URL)) {
 				return chain.filter(exchange);
 			}
 
