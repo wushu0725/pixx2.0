@@ -114,6 +114,7 @@ public class TreeUtil {
 			node.setLabel(menu.getName());
 			node.setComponent(menu.getComponent());
 			node.setIcon(menu.getIcon());
+			node.setKeepalive(menu.getKeepalive());
 			trees.add(node);
 		}
 		return TreeUtil.bulid(trees, root);

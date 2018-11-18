@@ -32,6 +32,7 @@
 		<result column="component" property="component"/>
 		<result column="sort" property="sort"/>
 		<result column="type" property="type"/>
+		<result column="keepalive" property="keepalive"/>
 		<result column="create_time" property="createTime"/>
 		<result column="update_time" property="updateTime"/>
 		<result column="del_flag" property="delFlag"/>
@@ -46,6 +47,7 @@
 		<result column="path" property="path"/>
 		<result column="component" property="component"/>
 		<result column="sort" property="sort"/>
+		<result column="keepalive" property="keepalive"/>
 		<result column="type" property="type"/>
 		<result column="create_time" property="createTime"/>
 		<result column="update_time" property="updateTime"/>
