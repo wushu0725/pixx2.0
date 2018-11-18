@@ -13,10 +13,6 @@ spring:
       discovery:
         enabled: true
         service-id: pigx-config
-  boot:
-    admin:
-      ui:
-        resource-locations: 'classpath:/ui/,classpath:/static/'
 
 # 注册中心配置
 eureka:
