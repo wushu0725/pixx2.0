@@ -29,7 +29,6 @@ import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -74,7 +73,7 @@ public class SysDict extends Model<SysDict> {
 	/**
 	 * 排序（升序）
 	 */
-	private BigDecimal sort;
+	private Integer sort;
 	/**
 	 * 创建时间
 	 */

@@ -56,7 +56,7 @@ public class SysDept extends Model<SysDept> {
 	/**
 	 * 排序
 	 */
-	private Integer orderNum;
+	private Integer sort;
 	/**
 	 * 创建时间
 	 */

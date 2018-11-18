@@ -107,7 +107,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 	 */
 	@Override
 	public List<DeptTree> selectListTree(EntityWrapper<SysDept> sysDeptEntityWrapper) {
-		sysDeptEntityWrapper.orderBy("order_num", false);
+		sysDeptEntityWrapper.orderBy("sort", false);
 		return getDeptTree(this.selectList(sysDeptEntityWrapper));
 	}
 
