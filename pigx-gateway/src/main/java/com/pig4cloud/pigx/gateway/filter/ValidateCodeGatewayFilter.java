@@ -17,30 +17,25 @@
 
 package com.pig4cloud.pigx.gateway.filter;
 
-import cn.hutool.core.codec.Base64;
-import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
-import com.pig4cloud.pigx.common.core.exception.CheckedException;
 import com.pig4cloud.pigx.common.core.exception.ValidateCodeException;
 import com.pig4cloud.pigx.common.core.util.R;
+import com.pig4cloud.pigx.common.core.util.WebUtils;
 import com.pig4cloud.pigx.gateway.config.FilterIgnorePropertiesConfig;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-
-import java.io.IOException;
 
 /**
  * @author lengleng
@@ -51,57 +46,9 @@ import java.io.IOException;
 @Component
 @AllArgsConstructor
 public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
-	private static final String BASIC_ = "Basic ";
 	private final ObjectMapper objectMapper;
 	private final RedisTemplate redisTemplate;
 	private final FilterIgnorePropertiesConfig filterIgnorePropertiesConfig;
-
-	/**
-	 * 从header 请求中的clientId/clientsecect
-	 *
-	 * @param header header中的参数
-	 * @throws CheckedException if the Basic header is not present or is not valid
-	 *                          Base64
-	 */
-	public static String[] extractAndDecodeHeader(String header)
-		throws IOException, CheckedException {
-
-		byte[] base64Token = header.substring(6).getBytes("UTF-8");
-		byte[] decoded;
-		try {
-			decoded = Base64.decode(base64Token);
-		} catch (IllegalArgumentException e) {
-			throw new CheckedException(
-				"Failed to decode basic authentication token");
-		}
-
-		String token = new String(decoded, CharsetUtil.UTF_8);
-
-		int delim = token.indexOf(":");
-
-		if (delim == -1) {
-			throw new CheckedException("Invalid basic authentication token");
-		}
-		return new String[]{token.substring(0, delim), token.substring(delim + 1)};
-	}
-
-	/**
-	 * *从header 请求中的clientId/clientsecect
-	 *
-	 * @param request
-	 * @return
-	 * @throws IOException
-	 */
-	public static String[] extractAndDecodeHeader(ServerHttpRequest request)
-		throws IOException, CheckedException {
-		String header = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-
-		if (header == null || !header.startsWith(BASIC_)) {
-			throw new CheckedException("请求头中client信息为空");
-		}
-
-		return extractAndDecodeHeader(header);
-	}
 
 	@Override
 	public GatewayFilter apply(Object config) {
@@ -122,7 +69,7 @@ public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
 			}
 
 			try {
-				String[] clientInfos = extractAndDecodeHeader(request);
+				String[] clientInfos = WebUtils.getClientId(request);
 				if (filterIgnorePropertiesConfig.getClients().contains(clientInfos[0])) {
 					return chain.filter(exchange);
 				}
