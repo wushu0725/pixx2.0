@@ -19,7 +19,6 @@
 
 package com.pig4cloud.pigx.admin.controller;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.pig4cloud.pigx.admin.api.dto.DeptTree;
 import com.pig4cloud.pigx.admin.api.entity.SysDept;
 import com.pig4cloud.pigx.admin.service.SysDeptService;
@@ -68,7 +67,17 @@ public class DeptController {
 	 */
 	@GetMapping(value = "/tree")
 	public R<List<DeptTree>> getTree() {
-		return new R<>(sysDeptService.selectListTree(new EntityWrapper<>()));
+		return new R<>(sysDeptService.selectTree());
+	}
+
+	/**
+	 * 返回当前用户树形菜单集合
+	 *
+	 * @return 树形菜单
+	 */
+	@GetMapping(value = "/user-tree")
+	public R<List<DeptTree>> userTree() {
+		return new R<>(sysDeptService.selectUserTree());
 	}
 
 	/**

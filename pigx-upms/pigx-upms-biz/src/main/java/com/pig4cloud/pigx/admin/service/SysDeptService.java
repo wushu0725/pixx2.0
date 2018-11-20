@@ -19,7 +19,6 @@
 
 package com.pig4cloud.pigx.admin.service;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.IService;
 import com.pig4cloud.pigx.admin.api.dto.DeptTree;
 import com.pig4cloud.pigx.admin.api.entity.SysDept;
@@ -39,10 +38,16 @@ public interface SysDeptService extends IService<SysDept> {
 	/**
 	 * 查询部门树菜单
 	 *
-	 * @param sysDeptEntityWrapper
 	 * @return 树
 	 */
-	List<DeptTree> selectListTree(EntityWrapper<SysDept> sysDeptEntityWrapper);
+	List<DeptTree> selectTree();
+
+	/**
+	 * 查询用户部门树
+	 *
+	 * @return
+	 */
+	List<DeptTree> selectUserTree();
 
 	/**
 	 * 添加信息部门
@@ -67,4 +72,5 @@ public interface SysDeptService extends IService<SysDept> {
 	 * @return 成功、失败
 	 */
 	Boolean updateDeptById(SysDept sysDept);
+
 }

@@ -40,11 +40,11 @@ import java.util.Map;
  */
 @Slf4j
 public class RedisAutoCacheManager extends RedisCacheManager {
+	private static final String SPLIT_FLAG = "#";
+	private static final int CACHE_LENGTH = 2;
 
-	public static final String SPLIT_FLAG = "#";
-
-	public RedisAutoCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration,
-								 Map<String, RedisCacheConfiguration> initialCacheConfigurations, boolean allowInFlightCacheCreation) {
+	RedisAutoCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration,
+						  Map<String, RedisCacheConfiguration> initialCacheConfigurations, boolean allowInFlightCacheCreation) {
 		super(cacheWriter, defaultCacheConfiguration, initialCacheConfigurations, allowInFlightCacheCreation);
 	}
 
@@ -54,7 +54,7 @@ public class RedisAutoCacheManager extends RedisCacheManager {
 			return super.createRedisCache(name, cacheConfig);
 		}
 		String[] cacheArray = name.split(SPLIT_FLAG);
-		if (cacheArray.length < 2) {
+		if (cacheArray.length < CACHE_LENGTH) {
 			return super.createRedisCache(name, cacheConfig);
 		}
 		String cacheName = cacheArray[0] + ":" + TenantUtils.getTenantId();

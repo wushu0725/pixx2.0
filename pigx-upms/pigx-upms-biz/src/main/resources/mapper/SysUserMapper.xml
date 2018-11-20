@@ -164,6 +164,9 @@
 		<if test="username != null and username != ''">
 			and `user`.username LIKE CONCAT('%',#{username},'%')
 		</if>
+		<if test="deptId != null and deptId != ''">
+			and `user`.dept_id = #{deptId}
+		</if>
 		ORDER BY `user`.create_time DESC
 	</select>
 </mapper>

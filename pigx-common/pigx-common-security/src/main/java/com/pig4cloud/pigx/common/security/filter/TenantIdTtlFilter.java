@@ -58,5 +58,6 @@ public class TenantIdTtlFilter extends GenericFilterBean {
 		}
 
 		filterChain.doFilter(request, response);
+		TenantUtils.clear();
 	}
 }

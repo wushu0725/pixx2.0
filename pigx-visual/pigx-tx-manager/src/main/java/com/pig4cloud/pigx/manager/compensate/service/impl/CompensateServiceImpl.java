@@ -134,7 +134,7 @@ public class CompensateServiceImpl implements CompensateService {
 		boolean autoExecuteRes;
 		try {
 			int executeCount = 0;
-			autoExecuteRes = executeCompensate_(json);
+			autoExecuteRes = executeCompensateMethod(json);
 			logger.info("Automatic Compensate Result->" + autoExecuteRes + ",json->" + json);
 			while (!autoExecuteRes) {
 				logger.info("Compensate Failure, Entering Compensate Queue->" + autoExecuteRes + ",json->" + json);
@@ -148,7 +148,7 @@ public class CompensateServiceImpl implements CompensateService {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				autoExecuteRes = executeCompensate_(json);
+				autoExecuteRes = executeCompensateMethod(json);
 			}
 
 			//执行成功删除数据
@@ -316,7 +316,7 @@ public class CompensateServiceImpl implements CompensateService {
 			throw new ServiceException("no data existing");
 		}
 
-		boolean hasOk = executeCompensate_(json);
+		boolean hasOk = executeCompensateMethod(json);
 		if (hasOk) {
 			// 删除本地补偿数据
 			compensateDao.deleteCompensateByPath(path);
@@ -327,7 +327,7 @@ public class CompensateServiceImpl implements CompensateService {
 	}
 
 
-	private boolean executeCompensate_(String json) throws ServiceException {
+	private boolean executeCompensateMethod(String json) throws ServiceException {
 		JSONObject jsonObject = JSON.parseObject(json);
 
 		String model = jsonObject.getString("model");

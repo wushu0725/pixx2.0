@@ -48,12 +48,13 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 	/**
 	 * 分页查询用户信息（含角色）
 	 *
-	 * @param query     查询条件
+	 * @param query     分页条件
 	 * @param username  用户名
-	 * @param dataScope
+	 * @param deptId    部门ID
+	 * @param dataScope 数据权限
 	 * @return list
 	 */
-	List selectUserVoPage(Query query, @Param("username") Object username, DataScope dataScope);
+	List selectUserVoPage(Query query, @Param("username") Object username, @Param("deptId") Object deptId, DataScope dataScope);
 
 	/**
 	 * 通过ID查询用户信息

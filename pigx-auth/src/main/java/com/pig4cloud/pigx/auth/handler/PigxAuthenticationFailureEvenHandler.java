@@ -17,7 +17,7 @@
 
 package com.pig4cloud.pigx.auth.handler;
 
-import com.pig4cloud.pigx.common.security.handler.AuthenticationFailureEvenHandler;
+import com.pig4cloud.pigx.common.security.handler.AbstractAuthenticationFailureEvenHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class PigxAuthenticationFailureEvenHandler extends AuthenticationFailureEvenHandler {
+public class PigxAuthenticationFailureEvenHandler extends AbstractAuthenticationFailureEvenHandler {
 
 	/**
 	 * 处理登录失败方法

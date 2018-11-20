@@ -21,6 +21,7 @@ package com.pig4cloud.pigx.admin.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.dto.DeptTree;
 import com.pig4cloud.pigx.admin.api.entity.SysDept;
@@ -29,6 +30,7 @@ import com.pig4cloud.pigx.admin.api.vo.TreeUtil;
 import com.pig4cloud.pigx.admin.mapper.SysDeptMapper;
 import com.pig4cloud.pigx.admin.service.SysDeptRelationService;
 import com.pig4cloud.pigx.admin.service.SysDeptService;
+import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -114,17 +116,36 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 	}
 
 	/**
-	 * 查询部门树
+	 * 查询全部部门树
 	 *
-	 * @param sysDeptEntityWrapper
 	 * @return 树
 	 */
 	@Override
-	public List<DeptTree> selectListTree(EntityWrapper<SysDept> sysDeptEntityWrapper) {
-		sysDeptEntityWrapper.orderBy("sort", false);
-		return getDeptTree(this.selectList(sysDeptEntityWrapper));
+	public List<DeptTree> selectTree() {
+		Wrapper condition = new EntityWrapper<>();
+		condition.orderBy("sort", false);
+		return getDeptTree(this.selectList(condition));
 	}
 
+	/**
+	 * 查询用户部门树
+	 *
+	 * @return
+	 */
+	@Override
+	public List<DeptTree> selectUserTree() {
+		Integer deptId = SecurityUtils.getUser().getDeptId();
+
+		SysDeptRelation condition = new SysDeptRelation();
+		condition.setAncestor(deptId);
+		List<Integer> descendantIdList = sysDeptRelationService
+			.selectList(new EntityWrapper<>(condition))
+			.stream().map(SysDeptRelation::getDescendant)
+			.collect(Collectors.toList());
+
+		List<SysDept> deptList = baseMapper.selectBatchIds(descendantIdList);
+		return getDeptTree(deptList);
+	}
 
 	/**
 	 * 构建部门树

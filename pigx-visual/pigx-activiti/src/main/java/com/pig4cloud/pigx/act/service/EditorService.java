@@ -42,8 +42,8 @@ public interface EditorService {
 	 * @param modelId
 	 * @param name
 	 * @param description
-	 * @param json_xml
-	 * @param svg_xml
+	 * @param jsonXml
+	 * @param svgXml
 	 */
-	void saveModel(String modelId, String name, String description, String json_xml, String svg_xml);
+	void saveModel(String modelId, String name, String description, String jsonXml, String svgXml);
 }

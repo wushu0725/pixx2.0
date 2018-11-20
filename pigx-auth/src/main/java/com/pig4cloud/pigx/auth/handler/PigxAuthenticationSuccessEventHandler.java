@@ -17,7 +17,7 @@
 
 package com.pig4cloud.pigx.auth.handler;
 
-import com.pig4cloud.pigx.common.security.handler.AuthenticationSuccessEventHandler;
+import com.pig4cloud.pigx.common.security.handler.AbstractAuthenticationSuccessEventHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class PigxAuthenticationSuccessEventHandler extends AuthenticationSuccessEventHandler {
+public class PigxAuthenticationSuccessEventHandler extends AbstractAuthenticationSuccessEventHandler {
 
 	/**
 	 * 处理登录成功方法

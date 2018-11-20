@@ -46,4 +46,8 @@ public class TenantUtils {
 	public static Integer getTenantId() {
 		return THREAD_LOCAL_TENANT.get();
 	}
+
+	public static void clear(){
+		THREAD_LOCAL_TENANT.remove();
+	}
 }

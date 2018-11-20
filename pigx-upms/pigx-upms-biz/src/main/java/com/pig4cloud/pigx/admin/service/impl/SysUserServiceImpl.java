@@ -109,7 +109,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		dataScope.setIsOnly(true);
 		dataScope.setDeptIds(getChildDepts());
 		Object username = query.getCondition().get("username");
-		query.setRecords(baseMapper.selectUserVoPage(query, username, dataScope));
+		Object deptId = query.getCondition().get("deptId");
+		query.setRecords(baseMapper.selectUserVoPage(query, username, deptId, dataScope));
 		return query;
 	}
 
