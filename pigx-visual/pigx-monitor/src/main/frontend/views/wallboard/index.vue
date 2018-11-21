@@ -81,7 +81,7 @@
       viewRegistry.addView({
         path: '/wallboard',
         name: 'wallboard',
-        label: 'Wallboard',
+        label: '图表',
         order: -100,
         component: this
       });

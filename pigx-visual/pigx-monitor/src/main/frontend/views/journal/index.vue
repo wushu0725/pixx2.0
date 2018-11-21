@@ -17,7 +17,6 @@
 <template>
   <div class="section">
     <div class="container">
-      <h1 class="title">Event Journal</h1>
       <div v-if="error" class="message is-warning">
         <div class="message-body">
           <strong>
@@ -30,24 +29,27 @@
       <table class="table is-fullwidth">
         <thead>
           <tr>
-            <th>Application</th>
-            <th>Instance</th>
-            <th>Time</th>
-            <th>Event</th>
+            <th>应用</th>
+            <th>实例</th>
+            <th>时间</th>
+            <th>事件</th>
           </tr>
         </thead>
         <tbody>
           <template v-for="event in events">
             <tr class="is-selectable" :key="event.key"
-                @click="showPayload[event.key] ? $delete(showPayload, event.key) : $set(showPayload, event.key, true)"
-            >
+                @click="showPayload[event.key] ? $delete(showPayload, event.key) : $set(showPayload, event.key, true)">
               <td v-text="instanceNames[event.instance] || '?'" />
               <td v-text="event.instance" />
               <td v-text="event.timestamp.format('L HH:mm:ss.SSS')" />
               <td>
-                <span v-text="event.type" /> <span v-if="event.type === 'STATUS_CHANGED'"
-                                                   v-text="`(${event.payload.statusInfo.status})`"
-                />
+                <el-tag type="warning" v-if="event.type === 'DEREGISTERED'">取消注册</el-tag>
+                <el-tag v-if="event.type === 'REGISTERED'">服务注册</el-tag>
+                <el-tag v-if="event.type === 'REGISTRATION_UPDATED'">注册更新</el-tag>
+                <el-tag type="info" v-if="event.type === 'ENDPOINTS_DETECTED'">端点检查</el-tag>
+                <el-tag type="success" v-if="event.type === 'STATUS_CHANGED' && event.payload.statusInfo.status === 'UP'">服务上线</el-tag>
+                <el-tag type="warning" v-if="event.type === 'STATUS_CHANGED' && event.payload.statusInfo.status === 'DOWN'">服务下线</el-tag>
+                <el-tag type="danger" v-if="event.type === 'STATUS_CHANGED' && event.payload.statusInfo.status === 'OFFLINE'">服务注销</el-tag>
               </td>
             </tr>
             <tr :key="`${event.key}-detail`" v-if="showPayload[event.key]">
@@ -133,7 +135,7 @@
       viewRegistry.addView({
         path: '/journal',
         name: 'journal',
-        label: 'Journal',
+        label: '事件',
         order: 100,
         component: this
       });

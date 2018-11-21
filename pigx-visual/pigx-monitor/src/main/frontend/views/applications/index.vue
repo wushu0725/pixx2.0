@@ -29,23 +29,23 @@
       <div class="level applications-stats">
         <div class="level-item has-text-centered">
           <div>
-            <p class="heading">Applications</p>
+            <p class="heading">应用</p>
             <p class="title" v-text="applicationsCount">1</p>
           </div>
         </div>
         <div class="level-item has-text-centered">
           <div>
-            <p class="heading">Instances</p>
+            <p class="heading">实例</p>
             <p class="title" v-text="instancesCount">1</p>
           </div>
         </div>
         <div class="level-item has-text-centered">
           <div v-if="downCount === 0">
-            <p class="heading">Status</p>
+            <p class="heading">状态</p>
             <p class="title has-text-success">all up</p>
           </div>
           <div v-else>
-            <p class="heading">instances down</p>
+            <p class="heading">下线</p>
             <p class="title has-text-danger" v-text="downCount" />
           </div>
         </div>
@@ -110,7 +110,7 @@
         path: '/applications/:selected?',
         props: true,
         name: 'applications',
-        label: 'Applications',
+        label: '应用',
         handle,
         order: 0,
         component: this

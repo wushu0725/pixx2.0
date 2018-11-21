@@ -4,31 +4,18 @@
 <head>
   <base href="${basePath}">
   <meta charset="utf-8" />
-  <title>Hystrix Monitor</title>
+  <title>断路器监控</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Setup base for everything -->
   <link rel="stylesheet" type="text/css" href="css/global.css" />
-
-  <!-- Our custom CSS -->
   <link rel="stylesheet" type="text/css" href="css/monitor.css" />
-
-  <!-- d3 -->
   <script type="text/javascript" src="<@spring.url '/webjars/d3js/3.4.11/d3.min.js'/>" ></script>
-
-  <!-- Javascript to monitor and display -->
   <script type="text/javascript" src="<@spring.url '/webjars/jquery/2.1.1/jquery.min.js'/>" ></script>
   <script type="text/javascript" src="js/jquery.tinysort.min.js"></script>
   <script type="text/javascript" src="js/tmpl.js"></script>
-
-  <!-- HystrixCommand -->
   <script type="text/javascript" src="components/hystrixCommand/hystrixCommand.js"></script>
   <link rel="stylesheet" type="text/css" href="components/hystrixCommand/hystrixCommand.css" />
-
-  <!-- HystrixThreadPool -->
   <script type="text/javascript" src="components/hystrixThreadPool/hystrixThreadPool.js"></script>
   <link rel="stylesheet" type="text/css" href="components/hystrixThreadPool/hystrixThreadPool.css" />
-
 </head>
 <body>
 <div id="header">
@@ -39,7 +26,7 @@
   <div class="row">
     <div class="menubar">
       <div class="title">
-        Circuit
+        熔断
       </div>
       <div class="menu_actions">
         Sort:
@@ -54,18 +41,18 @@
         <a href="javascript://" onclick="hystrixMonitor.sortByLatency995();">99.5</a>
       </div>
       <div class="menu_legend">
-        <span class="success">Success</span> | <span class="shortCircuited">Short-Circuited</span> | <span class="badRequest"> Bad Request</span> | <span class="timeout">Timeout</span> | <span class="rejected">Rejected</span> | <span class="failure">Failure</span> | <span class="errorPercentage">Error %</span>
+        <span class="success">成功</span> | <span class="shortCircuited">短路</span> | <span class="badRequest">Bad</span> | <span class="timeout">超时</span> | <span class="rejected">拒绝</span> | <span class="failure">失败</span> | <span class="errorPercentage">错误率</span>
       </div>
     </div>
   </div>
-  <div id="dependencies" class="row dependencies"><span class="loading">Loading ...</span></div>
+  <div id="dependencies" class="row dependencies"><span class="loading">加载中 ...</span></div>
 
   <div class="spacer"></div>
 
   <div class="row">
     <div class="menubar">
       <div class="title">
-        Thread Pools
+        线程池
       </div>
       <div class="menu_actions">
         Sort: <a href="javascript://" onclick="dependencyThreadPoolMonitor.sortAlphabetically();">Alphabetical</a> |
@@ -73,7 +60,7 @@
       </div>
     </div>
   </div>
-  <div id="dependencyThreadPools" class="row dependencyThreadPools"><span class="loading">Loading ...</span></div>
+  <div id="dependencyThreadPools" class="row dependencyThreadPools"><span class="loading">加载中 ...</span></div>
 </div>
 
 
@@ -101,9 +88,9 @@
     var poolStream = "${contextPath}/proxy.stream?origin=" + stream;
 
     if(getUrlVars()["title"] != undefined) {
-      $('#title_name').text("Hystrix Stream: " + decodeURIComponent(getUrlVars()["title"]))
+      $('#title_name').text("目标流: " + decodeURIComponent(getUrlVars()["title"]))
     } else {
-      $('#title_name').text("Hystrix Stream: " + decodeURIComponent(stream))
+      $('#title_name').text("目标流: " + decodeURIComponent(stream))
     }
   }
   console.log("Command Stream: " + commandStream)

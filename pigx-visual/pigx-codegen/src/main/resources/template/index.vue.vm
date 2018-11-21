@@ -117,11 +117,12 @@
         })
         .then(data => {
         _this.tableData.splice(index, 1)
-      _this.$message({
-        showClose: true,
-        message: '删除成功',
-        type: 'success'
-      })
+        _this.$message({
+          showClose: true,
+          message: '删除成功',
+          type: 'success'
+        })
+        this.getList(this.page)
     })
     .catch(function(err) { })
     },
@@ -135,11 +136,11 @@
     handleUpdate: function(row, index, done) {
       putObj(row).then(data => {
         this.tableData.splice(index, 1, Object.assign({}, row))
-      this.$message({
-        showClose: true,
-        message: '修改成功',
-        type: 'success'
-      })
+        this.$message({
+          showClose: true,
+          message: '修改成功',
+          type: 'success'
+        })
       done()
       this.getList(this.page)
     })
@@ -153,13 +154,13 @@
     handleSave: function(row, done) {
       addObj(row).then(data => {
         this.tableData.push(Object.assign({}, row))
-      this.$message({
-        showClose: true,
-        message: '添加成功',
-        type: 'success'
-      })
-      done()
-      this.getList(this.page)
+        this.$message({
+          showClose: true,
+          message: '添加成功',
+          type: 'success'
+        })
+        done()
+        this.getList(this.page)
     })
     },
     /**

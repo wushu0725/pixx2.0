@@ -163,8 +163,7 @@ public class UserController {
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_user_edit')")
 	public R<Boolean> userUpdate(@Valid @RequestBody UserDTO userDto) {
-		SysUser user = userService.selectById(userDto.getUserId());
-		return new R<>(userService.updateUser(userDto, user.getUsername()));
+		return new R<>(userService.updateUser(userDto));
 	}
 
 	/**
@@ -187,7 +186,7 @@ public class UserController {
 	@SysLog("修改个人信息")
 	@PutMapping("/edit")
 	public R<Boolean> editInfo(@Valid @RequestBody UserDTO userDto) {
-		return userService.updateUserInfo(userDto, SecurityUtils.getUser().getUsername());
+		return userService.updateUserInfo(userDto);
 	}
 
 	/**

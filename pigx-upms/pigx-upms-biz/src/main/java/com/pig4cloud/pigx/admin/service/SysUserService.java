@@ -64,19 +64,17 @@ public interface SysUserService extends IService<SysUser> {
 	 * 更新当前用户基本信息
 	 *
 	 * @param userDto  用户信息
-	 * @param username 用户名
 	 * @return Boolean
 	 */
-	R<Boolean> updateUserInfo(UserDTO userDto, String username);
+	R<Boolean> updateUserInfo(UserDTO userDto);
 
 	/**
 	 * 更新指定用户信息
 	 *
 	 * @param userDto  用户信息
-	 * @param username 用户信息
 	 * @return
 	 */
-	Boolean updateUser(UserDTO userDto, String username);
+	Boolean updateUser(UserDTO userDto);
 
 	/**
 	 * 通过ID查询用户信息

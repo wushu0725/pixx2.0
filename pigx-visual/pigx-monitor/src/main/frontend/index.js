@@ -23,11 +23,14 @@ import Notifications from './notifications';
 import sbaShell from './shell';
 import Store from './store';
 import ViewRegistry from './viewRegistry';
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 import views from './views';
 
 moment.locale(window.navigator.language);
 Vue.use(VueRouter);
 Vue.use(components);
+Vue.use(ElementUI)
 
 const applicationStore = new Store();
 const viewRegistry = new ViewRegistry();

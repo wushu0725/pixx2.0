@@ -141,16 +141,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	}
 
 	@Override
-	@CacheEvict(value = "user_details", key = "#username")
-	public R<Boolean> updateUserInfo(UserDTO userDto, String username) {
-		UserVO userVO = baseMapper.selectUserVoByUsername(username);
+	@CacheEvict(value = "user_details", key = "#userDto.username")
+	public R<Boolean> updateUserInfo(UserDTO userDto) {
+		UserVO userVO = baseMapper.selectUserVoByUsername(userDto.getUsername());
 		SysUser sysUser = new SysUser();
 		if (StrUtil.isNotBlank(userDto.getPassword())
 			&& StrUtil.isNotBlank(userDto.getNewpassword1())) {
 			if (ENCODER.matches(userDto.getPassword(), userVO.getPassword())) {
 				sysUser.setPassword(ENCODER.encode(userDto.getNewpassword1()));
 			} else {
-				log.warn("原密码错误，修改密码失败:{}", username);
+				log.warn("原密码错误，修改密码失败:{}", userDto.getUsername());
 				return new R<>(Boolean.FALSE, "原密码错误，修改失败");
 			}
 		}
@@ -161,8 +161,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	}
 
 	@Override
-	@CacheEvict(value = "user_details", key = "#username")
-	public Boolean updateUser(UserDTO userDto, String username) {
+	@CacheEvict(value = "user_details", key = "#userDto.username")
+	public Boolean updateUser(UserDTO userDto) {
 		SysUser sysUser = new SysUser();
 		BeanUtils.copyProperties(userDto, sysUser);
 		sysUser.setUpdateTime(LocalDateTime.now());
