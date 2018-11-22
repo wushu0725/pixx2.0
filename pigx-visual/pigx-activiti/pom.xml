@@ -56,7 +56,7 @@
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-boot-starter</artifactId>
-			<version>${mbp.boot.version}</version>
+			<version>${mybatis-plus.version}</version>
 		</dependency>
 		<!-- activiti -->
 		<dependency>

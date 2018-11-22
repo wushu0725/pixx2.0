@@ -83,7 +83,7 @@
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-boot-starter</artifactId>
-			<version>${mbp.boot.version}</version>
+			<version>${mybatis-plus.version}</version>
 		</dependency>
 		<!--数据库-->
 		<dependency>
