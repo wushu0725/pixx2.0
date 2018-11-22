@@ -1,9 +1,9 @@
 server:
-  port: 5001
+  port: 5003
 
 spring:
   application:
-    name: pigx-daemon
+    name: @artifactId@
   #配置中心
   cloud:
     config:

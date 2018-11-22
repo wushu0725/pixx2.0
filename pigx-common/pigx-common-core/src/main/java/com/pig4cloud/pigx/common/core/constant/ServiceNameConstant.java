@@ -26,17 +26,17 @@ package com.pig4cloud.pigx.common.core.constant;
  */
 public interface ServiceNameConstant {
 	/**
-	 * 认证服务的SERVICEID（zuul 配置的对应）
+	 * 认证中心
 	 */
 	String AUTH_SERVICE = "pigx-auth";
 
 	/**
 	 * UMPS模块
 	 */
-	String UMPS_SERVICE = "pigx-upms";
+	String UMPS_SERVICE = "pigx-upms-biz";
 
 	/**
 	 * 分布式事务协调服务
 	 */
-	String  TX_MANAGER = "pigx-tx-manager";
+	String TX_MANAGER = "pigx-tx-manager";
 }

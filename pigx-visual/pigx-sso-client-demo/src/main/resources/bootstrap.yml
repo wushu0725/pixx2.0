@@ -3,8 +3,6 @@ server:
   servlet:
     context-path: /sso1
 
-
-
 security:
   oauth2:
     client:
@@ -19,7 +17,7 @@ security:
 
 spring:
   application:
-    name: pig-sso-client-demo
+    name: @artifactId@
 # 注册中心
 eureka:
   instance:

@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: pigx-config
+    name: @artifactId@
   profiles:
     active: native
   # 配置中心

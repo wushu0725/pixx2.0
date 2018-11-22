@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: pigx-upms
+    name: @artifactId@
   # dev环境
   profiles:
     active: dev

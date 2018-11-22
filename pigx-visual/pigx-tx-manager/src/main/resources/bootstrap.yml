@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: pigx-tx-manager
+    name: @artifactId@
   #配置中心
   cloud:
     config:

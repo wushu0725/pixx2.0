@@ -7,7 +7,7 @@ spring:
       name: pig
       password: pig
   application:
-    name: pig-eureka
+    name: @artifactId@
   cloud:
     config:
       enabled: false
@@ -15,7 +15,7 @@ spring:
 # 类似的 redis 使用pigx-redis ,gateway 换成 pigx-gateway
 eureka:
   instance:
-    hostname: lengleng
+    hostname: pigx-eureka
     prefer-ip-address: true
   client:
     register-with-eureka: false

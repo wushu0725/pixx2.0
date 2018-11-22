@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: pigx-codegen
+    name: @artifactId@
   #配置中心
   cloud:
     config:
@@ -21,6 +21,3 @@ eureka:
   client:
     service-url:
       defaultZone: http://pig:pig@pigx-eureka:1025/eureka/
-logging:
-  level:
-    root: info
