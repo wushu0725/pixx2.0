@@ -55,13 +55,13 @@ public class TokenController {
 	/**
 	 * 删除
 	 *
-	 * @param id ID
+	 * @param token token
 	 * @return success/false
 	 */
 	@SysLog("删除用户token")
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/{token}")
 	@PreAuthorize("@pms.hasPermission('sys_token_del')")
-	public R<Boolean> delete(@PathVariable String id) {
-		return remoteTokenService.deleteTokenById(id, SecurityConstants.FROM_IN);
+	public R<Boolean> delete(@PathVariable String token) {
+		return remoteTokenService.deleteTokenById(token, SecurityConstants.FROM_IN);
 	}
 }

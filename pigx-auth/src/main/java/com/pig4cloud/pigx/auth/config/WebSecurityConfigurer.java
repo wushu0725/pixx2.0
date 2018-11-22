@@ -62,13 +62,13 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.formLogin()
-			.loginPage("/oauth/login")
-			.loginProcessingUrl("/oauth/form")
+			.loginPage("/token/login")
+			.loginProcessingUrl("/token/form")
 			.and()
 			.authorizeRequests()
 			.antMatchers(
+				"/token/**",
 				"/actuator/**",
-				"/oauth/**",
 				"/mobile/**").permitAll()
 			.anyRequest().authenticated()
 			.and().csrf().disable()

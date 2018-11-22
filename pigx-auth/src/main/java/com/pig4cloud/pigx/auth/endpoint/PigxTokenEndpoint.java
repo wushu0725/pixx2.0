@@ -55,7 +55,7 @@ import java.util.Map;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/oauth")
+@RequestMapping("/token")
 public class PigxTokenEndpoint {
 	private static final String PIGX_OAUTH_ACCESS = SecurityConstants.PIGX_PREFIX + SecurityConstants.OAUTH_PREFIX + "access:";
 	private final TokenStore tokenStore;
@@ -103,7 +103,7 @@ public class PigxTokenEndpoint {
 	 * @param from  内部调用标志
 	 * @return
 	 */
-	@DeleteMapping("/token/{token}")
+	@DeleteMapping("/{token}")
 	public R<Boolean> delToken(@PathVariable("token") String token, @RequestHeader(required = false) String from) {
 		if (StrUtil.isBlank(from)) {
 			return null;

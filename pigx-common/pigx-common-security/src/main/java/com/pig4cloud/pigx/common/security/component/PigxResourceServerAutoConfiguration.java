@@ -24,9 +24,13 @@ import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -39,7 +43,16 @@ public class PigxResourceServerAutoConfiguration {
 	@Primary
 	@LoadBalanced
 	public RestTemplate lbRestTemplate() {
-		return new RestTemplate();
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
+			@Override
+			public void handleError(ClientHttpResponse response) throws IOException {
+				if (response.getRawStatusCode() != HttpStatus.BAD_REQUEST.value()) {
+					super.handleError(response);
+				}
+			}
+		});
+		return restTemplate;
 	}
 
 	@Bean

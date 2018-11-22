@@ -53,14 +53,13 @@ public class RemoteTokenServiceFallbackImpl implements RemoteTokenService {
 	/**
 	 * 删除token
 	 *
-	 *
-	 * @param s
-	 * @param id
+	 * @param token
+	 * @param from
 	 * @return
 	 */
 	@Override
-	public R<Boolean> deleteTokenById(String s, String id) {
-		log.error("删除token 失败 {}", id, cause);
+	public R<Boolean> deleteTokenById(String token, String from) {
+		log.error("删除token 失败 {}", token, cause);
 		return null;
 	}
 }

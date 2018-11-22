@@ -26,14 +26,13 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.common.DefaultThrowableAnalyzer;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.exceptions.ClientAuthenticationException;
 import org.springframework.security.oauth2.common.exceptions.InsufficientScopeException;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
 import org.springframework.security.web.util.ThrowableAnalyzer;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
-
-import java.io.IOException;
 
 /**
  * @author lengleng
@@ -86,7 +85,7 @@ public class PigxWebResponseExceptionTranslator implements WebResponseExceptionT
 
 	}
 
-	private ResponseEntity<OAuth2Exception> handleOAuth2Exception(OAuth2Exception e) throws IOException {
+	private ResponseEntity<OAuth2Exception> handleOAuth2Exception(OAuth2Exception e) {
 
 		int status = e.getHttpErrorCode();
 		HttpHeaders headers = new HttpHeaders();
@@ -96,10 +95,14 @@ public class PigxWebResponseExceptionTranslator implements WebResponseExceptionT
 			headers.set("WWW-Authenticate", String.format("%s %s", OAuth2AccessToken.BEARER_TYPE, e.getSummary()));
 		}
 
-		ResponseEntity<OAuth2Exception> response = new ResponseEntity<>(new PigxAuth2Exception(e.getMessage()), headers,
-			HttpStatus.valueOf(status));
+		// 客户端异常直接返回客户端,不然无法解析
+		if (e instanceof ClientAuthenticationException) {
+			return new ResponseEntity<>(e, headers,
+				HttpStatus.valueOf(status));
+		}
 
-		return response;
+		return new ResponseEntity<>(new PigxAuth2Exception(e.getMessage()), headers,
+			HttpStatus.valueOf(status));
 
 	}
 }
