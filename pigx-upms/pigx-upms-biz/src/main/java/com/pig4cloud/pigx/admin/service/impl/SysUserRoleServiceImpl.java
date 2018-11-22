@@ -19,7 +19,7 @@
 
 package com.pig4cloud.pigx.admin.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.entity.SysUserRole;
 import com.pig4cloud.pigx.admin.mapper.SysUserRoleMapper;
 import com.pig4cloud.pigx.admin.service.SysUserRoleService;

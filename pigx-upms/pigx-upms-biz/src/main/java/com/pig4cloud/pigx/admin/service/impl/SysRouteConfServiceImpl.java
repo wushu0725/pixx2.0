@@ -19,8 +19,9 @@ package com.pig4cloud.pigx.admin.service.impl;
 
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONUtil;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.entity.SysRouteConf;
 import com.pig4cloud.pigx.admin.mapper.SysRouteConfMapper;
 import com.pig4cloud.pigx.admin.service.SysRouteConfService;
@@ -70,7 +71,7 @@ public class SysRouteConfServiceImpl extends ServiceImpl<SysRouteConfMapper, Sys
 	public List<SysRouteConf> routes() {
 		SysRouteConf condition = new SysRouteConf();
 		condition.setDelFlag(CommonConstant.STATUS_NORMAL);
-		return baseMapper.selectList(new EntityWrapper<>(condition));
+		return baseMapper.selectList(new QueryWrapper<>(condition));
 	}
 
 	/**
@@ -132,7 +133,7 @@ public class SysRouteConfServiceImpl extends ServiceImpl<SysRouteConfMapper, Sys
 		// 逻辑删除全部
 		SysRouteConf condition = new SysRouteConf();
 		condition.setDelFlag(CommonConstant.STATUS_NORMAL);
-		this.delete(new EntityWrapper<>(condition));
+		this.remove(new UpdateWrapper<>(condition));
 
 		//插入生效路由
 		List<SysRouteConf> routeConfList = routeDefinitionVoList.stream().map(vo -> {
@@ -144,7 +145,7 @@ public class SysRouteConfServiceImpl extends ServiceImpl<SysRouteConfMapper, Sys
 			routeConf.setUri(vo.getUri().toString());
 			return routeConf;
 		}).collect(Collectors.toList());
-		this.insertBatch(routeConfList);
+		this.saveBatch(routeConfList);
 		log.debug("更新网关路由结束 ");
 
 		this.applicationEventPublisher.publishEvent(new RefreshRoutesEvent(this));

@@ -18,7 +18,10 @@
 package com.pig4cloud.pigx.admin.service.impl;
 
 import cn.hutool.json.JSONUtil;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 import com.pig4cloud.pigx.admin.api.entity.SysSocialDetails;
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
@@ -51,6 +54,18 @@ public class SysSocialDetailsServiceImpl extends ServiceImpl<SysSocialDetailsMap
 	private final RestTemplate restTemplate;
 	private final SysUserMapper sysUserMapper;
 
+
+	/**
+	 * 社交登录简单分页查询
+	 *
+	 * @param sysSocialDetails 社交登录
+	 * @return
+	 */
+	@Override
+	public IPage<SysSocialDetails> getSysSocialDetailsPage(Page<SysSocialDetails> page, SysSocialDetails sysSocialDetails) {
+		return baseMapper.getSysSocialDetailsPage(page, sysSocialDetails);
+	}
+
 	/**
 	 * 绑定社交账号
 	 *
@@ -65,7 +80,7 @@ public class SysSocialDetailsServiceImpl extends ServiceImpl<SysSocialDetailsMap
 		SysUser sysUser = sysUserMapper.selectById(SecurityUtils.getUser().getId());
 		sysUser.setWxOpenid(result.get("openId"));
 
-		sysUserMapper.updateAllColumnById(sysUser);
+		sysUserMapper.updateById(sysUser);
 		//更新緩存
 		cacheManager.getCache("user_details").evict(result.get("openId"));
 		return Boolean.TRUE;
@@ -95,7 +110,7 @@ public class SysSocialDetailsServiceImpl extends ServiceImpl<SysSocialDetailsMap
 	private Map<String, String> getOpenId(String appId, String code) {
 		SysSocialDetails condition = new SysSocialDetails();
 		condition.setAppId(appId);
-		SysSocialDetails socialDetails = this.baseMapper.selectOne(condition);
+		SysSocialDetails socialDetails = this.baseMapper.selectOne(new QueryWrapper<>(condition));
 
 		String openId = null;
 		//微信登录

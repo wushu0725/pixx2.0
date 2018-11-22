@@ -19,7 +19,7 @@
 
 package com.pig4cloud.pigx.admin.controller;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.pig4cloud.pigx.admin.api.dto.MenuTree;
 import com.pig4cloud.pigx.admin.api.entity.SysMenu;
 import com.pig4cloud.pigx.admin.api.vo.MenuVO;
@@ -78,7 +78,8 @@ public class MenuController {
 	 */
 	@GetMapping(value = "/tree")
 	public R<List<MenuTree>> getTree() {
-		return new R<>(TreeUtil.bulidTree(sysMenuService.selectList(new EntityWrapper<>()), -1));
+		return new R<>(TreeUtil.bulidTree(sysMenuService.list(new QueryWrapper<SysMenu>()
+			.lambda().eq(SysMenu::getDelFlag,CommonConstant.STATUS_NORMAL)), -1));
 	}
 
 	/**
@@ -103,7 +104,7 @@ public class MenuController {
 	 */
 	@GetMapping("/{id}")
 	public R<SysMenu> menu(@PathVariable Integer id) {
-		return new R<>(sysMenuService.selectById(id));
+		return new R<>(sysMenuService.getById(id));
 	}
 
 	/**
@@ -116,7 +117,7 @@ public class MenuController {
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_menu_add')")
 	public R<Boolean> menu(@Valid @RequestBody SysMenu sysMenu) {
-		return new R<>(sysMenuService.insert(sysMenu));
+		return new R<>(sysMenuService.save(sysMenu));
 	}
 
 	/**

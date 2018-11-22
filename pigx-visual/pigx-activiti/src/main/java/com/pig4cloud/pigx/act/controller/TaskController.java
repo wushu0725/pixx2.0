@@ -18,7 +18,7 @@
 package com.pig4cloud.pigx.act.controller;
 
 import cn.hutool.core.io.IoUtil;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pig4cloud.pigx.act.dto.LeaveBillDto;
 import com.pig4cloud.pigx.act.service.ActTaskService;
 import com.pig4cloud.pigx.common.core.util.R;
@@ -44,8 +44,8 @@ public class TaskController {
 	private final ActTaskService actTaskService;
 
 	@GetMapping("/todo")
-	public Page todo(@RequestParam Map<String, Object> params) {
-		return actTaskService.findTaskByName(params, SecurityUtils.getUsername());
+	public R<IPage> todo(@RequestParam Map<String, Object> params) {
+		return new R<>(actTaskService.findTaskByName(params, SecurityUtils.getUsername()));
 	}
 
 	@GetMapping("/{id}")

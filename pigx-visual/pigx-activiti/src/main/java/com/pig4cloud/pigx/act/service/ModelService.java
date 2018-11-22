@@ -17,7 +17,7 @@
 
 package com.pig4cloud.pigx.act.service;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.activiti.engine.repository.Model;
 
 import java.util.Map;
@@ -45,7 +45,7 @@ public interface ModelService {
 	 * @param params
 	 * @return
 	 */
-	Page<Model> selectPage(Map<String, Object> params);
+	IPage<Model> selectPage(Map<String, Object> params);
 
 	/**
 	 * 删除流程

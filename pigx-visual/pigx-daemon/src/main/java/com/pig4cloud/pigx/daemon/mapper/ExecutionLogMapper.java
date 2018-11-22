@@ -1,16 +1,24 @@
 package com.pig4cloud.pigx.daemon.mapper;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.daemon.entity.ExecutionLog;
-import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
+ * 任务日志处理
  *
- *
- * @author lengleng
- * @date 2018-08-03 22:15:56
+ * @author lishangbu
+ * @date 2018/11/22
  */
-@Mapper
 public interface ExecutionLogMapper extends BaseMapper<ExecutionLog> {
+  /**
+    * 任务日志处理简单分页查询
+    * @param executionLog 任务日志处理
+    * @return
+    */
+  IPage<ExecutionLog> getExecutionLogPage(Page page, @Param("executionLog") ExecutionLog executionLog);
+
 
 }

@@ -20,10 +20,10 @@
 package com.pig4cloud.pigx.admin.config;
 
 import cn.hutool.core.util.ArrayUtil;
-import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
-import com.baomidou.mybatisplus.plugins.parser.ISqlParser;
-import com.baomidou.mybatisplus.plugins.parser.tenant.TenantHandler;
-import com.baomidou.mybatisplus.plugins.parser.tenant.TenantSqlParser;
+import com.baomidou.mybatisplus.core.parser.ISqlParser;
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
+import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
 import com.pig4cloud.pigx.common.core.datascope.DataScopeInterceptor;
 import com.pig4cloud.pigx.common.core.util.TenantUtils;
 import lombok.extern.slf4j.Slf4j;

@@ -19,10 +19,12 @@ package com.pig4cloud.pigx.act.service.impl;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.pig4cloud.pigx.act.service.ModelService;
+import com.pig4cloud.pigx.common.core.constant.PaginationConstant;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import com.pig4cloud.pigx.common.core.util.TenantUtils;
 import lombok.AllArgsConstructor;
@@ -106,7 +108,7 @@ public class ModelServiceImpl implements ModelService {
 	 * @return
 	 */
 	@Override
-	public Page<Model> selectPage(Map<String, Object> params) {
+	public IPage<Model> selectPage(Map<String, Object> params) {
 		ModelQuery modelQuery = repositoryService.createModelQuery()
 			.latestVersion().orderByLastUpdateTime().desc();
 		String category = (String) params.get("category");
@@ -114,10 +116,10 @@ public class ModelServiceImpl implements ModelService {
 			modelQuery.modelCategory(category);
 		}
 
-		int page = MapUtil.getInt(params, "page");
-		int limit = MapUtil.getInt(params, "limit");
+		int page = MapUtil.getInt(params, PaginationConstant.CURRENT);
+		int limit = MapUtil.getInt(params, PaginationConstant.SIZE);
 
-		Page result = new Page(page, limit);
+		IPage result = new Page(page, limit);
 		result.setTotal(modelQuery.count());
 		result.setRecords(modelQuery.listPage((page - 1) * limit, limit));
 		return result;

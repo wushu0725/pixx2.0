@@ -19,8 +19,11 @@
 
 package com.pig4cloud.pigx.admin.mapper;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.admin.api.entity.SysDict;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -31,5 +34,12 @@ import com.pig4cloud.pigx.admin.api.entity.SysDict;
  * @since 2017-11-19
  */
 public interface SysDictMapper extends BaseMapper<SysDict> {
+	/**
+	 * 系统字典简单分页查询
+	 * @param sysDict 系统字典
+	 * @return
+	 */
+	IPage<SysDict> getSysDictPage(Page page, @Param("sysDict") SysDict sysDict);
+
 
 }

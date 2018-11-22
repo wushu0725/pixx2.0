@@ -17,12 +17,11 @@
 
 package com.pig4cloud.pigx.admin.controller;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 import com.pig4cloud.pigx.admin.api.entity.SysSocialDetails;
 import com.pig4cloud.pigx.admin.service.SysSocialDetailsService;
-import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.log.annotation.SysLog;
 import io.swagger.annotations.Api;
@@ -30,7 +29,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Map;
 
 
 /**
@@ -48,14 +46,15 @@ public class SysSocialDetailsController {
 
 
 	/**
-	 * 列表
+	 * 社交登录账户简单分页查询
 	 *
-	 * @param params
+	 * @param page             分页对象
+	 * @param sysSocialDetails 社交登录
 	 * @return
 	 */
 	@GetMapping("/page")
-	public R<Page> page(@RequestParam Map<String, Object> params) {
-		return new R<>(sysSocialDetailsService.selectPage(new Query<>(params), new EntityWrapper<>()));
+	public R<IPage<SysSocialDetails>> getSysSocialDetailsPage(Page<SysSocialDetails> page, SysSocialDetails sysSocialDetails) {
+		return new R<>(sysSocialDetailsService.getSysSocialDetailsPage(page, sysSocialDetails));
 	}
 
 
@@ -67,7 +66,7 @@ public class SysSocialDetailsController {
 	 */
 	@GetMapping("/{id}")
 	public R<SysSocialDetails> info(@PathVariable("id") Integer id) {
-		return new R<>(sysSocialDetailsService.selectById(id));
+		return new R<>(sysSocialDetailsService.getById(id));
 	}
 
 	/**
@@ -79,7 +78,7 @@ public class SysSocialDetailsController {
 	@SysLog("保存三方信息")
 	@PostMapping
 	public R save(@Valid @RequestBody SysSocialDetails sysSocialDetails) {
-		sysSocialDetailsService.insert(sysSocialDetails);
+		sysSocialDetailsService.save(sysSocialDetails);
 		return new R<>(Boolean.TRUE);
 	}
 
@@ -105,7 +104,7 @@ public class SysSocialDetailsController {
 	@SysLog("删除三方信息")
 	@DeleteMapping("/{id}")
 	public R delete(@PathVariable Integer id) {
-		return new R<>(sysSocialDetailsService.deleteById(id));
+		return new R<>(sysSocialDetailsService.removeById(id));
 	}
 
 	/**

@@ -17,7 +17,7 @@
 
 package com.pig4cloud.pigx.admin.api.feign;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.admin.api.feign.factory.RemoteTokenServiceFallbackFactory;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import com.pig4cloud.pigx.common.core.constant.ServiceNameConstant;

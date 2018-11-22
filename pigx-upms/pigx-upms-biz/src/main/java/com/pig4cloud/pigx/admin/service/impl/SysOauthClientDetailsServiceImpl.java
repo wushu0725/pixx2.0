@@ -19,7 +19,9 @@
 
 package com.pig4cloud.pigx.admin.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.entity.SysOauthClientDetails;
 import com.pig4cloud.pigx.admin.mapper.SysOauthClientDetailsMapper;
 import com.pig4cloud.pigx.admin.service.SysOauthClientDetailsService;
@@ -38,6 +40,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysOauthClientDetailsServiceImpl extends ServiceImpl<SysOauthClientDetailsMapper, SysOauthClientDetails> implements SysOauthClientDetailsService {
 
+
+	/**
+	 * 系统终端简单分页查询
+	 * @param sysOauthClientDetails 系统终端
+	 * @return
+	 */
+	@Override
+	public IPage<SysOauthClientDetails> getSysOauthClientDetailsPage(Page<SysOauthClientDetails> page, SysOauthClientDetails sysOauthClientDetails){
+		return baseMapper.getSysOauthClientDetailsPage(page,sysOauthClientDetails);
+	}
+
 	/**
 	 * 通过ID删除客户端
 	 *
@@ -47,7 +60,7 @@ public class SysOauthClientDetailsServiceImpl extends ServiceImpl<SysOauthClient
 	@Override
 	@CacheEvict(value = SecurityConstants.CLIENT_DETAILS_KEY, key = "#id")
 	public Boolean deleteClientDetailsById(String id) {
-		return this.deleteById(id);
+		return this.removeById(id);
 	}
 
 	/**

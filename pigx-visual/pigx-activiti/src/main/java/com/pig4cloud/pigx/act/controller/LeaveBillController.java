@@ -17,19 +17,16 @@
 
 package com.pig4cloud.pigx.act.controller;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.act.entity.LeaveBill;
 import com.pig4cloud.pigx.act.service.LeaveBillService;
 import com.pig4cloud.pigx.act.service.ProcessService;
 import com.pig4cloud.pigx.common.core.constant.enums.EnumTaskStatus;
-import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 
 /**
@@ -46,14 +43,14 @@ public class LeaveBillController {
 	private final ProcessService processService;
 
 	/**
-	 * 列表
-	 *
-	 * @param params
+	 * 请假审批单简单分页查询
+	 * @param page 分页对象
+	 * @param leaveBill 请假审批单
 	 * @return
 	 */
 	@GetMapping("/page")
-	public Page page(@RequestParam Map<String, Object> params) {
-		return leaveBillService.selectPage(new Query<>(params), new EntityWrapper<>());
+	public R<IPage<LeaveBill>> getLeaveBillPage(Page<LeaveBill> page, LeaveBill leaveBill) {
+		return  new R<>(leaveBillService.getLeaveBillPage(page,leaveBill));
 	}
 
 
@@ -65,7 +62,7 @@ public class LeaveBillController {
 	 */
 	@GetMapping("/{leaveId}")
 	public R info(@PathVariable("leaveId") Integer leaveId) {
-		LeaveBill leaveBill = leaveBillService.selectById(leaveId);
+		LeaveBill leaveBill = leaveBillService.getById(leaveId);
 		return new R<>(leaveBill);
 	}
 
@@ -79,7 +76,7 @@ public class LeaveBillController {
 	public R save(@RequestBody LeaveBill leaveBill) {
 		leaveBill.setUsername(SecurityUtils.getUsername());
 		leaveBill.setState(EnumTaskStatus.UNSUBMIT.getStatus());
-		return new R<>(leaveBillService.insert(leaveBill));
+		return new R<>(leaveBillService.save(leaveBill));
 	}
 
 	/**
@@ -102,7 +99,7 @@ public class LeaveBillController {
 	 */
 	@DeleteMapping("/{leaveId}")
 	public R delete(@PathVariable Integer leaveId) {
-		return new R<>(leaveBillService.deleteById(leaveId));
+		return new R<>(leaveBillService.removeById(leaveId));
 	}
 
 	/**

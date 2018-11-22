@@ -52,7 +52,7 @@ public class ColumnEntity {
 	 */
 	private String attrType;
 	/**
-	 * 其他信息。
+	 * 其他信息
 	 */
 	private String extra;
 }

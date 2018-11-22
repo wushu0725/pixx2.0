@@ -19,14 +19,10 @@
 
 package com.pig4cloud.pigx.admin.api.entity;
 
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.io.Serializable;
 
 /**
  * <p>
@@ -46,16 +42,9 @@ public class SysRoleMenu extends Model<SysRoleMenu> {
 	/**
 	 * 角色ID
 	 */
-	@TableId(type = IdType.INPUT)
 	private Integer roleId;
 	/**
 	 * 菜单ID
 	 */
-	@TableId(type = IdType.INPUT)
 	private Integer menuId;
-
-	@Override
-	protected Serializable pkVal() {
-		return this.roleId;
-	}
 }

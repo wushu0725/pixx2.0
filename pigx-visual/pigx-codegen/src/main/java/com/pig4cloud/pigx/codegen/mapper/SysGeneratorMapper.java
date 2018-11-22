@@ -17,7 +17,8 @@
 
 package com.pig4cloud.pigx.codegen.mapper;
 
-import com.pig4cloud.pigx.common.core.util.Query;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -34,11 +35,11 @@ public interface SysGeneratorMapper {
 	/**
 	 * 分页查询表格
 	 *
-	 * @param params
+	 * @param page
 	 * @param tableName
 	 * @return
 	 */
-	List<Map<String, Object>> queryList(Query params, @Param("tableName") Object tableName);
+	IPage<List<Map<String, Object>>> queryList(Page page, @Param("tableName") String tableName);
 
 	/**
 	 * 查询表信息

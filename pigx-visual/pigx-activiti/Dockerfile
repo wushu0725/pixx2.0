@@ -6,7 +6,7 @@ RUN mkdir -p /pigx/bin/com.pig4cloud/pigx-daemon
 
 WORKDIR /pigx/bin/com.pig4cloud/pigx-activiti
 
-EXPOSE 5002
+EXPOSE 5005
 
 ADD ./pigx-visual/pigx-activiti/target/pigx-activiti.jar ./
 

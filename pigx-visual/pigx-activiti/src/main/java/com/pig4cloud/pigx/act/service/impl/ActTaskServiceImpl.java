@@ -19,13 +19,15 @@ package com.pig4cloud.pigx.act.service.impl;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.act.dto.CommentDto;
 import com.pig4cloud.pigx.act.dto.LeaveBillDto;
 import com.pig4cloud.pigx.act.dto.TaskDTO;
 import com.pig4cloud.pigx.act.entity.LeaveBill;
 import com.pig4cloud.pigx.act.mapper.LeaveBillMapper;
 import com.pig4cloud.pigx.act.service.ActTaskService;
+import com.pig4cloud.pigx.common.core.constant.PaginationConstant;
 import com.pig4cloud.pigx.common.core.constant.enums.EnumTaskStatus;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
@@ -68,15 +70,15 @@ public class ActTaskServiceImpl implements ActTaskService {
 	private final ProcessEngineFactoryBean processEngine;
 
 	@Override
-	public Page findTaskByName(Map<String, Object> params, String name) {
+	public IPage findTaskByName(Map<String, Object> params, String name) {
 		TaskQuery taskQuery = taskService.createTaskQuery()
 			.taskCandidateOrAssigned(name)
 			.orderByTaskCreateTime().asc();
 
-		int page = MapUtil.getInt(params, "page");
-		int limit = MapUtil.getInt(params, "limit");
+		int page = MapUtil.getInt(params, PaginationConstant.CURRENT);
+		int limit = MapUtil.getInt(params, PaginationConstant.SIZE);
 
-		Page result = new Page(page, limit);
+		IPage result = new Page(page, limit);
 		result.setTotal(taskQuery.count());
 		List<TaskDTO> taskDTOList = new ArrayList<>();
 		taskQuery.list().forEach(task -> {

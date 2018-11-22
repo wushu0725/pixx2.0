@@ -17,7 +17,7 @@
 
 package com.pig4cloud.pigx.admin.api.feign.fallback;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.admin.api.feign.RemoteTokenService;
 import com.pig4cloud.pigx.common.core.util.R;
 import lombok.Setter;

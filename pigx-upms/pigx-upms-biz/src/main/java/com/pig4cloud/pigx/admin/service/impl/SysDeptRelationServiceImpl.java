@@ -20,8 +20,8 @@
 package com.pig4cloud.pigx.admin.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.entity.SysDept;
 import com.pig4cloud.pigx.admin.api.entity.SysDeptRelation;
 import com.pig4cloud.pigx.admin.mapper.SysDeptRelationMapper;
@@ -58,13 +58,13 @@ public class SysDeptRelationServiceImpl extends ServiceImpl<SysDeptRelationMappe
 		SysDeptRelation condition = new SysDeptRelation();
 		condition.setDescendant(sysDept.getParentId());
 		List<SysDeptRelation> relationList = sysDeptRelationMapper
-			.selectList(new EntityWrapper<>(condition))
+			.selectList(new QueryWrapper<>(condition))
 			.stream().map(relation -> {
 				relation.setDescendant(sysDept.getDeptId());
 				return relation;
 			}).collect(Collectors.toList());
 		if (CollUtil.isNotEmpty(relationList)) {
-			this.insertBatch(relationList);
+			this.saveBatch(relationList);
 		}
 
 		//自己也要维护到关系表中

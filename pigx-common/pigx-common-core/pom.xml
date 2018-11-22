@@ -50,10 +50,10 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
-		<!--mybatis-->
+		<!--mybatis plus extension,包含了mybatis plus core-->
 		<dependency>
 			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus-core</artifactId>
+			<artifactId>mybatis-plus-extension</artifactId>
 			<version>${mybatis-plus.version}</version>
 		</dependency>
 		<!--feign 依赖-->

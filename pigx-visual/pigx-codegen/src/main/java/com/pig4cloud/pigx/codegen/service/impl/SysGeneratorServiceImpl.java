@@ -18,11 +18,12 @@
 package com.pig4cloud.pigx.codegen.service.impl;
 
 import cn.hutool.core.io.IoUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.codegen.entity.GenConfig;
 import com.pig4cloud.pigx.codegen.mapper.SysGeneratorMapper;
 import com.pig4cloud.pigx.codegen.service.SysGeneratorService;
 import com.pig4cloud.pigx.codegen.util.GenUtils;
-import com.pig4cloud.pigx.common.core.util.Query;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -46,13 +47,12 @@ public class SysGeneratorServiceImpl implements SysGeneratorService {
 	/**
 	 * 分页查询表
 	 *
-	 * @param query 查询条件
+	 * @param tableName 查询条件
 	 * @return
 	 */
 	@Override
-	public List<Map<String, Object>> queryPage(Query query) {
-		Object tableName = query.getCondition().get("tableName");
-		return sysGeneratorMapper.queryList(query, tableName);
+	public IPage<List<Map<String, Object>>> queryPage(Page page, String tableName) {
+		return sysGeneratorMapper.queryList(page,tableName);
 	}
 
 	/**

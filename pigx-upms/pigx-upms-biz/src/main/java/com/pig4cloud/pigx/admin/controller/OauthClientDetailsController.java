@@ -19,11 +19,10 @@
 
 package com.pig4cloud.pigx.admin.controller;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.admin.api.entity.SysOauthClientDetails;
 import com.pig4cloud.pigx.admin.service.SysOauthClientDetailsService;
-import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.log.annotation.SysLog;
 import io.swagger.annotations.Api;
@@ -32,7 +31,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Map;
 
 /**
  * <p>
@@ -57,19 +55,19 @@ public class OauthClientDetailsController {
 	 */
 	@GetMapping("/{id}")
 	public R<SysOauthClientDetails> get(@PathVariable Integer id) {
-		return new R<>(sysOauthClientDetailsService.selectById(id));
+		return new R<>(sysOauthClientDetailsService.getById(id));
 	}
 
 
 	/**
-	 * 分页查询信息
-	 *
-	 * @param params 分页对象
-	 * @return 分页对象
+	 * 简单分页查询
+	 * @param page 分页对象
+	 * @param sysOauthClientDetails 系统终端
+	 * @return
 	 */
 	@GetMapping("/page")
-	public R<Page> page(@RequestParam Map<String, Object> params) {
-		return new R<>(sysOauthClientDetailsService.selectPage(new Query<>(params), new EntityWrapper<>()));
+	public R<IPage<SysOauthClientDetails>> getSysOauthClientDetailsPage(Page<SysOauthClientDetails> page, SysOauthClientDetails sysOauthClientDetails) {
+		return  new R<>(sysOauthClientDetailsService.getSysOauthClientDetailsPage(page,sysOauthClientDetails));
 	}
 
 	/**
@@ -82,7 +80,7 @@ public class OauthClientDetailsController {
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_client_add')")
 	public R<Boolean> add(@Valid @RequestBody SysOauthClientDetails sysOauthClientDetails) {
-		return new R<>(sysOauthClientDetailsService.insert(sysOauthClientDetails));
+		return new R<>(sysOauthClientDetailsService.save(sysOauthClientDetails));
 	}
 
 	/**

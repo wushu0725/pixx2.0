@@ -19,7 +19,9 @@
 
 package com.pig4cloud.pigx.admin.service;
 
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.pig4cloud.pigx.admin.api.entity.SysLog;
 import com.pig4cloud.pigx.admin.api.vo.PreLogVo;
 
@@ -34,6 +36,13 @@ import java.util.List;
  * @since 2017-11-20
  */
 public interface SysLogService extends IService<SysLog> {
+
+	/**
+	 * 系统日志简单分页查询
+	 * @param sysLog 系统日志
+	 * @return
+	 */
+	IPage<SysLog> getSysLogPage(Page<SysLog> page, SysLog sysLog);
 
 	/**
 	 * 批量插入前端错误日志

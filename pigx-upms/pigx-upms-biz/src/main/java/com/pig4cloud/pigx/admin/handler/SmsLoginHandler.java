@@ -17,7 +17,7 @@
 
 package com.pig4cloud.pigx.admin.handler;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
 import com.pig4cloud.pigx.admin.service.SysUserService;
@@ -58,7 +58,7 @@ public class SmsLoginHandler extends AbstractLoginHandler {
 		SysUser condition = new SysUser();
 		condition.setPhone(identify);
 		SysUser sysUser = sysUserService
-			.selectOne(new EntityWrapper<>(condition));
+			.getOne(new QueryWrapper<>(condition));
 
 		if (sysUser == null) {
 			log.info("手机号未注册:{}", identify);

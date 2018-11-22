@@ -19,8 +19,9 @@
 
 package com.pig4cloud.pigx.admin.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.entity.SysMenu;
 import com.pig4cloud.pigx.admin.api.entity.SysRoleMenu;
 import com.pig4cloud.pigx.admin.api.vo.MenuVO;
@@ -62,7 +63,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 		// 查询父节点为当前节点的节点
 		SysMenu conditon = new SysMenu();
 		conditon.setParentId(id);
-		List<Integer> menuIdList = this.selectList(new EntityWrapper<>(conditon))
+		List<Integer> menuIdList = this.list(new QueryWrapper<>(conditon))
 			.stream().map(SysMenu::getMenuId)
 			.collect(Collectors.toList());
 		menuIdList.add(id);
@@ -71,10 +72,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 		menuIdList.forEach(menu -> {
 			SysRoleMenu conditon2 = new SysRoleMenu();
 			conditon2.setMenuId(menu);
-			sysRoleMenuMapper.delete(new EntityWrapper<>(conditon2));
+			sysRoleMenuMapper.delete(new UpdateWrapper<>(conditon2));
 		});
 		//删除当前菜单及其子菜单
-		return this.deleteBatchIds(menuIdList);
+		return this.removeByIds(menuIdList);
 	}
 
 	@Override

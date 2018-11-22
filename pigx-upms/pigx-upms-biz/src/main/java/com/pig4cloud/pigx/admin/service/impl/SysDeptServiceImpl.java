@@ -20,9 +20,8 @@
 package com.pig4cloud.pigx.admin.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.dto.DeptTree;
 import com.pig4cloud.pigx.admin.api.entity.SysDept;
 import com.pig4cloud.pigx.admin.api.entity.SysDeptRelation;
@@ -30,6 +29,7 @@ import com.pig4cloud.pigx.admin.api.vo.TreeUtil;
 import com.pig4cloud.pigx.admin.mapper.SysDeptMapper;
 import com.pig4cloud.pigx.admin.service.SysDeptRelationService;
 import com.pig4cloud.pigx.admin.service.SysDeptService;
+import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -63,7 +63,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 	public Boolean insertDept(SysDept dept) {
 		SysDept sysDept = new SysDept();
 		BeanUtils.copyProperties(dept, sysDept);
-		this.insert(sysDept);
+		this.save(sysDept);
 		sysDeptRelationService.insertDeptRelation(sysDept);
 		return Boolean.TRUE;
 	}
@@ -82,13 +82,13 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 		SysDeptRelation condition = new SysDeptRelation();
 		condition.setAncestor(id);
 		List<Integer> idList = sysDeptRelationService
-			.selectList(new EntityWrapper<>(condition))
+			.list(new QueryWrapper<>(condition))
 			.stream()
 			.map(SysDeptRelation::getDescendant)
 			.collect(Collectors.toList());
 
 		if (CollUtil.isNotEmpty(idList)) {
-			this.deleteBatchIds(idList);
+			this.removeByIds(idList);
 		}
 
 		//删除部门级联关系
@@ -122,9 +122,10 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 	 */
 	@Override
 	public List<DeptTree> selectTree() {
-		Wrapper condition = new EntityWrapper<>();
-		condition.orderBy("sort", false);
-		return getDeptTree(this.selectList(condition));
+		return getDeptTree(this.list(
+			new QueryWrapper<SysDept>()
+				.lambda().eq(SysDept::getDelFlag, CommonConstant.STATUS_NORMAL)
+		));
 	}
 
 	/**
@@ -139,7 +140,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 		SysDeptRelation condition = new SysDeptRelation();
 		condition.setAncestor(deptId);
 		List<Integer> descendantIdList = sysDeptRelationService
-			.selectList(new EntityWrapper<>(condition))
+			.list(new QueryWrapper<>(condition))
 			.stream().map(SysDeptRelation::getDescendant)
 			.collect(Collectors.toList());
 

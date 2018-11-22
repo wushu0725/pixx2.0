@@ -56,7 +56,7 @@ public class DeptController {
 	 */
 	@GetMapping("/{id}")
 	public R<SysDept> get(@PathVariable Integer id) {
-		return new R<>(sysDeptService.selectById(id));
+		return new R<>(sysDeptService.getById(id));
 	}
 
 

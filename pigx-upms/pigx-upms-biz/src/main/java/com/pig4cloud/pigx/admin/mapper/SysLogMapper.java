@@ -19,8 +19,11 @@
 
 package com.pig4cloud.pigx.admin.mapper;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.admin.api.entity.SysLog;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -31,5 +34,10 @@ import com.pig4cloud.pigx.admin.api.entity.SysLog;
  * @since 2017-11-20
  */
 public interface SysLogMapper extends BaseMapper<SysLog> {
-
+	/**
+	 * 系统日志简单分页查询
+	 * @param sysLog 系统日志
+	 * @return
+	 */
+	IPage<SysLog> getSysLogPage(Page page, @Param("sysLog") SysLog sysLog);
 }

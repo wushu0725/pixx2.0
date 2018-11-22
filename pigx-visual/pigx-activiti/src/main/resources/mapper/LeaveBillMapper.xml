@@ -5,7 +5,7 @@
 
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.pig4cloud.pigx.act.entity.LeaveBill" id="leaveBillMap">
-        <result property="leaveId" column="leave_id"/>
+        <id property="leaveId" column="leave_id"/>
         <result property="username" column="username"/>
         <result property="days" column="days"/>
         <result property="content" column="content"/>
@@ -14,6 +14,46 @@
         <result property="updateTime" column="update_time"/>
         <result property="delFlag" column="del_flag"/>
     </resultMap>
+
+	<!--leaveBill简单分页查询-->
+	<select id="getLeaveBillPage" resultMap="leaveBillMap">
+		SELECT
+		leave_id,
+		username,
+		days,
+		content,
+		state,
+		create_time,
+		update_time,
+		del_flag
+		FROM oa_leave_bill
+		<where>
+			<if test="leaveBill.leaveId != null and leaveBill.leaveId != ''">
+				AND leave_id = #{leaveBill.leaveId}
+			</if>
+			<if test="leaveBill.username != null and leaveBill.username != ''">
+				AND username = #{leaveBill.username}
+			</if>
+			<if test="leaveBill.days != null and leaveBill.days != ''">
+				AND days = #{leaveBill.days}
+			</if>
+			<if test="leaveBill.content != null and leaveBill.content != ''">
+				AND content = #{leaveBill.content}
+			</if>
+			<if test="leaveBill.state != null and leaveBill.state != ''">
+				AND state = #{leaveBill.state}
+			</if>
+			<if test="leaveBill.createTime != null and leaveBill.createTime != ''">
+				AND create_time = #{leaveBill.createTime}
+			</if>
+			<if test="leaveBill.updateTime != null and leaveBill.updateTime != ''">
+				AND update_time = #{leaveBill.updateTime}
+			</if>
+			<if test="leaveBill.delFlag != null and leaveBill.delFlag != ''">
+				AND del_flag = #{leaveBill.delFlag}
+			</if>
+		</where>
+	</select>
 
 
 </mapper>

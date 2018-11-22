@@ -21,7 +21,9 @@ package com.pig4cloud.pigx.auth.endpoint;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.pig4cloud.pigx.common.core.constant.PaginationConstant;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.core.util.TenantUtils;
@@ -127,7 +129,7 @@ public class PigxTokenEndpoint {
 
 		List<Map<String, String>> list = new ArrayList<>();
 		//根据分页参数获取对应数据
-		List<String> pages = findKeysForPage(PIGX_OAUTH_ACCESS + "*", MapUtil.getInt(params, "page"), MapUtil.getInt(params, "limit"));
+		List<String> pages = findKeysForPage(PIGX_OAUTH_ACCESS + "*", MapUtil.getInt(params, PaginationConstant.CURRENT), MapUtil.getInt(params, PaginationConstant.SIZE));
 
 		for (String page : pages) {
 			String accessToken = StrUtil.subAfter(page, PIGX_OAUTH_ACCESS, true);
@@ -161,9 +163,9 @@ public class PigxTokenEndpoint {
 			list.add(map);
 		}
 
-		Page result = new Page(MapUtil.getInt(params, "page"), MapUtil.getInt(params, "limit"));
+		Page result = new Page(MapUtil.getInt(params, PaginationConstant.CURRENT), MapUtil.getInt(params, PaginationConstant.SIZE));
 		result.setRecords(list);
-		result.setTotal(redisTemplate.keys(PIGX_OAUTH_ACCESS + "*").size());
+		result.setTotal(Long.valueOf(redisTemplate.keys(PIGX_OAUTH_ACCESS + "*").size()));
 		return new R<>(result);
 	}
 

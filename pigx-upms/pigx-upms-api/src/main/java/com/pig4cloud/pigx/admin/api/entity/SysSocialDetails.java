@@ -17,10 +17,10 @@
 
 package com.pig4cloud.pigx.admin.api.entity;
 
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableLogic;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -87,11 +87,4 @@ public class SysSocialDetails extends Model<SysSocialDetails> {
 	 */
 	private Integer tenantId;
 
-	/**
-	 * 主键值
-	 */
-	@Override
-	protected Serializable pkVal() {
-		return this.id;
-	}
 }

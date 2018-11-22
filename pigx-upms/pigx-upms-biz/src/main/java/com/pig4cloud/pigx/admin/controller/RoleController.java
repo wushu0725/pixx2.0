@@ -19,12 +19,12 @@
 
 package com.pig4cloud.pigx.admin.controller;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.admin.api.entity.SysRole;
 import com.pig4cloud.pigx.admin.service.SysRoleMenuService;
 import com.pig4cloud.pigx.admin.service.SysRoleService;
-import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.log.annotation.SysLog;
 import io.swagger.annotations.Api;
@@ -55,7 +55,7 @@ public class RoleController {
 	 */
 	@GetMapping("/{id}")
 	public R<SysRole> role(@PathVariable Integer id) {
-		return new R<>(sysRoleService.selectById(id));
+		return new R<>(sysRoleService.getById(id));
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class RoleController {
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_role_add')")
 	public R<Boolean> role(@RequestBody SysRole sysRole) {
-		return new R<>(sysRoleService.insert(sysRole));
+		return new R<>(sysRoleService.save(sysRole));
 	}
 
 	/**
@@ -104,18 +104,18 @@ public class RoleController {
 	 */
 	@GetMapping("/list")
 	public R<List<SysRole>> roleList() {
-		return new R<>(sysRoleService.selectList(new EntityWrapper<>()));
+		return new R<>(sysRoleService.list(new QueryWrapper<>()));
 	}
 
 	/**
 	 * 分页查询角色信息
 	 *
-	 * @param params 分页对象
+	 * @param page 分页对象
 	 * @return 分页对象
 	 */
 	@GetMapping("/page")
-	public R<Page> rolePage(@RequestParam Map<String, Object> params) {
-		return new R<>(sysRoleService.selectPage(new Query<>(params), new EntityWrapper<>()));
+	public R<IPage> rolePage(Page page) {
+		return new R<>(sysRoleService.page(page, new QueryWrapper<>()));
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class RoleController {
 	@PutMapping("/upd-menu")
 	@PreAuthorize("@pms.hasPermission('sys_role_perm')")
 	public R<Boolean> roleMenuUpd(Integer roleId, @RequestParam(value = "menuIds", required = false) String menuIds) {
-		SysRole sysRole = sysRoleService.selectById(roleId);
+		SysRole sysRole = sysRoleService.getById(roleId);
 		return new R<>(sysRoleMenuService.insertRoleMenus(sysRole.getRoleCode(), roleId, menuIds));
 	}
 }

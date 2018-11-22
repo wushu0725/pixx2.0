@@ -19,7 +19,9 @@
 
 package com.pig4cloud.pigx.admin.service;
 
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.pig4cloud.pigx.admin.api.entity.SysDict;
 
 /**
@@ -31,5 +33,12 @@ import com.pig4cloud.pigx.admin.api.entity.SysDict;
  * @since 2017-11-19
  */
 public interface SysDictService extends IService<SysDict> {
+
+	/**
+	 * 系统字典简单分页查询
+	 * @param sysDict 系统字典
+	 * @return
+	 */
+	IPage<SysDict> getSysDictPage(Page<SysDict> page, SysDict sysDict);
 
 }

@@ -19,8 +19,8 @@
 
 package com.pig4cloud.pigx.admin.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.entity.SysRole;
 import com.pig4cloud.pigx.admin.api.entity.SysRoleMenu;
 import com.pig4cloud.pigx.admin.mapper.SysRoleMapper;
@@ -70,7 +70,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 		SysRoleMenu condition = new SysRoleMenu();
 		condition.setRoleId(id);
 
-		sysRoleMenuMapper.delete(new EntityWrapper<>(condition));
-		return this.deleteById(id);
+		sysRoleMenuMapper.delete(new UpdateWrapper<>(condition));
+		return this.removeById(id);
 	}
 }

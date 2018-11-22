@@ -17,16 +17,12 @@
 
 package com.pig4cloud.pigx.admin.api.entity;
 
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableLogic;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -56,12 +52,13 @@ public class SysRouteConf extends Model<SysRouteConf> {
 	 */
 	private String filters;
 	/**
-	 *
+	 * uri
 	 */
 	private String uri;
 	/**
 	 * 排序
 	 */
+	@TableField(value="`order`")
 	private Integer order;
 	/**
 	 * 创建时间
@@ -77,11 +74,4 @@ public class SysRouteConf extends Model<SysRouteConf> {
 	@TableLogic
 	private String delFlag;
 
-	/**
-	 * 主键值
-	 */
-	@Override
-	protected Serializable pkVal() {
-		return this.routeId;
-	}
 }

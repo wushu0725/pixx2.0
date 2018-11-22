@@ -18,7 +18,7 @@
 package com.pig4cloud.pigx.act.controller;
 
 import cn.hutool.core.io.IoUtil;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pig4cloud.pigx.act.dto.ProcessDefDTO;
 import com.pig4cloud.pigx.act.service.ProcessService;
 import com.pig4cloud.pigx.common.core.constant.enums.EnumResourceType;
@@ -44,8 +44,8 @@ public class ProcessController {
 	private final ProcessService processService;
 
 	@GetMapping
-	public Page<ProcessDefDTO> list(@RequestParam Map<String, Object> params) {
-		return processService.getProcessByPage(params);
+	public R<IPage<ProcessDefDTO>> list(@RequestParam Map<String, Object> params) {
+		return new R<>(processService.getProcessByPage(params));
 	}
 
 	@GetMapping(value = "/resource/{proInsId}/{procDefId}/{resType}")

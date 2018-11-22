@@ -19,7 +19,7 @@ package com.pig4cloud.pigx.admin.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.RandomUtil;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
 import com.pig4cloud.pigx.admin.mapper.SysUserMapper;
 import com.pig4cloud.pigx.admin.service.MobileService;
@@ -60,7 +60,7 @@ public class MobileServiceImpl implements MobileService {
 	public R<Boolean> sendSmsCode(String mobile) {
 		SysUser condition = new SysUser();
 		condition.setPhone(mobile);
-		List<SysUser> userList = userMapper.selectList(new EntityWrapper<>(condition));
+		List<SysUser> userList = userMapper.selectList(new QueryWrapper<>(condition));
 
 		if (CollUtil.isEmpty(userList)) {
 			log.info("手机号未注册:{}", mobile);

@@ -18,17 +18,16 @@
 package com.pig4cloud.pigx.codegen.controller;
 
 import cn.hutool.core.io.IoUtil;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.codegen.entity.GenConfig;
 import com.pig4cloud.pigx.codegen.service.SysGeneratorService;
-import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * 代码生成器
@@ -45,13 +44,12 @@ public class SysGeneratorController {
 	/**
 	 * 列表
 	 *
-	 * @param params 参数集
+	 * @param tableName 参数集
 	 * @return 数据库表
 	 */
 	@GetMapping("/page")
-	public R<Page> list(@RequestParam Map<String, Object> params) {
-		Query query = new Query(params);
-		return new R<>(query.setRecords(sysGeneratorService.queryPage(query)));
+	public R<IPage> list(Page page, String tableName) {
+		return new R<>(sysGeneratorService.queryPage(page,tableName));
 	}
 
 	/**

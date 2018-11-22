@@ -17,9 +17,9 @@
 
 package com.pig4cloud.pigx.daemon.controller;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.pig4cloud.pigx.common.core.util.Query;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.daemon.entity.ExecutionLog;
 import com.pig4cloud.pigx.daemon.service.ExecutionLogService;
@@ -40,16 +40,16 @@ public class ExecutionLogController {
 
 	private final ExecutionLogService executionLogService;
 
-
 	/**
-	 * 列表
+	 * 任务日志处理简单分页查询
 	 *
-	 * @param params
+	 * @param page         分页对象
+	 * @param executionLog 任务日志处理
 	 * @return
 	 */
 	@GetMapping("/page")
-	public R<Page> page(@RequestParam Map<String, Object> params) {
-		return new R<>(executionLogService.selectPage(new Query<>(params), new EntityWrapper<>()));
+	public R<IPage<ExecutionLog>> getExecutionLogPage(Page<ExecutionLog> page, ExecutionLog executionLog) {
+		return new R<>(executionLogService.getExecutionLogPage(page, executionLog));
 	}
 
 
@@ -61,7 +61,7 @@ public class ExecutionLogController {
 	 */
 	@GetMapping("/{id}")
 	public R<ExecutionLog> info(@PathVariable("id") String id) {
-		return new R<>(executionLogService.selectById(id));
+		return new R<>(executionLogService.getById(id));
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class ExecutionLogController {
 	 */
 	@PostMapping
 	public R<Boolean> save(@RequestBody ExecutionLog executionLog) {
-		return new R<>(executionLogService.insert(executionLog));
+		return new R<>(executionLogService.save(executionLog));
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class ExecutionLogController {
 	 */
 	@DeleteMapping("/{id}")
 	public R<Boolean> delete(@PathVariable String id) {
-		return new R<>(executionLogService.deleteById(id));
+		return new R<>(executionLogService.removeById(id));
 	}
 
 }

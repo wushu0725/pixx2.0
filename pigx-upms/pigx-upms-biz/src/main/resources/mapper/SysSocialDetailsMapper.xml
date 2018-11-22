@@ -1,37 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
-  ~    Copyright (c) 2018-2025, lengleng All rights reserved.
   ~
-  ~ Redistribution and use in source and binary forms, with or without
-  ~ modification, are permitted provided that the following conditions are met:
+  ~      Copyright (c) 2018-2025, lengleng All rights reserved.
+  ~
+  ~  Redistribution and use in source and binary forms, with or without
+  ~  modification, are permitted provided that the following conditions are met:
   ~
   ~ Redistributions of source code must retain the above copyright notice,
-  ~ this list of conditions and the following disclaimer.
-  ~ Redistributions in binary form must reproduce the above copyright
-  ~ notice, this list of conditions and the following disclaimer in the
-  ~ documentation and/or other materials provided with the distribution.
-  ~ Neither the name of the pig4cloud.com developer nor the names of its
-  ~ contributors may be used to endorse or promote products derived from
-  ~ this software without specific prior written permission.
-  ~ Author: lengleng (wangiegie@gmail.com)
+  ~  this list of conditions and the following disclaimer.
+  ~  Redistributions in binary form must reproduce the above copyright
+  ~  notice, this list of conditions and the following disclaimer in the
+  ~  documentation and/or other materials provided with the distribution.
+  ~  Neither the name of the pig4cloud.com developer nor the names of its
+  ~  contributors may be used to endorse or promote products derived from
+  ~  this software without specific prior written permission.
+  ~  Author: lengleng (wangiegie@gmail.com)
+  ~
   -->
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.pig4cloud.pigx.generator.mapper.SysSocialDetailsMappper">
+<mapper namespace="com.pig4cloud.pigx.admin.mapper.SysSocialDetailsMapper">
 
-	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.pig4cloud.pigx.admin.api.entity.SysSocialDetails" id="sysSocialDetailsMap">
-        <result property="id" column="id"/>
-        <result property="type" column="type"/>
-        <result property="remark" column="remark"/>
-        <result property="appId" column="app_id"/>
-        <result property="appSecret" column="app_secret"/>
-        <result property="redirectUrl" column="redirect_url"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateTime" column="update_time"/>
-        <result property="delFlag" column="del_flag"/>
-    </resultMap>
+	<resultMap id="sysSocialDetailsMap" type="com.pig4cloud.pigx.admin.api.entity.SysSocialDetails">
+		<id property="id" column="id"/>
+		<result property="type" column="type"/>
+		<result property="remark" column="remark"/>
+		<result property="appId" column="app_id"/>
+		<result property="appSecret" column="app_secret"/>
+		<result property="redirectUrl" column="redirect_url"/>
+		<result property="createTime" column="create_time"/>
+		<result property="updateTime" column="update_time"/>
+		<result property="delFlag" column="del_flag"/>
+	</resultMap>
+
+	<!--sysSocialDetails简单分页查询-->
+	<select id="getSysSocialDetailsPage" resultMap="sysSocialDetailsMap">
+		SELECT
+		id,
+		type,
+		remark,
+		app_id,
+		app_secret,
+		redirect_url,
+		create_time,
+		update_time,
+		del_flag
+		FROM sys_social_details
+		<where>
+			<if test="sysSocialDetails.id != null and sysSocialDetails.id != ''">
+				AND id = #{sysSocialDetails.id}
+			</if>
+			<if test="sysSocialDetails.type != null and sysSocialDetails.type != ''">
+				AND type = #{sysSocialDetails.type}
+			</if>
+			<if test="sysSocialDetails.remark != null and sysSocialDetails.remark != ''">
+				AND remark = #{sysSocialDetails.remark}
+			</if>
+			<if test="sysSocialDetails.appId != null and sysSocialDetails.appId != ''">
+				AND app_id = #{sysSocialDetails.appId}
+			</if>
+			<if test="sysSocialDetails.appSecret != null and sysSocialDetails.appSecret != ''">
+				AND app_secret = #{sysSocialDetails.appSecret}
+			</if>
+			<if test="sysSocialDetails.redirectUrl != null and sysSocialDetails.redirectUrl != ''">
+				AND redirect_url = #{sysSocialDetails.redirectUrl}
+			</if>
+			<if test="sysSocialDetails.createTime != null and sysSocialDetails.createTime != ''">
+				AND create_time = #{sysSocialDetails.createTime}
+			</if>
+			<if test="sysSocialDetails.updateTime != null and sysSocialDetails.updateTime != ''">
+				AND update_time = #{sysSocialDetails.updateTime}
+			</if>
+			<if test="sysSocialDetails.delFlag != null and sysSocialDetails.delFlag != ''">
+				AND del_flag = #{sysSocialDetails.delFlag}
+			</if>
+		</where>
+	</select>
 
 
 </mapper>

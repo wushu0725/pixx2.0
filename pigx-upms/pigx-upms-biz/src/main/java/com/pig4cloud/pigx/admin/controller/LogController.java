@@ -20,12 +20,11 @@
 package com.pig4cloud.pigx.admin.controller;
 
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.admin.api.entity.SysLog;
 import com.pig4cloud.pigx.admin.api.vo.PreLogVo;
 import com.pig4cloud.pigx.admin.service.SysLogService;
-import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
@@ -34,7 +33,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -52,14 +50,14 @@ public class LogController {
 	private final SysLogService sysLogService;
 
 	/**
-	 * 分页查询日志信息
-	 *
-	 * @param params 分页对象
-	 * @return 分页对象
+	 * 简单分页查询
+	 * @param page 分页对象
+	 * @param sysLog 系统日志
+	 * @return
 	 */
 	@GetMapping("/page")
-	public R<Page> logPage(@RequestParam Map<String, Object> params) {
-		return new R<>(sysLogService.selectPage(new Query<>(params), new EntityWrapper<>()));
+	public R<IPage<SysLog>> getSysLogPage(Page<SysLog> page, SysLog sysLog) {
+		return  new R<>(sysLogService.getSysLogPage(page,sysLog));
 	}
 
 	/**
@@ -71,7 +69,7 @@ public class LogController {
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_log_del')")
 	public R<Boolean> delete(@PathVariable Long id) {
-		return new R<>(sysLogService.deleteById(id));
+		return new R<>(sysLogService.removeById(id));
 	}
 
 	/**
@@ -82,7 +80,7 @@ public class LogController {
 	 */
 	@PostMapping
 	public R<Boolean> save(@Valid @RequestBody SysLog sysLog) {
-		return new R<>(sysLogService.insert(sysLog));
+		return new R<>(sysLogService.save(sysLog));
 	}
 
 	/**

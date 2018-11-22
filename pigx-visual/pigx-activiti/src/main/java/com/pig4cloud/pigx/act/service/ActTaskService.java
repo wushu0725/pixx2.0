@@ -17,7 +17,7 @@
 
 package com.pig4cloud.pigx.act.service;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pig4cloud.pigx.act.dto.CommentDto;
 import com.pig4cloud.pigx.act.dto.LeaveBillDto;
 
@@ -39,7 +39,7 @@ public interface ActTaskService {
 	 * @param name
 	 * @return
 	 */
-	Page findTaskByName(Map<String, Object> params, String name);
+	IPage findTaskByName(Map<String, Object> params, String name);
 
 	/**
 	 * 通过任务ID查询任务信息关联申请单信息

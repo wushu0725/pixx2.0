@@ -21,9 +21,11 @@ package com.pig4cloud.pigx.admin.service.impl;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.dto.UserDTO;
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 import com.pig4cloud.pigx.admin.api.entity.*;
@@ -32,7 +34,6 @@ import com.pig4cloud.pigx.admin.api.vo.UserVO;
 import com.pig4cloud.pigx.admin.mapper.SysUserMapper;
 import com.pig4cloud.pigx.admin.service.*;
 import com.pig4cloud.pigx.common.core.datascope.DataScope;
-import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
@@ -103,15 +104,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	}
 
 	@Override
-	public Page selectWithRolePage(Query query) {
+	public IPage<List<UserVO>> getUsersWithRolePage(Page<List<UserVO>> page, String username,String deptId) {
 		DataScope dataScope = new DataScope();
 		dataScope.setScopeName("deptId");
 		dataScope.setIsOnly(true);
 		dataScope.setDeptIds(getChildDepts());
-		Object username = query.getCondition().get("username");
-		Object deptId = query.getCondition().get("deptId");
-		query.setRecords(baseMapper.selectUserVoPage(query, username, deptId, dataScope));
-		return query;
+		IPage<List<UserVO>> userVosPage = baseMapper.getUserVosPage(page, username,deptId, dataScope);
+		return userVosPage.setTotal(Long.valueOf(userVosPage.getRecords().size()));
 	}
 
 
@@ -136,7 +135,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	@CacheEvict(value = "user_details", key = "#sysUser.username")
 	public Boolean deleteUserById(SysUser sysUser) {
 		sysUserRoleService.deleteByUserId(sysUser.getUserId());
-		this.deleteById(sysUser.getUserId());
+		this.removeById(sysUser.getUserId());
 		return Boolean.TRUE;
 	}
 
@@ -174,7 +173,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
 		SysUserRole condition = new SysUserRole();
 		condition.setUserId(userDto.getUserId());
-		sysUserRoleService.delete(new EntityWrapper<>(condition));
+		sysUserRoleService.remove(new UpdateWrapper<>(condition));
 		userDto.getRole().forEach(roleId -> {
 			SysUserRole userRole = new SysUserRole();
 			userRole.setUserId(sysUser.getUserId());
@@ -194,10 +193,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	public List<SysUser> ancestorUsers(String username) {
 		SysUser condition = new SysUser();
 		condition.setUsername(username);
-		SysUser sysUser = this.selectOne(new EntityWrapper<>(condition));
+		SysUser sysUser = this.getOne(new QueryWrapper<>(condition));
 
 		Integer deptId = sysUser.getDeptId();
-		SysDept sysDept = sysDeptService.selectById(deptId);
+		SysDept sysDept = sysDeptService.getById(deptId);
 		if (sysDept == null) {
 			return null;
 		}
@@ -205,7 +204,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		Integer parentId = sysDept.getParentId();
 		SysUser condition2 = new SysUser();
 		condition2.setDeptId(parentId);
-		return this.selectList(new EntityWrapper<>(condition2));
+		return this.list(new QueryWrapper<>(condition2));
 	}
 
 	/**
@@ -219,7 +218,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		SysDeptRelation condition = new SysDeptRelation();
 		condition.setAncestor(deptId);
 		return sysDeptRelationService
-			.selectList(new EntityWrapper<>(condition))
+			.list(new QueryWrapper<>(condition))
 			.stream()
 			.map(SysDeptRelation::getDescendant)
 			.collect(Collectors.toList());

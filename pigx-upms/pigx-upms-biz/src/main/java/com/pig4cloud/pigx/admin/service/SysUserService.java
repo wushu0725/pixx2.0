@@ -19,13 +19,13 @@
 
 package com.pig4cloud.pigx.admin.service;
 
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.pig4cloud.pigx.admin.api.dto.UserDTO;
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
 import com.pig4cloud.pigx.admin.api.vo.UserVO;
-import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 
 import java.util.List;
@@ -46,11 +46,11 @@ public interface SysUserService extends IService<SysUser> {
 	/**
 	 * 分页查询用户信息（含有角色信息）
 	 *
-	 * @param query 查询条件
+	 * @param page 分页对象
+	 * @param username 用户名
 	 * @return
 	 */
-	Page selectWithRolePage(Query query);
-
+	IPage<List<UserVO>> getUsersWithRolePage(Page<List<UserVO>> page, String username,String deptId);
 
 	/**
 	 * 删除用户

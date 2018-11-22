@@ -17,16 +17,13 @@
 
 package com.pig4cloud.pigx.daemon.controller;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.pig4cloud.pigx.common.core.util.Query;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.daemon.entity.StatusTraceLog;
 import com.pig4cloud.pigx.daemon.service.StatusTraceLogService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 
 /**
@@ -40,14 +37,14 @@ public class StatusTraceLogController {
 	private final StatusTraceLogService statusTraceLogService;
 
 	/**
-	 * 列表
-	 *
-	 * @param params
+	 * 任务轨迹处理简单分页查询
+	 * @param page 分页对象
+	 * @param statusTraceLog 任务轨迹处理
 	 * @return
 	 */
 	@GetMapping("/page")
-	public R<Page> page(@RequestParam Map<String, Object> params) {
-		return new R<>(statusTraceLogService.selectPage(new Query<>(params), new EntityWrapper<>()));
+	public R<IPage<StatusTraceLog>> getStatusTraceLogPage(Page<StatusTraceLog> page, StatusTraceLog statusTraceLog) {
+		return  new R<>(statusTraceLogService.getStatusTraceLogPage(page,statusTraceLog));
 	}
 
 
@@ -59,7 +56,7 @@ public class StatusTraceLogController {
 	 */
 	@GetMapping("/{id}")
 	public R<StatusTraceLog> info(@PathVariable("id") String id) {
-		return new R<>(statusTraceLogService.selectById(id));
+		return new R<>(statusTraceLogService.getById(id));
 	}
 
 	/**
@@ -70,7 +67,7 @@ public class StatusTraceLogController {
 	 */
 	@PostMapping
 	public R<Boolean> save(@RequestBody StatusTraceLog statusTraceLog) {
-		return new R<>(statusTraceLogService.insert(statusTraceLog));
+		return new R<>(statusTraceLogService.save(statusTraceLog));
 	}
 
 	/**
@@ -92,7 +89,7 @@ public class StatusTraceLogController {
 	 */
 	@DeleteMapping("/{id}")
 	public R<Boolean> delete(@PathVariable("id") String id) {
-		return new R<>(statusTraceLogService.deleteById(id));
+		return new R<>(statusTraceLogService.removeById(id));
 	}
 
 }

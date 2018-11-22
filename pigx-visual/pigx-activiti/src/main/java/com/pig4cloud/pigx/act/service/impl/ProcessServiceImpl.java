@@ -19,11 +19,13 @@ package com.pig4cloud.pigx.act.service.impl;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.act.dto.ProcessDefDTO;
 import com.pig4cloud.pigx.act.entity.LeaveBill;
 import com.pig4cloud.pigx.act.mapper.LeaveBillMapper;
 import com.pig4cloud.pigx.act.service.ProcessService;
+import com.pig4cloud.pigx.common.core.constant.PaginationConstant;
 import com.pig4cloud.pigx.common.core.constant.enums.EnumProcessStatus;
 import com.pig4cloud.pigx.common.core.constant.enums.EnumResourceType;
 import com.pig4cloud.pigx.common.core.constant.enums.EnumTaskStatus;
@@ -60,17 +62,17 @@ public class ProcessServiceImpl implements ProcessService {
 	 * @return
 	 */
 	@Override
-	public Page<ProcessDefDTO> getProcessByPage(Map<String, Object> params) {
+	public IPage<ProcessDefDTO> getProcessByPage(Map<String, Object> params) {
 		ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().latestVersion();
 		String category = MapUtil.getStr(params, "category");
 		if (StrUtil.isNotBlank(category)) {
 			query.processDefinitionCategory(category);
 		}
 
-		int page = MapUtil.getInt(params, "page");
-		int limit = MapUtil.getInt(params, "limit");
+		int page = MapUtil.getInt(params, PaginationConstant.CURRENT);
+		int limit = MapUtil.getInt(params, PaginationConstant.SIZE);
 
-		Page result = new Page(page, limit);
+		IPage result = new Page(page, limit);
 		result.setTotal(query.count());
 
 		List<ProcessDefDTO> deploymentList = new ArrayList<>();

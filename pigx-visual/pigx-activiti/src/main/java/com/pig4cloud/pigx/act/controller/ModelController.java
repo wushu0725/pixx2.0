@@ -17,7 +17,7 @@
 
 package com.pig4cloud.pigx.act.controller;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pig4cloud.pigx.act.dto.ModelForm;
 import com.pig4cloud.pigx.act.service.ModelService;
 import com.pig4cloud.pigx.common.core.util.R;
@@ -52,8 +52,8 @@ public class ModelController {
 	}
 
 	@GetMapping
-	public Page<Model> list(@RequestParam Map<String, Object> params) {
-		return modelService.selectPage(params);
+	public R<IPage<Model>> list(@RequestParam Map<String, Object> params) {
+		return new R<> (modelService.selectPage(params));
 	}
 
 	@DeleteMapping("/{id}")

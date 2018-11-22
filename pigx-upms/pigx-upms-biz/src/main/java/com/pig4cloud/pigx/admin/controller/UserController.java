@@ -20,8 +20,9 @@
 package com.pig4cloud.pigx.admin.controller;
 
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.admin.api.dto.UserDTO;
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
@@ -30,7 +31,6 @@ import com.pig4cloud.pigx.admin.api.vo.UserVO;
 import com.pig4cloud.pigx.admin.service.SysUserService;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
-import com.pig4cloud.pigx.common.core.util.Query;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.log.annotation.SysLog;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
@@ -46,7 +46,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author lengleng
@@ -82,7 +81,7 @@ public class UserController {
 
 		SysUser condition = new SysUser();
 		condition.setUsername(username);
-		SysUser sysUser = userService.selectOne(new EntityWrapper<>(condition));
+		SysUser sysUser = userService.getOne(new QueryWrapper<>(condition));
 		if (sysUser == null) {
 			return new R<>();
 		}
@@ -110,7 +109,7 @@ public class UserController {
 	public R<SysUser> user(@PathVariable String username) {
 		SysUser condition = new SysUser();
 		condition.setUsername(username);
-		return new R<>(userService.selectOne(new EntityWrapper<>(condition)));
+		return new R<>(userService.getOne(new QueryWrapper<>(condition)));
 	}
 
 	/**
@@ -125,7 +124,7 @@ public class UserController {
 	@ApiOperation(value = "删除用户", notes = "根据ID删除用户")
 	@ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "int", paramType = "path")
 	public R<Boolean> userDel(@PathVariable Integer id) {
-		SysUser sysUser = userService.selectById(id);
+		SysUser sysUser = userService.getById(id);
 		return new R<>(userService.deleteUserById(sysUser));
 	}
 
@@ -143,7 +142,7 @@ public class UserController {
 		BeanUtils.copyProperties(userDto, sysUser);
 		sysUser.setDelFlag(CommonConstant.STATUS_NORMAL);
 		sysUser.setPassword(ENCODER.encode(userDto.getPassword()));
-		userService.insert(sysUser);
+		userService.save(sysUser);
 		userDto.getRole().forEach(roleId -> {
 			SysUserRole userRole = new SysUserRole();
 			userRole.setUserId(sysUser.getUserId());
@@ -169,12 +168,13 @@ public class UserController {
 	/**
 	 * 分页查询用户
 	 *
-	 * @param params 参数集
+	 * @param page 参数集
+	 * @param username 用户名
 	 * @return 用户集合
 	 */
 	@GetMapping("/page")
-	public R<Page> userPage(@RequestParam Map<String, Object> params) {
-		return new R<>(userService.selectWithRolePage(new Query(params)));
+	public R<IPage> userPage(Page<List<UserVO>> page, @RequestParam(required = false) String username,@RequestParam(required = false) String deptId) {
+		return new R<>(userService.getUsersWithRolePage(page,username,deptId));
 	}
 
 	/**

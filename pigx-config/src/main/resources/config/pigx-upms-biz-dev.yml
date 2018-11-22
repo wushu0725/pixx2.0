@@ -33,3 +33,7 @@ swagger:
         description: 'read all'
       - scope: 'write'
         description: 'access all'
+# Logger Config
+logging:
+  level:
+    com.pig4cloud.pigx.admin.mapper: debug

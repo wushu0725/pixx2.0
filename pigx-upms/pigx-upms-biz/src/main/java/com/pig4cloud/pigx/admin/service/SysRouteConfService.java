@@ -18,7 +18,7 @@
 package com.pig4cloud.pigx.admin.service;
 
 import cn.hutool.json.JSONArray;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.pig4cloud.pigx.admin.api.entity.SysRouteConf;
 import reactor.core.publisher.Mono;
 

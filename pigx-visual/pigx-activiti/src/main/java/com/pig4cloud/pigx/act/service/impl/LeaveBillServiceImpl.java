@@ -17,7 +17,9 @@
 
 package com.pig4cloud.pigx.act.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.act.entity.LeaveBill;
 import com.pig4cloud.pigx.act.mapper.LeaveBillMapper;
 import com.pig4cloud.pigx.act.service.LeaveBillService;
@@ -29,5 +31,16 @@ import org.springframework.stereotype.Service;
  */
 @Service("leaveBillService")
 public class LeaveBillServiceImpl extends ServiceImpl<LeaveBillMapper, LeaveBill> implements LeaveBillService {
+
+	/**
+	 * 请假审批单简单分页查询
+	 *
+	 * @param leaveBill 请假审批单
+	 * @return
+	 */
+	@Override
+	public IPage<LeaveBill> getLeaveBillPage(Page<LeaveBill> page, LeaveBill leaveBill) {
+		return baseMapper.getLeaveBillPage(page, leaveBill);
+	}
 
 }

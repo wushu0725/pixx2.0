@@ -19,8 +19,8 @@
 
 package com.pig4cloud.pigx.admin.api.entity;
 
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -50,10 +50,5 @@ public class SysDeptRelation extends Model<SysDeptRelation> {
 	 */
 	private Integer descendant;
 
-
-	@Override
-	protected Serializable pkVal() {
-		return this.ancestor;
-	}
 
 }

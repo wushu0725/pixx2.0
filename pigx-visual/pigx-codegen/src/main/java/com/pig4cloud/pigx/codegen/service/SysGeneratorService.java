@@ -17,8 +17,9 @@
 
 package com.pig4cloud.pigx.codegen.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.codegen.entity.GenConfig;
-import com.pig4cloud.pigx.common.core.util.Query;
 
 import java.util.List;
 import java.util.Map;
@@ -38,8 +39,8 @@ public interface SysGeneratorService {
 
 	/**
 	 * 分页查询表
-	 * @param query 查询条件
+	 * @param tableName 表名
 	 * @return
 	 */
-	List<Map<String,Object>> queryPage(Query query);
+	IPage<List<Map<String, Object>>> queryPage(Page page, String tableName);
 }

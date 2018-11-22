@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.pig4cloud.pigx.daemon.dao.StatusTraceLogMappper">
+<mapper namespace="com.pig4cloud.pigx.daemon.mapper.StatusTraceLogMappper">
 
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.pig4cloud.pigx.daemon.entity.StatusTraceLog" id="statusTraceLogMap">
-        <result property="id" column="id"/>
+        <id property="id" column="id"/>
         <result property="jobName" column="job_name"/>
         <result property="originalTaskId" column="original_task_id"/>
         <result property="taskId" column="task_id"/>
@@ -18,5 +18,56 @@
         <result property="creationTime" column="creation_time"/>
     </resultMap>
 
+	<!--statusTraceLog简单分页查询-->
+	<select id="getStatusTraceLogPage" resultMap="statusTraceLogMap">
+		SELECT
+		id,
+		job_name,
+		original_task_id,
+		task_id,
+		slave_id,
+		source,
+		execution_type,
+		sharding_item,
+		state,
+		message,
+		creation_time
+		FROM job_status_trace_log
+		<where>
+			<if test="statusTraceLog.id != null and statusTraceLog.id != ''">
+				AND id = #{statusTraceLog.id}
+			</if>
+			<if test="statusTraceLog.jobName != null and statusTraceLog.jobName != ''">
+				AND job_name = #{statusTraceLog.jobName}
+			</if>
+			<if test="statusTraceLog.originalTaskId != null and statusTraceLog.originalTaskId != ''">
+				AND original_task_id = #{statusTraceLog.originalTaskId}
+			</if>
+			<if test="statusTraceLog.taskId != null and statusTraceLog.taskId != ''">
+				AND task_id = #{statusTraceLog.taskId}
+			</if>
+			<if test="statusTraceLog.slaveId != null and statusTraceLog.slaveId != ''">
+				AND slave_id = #{statusTraceLog.slaveId}
+			</if>
+			<if test="statusTraceLog.source != null and statusTraceLog.source != ''">
+				AND source = #{statusTraceLog.source}
+			</if>
+			<if test="statusTraceLog.executionType != null and statusTraceLog.executionType != ''">
+				AND execution_type = #{statusTraceLog.executionType}
+			</if>
+			<if test="statusTraceLog.shardingItem != null and statusTraceLog.shardingItem != ''">
+				AND sharding_item = #{statusTraceLog.shardingItem}
+			</if>
+			<if test="statusTraceLog.state != null and statusTraceLog.state != ''">
+				AND state = #{statusTraceLog.state}
+			</if>
+			<if test="statusTraceLog.message != null and statusTraceLog.message != ''">
+				AND message = #{statusTraceLog.message}
+			</if>
+			<if test="statusTraceLog.creationTime != null and statusTraceLog.creationTime != ''">
+				AND creation_time = #{statusTraceLog.creationTime}
+			</if>
+		</where>
+	</select>
 
 </mapper>

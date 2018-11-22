@@ -20,8 +20,8 @@
 package com.pig4cloud.pigx.admin.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.entity.SysRoleMenu;
 import com.pig4cloud.pigx.admin.mapper.SysRoleMenuMapper;
 import com.pig4cloud.pigx.admin.service.SysRoleMenuService;
@@ -60,7 +60,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 	public Boolean insertRoleMenus(String role, Integer roleId, String menuIds) {
 		SysRoleMenu condition = new SysRoleMenu();
 		condition.setRoleId(roleId);
-		this.delete(new EntityWrapper<>(condition));
+		this.remove(new UpdateWrapper<>(condition));
 
 		if (StrUtil.isBlank(menuIds)) {
 			return Boolean.TRUE;
@@ -77,6 +77,6 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 
 		//清空userinfo
 		cacheManager.getCache("user_details").clear();
-		return this.insertBatch(roleMenuList);
+		return this.saveBatch(roleMenuList);
 	}
 }

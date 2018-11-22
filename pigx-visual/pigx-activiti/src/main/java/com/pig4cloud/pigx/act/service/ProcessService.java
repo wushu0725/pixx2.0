@@ -17,7 +17,7 @@
 
 package com.pig4cloud.pigx.act.service;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pig4cloud.pigx.act.dto.ProcessDefDTO;
 
 import java.io.InputStream;
@@ -35,7 +35,7 @@ public interface ProcessService {
 	 * @param params
 	 * @return
 	 */
-	Page<ProcessDefDTO> getProcessByPage(Map<String, Object> params);
+	IPage<ProcessDefDTO> getProcessByPage(Map<String, Object> params);
 
 	/**
 	 * 读取xml/image资源

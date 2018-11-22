@@ -19,9 +19,9 @@
 
 package com.pig4cloud.pigx.admin.api.entity;
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableLogic;
-import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -94,12 +94,6 @@ public class SysLog implements Serializable {
 	private Long time;
 
 	/**
-	 * 删除标记
-	 */
-	@TableLogic
-	private String delFlag;
-
-	/**
 	 * 异常信息
 	 */
 	private String exception;
@@ -108,6 +102,13 @@ public class SysLog implements Serializable {
 	 * 服务ID
 	 */
 	private String serviceId;
+
+	/**
+	 * 删除标记
+	 */
+	@TableLogic
+	private String delFlag;
+
 
 
 }
