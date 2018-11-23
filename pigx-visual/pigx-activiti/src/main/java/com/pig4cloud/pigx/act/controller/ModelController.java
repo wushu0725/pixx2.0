@@ -17,12 +17,10 @@
 
 package com.pig4cloud.pigx.act.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pig4cloud.pigx.act.dto.ModelForm;
 import com.pig4cloud.pigx.act.service.ModelService;
 import com.pig4cloud.pigx.common.core.util.R;
 import lombok.AllArgsConstructor;
-import org.activiti.engine.repository.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -45,25 +43,24 @@ public class ModelController {
 	}
 
 	@PostMapping
-	public String createModel(@RequestParam String name, @RequestParam String key,
-							  @RequestParam String desc, @RequestParam String category) {
-		Model model = modelService.create(name, key, desc, category);
-		return model.getId();
+	public R createModel(@RequestParam String name, @RequestParam String key,
+						 @RequestParam String desc, @RequestParam String category) {
+		return new R(modelService.create(name, key, desc, category));
 	}
 
 	@GetMapping
-	public R<IPage<Model>> list(@RequestParam Map<String, Object> params) {
-		return new R<> (modelService.selectPage(params));
+	public R list(@RequestParam Map<String, Object> params) {
+		return new R<>(modelService.selectPage(params));
 	}
 
 	@DeleteMapping("/{id}")
-	public R<Boolean> delete(@PathVariable("id") String id) {
+	public R delete(@PathVariable("id") String id) {
 		return new R<>(modelService.delete(id));
 
 	}
 
 	@PostMapping("/deploy/{id}")
-	public R<Boolean> deploy(@PathVariable("id") String id) {
+	public R deploy(@PathVariable("id") String id) {
 		return new R<>(modelService.deploy(id));
 	}
 }

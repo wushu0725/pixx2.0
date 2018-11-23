@@ -21,15 +21,11 @@ package com.pig4cloud.pigx.admin.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.admin.api.dto.UserDTO;
-import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
-import com.pig4cloud.pigx.admin.api.entity.SysUserRole;
-import com.pig4cloud.pigx.admin.api.vo.UserVO;
 import com.pig4cloud.pigx.admin.service.SysUserService;
-import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.log.annotation.SysLog;
@@ -38,14 +34,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @author lengleng
@@ -56,7 +48,6 @@ import java.util.List;
 @RequestMapping("/user")
 @Api(value = "user", description = "用户管理模块")
 public class UserController {
-	private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
 	private final SysUserService userService;
 
 	/**
@@ -68,8 +59,8 @@ public class UserController {
 	 * @return 用户名
 	 */
 	@GetMapping(value = {"/info", "/info/{username}"})
-	public R<UserInfo> user(@PathVariable(required = false) String username,
-							@RequestHeader(required = false) String from) {
+	public R user(@PathVariable(required = false) String username,
+				  @RequestHeader(required = false) String from) {
 		// 查询用户不为空时判断是不是内部请求
 		if (StrUtil.isNotBlank(username) && !StrUtil.equals(SecurityConstants.FROM_IN, from)) {
 			return new R<>(null, "error");
@@ -78,10 +69,8 @@ public class UserController {
 		if (StrUtil.isBlank(username)) {
 			username = SecurityUtils.getUser().getUsername();
 		}
-
-		SysUser condition = new SysUser();
-		condition.setUsername(username);
-		SysUser sysUser = userService.getOne(new QueryWrapper<>(condition));
+		SysUser sysUser = userService.getOne(Wrappers.<SysUser>query()
+			.lambda().eq(SysUser::getUsername, username));
 		if (sysUser == null) {
 			return new R<>();
 		}
@@ -95,7 +84,7 @@ public class UserController {
 	 * @return 用户信息
 	 */
 	@GetMapping("/{id}")
-	public R<UserVO> user(@PathVariable Integer id) {
+	public R user(@PathVariable Integer id) {
 		return new R<>(userService.selectUserVoById(id));
 	}
 
@@ -106,7 +95,7 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("/details/{username}")
-	public R<SysUser> user(@PathVariable String username) {
+	public R user(@PathVariable String username) {
 		SysUser condition = new SysUser();
 		condition.setUsername(username);
 		return new R<>(userService.getOne(new QueryWrapper<>(condition)));
@@ -123,7 +112,7 @@ public class UserController {
 	@PreAuthorize("@pms.hasPermission('sys_user_del')")
 	@ApiOperation(value = "删除用户", notes = "根据ID删除用户")
 	@ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "int", paramType = "path")
-	public R<Boolean> userDel(@PathVariable Integer id) {
+	public R userDel(@PathVariable Integer id) {
 		SysUser sysUser = userService.getById(id);
 		return new R<>(userService.deleteUserById(sysUser));
 	}
@@ -137,19 +126,8 @@ public class UserController {
 	@SysLog("添加用户")
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_user_add')")
-	public R<Boolean> user(@RequestBody UserDTO userDto) {
-		SysUser sysUser = new SysUser();
-		BeanUtils.copyProperties(userDto, sysUser);
-		sysUser.setDelFlag(CommonConstant.STATUS_NORMAL);
-		sysUser.setPassword(ENCODER.encode(userDto.getPassword()));
-		userService.save(sysUser);
-		userDto.getRole().forEach(roleId -> {
-			SysUserRole userRole = new SysUserRole();
-			userRole.setUserId(sysUser.getUserId());
-			userRole.setRoleId(roleId);
-			userRole.insert();
-		});
-		return new R<>(Boolean.TRUE);
+	public R user(@RequestBody UserDTO userDto) {
+		return new R<>(userService.saveUser(userDto));
 	}
 
 	/**
@@ -161,20 +139,20 @@ public class UserController {
 	@SysLog("更新用户信息")
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_user_edit')")
-	public R<Boolean> userUpdate(@Valid @RequestBody UserDTO userDto) {
+	public R userUpdate(@Valid @RequestBody UserDTO userDto) {
 		return new R<>(userService.updateUser(userDto));
 	}
 
 	/**
 	 * 分页查询用户
 	 *
-	 * @param page 参数集
-	 * @param username 用户名
+	 * @param page    参数集
+	 * @param userDTO 查询参数列表
 	 * @return 用户集合
 	 */
 	@GetMapping("/page")
-	public R<IPage> userPage(Page<List<UserVO>> page, @RequestParam(required = false) String username,@RequestParam(required = false) String deptId) {
-		return new R<>(userService.getUsersWithRolePage(page,username,deptId));
+	public R userPage(Page page, UserDTO userDTO) {
+		return new R<>(userService.getUsersWithRolePage(page, userDTO));
 	}
 
 	/**
@@ -185,7 +163,7 @@ public class UserController {
 	 */
 	@SysLog("修改个人信息")
 	@PutMapping("/edit")
-	public R<Boolean> editInfo(@Valid @RequestBody UserDTO userDto) {
+	public R editInfo(@Valid @RequestBody UserDTO userDto) {
 		return userService.updateUserInfo(userDto);
 	}
 
@@ -194,7 +172,7 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("/ancestor/{username}")
-	public R<List<SysUser>> ancestorUsers(@PathVariable String username) {
+	public R ancestorUsers(@PathVariable String username) {
 		return new R<>(userService.ancestorUsers(username));
 	}
 }

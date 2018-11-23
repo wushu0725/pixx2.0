@@ -42,7 +42,7 @@ public class MobileController {
 
 	@SysLog("发送验证码")
 	@GetMapping("/{mobile}")
-	public R<Boolean> code(@PathVariable String mobile) {
+	public R code(@PathVariable String mobile) {
 		return mobileService.sendSmsCode(mobile);
 	}
 }

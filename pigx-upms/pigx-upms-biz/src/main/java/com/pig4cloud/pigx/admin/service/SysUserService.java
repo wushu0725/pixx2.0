@@ -46,11 +46,11 @@ public interface SysUserService extends IService<SysUser> {
 	/**
 	 * 分页查询用户信息（含有角色信息）
 	 *
-	 * @param page 分页对象
-	 * @param username 用户名
+	 * @param page    分页对象
+	 * @param userDTO 参数列表
 	 * @return
 	 */
-	IPage<List<UserVO>> getUsersWithRolePage(Page<List<UserVO>> page, String username,String deptId);
+	IPage getUsersWithRolePage(Page page, UserDTO userDTO);
 
 	/**
 	 * 删除用户
@@ -63,7 +63,7 @@ public interface SysUserService extends IService<SysUser> {
 	/**
 	 * 更新当前用户基本信息
 	 *
-	 * @param userDto  用户信息
+	 * @param userDto 用户信息
 	 * @return Boolean
 	 */
 	R<Boolean> updateUserInfo(UserDTO userDto);
@@ -71,7 +71,7 @@ public interface SysUserService extends IService<SysUser> {
 	/**
 	 * 更新指定用户信息
 	 *
-	 * @param userDto  用户信息
+	 * @param userDto 用户信息
 	 * @return
 	 */
 	Boolean updateUser(UserDTO userDto);
@@ -91,4 +91,12 @@ public interface SysUserService extends IService<SysUser> {
 	 * @return R
 	 */
 	List<SysUser> ancestorUsers(String username);
+
+	/**
+	 * 保存用户信息
+	 *
+	 * @param userDto DTO 对象
+	 * @return success/fail
+	 */
+	Boolean saveUser(UserDTO userDto);
 }

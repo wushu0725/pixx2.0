@@ -17,8 +17,6 @@
 
 package com.pig4cloud.pigx.admin.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.admin.api.feign.RemoteTokenService;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import com.pig4cloud.pigx.common.core.util.R;
@@ -49,7 +47,7 @@ public class TokenController {
 	 * @return token集合
 	 */
 	@GetMapping("/page")
-	public R<Page> token(@RequestParam Map<String, Object> params) {
+	public R token(@RequestParam Map<String, Object> params) {
 		return remoteTokenService.selectPage(params, SecurityConstants.FROM_IN);
 	}
 
@@ -62,7 +60,7 @@ public class TokenController {
 	@SysLog("删除用户token")
 	@DeleteMapping("/{token}")
 	@PreAuthorize("@pms.hasPermission('sys_token_del')")
-	public R<Boolean> delete(@PathVariable String token) {
+	public R delete(@PathVariable String token) {
 		return remoteTokenService.deleteTokenById(token, SecurityConstants.FROM_IN);
 	}
 }

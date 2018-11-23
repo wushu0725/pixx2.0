@@ -18,15 +18,13 @@
 package com.pig4cloud.pigx.daemon.controller;
 
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.daemon.entity.ExecutionLog;
 import com.pig4cloud.pigx.daemon.service.ExecutionLogService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 
 /**
@@ -48,8 +46,8 @@ public class ExecutionLogController {
 	 * @return
 	 */
 	@GetMapping("/page")
-	public R<IPage<ExecutionLog>> getExecutionLogPage(Page<ExecutionLog> page, ExecutionLog executionLog) {
-		return new R<>(executionLogService.getExecutionLogPage(page, executionLog));
+	public R getExecutionLogPage(Page page, ExecutionLog executionLog) {
+		return new R<>(executionLogService.page(page, Wrappers.query(executionLog)));
 	}
 
 
@@ -60,7 +58,7 @@ public class ExecutionLogController {
 	 * @return R
 	 */
 	@GetMapping("/{id}")
-	public R<ExecutionLog> info(@PathVariable("id") String id) {
+	public R info(@PathVariable("id") String id) {
 		return new R<>(executionLogService.getById(id));
 	}
 
@@ -71,7 +69,7 @@ public class ExecutionLogController {
 	 * @return R
 	 */
 	@PostMapping
-	public R<Boolean> save(@RequestBody ExecutionLog executionLog) {
+	public R save(@RequestBody ExecutionLog executionLog) {
 		return new R<>(executionLogService.save(executionLog));
 	}
 
@@ -82,7 +80,7 @@ public class ExecutionLogController {
 	 * @return R
 	 */
 	@PutMapping
-	public R<Boolean> update(@RequestBody ExecutionLog executionLog) {
+	public R update(@RequestBody ExecutionLog executionLog) {
 		return new R<>(executionLogService.updateById(executionLog));
 	}
 
@@ -93,7 +91,7 @@ public class ExecutionLogController {
 	 * @return R
 	 */
 	@DeleteMapping("/{id}")
-	public R<Boolean> delete(@PathVariable String id) {
+	public R delete(@PathVariable String id) {
 		return new R<>(executionLogService.removeById(id));
 	}
 

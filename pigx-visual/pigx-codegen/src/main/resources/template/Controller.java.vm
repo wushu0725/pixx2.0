@@ -49,8 +49,8 @@ public class ${className}Controller {
    * @return
    */
   @GetMapping("/page")
-  public R<IPage<${className}>> get${className}Page(Page<${className}> page, ${className} ${classname}) {
-    return  new R<>(${classname}Service.get${className}Page(page,${classname}));
+  public R get${className}Page(Page page, ${className} ${classname}) {
+    return  new R<>(${classname}Service.page(page,Wrappers.query(${classname})));
   }
 
 
@@ -60,7 +60,7 @@ public class ${className}Controller {
    * @return R
    */
   @GetMapping("/{${pk.lowerAttrName}}")
-  public R<${className}> getById(@PathVariable("${pk.lowerAttrName}") ${pk.attrType} ${pk.lowerAttrName}){
+  public R getById(@PathVariable("${pk.lowerAttrName}") ${pk.attrType} ${pk.lowerAttrName}){
     return new R<>(${classname}Service.getById(${pk.lowerAttrName}));
   }
 

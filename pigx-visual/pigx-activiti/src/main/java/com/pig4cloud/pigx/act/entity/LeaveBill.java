@@ -35,8 +35,8 @@ import java.time.LocalDateTime;
  * @date 2018-09-27 15:20:44
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @TableName("oa_leave_bill")
+@EqualsAndHashCode(callSuper = true)
 public class LeaveBill extends Model<LeaveBill> {
 	private static final long serialVersionUID = 1L;
 

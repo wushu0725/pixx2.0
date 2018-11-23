@@ -19,6 +19,7 @@ package com.pig4cloud.pigx.act.dto;
 
 import com.pig4cloud.pigx.act.entity.LeaveBill;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.List;
  * LeaveBillDto
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class LeaveBillDto extends LeaveBill {
 	/**
 	 * 任务ID

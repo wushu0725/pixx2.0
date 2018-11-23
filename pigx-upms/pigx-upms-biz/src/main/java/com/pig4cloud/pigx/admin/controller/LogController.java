@@ -20,7 +20,7 @@
 package com.pig4cloud.pigx.admin.controller;
 
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.admin.api.entity.SysLog;
 import com.pig4cloud.pigx.admin.api.vo.PreLogVo;
@@ -45,19 +45,20 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/log")
-@Api(value = "log",description = "日志管理模块")
+@Api(value = "log", description = "日志管理模块")
 public class LogController {
 	private final SysLogService sysLogService;
 
 	/**
 	 * 简单分页查询
-	 * @param page 分页对象
+	 *
+	 * @param page   分页对象
 	 * @param sysLog 系统日志
 	 * @return
 	 */
 	@GetMapping("/page")
-	public R<IPage<SysLog>> getSysLogPage(Page<SysLog> page, SysLog sysLog) {
-		return  new R<>(sysLogService.getSysLogPage(page,sysLog));
+	public R getSysLogPage(Page page, SysLog sysLog) {
+		return new R<>(sysLogService.page(page, Wrappers.query(sysLog)));
 	}
 
 	/**
@@ -68,7 +69,7 @@ public class LogController {
 	 */
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_log_del')")
-	public R<Boolean> delete(@PathVariable Long id) {
+	public R delete(@PathVariable Long id) {
 		return new R<>(sysLogService.removeById(id));
 	}
 
@@ -79,7 +80,7 @@ public class LogController {
 	 * @return success/false
 	 */
 	@PostMapping
-	public R<Boolean> save(@Valid @RequestBody SysLog sysLog) {
+	public R save(@Valid @RequestBody SysLog sysLog) {
 		return new R<>(sysLogService.save(sysLog));
 	}
 
@@ -90,7 +91,7 @@ public class LogController {
 	 * @return success/false
 	 */
 	@PostMapping("/logs")
-	public R<Boolean> saveLogs(@RequestBody List<PreLogVo> preLogVoList) {
+	public R saveLogs(@RequestBody List<PreLogVo> preLogVoList) {
 		return new R<>(sysLogService.insertLogs(preLogVoList));
 	}
 }

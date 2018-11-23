@@ -65,74 +65,31 @@
 		</collection>
 	</resultMap>
 
-	<sql id="selectUserVo">
-        SELECT
-            `user`.user_id,
-            `user`.username,
-            `user`.`password`,
-            `user`.salt,
-            `user`.phone,
-            `user`.avatar,
-            `user`.wx_openid,
-            `user`.qq_openid,
-            `user`.dept_id,
-            `user`.create_time AS ucreate_time,
-            `user`.update_time AS uupdate_time,
-            `user`.del_flag AS udel_flag,
-            `user`.lock_flag AS lock_flag,
-            `user`.dept_id AS deptId,
-            `user`.tenant_id AS tenantId,
-            r.role_id,
-            r.role_name,
-            r.role_code,
-            r.role_desc,
-            r.create_time AS rcreate_time,
-            r.update_time AS rupdate_time
-        FROM
-            sys_user AS `user`
-            LEFT JOIN sys_user_role AS ur ON ur.user_id = `user`.user_id
-            LEFT JOIN sys_role AS r ON r.role_id = ur.role_id
-    </sql>
+	<sql id="userRoleSql">
+		`user`.user_id,
+		`user`.username,
+		`user`.`password`,
+		`user`.salt,
+		`user`.phone,
+		`user`.avatar,
+		`user`.wx_openid,
+		`user`.qq_openid,
+		`user`.dept_id,
+		`user`.create_time AS ucreate_time,
+		`user`.update_time AS uupdate_time,
+		`user`.del_flag AS udel_flag,
+		`user`.lock_flag AS lock_flag,
+		`user`.dept_id AS deptId,
+		`user`.tenant_id AS tenantId,
+		r.role_id,
+		r.role_name,
+		r.role_code,
+		r.role_desc,
+		r.create_time AS rcreate_time,
+		r.update_time AS rupdate_time
+	</sql>
 
-	<select id="selectUserVoByUsername" resultMap="userVoResultMap">
-		<include refid="selectUserVo"/>
-		WHERE `user`.username = #{username}
-	</select>
-
-	<select id="selectUserVoById" resultMap="userVoResultMap">
-         SELECT
-            `user`.user_id,
-            `user`.username,
-            `user`.`password`,
-            `user`.salt,
-            `user`.phone,
-            `user`.avatar,
-			`user`.wx_openid,
-            `user`.qq_openid,
-            `user`.create_time AS ucreate_time,
-            `user`.update_time AS uupdate_time,
-            `user`.del_flag AS udel_flag,
-			`user`.lock_flag AS lock_flag,
-            `user`.tenant_id AS tenantId,
-            r.role_id,
-            r.role_name,
-            r.role_code,
-            r.role_desc,
-            r.create_time AS rcreate_time,
-            r.update_time AS rupdate_time,
-            d.name AS deptName,
-            d.dept_id AS deptId
-        FROM
-            sys_user AS `user`
-            LEFT JOIN sys_user_role AS ur ON ur.user_id = `user`.user_id
-            LEFT JOIN sys_role AS r ON r.role_id = ur.role_id
-            LEFT JOIN sys_dept AS d ON d.dept_id = `user`.dept_id
-        WHERE
-           `user`.user_id = #{id}
-    </select>
-
-	<select id="getUserVosPage" resultMap="userVoResultMap">
-		SELECT
+	<sql id="userRoleDeptSql">
 		`user`.user_id,
 		`user`.username,
 		`user`.`password`,
@@ -154,6 +111,33 @@
 		r.update_time AS rupdate_time,
 		d.name AS deptName,
 		d.dept_id AS deptId
+    </sql>
+
+	<select id="selectUserVoByUsername" resultMap="userVoResultMap">
+		SELECT
+			<include refid="userRoleSql"/>
+		FROM
+		sys_user AS `user`
+		LEFT JOIN sys_user_role AS ur ON ur.user_id = `user`.user_id
+		LEFT JOIN sys_role AS r ON r.role_id = ur.role_id
+			WHERE `user`.username = #{username}
+	</select>
+
+	<select id="selectUserVoById" resultMap="userVoResultMap">
+        SELECT
+	   		<include refid="userRoleDeptSql"/>
+        FROM
+            sys_user AS `user`
+            LEFT JOIN sys_user_role AS ur ON ur.user_id = `user`.user_id
+            LEFT JOIN sys_role AS r ON r.role_id = ur.role_id
+            LEFT JOIN sys_dept AS d ON d.dept_id = `user`.dept_id
+        WHERE
+           `user`.user_id = #{id}
+    </select>
+
+	<select id="getUserVosPage" resultMap="userVoResultMap">
+		SELECT
+		<include refid="userRoleSql"/>
 		FROM
 		sys_user AS `user`
 		LEFT JOIN sys_user_role AS ur ON ur.user_id = `user`.user_id
@@ -161,11 +145,11 @@
 		LEFT JOIN sys_dept AS d ON d.dept_id = `user`.dept_id
 		WHERE
 		r.del_flag = 0
-		<if test="username != null and username != ''">
-			and `user`.username LIKE CONCAT('%',#{username},'%')
+		<if test="query.username != null and query.username != ''">
+			and `user`.username LIKE CONCAT('%',#{query.username},'%')
 		</if>
-		<if test="deptId != null and deptId != ''">
-			and `user`.dept_id = #{deptId}
+		<if test="query.deptId != null and query.deptId != ''">
+			and `user`.dept_id = #{query.deptId}
 		</if>
 		ORDER BY `user`.create_time DESC
 	</select>

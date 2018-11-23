@@ -20,7 +20,9 @@
 package com.pig4cloud.pigx.admin.config;
 
 import cn.hutool.core.util.ArrayUtil;
+import com.baomidou.mybatisplus.core.injector.ISqlInjector;
 import com.baomidou.mybatisplus.core.parser.ISqlParser;
+import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
@@ -87,5 +89,15 @@ public class MybatisPlusConfigurer {
 	@Bean
 	public DataScopeInterceptor dataScopeInterceptor() {
 		return new DataScopeInterceptor();
+	}
+
+	/**
+	 * 逻辑删除插件
+	 *
+	 * @return LogicSqlInjector
+	 */
+	@Bean
+	public ISqlInjector sqlInjector() {
+		return new LogicSqlInjector();
 	}
 }

@@ -29,12 +29,5 @@ import org.apache.ibatis.annotations.Param;
  * @date ${datetime}
  */
 public interface ${className}Mapper extends BaseMapper<${className}> {
-  /**
-    * ${comments}简单分页查询
-    * @param ${classname} ${comments}
-    * @return
-    */
-  IPage<${className}> get${className}Page(Page page, @Param("${classname}") ${className} ${classname});
-
 
 }

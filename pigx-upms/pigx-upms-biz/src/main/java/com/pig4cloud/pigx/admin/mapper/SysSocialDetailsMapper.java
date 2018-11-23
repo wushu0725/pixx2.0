@@ -18,11 +18,8 @@
 package com.pig4cloud.pigx.admin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.admin.api.entity.SysSocialDetails;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * 系统社交登录账号表
@@ -32,10 +29,5 @@ import org.apache.ibatis.annotations.Param;
  */
 @Mapper
 public interface SysSocialDetailsMapper extends BaseMapper<SysSocialDetails> {
-	/**
-	 * 社交登录简单分页查询
-	 * @param sysSocialDetails 社交登录
-	 * @return
-	 */
-	IPage<SysSocialDetails> getSysSocialDetailsPage(Page page, @Param("sysSocialDetails") SysSocialDetails sysSocialDetails);
+
 }

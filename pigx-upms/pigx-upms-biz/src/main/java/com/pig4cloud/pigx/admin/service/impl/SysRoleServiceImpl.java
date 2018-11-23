@@ -19,7 +19,7 @@
 
 package com.pig4cloud.pigx.admin.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.entity.SysRole;
 import com.pig4cloud.pigx.admin.api.entity.SysRoleMenu;
@@ -53,7 +53,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 	 * @return
 	 */
 	@Override
-	public List<SysRole> findRolesByUserId(Integer userId) {
+	public List findRolesByUserId(Integer userId) {
 		return baseMapper.findRolesByUserId(userId);
 	}
 
@@ -67,10 +67,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 	@CacheEvict(value = "menu_details", allEntries = true)
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean deleteRoleById(Integer id) {
-		SysRoleMenu condition = new SysRoleMenu();
-		condition.setRoleId(id);
-
-		sysRoleMenuMapper.delete(new UpdateWrapper<>(condition));
+		sysRoleMenuMapper.delete(Wrappers
+			.<SysRoleMenu>update().lambda()
+			.eq(SysRoleMenu::getRoleId, id));
 		return this.removeById(id);
 	}
 }

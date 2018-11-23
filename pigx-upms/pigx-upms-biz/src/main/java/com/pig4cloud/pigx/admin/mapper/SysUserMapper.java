@@ -22,6 +22,7 @@ package com.pig4cloud.pigx.admin.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.pig4cloud.pigx.admin.api.dto.UserDTO;
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
 import com.pig4cloud.pigx.admin.api.vo.UserVO;
 import com.pig4cloud.pigx.common.core.datascope.DataScope;
@@ -49,12 +50,12 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 	/**
 	 * 分页查询用户信息（含角色）
 	 *
-	 * @param page     分页
-	 * @param username  用户名
+	 * @param page      分页
+	 * @param userDTO   查询参数
 	 * @param dataScope
 	 * @return list
 	 */
-	IPage<List<UserVO>> getUserVosPage(Page page, @Param("username") String username,@Param("deptId")String deptId,DataScope dataScope);
+	IPage<List<UserVO>> getUserVosPage(Page page, @Param("query") UserDTO userDTO, DataScope dataScope);
 
 	/**
 	 * 通过ID查询用户信息

@@ -19,8 +19,8 @@ package com.pig4cloud.pigx.admin.service.impl;
 
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.entity.SysRouteConf;
 import com.pig4cloud.pigx.admin.mapper.SysRouteConfMapper;
@@ -69,9 +69,7 @@ public class SysRouteConfServiceImpl extends ServiceImpl<SysRouteConfMapper, Sys
 	 */
 	@Override
 	public List<SysRouteConf> routes() {
-		SysRouteConf condition = new SysRouteConf();
-		condition.setDelFlag(CommonConstant.STATUS_NORMAL);
-		return baseMapper.selectList(new QueryWrapper<>(condition));
+		return baseMapper.selectList(Wrappers.emptyWrapper());
 	}
 
 	/**

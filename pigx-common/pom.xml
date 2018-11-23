@@ -33,7 +33,6 @@
 	<description>pigx 公共聚合模块</description>
 
 	<modules>
-		<module>pigx-common-aspect</module>
 		<module>pigx-common-cache</module>
 		<module>pigx-common-core</module>
 		<module>pigx-common-gateway</module>

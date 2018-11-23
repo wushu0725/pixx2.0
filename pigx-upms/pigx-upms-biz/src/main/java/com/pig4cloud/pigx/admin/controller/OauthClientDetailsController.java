@@ -19,7 +19,7 @@
 
 package com.pig4cloud.pigx.admin.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.admin.api.entity.SysOauthClientDetails;
 import com.pig4cloud.pigx.admin.service.SysOauthClientDetailsService;
@@ -54,20 +54,21 @@ public class OauthClientDetailsController {
 	 * @return SysOauthClientDetails
 	 */
 	@GetMapping("/{id}")
-	public R<SysOauthClientDetails> get(@PathVariable Integer id) {
+	public R get(@PathVariable Integer id) {
 		return new R<>(sysOauthClientDetailsService.getById(id));
 	}
 
 
 	/**
 	 * 简单分页查询
-	 * @param page 分页对象
+	 *
+	 * @param page                  分页对象
 	 * @param sysOauthClientDetails 系统终端
 	 * @return
 	 */
 	@GetMapping("/page")
-	public R<IPage<SysOauthClientDetails>> getSysOauthClientDetailsPage(Page<SysOauthClientDetails> page, SysOauthClientDetails sysOauthClientDetails) {
-		return  new R<>(sysOauthClientDetailsService.getSysOauthClientDetailsPage(page,sysOauthClientDetails));
+	public R getSysOauthClientDetailsPage(Page page, SysOauthClientDetails sysOauthClientDetails) {
+		return new R<>(sysOauthClientDetailsService.page(page, Wrappers.query(sysOauthClientDetails)));
 	}
 
 	/**
@@ -79,7 +80,7 @@ public class OauthClientDetailsController {
 	@SysLog("添加终端")
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_client_add')")
-	public R<Boolean> add(@Valid @RequestBody SysOauthClientDetails sysOauthClientDetails) {
+	public R add(@Valid @RequestBody SysOauthClientDetails sysOauthClientDetails) {
 		return new R<>(sysOauthClientDetailsService.save(sysOauthClientDetails));
 	}
 
@@ -92,7 +93,7 @@ public class OauthClientDetailsController {
 	@SysLog("删除终端")
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_client_del')")
-	public R<Boolean> delete(@PathVariable String id) {
+	public R delete(@PathVariable String id) {
 		return new R<>(sysOauthClientDetailsService.deleteClientDetailsById(id));
 	}
 
@@ -105,7 +106,7 @@ public class OauthClientDetailsController {
 	@SysLog("编辑终端")
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_client_edit')")
-	public R<Boolean> edit(@Valid @RequestBody SysOauthClientDetails sysOauthClientDetails) {
+	public R edit(@Valid @RequestBody SysOauthClientDetails sysOauthClientDetails) {
 		return new R<>(sysOauthClientDetailsService.updateClientDetailsById(sysOauthClientDetails));
 	}
 }

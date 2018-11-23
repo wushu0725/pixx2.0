@@ -17,6 +17,8 @@
 
 package com.pig4cloud.pigx.daemon.config;
 
+import com.baomidou.mybatisplus.core.injector.ISqlInjector;
+import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
@@ -37,5 +39,15 @@ public class MybatisPlusConfigurer {
 	@Bean
 	public PaginationInterceptor paginationInterceptor() {
 		return new PaginationInterceptor();
+	}
+
+	/**
+	 * 逻辑删除插件
+	 *
+	 * @return LogicSqlInjector
+	 */
+	@Bean
+	public ISqlInjector sqlInjector() {
+		return new LogicSqlInjector();
 	}
 }

@@ -19,8 +19,6 @@
 
 package com.pig4cloud.pigx.admin.service.impl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.entity.SysLog;
 import com.pig4cloud.pigx.admin.api.vo.PreLogVo;
@@ -43,15 +41,6 @@ import java.util.stream.Collectors;
  */
 @Service
 public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> implements SysLogService {
-	/**
-	 * 系统日志简单分页查询
-	 * @param sysLog 系统日志
-	 * @return
-	 */
-	@Override
-	public IPage<SysLog> getSysLogPage(Page<SysLog> page, SysLog sysLog){
-		return baseMapper.getSysLogPage(page,sysLog);
-	}
 
 	/**
 	 * 批量插入前端错误日志

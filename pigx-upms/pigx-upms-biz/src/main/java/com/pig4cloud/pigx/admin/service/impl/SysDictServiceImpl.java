@@ -19,8 +19,6 @@
 
 package com.pig4cloud.pigx.admin.service.impl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.entity.SysDict;
 import com.pig4cloud.pigx.admin.mapper.SysDictMapper;
@@ -37,15 +35,5 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> implements SysDictService {
-	/**
-	 * 系统字典简单分页查询
-	 * @param sysDict 系统字典
-	 * @return
-	 */
-	@Override
-	public IPage<SysDict> getSysDictPage(Page<SysDict> page, SysDict sysDict){
-		return baseMapper.getSysDictPage(page,sysDict);
-	}
-
 
 }

@@ -20,8 +20,8 @@
 package com.pig4cloud.pigx.admin.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.admin.api.entity.SysDict;
 import com.pig4cloud.pigx.admin.service.SysDictService;
@@ -35,7 +35,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * <p>
@@ -59,7 +58,7 @@ public class DictController {
 	 * @return 字典信息
 	 */
 	@GetMapping("/{id}")
-	public R<SysDict> dict(@PathVariable Integer id) {
+	public R dict(@PathVariable Integer id) {
 		return new R<>(sysDictService.getById(id));
 	}
 
@@ -70,8 +69,8 @@ public class DictController {
 	 * @return 分页对象
 	 */
 	@GetMapping("/page")
-	public R<IPage<SysDict>> getSysDictPage(Page<SysDict> page, SysDict sysDict) {
-		return  new R<>(sysDictService.getSysDictPage(page,sysDict));
+	public R<IPage> getSysDictPage(Page page, SysDict sysDict) {
+		return new R<>(sysDictService.page(page, Wrappers.query(sysDict)));
 	}
 
 	/**
@@ -82,10 +81,10 @@ public class DictController {
 	 */
 	@GetMapping("/type/{type}")
 	@Cacheable(value = "dict_details", key = "#type")
-	public R<List<SysDict>> findDictByType(@PathVariable String type) {
-		SysDict condition = new SysDict();
-		condition.setType(type);
-		return new R<>(sysDictService.list(new QueryWrapper<>(condition)));
+	public R findDictByType(@PathVariable String type) {
+		return new R<>(sysDictService.list(Wrappers
+			.<SysDict>query().lambda()
+			.eq(SysDict::getType, type)));
 	}
 
 	/**
@@ -98,7 +97,7 @@ public class DictController {
 	@PostMapping
 	@CacheEvict(value = "dict_details", key = "#sysDict.type")
 	@PreAuthorize("@pms.hasPermission('sys_dict_add')")
-	public R<Boolean> dict(@Valid @RequestBody SysDict sysDict) {
+	public R dict(@Valid @RequestBody SysDict sysDict) {
 		return new R<>(sysDictService.save(sysDict));
 	}
 
@@ -113,7 +112,7 @@ public class DictController {
 	@DeleteMapping("/{id}/{type}")
 	@CacheEvict(value = "dict_details", key = "#type")
 	@PreAuthorize("@pms.hasPermission('sys_dict_del')")
-	public R<Boolean> deleteDict(@PathVariable Integer id, @PathVariable String type) {
+	public R deleteDict(@PathVariable Integer id, @PathVariable String type) {
 		return new R<>(sysDictService.removeById(id));
 	}
 
@@ -127,7 +126,7 @@ public class DictController {
 	@SysLog("修改字典")
 	@CacheEvict(value = "dict_details", key = "#sysDict.type")
 	@PreAuthorize("@pms.hasPermission('sys_dict_edit')")
-	public R<Boolean> editDict(@Valid @RequestBody SysDict sysDict) {
+	public R editDict(@Valid @RequestBody SysDict sysDict) {
 		return new R<>(sysDictService.updateById(sysDict));
 	}
 }

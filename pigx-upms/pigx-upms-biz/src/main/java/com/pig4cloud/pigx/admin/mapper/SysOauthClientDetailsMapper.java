@@ -21,10 +21,7 @@ package com.pig4cloud.pigx.admin.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.admin.api.entity.SysOauthClientDetails;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -35,12 +32,5 @@ import org.apache.ibatis.annotations.Param;
  * @since 2018-05-15
  */
 public interface SysOauthClientDetailsMapper extends BaseMapper<SysOauthClientDetails> {
-	/**
-	 * 系统终端简单分页查询
-	 * @param sysOauthClientDetails 系统终端
-	 * @return
-	 */
-	IPage<SysOauthClientDetails> getSysOauthClientDetailsPage(Page page, @Param("sysOauthClientDetails") SysOauthClientDetails sysOauthClientDetails);
-
 
 }

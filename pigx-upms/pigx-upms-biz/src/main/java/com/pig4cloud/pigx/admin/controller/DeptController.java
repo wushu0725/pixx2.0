@@ -19,7 +19,6 @@
 
 package com.pig4cloud.pigx.admin.controller;
 
-import com.pig4cloud.pigx.admin.api.dto.DeptTree;
 import com.pig4cloud.pigx.admin.api.entity.SysDept;
 import com.pig4cloud.pigx.admin.service.SysDeptService;
 import com.pig4cloud.pigx.common.core.util.R;
@@ -31,7 +30,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * <p>
@@ -55,7 +53,7 @@ public class DeptController {
 	 * @return SysDept
 	 */
 	@GetMapping("/{id}")
-	public R<SysDept> get(@PathVariable Integer id) {
+	public R get(@PathVariable Integer id) {
 		return new R<>(sysDeptService.getById(id));
 	}
 
@@ -66,7 +64,7 @@ public class DeptController {
 	 * @return 树形菜单
 	 */
 	@GetMapping(value = "/tree")
-	public R<List<DeptTree>> getTree() {
+	public R getTree() {
 		return new R<>(sysDeptService.selectTree());
 	}
 
@@ -76,7 +74,7 @@ public class DeptController {
 	 * @return 树形菜单
 	 */
 	@GetMapping(value = "/user-tree")
-	public R<List<DeptTree>> userTree() {
+	public R userTree() {
 		return new R<>(sysDeptService.selectUserTree());
 	}
 
@@ -89,7 +87,7 @@ public class DeptController {
 	@SysLog("添加部门")
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_dept_add')")
-	public R<Boolean> add(@Valid @RequestBody SysDept sysDept) {
+	public R add(@Valid @RequestBody SysDept sysDept) {
 		return new R<>(sysDeptService.insertDept(sysDept));
 	}
 
@@ -102,7 +100,7 @@ public class DeptController {
 	@SysLog("删除部门")
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_dept_del')")
-	public R<Boolean> delete(@PathVariable Integer id) {
+	public R delete(@PathVariable Integer id) {
 		return new R<>(sysDeptService.deleteDeptById(id));
 	}
 
@@ -115,7 +113,7 @@ public class DeptController {
 	@SysLog("编辑部门")
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_dept_edit')")
-	public R<Boolean> edit(@Valid @RequestBody SysDept sysDept) {
+	public R edit(@Valid @RequestBody SysDept sysDept) {
 		sysDept.setUpdateTime(LocalDateTime.now());
 		return new R<>(sysDeptService.updateDeptById(sysDept));
 	}

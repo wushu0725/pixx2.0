@@ -19,8 +19,6 @@
 
 package com.pig4cloud.pigx.admin.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pig4cloud.pigx.admin.api.entity.SysOauthClientDetails;
 
@@ -33,14 +31,6 @@ import com.pig4cloud.pigx.admin.api.entity.SysOauthClientDetails;
  * @since 2018-05-15
  */
 public interface SysOauthClientDetailsService extends IService<SysOauthClientDetails> {
-	/**
-	 * 系统终端简单分页查询
-	 * @param sysOauthClientDetails 系统终端
-	 * @return
-	 */
-	IPage<SysOauthClientDetails> getSysOauthClientDetailsPage(Page<SysOauthClientDetails> page, SysOauthClientDetails sysOauthClientDetails);
-
-
 	/**
 	 * 通过ID删除客户端
 	 *

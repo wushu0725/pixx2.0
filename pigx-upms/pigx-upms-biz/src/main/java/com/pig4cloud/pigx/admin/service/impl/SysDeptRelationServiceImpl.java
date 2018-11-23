@@ -20,7 +20,7 @@
 package com.pig4cloud.pigx.admin.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.entity.SysDept;
 import com.pig4cloud.pigx.admin.api.entity.SysDeptRelation;
@@ -58,7 +58,8 @@ public class SysDeptRelationServiceImpl extends ServiceImpl<SysDeptRelationMappe
 		SysDeptRelation condition = new SysDeptRelation();
 		condition.setDescendant(sysDept.getParentId());
 		List<SysDeptRelation> relationList = sysDeptRelationMapper
-			.selectList(new QueryWrapper<>(condition))
+			.selectList(Wrappers.<SysDeptRelation>query().lambda()
+				.eq(SysDeptRelation::getDescendant, sysDept.getParentId()))
 			.stream().map(relation -> {
 				relation.setDescendant(sysDept.getDeptId());
 				return relation;

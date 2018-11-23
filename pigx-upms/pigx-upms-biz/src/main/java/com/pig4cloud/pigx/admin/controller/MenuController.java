@@ -19,7 +19,7 @@
 
 package com.pig4cloud.pigx.admin.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.pig4cloud.pigx.admin.api.dto.MenuTree;
 import com.pig4cloud.pigx.admin.api.entity.SysMenu;
 import com.pig4cloud.pigx.admin.api.vo.MenuVO;
@@ -58,7 +58,7 @@ public class MenuController {
 	 * @return 当前用户的树形菜单
 	 */
 	@GetMapping
-	public R<List<MenuTree>> userMenu() {
+	public R userMenu() {
 		// 获取符合条件的菜单
 		Set<MenuVO> all = new HashSet<>();
 		SecurityUtils.getRoles()
@@ -77,9 +77,8 @@ public class MenuController {
 	 * @return 树形菜单
 	 */
 	@GetMapping(value = "/tree")
-	public R<List<MenuTree>> getTree() {
-		return new R<>(TreeUtil.bulidTree(sysMenuService.list(new QueryWrapper<SysMenu>()
-			.lambda().eq(SysMenu::getDelFlag,CommonConstant.STATUS_NORMAL)), -1));
+	public R getTree() {
+		return new R<>(TreeUtil.bulidTree(sysMenuService.list(Wrappers.emptyWrapper()), -1));
 	}
 
 	/**
@@ -89,7 +88,7 @@ public class MenuController {
 	 * @return 属性集合
 	 */
 	@GetMapping("/tree/{roleId}")
-	public List<Integer> roleTree(@PathVariable Integer roleId) {
+	public List roleTree(@PathVariable Integer roleId) {
 		return sysMenuService.findMenuByRoleId(roleId)
 			.stream()
 			.map(MenuVO::getMenuId)
@@ -103,7 +102,7 @@ public class MenuController {
 	 * @return 菜单详细信息
 	 */
 	@GetMapping("/{id}")
-	public R<SysMenu> menu(@PathVariable Integer id) {
+	public R menu(@PathVariable Integer id) {
 		return new R<>(sysMenuService.getById(id));
 	}
 
@@ -116,7 +115,7 @@ public class MenuController {
 	@SysLog("新增菜单")
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_menu_add')")
-	public R<Boolean> menu(@Valid @RequestBody SysMenu sysMenu) {
+	public R menu(@Valid @RequestBody SysMenu sysMenu) {
 		return new R<>(sysMenuService.save(sysMenu));
 	}
 
@@ -129,7 +128,7 @@ public class MenuController {
 	@SysLog("删除菜单")
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_menu_del')")
-	public R<Boolean> menuDel(@PathVariable Integer id) {
+	public R menuDel(@PathVariable Integer id) {
 		return new R<>(sysMenuService.deleteMenu(id));
 	}
 
@@ -142,7 +141,7 @@ public class MenuController {
 	@SysLog("更新菜单")
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_menu_edit')")
-	public R<Boolean> menuUpdate(@Valid @RequestBody SysMenu sysMenu) {
+	public R menuUpdate(@Valid @RequestBody SysMenu sysMenu) {
 		return new R<>(sysMenuService.updateMenuById(sysMenu));
 	}
 

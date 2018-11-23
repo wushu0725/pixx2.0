@@ -17,9 +17,8 @@
 
 package com.pig4cloud.pigx.admin.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 import com.pig4cloud.pigx.admin.api.entity.SysSocialDetails;
 import com.pig4cloud.pigx.admin.service.SysSocialDetailsService;
 import com.pig4cloud.pigx.common.core.util.R;
@@ -53,8 +52,8 @@ public class SysSocialDetailsController {
 	 * @return
 	 */
 	@GetMapping("/page")
-	public R<IPage<SysSocialDetails>> getSysSocialDetailsPage(Page<SysSocialDetails> page, SysSocialDetails sysSocialDetails) {
-		return new R<>(sysSocialDetailsService.getSysSocialDetailsPage(page, sysSocialDetails));
+	public R getSysSocialDetailsPage(Page page, SysSocialDetails sysSocialDetails) {
+		return new R<>(sysSocialDetailsService.page(page, Wrappers.query(sysSocialDetails)));
 	}
 
 
@@ -65,7 +64,7 @@ public class SysSocialDetailsController {
 	 * @return R
 	 */
 	@GetMapping("/{id}")
-	public R<SysSocialDetails> info(@PathVariable("id") Integer id) {
+	public R info(@PathVariable("id") Integer id) {
 		return new R<>(sysSocialDetailsService.getById(id));
 	}
 
@@ -114,7 +113,7 @@ public class SysSocialDetailsController {
 	 * @return
 	 */
 	@GetMapping("/info/{inStr}")
-	public R<UserInfo> social(@PathVariable String inStr) {
+	public R social(@PathVariable String inStr) {
 		return new R<>(sysSocialDetailsService.findUserInfo(inStr));
 	}
 
@@ -126,7 +125,7 @@ public class SysSocialDetailsController {
 	 * @return
 	 */
 	@PostMapping("/bind")
-	public R<Boolean> bind(String state, String code) {
+	public R bind(String state, String code) {
 		return new R<>(sysSocialDetailsService.bindSocial(state, code));
 	}
 }

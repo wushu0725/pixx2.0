@@ -17,7 +17,7 @@
 
 package com.pig4cloud.pigx.act.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.act.entity.LeaveBill;
 import com.pig4cloud.pigx.act.service.LeaveBillService;
@@ -44,13 +44,14 @@ public class LeaveBillController {
 
 	/**
 	 * 请假审批单简单分页查询
-	 * @param page 分页对象
+	 *
+	 * @param page      分页对象
 	 * @param leaveBill 请假审批单
 	 * @return
 	 */
 	@GetMapping("/page")
-	public R<IPage<LeaveBill>> getLeaveBillPage(Page<LeaveBill> page, LeaveBill leaveBill) {
-		return  new R<>(leaveBillService.getLeaveBillPage(page,leaveBill));
+	public R getLeaveBillPage(Page page, LeaveBill leaveBill) {
+		return new R<>(leaveBillService.page(page, Wrappers.query(leaveBill)));
 	}
 
 
@@ -62,8 +63,7 @@ public class LeaveBillController {
 	 */
 	@GetMapping("/{leaveId}")
 	public R info(@PathVariable("leaveId") Integer leaveId) {
-		LeaveBill leaveBill = leaveBillService.getById(leaveId);
-		return new R<>(leaveBill);
+		return new R<>(leaveBillService.getById(leaveId));
 	}
 
 	/**
@@ -87,8 +87,7 @@ public class LeaveBillController {
 	 */
 	@PutMapping
 	public R update(@RequestBody LeaveBill leaveBill) {
-		leaveBillService.updateById(leaveBill);
-		return new R<>(Boolean.TRUE);
+		return new R<>(leaveBillService.updateById(leaveBill));
 	}
 
 	/**

@@ -47,7 +47,7 @@ public class SysRouteConfController {
 	 */
 	@GetMapping
 	public R routes() {
-		return new R<>(sysRouteConfService.routes());
+		return new R<>(sysRouteConfService.list());
 	}
 
 	/**

@@ -17,8 +17,6 @@
 
 package com.pig4cloud.pigx.admin.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 import com.pig4cloud.pigx.admin.api.entity.SysSocialDetails;
@@ -30,13 +28,6 @@ import com.pig4cloud.pigx.admin.api.entity.SysSocialDetails;
  * @date 2018-08-16 21:30:41
  */
 public interface SysSocialDetailsService extends IService<SysSocialDetails> {
-
-	/**
-	 * 社交登录简单分页查询
-	 * @param sysSocialDetails 社交登录
-	 * @return
-	 */
-	IPage<SysSocialDetails> getSysSocialDetailsPage(Page<SysSocialDetails> page, SysSocialDetails sysSocialDetails);
 
 	/**
 	 * 绑定社交账号

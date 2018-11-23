@@ -17,7 +17,9 @@
 
 package com.pig4cloud.pigx.act.config;
 
+import com.baomidou.mybatisplus.core.injector.ISqlInjector;
 import com.baomidou.mybatisplus.core.parser.ISqlParser;
+import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
@@ -72,5 +74,15 @@ public class MybatisPlusConfigurer {
 		sqlParserList.add(tenantSqlParser);
 		paginationInterceptor.setSqlParserList(sqlParserList);
 		return paginationInterceptor;
+	}
+
+	/**
+	 * 逻辑删除插件
+	 *
+	 * @return LogicSqlInjector
+	 */
+	@Bean
+	public ISqlInjector sqlInjector() {
+		return new LogicSqlInjector();
 	}
 }

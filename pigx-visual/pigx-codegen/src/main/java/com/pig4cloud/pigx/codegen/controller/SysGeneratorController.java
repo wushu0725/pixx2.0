@@ -18,12 +18,12 @@
 package com.pig4cloud.pigx.codegen.controller;
 
 import cn.hutool.core.io.IoUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.codegen.entity.GenConfig;
 import com.pig4cloud.pigx.codegen.service.SysGeneratorService;
 import com.pig4cloud.pigx.common.core.util.R;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -48,8 +48,8 @@ public class SysGeneratorController {
 	 * @return 数据库表
 	 */
 	@GetMapping("/page")
-	public R<IPage> list(Page page, String tableName) {
-		return new R<>(sysGeneratorService.queryPage(page,tableName));
+	public R list(Page page, String tableName) {
+		return new R<>(sysGeneratorService.queryPage(page, tableName));
 	}
 
 	/**
@@ -60,8 +60,8 @@ public class SysGeneratorController {
 		byte[] data = sysGeneratorService.generatorCode(genConfig);
 
 		response.reset();
-		response.setHeader("Content-Disposition", String.format("attachment; filename=%s.zip", genConfig.getTableName()));
-		response.addHeader("Content-Length", "" + data.length);
+		response.setHeader(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=%s.zip", genConfig.getTableName()));
+		response.addHeader(HttpHeaders.CONTENT_LENGTH,  String.valueOf(data.length));
 		response.setContentType("application/octet-stream; charset=UTF-8");
 
 		IoUtil.write(response.getOutputStream(), Boolean.TRUE, data);

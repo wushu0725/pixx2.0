@@ -19,6 +19,7 @@ package com.pig4cloud.pigx.admin.handler;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.pig4cloud.pigx.admin.api.dto.UserInfo;
 import com.pig4cloud.pigx.admin.api.entity.SysSocialDetails;
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
@@ -74,10 +75,9 @@ public class WeChatLoginHandler extends AbstractLoginHandler {
 	 */
 	@Override
 	public UserInfo info(String openId) {
-		SysUser condition = new SysUser();
-		condition.setWxOpenid(openId);
 		SysUser sysUser = sysUserService
-			.getOne(new QueryWrapper<>(condition));
+			.getOne(Wrappers.<SysUser>query()
+				.lambda().eq(SysUser::getWxOpenid, openId));
 
 		if (sysUser == null) {
 			log.info("微信未绑定:{}", openId);

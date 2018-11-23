@@ -21,9 +21,8 @@ package com.pig4cloud.pigx.admin.service.impl;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.admin.api.dto.UserDTO;
@@ -33,6 +32,7 @@ import com.pig4cloud.pigx.admin.api.vo.MenuVO;
 import com.pig4cloud.pigx.admin.api.vo.UserVO;
 import com.pig4cloud.pigx.admin.mapper.SysUserMapper;
 import com.pig4cloud.pigx.admin.service.*;
+import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.datascope.DataScope;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
@@ -45,6 +45,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -66,6 +67,30 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	private final SysDeptService sysDeptService;
 	private final SysUserRoleService sysUserRoleService;
 	private final SysDeptRelationService sysDeptRelationService;
+
+	/**
+	 * 保存用户信息
+	 *
+	 * @param userDto DTO 对象
+	 * @return success/fail
+	 */
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean saveUser(UserDTO userDto) {
+		SysUser sysUser = new SysUser();
+		BeanUtils.copyProperties(userDto, sysUser);
+		sysUser.setDelFlag(CommonConstant.STATUS_NORMAL);
+		sysUser.setPassword(ENCODER.encode(userDto.getPassword()));
+		baseMapper.insert(sysUser);
+		List<SysUserRole> userRoleList = userDto.getRole()
+			.stream().map(roleId -> {
+				SysUserRole userRole = new SysUserRole();
+				userRole.setUserId(sysUser.getUserId());
+				userRole.setRoleId(roleId);
+				return userRole;
+			}).collect(Collectors.toList());
+		return sysUserRoleService.saveBatch(userRoleList);
+	}
 
 	/**
 	 * 通过查用户的全部信息
@@ -103,16 +128,21 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		return userInfo;
 	}
 
+	/**
+	 * 分页查询用户信息（含有角色信息）
+	 *
+	 * @param page    分页对象
+	 * @param userDTO 参数列表
+	 * @return
+	 */
 	@Override
-	public IPage<List<UserVO>> getUsersWithRolePage(Page<List<UserVO>> page, String username,String deptId) {
+	public IPage getUsersWithRolePage(Page page, UserDTO userDTO) {
 		DataScope dataScope = new DataScope();
 		dataScope.setScopeName("deptId");
 		dataScope.setIsOnly(true);
 		dataScope.setDeptIds(getChildDepts());
-		IPage<List<UserVO>> userVosPage = baseMapper.getUserVosPage(page, username,deptId, dataScope);
-		return userVosPage.setTotal(Long.valueOf(userVosPage.getRecords().size()));
+		return baseMapper.getUserVosPage(page, userDTO, dataScope);
 	}
-
 
 	/**
 	 * 通过ID查询用户信息
@@ -171,9 +201,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		}
 		this.updateById(sysUser);
 
-		SysUserRole condition = new SysUserRole();
-		condition.setUserId(userDto.getUserId());
-		sysUserRoleService.remove(new UpdateWrapper<>(condition));
+		sysUserRoleService.remove(Wrappers.<SysUserRole>update().lambda()
+			.eq(SysUserRole::getUserId, userDto.getUserId()));
 		userDto.getRole().forEach(roleId -> {
 			SysUserRole userRole = new SysUserRole();
 			userRole.setUserId(sysUser.getUserId());
@@ -191,20 +220,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	 */
 	@Override
 	public List<SysUser> ancestorUsers(String username) {
-		SysUser condition = new SysUser();
-		condition.setUsername(username);
-		SysUser sysUser = this.getOne(new QueryWrapper<>(condition));
+		SysUser sysUser = this.getOne(Wrappers.<SysUser>query().lambda()
+			.eq(SysUser::getUsername, username));
 
-		Integer deptId = sysUser.getDeptId();
-		SysDept sysDept = sysDeptService.getById(deptId);
+		SysDept sysDept = sysDeptService.getById(sysUser.getDeptId());
 		if (sysDept == null) {
 			return null;
 		}
 
 		Integer parentId = sysDept.getParentId();
-		SysUser condition2 = new SysUser();
-		condition2.setDeptId(parentId);
-		return this.list(new QueryWrapper<>(condition2));
+		return this.list(Wrappers.<SysUser>query().lambda()
+			.eq(SysUser::getDeptId, parentId));
 	}
 
 	/**
@@ -215,10 +241,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	private List<Integer> getChildDepts() {
 		Integer deptId = SecurityUtils.getUser().getDeptId();
 		//获取当前部门的子部门
-		SysDeptRelation condition = new SysDeptRelation();
-		condition.setAncestor(deptId);
 		return sysDeptRelationService
-			.list(new QueryWrapper<>(condition))
+			.list(Wrappers.<SysDeptRelation>query().lambda()
+				.eq(SysDeptRelation::getAncestor, deptId))
 			.stream()
 			.map(SysDeptRelation::getDescendant)
 			.collect(Collectors.toList());
