@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/leavebill")
+@RequestMapping("/leave-bill")
 public class LeaveBillController {
 	private final LeaveBillService leaveBillService;
 	private final ProcessService processService;

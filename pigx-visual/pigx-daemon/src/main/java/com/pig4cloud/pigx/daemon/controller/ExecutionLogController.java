@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.*;
  * @date 2018-08-03 22:15:56
  */
 @RestController
-@RequestMapping("/executionlog")
+@RequestMapping("/execution-log")
 @AllArgsConstructor
 public class ExecutionLogController {
 

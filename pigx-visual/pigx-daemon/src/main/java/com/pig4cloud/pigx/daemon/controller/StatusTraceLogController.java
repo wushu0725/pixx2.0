@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/statustracelog")
+@RequestMapping("/status-trace-log")
 public class StatusTraceLogController {
 	private final StatusTraceLogService statusTraceLogService;
 

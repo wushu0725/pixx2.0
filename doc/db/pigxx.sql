@@ -163,32 +163,95 @@ INSERT INTO `sys_log` VALUES ('1', '0', '添加用户', 'pig', 'admin', '2018-11
 COMMIT;
 
 -- ----------------------------
---  Table structure for `sys_menu`
+-- Table structure for sys_menu
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_menu`;
-CREATE TABLE `sys_menu` (
-  `menu_id` int(11) NOT NULL COMMENT '菜单ID',
-  `name` varchar(32) NOT NULL COMMENT '菜单名称',
-  `permission` varchar(32) DEFAULT NULL COMMENT '菜单权限标识',
-  `path` varchar(128) DEFAULT NULL COMMENT '前端URL',
-  `parent_id` int(11) DEFAULT NULL COMMENT '父菜单ID',
-  `icon` varchar(32) DEFAULT NULL COMMENT '图标',
-  `component` varchar(64) DEFAULT NULL COMMENT 'VUE页面',
-  `sort` int(11) DEFAULT '1' COMMENT '排序值',
-  `keepalive` char(1) DEFAULT '0' COMMENT '0-开启，1- 关闭',
-  `type` char(1) DEFAULT NULL COMMENT '菜单类型 （0菜单 1按钮）',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `del_flag` char(1) DEFAULT '0' COMMENT '0--正常 1--删除',
-  `tenant_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='菜单权限表';
+CREATE TABLE `sys_menu`  (
+                           `menu_id` int(11) NOT NULL COMMENT '菜单ID',
+                           `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '菜单名称',
+                           `permission` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '菜单权限标识',
+                           `path` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '前端URL',
+                           `parent_id` int(11) NULL DEFAULT NULL COMMENT '父菜单ID',
+                           `icon` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标',
+                           `component` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'VUE页面',
+                           `sort` int(11) NULL DEFAULT 1 COMMENT '排序值',
+                           `keepalive` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '0-开启，1- 关闭',
+                           `type` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '菜单类型 （0菜单 1按钮）',
+                           `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                           `update_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                           `del_flag` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '0--正常 1--删除',
+                           `tenant_id` int(11) NULL DEFAULT NULL,
+                           PRIMARY KEY (`menu_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
---  Records of `sys_menu`
+-- Records of sys_menu
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_menu` VALUES ('1000', '权限管理', null, '/upms', '-1', 'icon-quanxianguanli', 'Layout', '0', '0', '0', '2018-09-28 08:29:53', '2018-09-28 08:53:01', '0', '1'), ('1100', '用户管理', null, 'user', '1000', 'icon-yonghuguanli', 'views/admin/user/index', '1', '0', '0', '2017-11-02 22:24:37', '2018-09-28 09:00:41', '0', '1'), ('1101', '用户新增', 'sys_user_add', null, '1100', null, null, null, '0', '1', '2017-11-08 09:52:09', '2018-09-28 09:06:34', '0', '1'), ('1102', '用户修改', 'sys_user_edit', null, '1100', null, null, null, '0', '1', '2017-11-08 09:52:48', '2018-09-28 09:06:37', '0', '1'), ('1103', '用户删除', 'sys_user_del', null, '1100', null, null, null, '0', '1', '2017-11-08 09:54:01', '2018-09-28 09:06:42', '0', '1'), ('1200', '菜单管理', null, 'menu', '1000', 'icon-caidanguanli', 'views/admin/menu/index', '2', '0', '0', '2017-11-08 09:57:27', '2018-09-28 09:00:45', '0', '1'), ('1201', '菜单新增', 'sys_menu_add', null, '1200', null, null, null, '0', '1', '2017-11-08 10:15:53', '2018-09-28 09:07:16', '0', '1'), ('1202', '菜单修改', 'sys_menu_edit', null, '1200', null, null, null, '0', '1', '2017-11-08 10:16:23', '2018-09-28 09:07:18', '0', '1'), ('1203', '菜单删除', 'sys_menu_del', null, '1200', null, null, null, '0', '1', '2017-11-08 10:16:43', '2018-09-28 09:07:22', '0', '1'), ('1300', '角色管理', null, 'role', '1000', 'icon-jiaoseguanli', 'views/admin/role/index', '3', '0', '0', '2017-11-08 10:13:37', '2018-09-28 09:00:48', '0', '1'), ('1301', '角色新增', 'sys_role_add', null, '1300', null, null, null, '0', '1', '2017-11-08 10:14:18', '2018-09-28 09:07:46', '0', '1'), ('1302', '角色修改', 'sys_role_edit', null, '1300', null, null, null, '0', '1', '2017-11-08 10:14:41', '2018-09-28 09:07:49', '0', '1'), ('1303', '角色删除', 'sys_role_del', null, '1300', null, null, null, '0', '1', '2017-11-08 10:14:59', '2018-09-28 09:07:53', '0', '1'), ('1304', '分配权限', 'sys_role_perm', null, '1300', null, null, null, '0', '1', '2018-04-20 07:22:55', '2018-09-28 09:13:23', '0', '1'), ('1400', '部门管理', null, 'dept', '1000', 'icon-web-icon-', 'views/admin/dept/index', '4', '0', '0', '2018-01-20 13:17:19', '2018-09-28 09:00:52', '0', '1'), ('1401', '部门新增', 'sys_dept_add', null, '1400', null, null, null, '0', '1', '2018-01-20 14:56:16', '2018-09-28 09:08:13', '0', '1'), ('1402', '部门修改', 'sys_dept_edit', null, '1400', null, null, null, '0', '1', '2018-01-20 14:56:59', '2018-09-28 09:08:16', '0', '1'), ('1403', '部门删除', 'sys_dept_del', null, '1400', null, null, null, '0', '1', '2018-01-20 14:57:28', '2018-09-28 09:08:18', '0', '1'), ('2000', '系统管理', null, '/admin', '-1', 'icon-xitongguanli', 'Layout', '1', '0', '0', '2017-11-07 20:56:00', '2018-09-28 08:53:18', '0', '1'), ('2100', '日志管理', null, 'log', '2000', 'icon-rizhiguanli', 'views/admin/log/index', '5', '0', '0', '2017-11-20 14:06:22', '2018-09-28 09:01:52', '0', '1'), ('2101', '日志删除', 'sys_log_del', null, '2100', null, null, null, '0', '1', '2017-11-20 20:37:37', '2018-09-28 09:08:44', '0', '1'), ('2200', '字典管理', null, 'dict', '2000', 'icon-navicon-zdgl', 'views/admin/dict/index', '6', '0', '0', '2017-11-29 11:30:52', '2018-09-28 09:01:47', '0', '1'), ('2201', '字典删除', 'sys_dict_del', null, '2200', null, null, null, '0', '1', '2017-11-29 11:30:11', '2018-09-28 09:09:10', '0', '1'), ('2202', '字典新增', 'sys_dict_add', null, '2200', null, null, null, '0', '1', '2018-05-11 22:34:55', '2018-09-28 09:09:12', '0', '1'), ('2203', '字典修改', 'sys_dict_edit', null, '2200', null, null, null, '0', '1', '2018-05-11 22:36:03', '2018-09-28 09:09:16', '0', '1'), ('2300', '代码生成', '', 'gen', '2000', 'icon-weibiaoti46', 'views/admin/gen/index', '8', '0', '0', '2018-01-20 13:17:19', '2018-09-28 09:02:54', '0', '1'), ('2400', '终端管理', '', 'client', '2000', 'icon-shouji', 'views/admin/client/index', '9', '0', '0', '2018-01-20 13:17:19', '2018-09-28 09:01:43', '0', '1'), ('2401', '客户端新增', 'sys_client_add', null, '2400', '1', null, null, '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:10:25', '0', '1'), ('2402', '客户端修改', 'sys_client_edit', null, '2400', null, null, null, '0', '1', '2018-05-15 21:37:06', '2018-09-28 09:10:27', '0', '1'), ('2403', '客户端删除', 'sys_client_del', null, '2400', null, null, null, '0', '1', '2018-05-15 21:39:16', '2018-09-28 09:10:30', '0', '1'), ('2500', '密钥管理', '', 'social', '2000', 'icon-miyue', 'views/admin/social/index', '10', '0', '0', '2018-01-20 13:17:19', '2018-09-28 09:01:41', '0', '1'), ('2501', '密钥新增', 'generator_syssocialdetails_add', null, '2500', '1', null, '0', '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:11:02', '0', '1'), ('2502', '密钥修改', 'generator_syssocialdetails_edit', null, '2500', '1', null, '1', '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:11:04', '0', '1'), ('2503', '密钥删除', 'generator_syssocialdetails_del', null, '2500', '1', null, '2', '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:11:06', '0', '1'), ('2600', '令牌管理', null, 'token', '2000', 'icon-denglvlingpai', 'views/admin/token/index', '11', '0', '0', '2018-09-04 05:58:41', '2018-09-28 09:01:38', '0', '1'), ('2601', '令牌删除', 'sys_token_del', null, '2600', null, null, '1', '0', '1', '2018-09-04 05:59:50', '2018-09-28 09:11:24', '0', '1'), ('2700', '动态路由', null, 'route', '2000', 'icon-luyou', 'views/admin/route/index', '12', '0', '0', '2018-09-04 05:58:41', '2018-09-28 09:01:38', '0', '1'), ('3000', '系统监控', null, '/daemon', '-1', 'icon-msnui-supervise', 'Layout', '2', '0', '0', '2018-07-27 01:13:21', '2018-09-28 08:53:24', '0', '1'), ('3100', '服务监控', null, 'http://139.224.200.249:15001', '3000', 'icon-server', null, '0', '0', '0', '2018-06-26 10:50:32', '2018-09-28 09:03:40', '0', '1'), ('3200', '接口文档', null, 'http://139.224.200.249:19999/swagger-ui.html', '3000', 'icon-wendang', null, '1', '0', '0', '2018-06-26 10:50:32', '2018-09-28 09:05:16', '0', '1'), ('3300', '事务监控', null, 'tx', '3000', 'icon-gtsquanjushiwufuwuGTS', 'views/admin/tx/index', '5', '0', '0', '2018-08-19 11:02:39', '2018-09-28 09:03:36', '0', '1'), ('3400', '在线事务', null, 'model', '3000', 'icon-online', 'views/admin/tx/model', '6', '0', '0', '2018-08-19 11:32:04', '2018-09-28 09:03:58', '0', '1'), ('3500', '任务监控', null, 'http://139.224.200.249:8899', '3000', 'icon-msnui-supervise', null, '7', '0', '0', '2018-06-26 10:50:32', '2018-09-28 09:03:33', '0', '1'), ('3600', '任务轨迹', '', 'statustracelog', '3000', 'icon-guiji', 'views/daemon/statustracelog/index', '8', '0', '0', '2018-01-20 13:17:19', '2018-09-28 09:04:15', '0', '1'), ('3601', '删除', 'daemon_statustracelog_del', null, '3600', '1', null, '2', '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:13:45', '0', '1'), ('3700', '调用拓扑', null, 'http://139.224.200.249:8081', '3000', 'icon-line', null, '10', '0', '0', '2018-01-25 11:08:52', '2018-09-28 09:04:29', '0', '1'), ('3800', '缓存状态', null, 'http://139.224.200.249:8585', '3000', 'icon-qingchuhuancun', null, '12', '0', '0', '2018-01-23 10:56:11', '2018-09-28 09:13:56', '0', '1'), ('4000', '协同管理', null, '/activti', '-1', 'icon-kuaisugongzuoliu_o', 'Layout', '3', '0', '0', '2018-09-26 01:38:13', '2018-09-28 08:58:24', '0', '1'), ('4100', '模型管理', null, 'activiti', '4000', 'icon-weibiaoti13', 'views/admin/activiti/index', '1', '0', '0', '2018-09-26 01:39:07', '2018-09-28 09:00:57', '0', '1'), ('4101', '模型管理', 'act_model_manage', null, '4100', '1', null, '0', '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:12:07', '0', '1'), ('4200', '流程管理', null, 'process', '4000', 'icon-liucheng', 'views/admin/activiti/process', '2', '0', '0', '2018-09-26 06:41:05', '2018-09-28 09:01:02', '0', '1'), ('4201', '流程管理', 'act_process_manage', null, '4200', '1', null, '0', '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:12:07', '0', '1'), ('4300', '请假管理', '', 'leavebill', '4000', 'icon-qingjia', 'views/admin/activiti/leave', '3', '0', '0', '2018-01-20 13:17:19', '2018-09-28 09:01:07', '0', '1'), ('4301', '请假新增', 'act_leavebill_add', null, '4300', '1', null, '0', '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:12:07', '0', '1'), ('4302', '请假修改', 'act_leavebill_edit', null, '4300', '1', null, '1', '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:12:09', '0', '1'), ('4303', '请假删除', 'act_leavebill_del', null, '4300', '1', null, '2', '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:12:14', '0', '1'), ('4400', '代办任务', null, 'task', '4000', 'icon-renwu', 'views/admin/activiti/task', '4', '0', '0', '2018-09-27 09:52:31', '2018-09-28 09:04:19', '0', '1'), ('4401', '流程管理', 'act_task_manage', null, '4400', '1', null, '0', '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:12:07', '0', '1'), ('5000', '多级菜单', null, '/crud', '-1', 'icon-caidanguanli', 'Layout', '4', '0', '0', '2018-08-28 01:50:22', '2018-09-28 08:58:20', '0', '1'), ('5001', '一级菜单', null, 'index', '5000', 'icon-caidanguanli', 'Layout', '1', '0', '0', '2018-08-28 01:50:48', '2018-09-28 09:12:54', '0', '1'), ('5002', '二级菜单', null, 'index', '5000', 'icon-caidanguanli', 'views/crud/index', '1', '0', '0', '2018-08-28 01:51:23', '2018-09-28 09:13:08', '0', '1'), ('6000', '系统官网', null, 'https://pig4cloud.com#', '-1', 'icon-guanwang', '', '5', '0', '0', '2018-09-27 02:26:36', '2018-11-17 16:18:50', '1', '1');
+INSERT INTO `sys_menu` VALUES (1000, '权限管理', NULL, '/upms', -1, 'icon-quanxianguanli', 'Layout', 0, '0', '0', '2018-09-28 08:29:53', '2018-09-28 08:53:01', '0', 1);
+INSERT INTO `sys_menu` VALUES (1100, '用户管理', NULL, 'user', 1000, 'icon-yonghuguanli', 'views/admin/user/index', 1, '0', '0', '2017-11-02 22:24:37', '2018-09-28 09:00:41', '0', 1);
+INSERT INTO `sys_menu` VALUES (1101, '用户新增', 'sys_user_add', NULL, 1100, NULL, NULL, NULL, '0', '1', '2017-11-08 09:52:09', '2018-09-28 09:06:34', '0', 1);
+INSERT INTO `sys_menu` VALUES (1102, '用户修改', 'sys_user_edit', NULL, 1100, NULL, NULL, NULL, '0', '1', '2017-11-08 09:52:48', '2018-09-28 09:06:37', '0', 1);
+INSERT INTO `sys_menu` VALUES (1103, '用户删除', 'sys_user_del', NULL, 1100, NULL, NULL, NULL, '0', '1', '2017-11-08 09:54:01', '2018-09-28 09:06:42', '0', 1);
+INSERT INTO `sys_menu` VALUES (1200, '菜单管理', NULL, 'menu', 1000, 'icon-caidanguanli', 'views/admin/menu/index', 2, '0', '0', '2017-11-08 09:57:27', '2018-09-28 09:00:45', '0', 1);
+INSERT INTO `sys_menu` VALUES (1201, '菜单新增', 'sys_menu_add', NULL, 1200, NULL, NULL, NULL, '0', '1', '2017-11-08 10:15:53', '2018-09-28 09:07:16', '0', 1);
+INSERT INTO `sys_menu` VALUES (1202, '菜单修改', 'sys_menu_edit', NULL, 1200, NULL, NULL, NULL, '0', '1', '2017-11-08 10:16:23', '2018-09-28 09:07:18', '0', 1);
+INSERT INTO `sys_menu` VALUES (1203, '菜单删除', 'sys_menu_del', NULL, 1200, NULL, NULL, NULL, '0', '1', '2017-11-08 10:16:43', '2018-09-28 09:07:22', '0', 1);
+INSERT INTO `sys_menu` VALUES (1300, '角色管理', NULL, 'role', 1000, 'icon-jiaoseguanli', 'views/admin/role/index', 3, '0', '0', '2017-11-08 10:13:37', '2018-09-28 09:00:48', '0', 1);
+INSERT INTO `sys_menu` VALUES (1301, '角色新增', 'sys_role_add', NULL, 1300, NULL, NULL, NULL, '0', '1', '2017-11-08 10:14:18', '2018-09-28 09:07:46', '0', 1);
+INSERT INTO `sys_menu` VALUES (1302, '角色修改', 'sys_role_edit', NULL, 1300, NULL, NULL, NULL, '0', '1', '2017-11-08 10:14:41', '2018-09-28 09:07:49', '0', 1);
+INSERT INTO `sys_menu` VALUES (1303, '角色删除', 'sys_role_del', NULL, 1300, NULL, NULL, NULL, '0', '1', '2017-11-08 10:14:59', '2018-09-28 09:07:53', '0', 1);
+INSERT INTO `sys_menu` VALUES (1304, '分配权限', 'sys_role_perm', NULL, 1300, NULL, NULL, NULL, '0', '1', '2018-04-20 07:22:55', '2018-09-28 09:13:23', '0', 1);
+INSERT INTO `sys_menu` VALUES (1400, '部门管理', NULL, 'dept', 1000, 'icon-web-icon-', 'views/admin/dept/index', 4, '0', '0', '2018-01-20 13:17:19', '2018-09-28 09:00:52', '0', 1);
+INSERT INTO `sys_menu` VALUES (1401, '部门新增', 'sys_dept_add', NULL, 1400, NULL, NULL, NULL, '0', '1', '2018-01-20 14:56:16', '2018-09-28 09:08:13', '0', 1);
+INSERT INTO `sys_menu` VALUES (1402, '部门修改', 'sys_dept_edit', NULL, 1400, NULL, NULL, NULL, '0', '1', '2018-01-20 14:56:59', '2018-09-28 09:08:16', '0', 1);
+INSERT INTO `sys_menu` VALUES (1403, '部门删除', 'sys_dept_del', NULL, 1400, NULL, NULL, NULL, '0', '1', '2018-01-20 14:57:28', '2018-09-28 09:08:18', '0', 1);
+INSERT INTO `sys_menu` VALUES (2000, '系统管理', NULL, '/admin', -1, 'icon-xitongguanli', 'Layout', 1, '0', '0', '2017-11-07 20:56:00', '2018-09-28 08:53:18', '0', 1);
+INSERT INTO `sys_menu` VALUES (2100, '日志管理', NULL, 'log', 2000, 'icon-rizhiguanli', 'views/admin/log/index', 5, '0', '0', '2017-11-20 14:06:22', '2018-09-28 09:01:52', '0', 1);
+INSERT INTO `sys_menu` VALUES (2101, '日志删除', 'sys_log_del', NULL, 2100, NULL, NULL, NULL, '0', '1', '2017-11-20 20:37:37', '2018-09-28 09:08:44', '0', 1);
+INSERT INTO `sys_menu` VALUES (2200, '字典管理', NULL, 'dict', 2000, 'icon-navicon-zdgl', 'views/admin/dict/index', 6, '0', '0', '2017-11-29 11:30:52', '2018-09-28 09:01:47', '0', 1);
+INSERT INTO `sys_menu` VALUES (2201, '字典删除', 'sys_dict_del', NULL, 2200, NULL, NULL, NULL, '0', '1', '2017-11-29 11:30:11', '2018-09-28 09:09:10', '0', 1);
+INSERT INTO `sys_menu` VALUES (2202, '字典新增', 'sys_dict_add', NULL, 2200, NULL, NULL, NULL, '0', '1', '2018-05-11 22:34:55', '2018-09-28 09:09:12', '0', 1);
+INSERT INTO `sys_menu` VALUES (2203, '字典修改', 'sys_dict_edit', NULL, 2200, NULL, NULL, NULL, '0', '1', '2018-05-11 22:36:03', '2018-09-28 09:09:16', '0', 1);
+INSERT INTO `sys_menu` VALUES (2300, '代码生成', '', 'gen', 2000, 'icon-weibiaoti46', 'views/admin/gen/index', 8, '0', '0', '2018-01-20 13:17:19', '2018-09-28 09:02:54', '0', 1);
+INSERT INTO `sys_menu` VALUES (2400, '终端管理', '', 'client', 2000, 'icon-shouji', 'views/admin/client/index', 9, '0', '0', '2018-01-20 13:17:19', '2018-09-28 09:01:43', '0', 1);
+INSERT INTO `sys_menu` VALUES (2401, '客户端新增', 'sys_client_add', NULL, 2400, '1', NULL, NULL, '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:10:25', '0', 1);
+INSERT INTO `sys_menu` VALUES (2402, '客户端修改', 'sys_client_edit', NULL, 2400, NULL, NULL, NULL, '0', '1', '2018-05-15 21:37:06', '2018-09-28 09:10:27', '0', 1);
+INSERT INTO `sys_menu` VALUES (2403, '客户端删除', 'sys_client_del', NULL, 2400, NULL, NULL, NULL, '0', '1', '2018-05-15 21:39:16', '2018-09-28 09:10:30', '0', 1);
+INSERT INTO `sys_menu` VALUES (2500, '密钥管理', '', 'social', 2000, 'icon-miyue', 'views/admin/social/index', 10, '0', '0', '2018-01-20 13:17:19', '2018-09-28 09:01:41', '0', 1);
+INSERT INTO `sys_menu` VALUES (2501, '密钥新增', 'generator_syssocialdetails_add', NULL, 2500, '1', NULL, 0, '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:11:02', '0', 1);
+INSERT INTO `sys_menu` VALUES (2502, '密钥修改', 'generator_syssocialdetails_edit', NULL, 2500, '1', NULL, 1, '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:11:04', '0', 1);
+INSERT INTO `sys_menu` VALUES (2503, '密钥删除', 'generator_syssocialdetails_del', NULL, 2500, '1', NULL, 2, '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:11:06', '0', 1);
+INSERT INTO `sys_menu` VALUES (2600, '令牌管理', NULL, 'token', 2000, 'icon-denglvlingpai', 'views/admin/token/index', 11, '0', '0', '2018-09-04 05:58:41', '2018-09-28 09:01:38', '0', 1);
+INSERT INTO `sys_menu` VALUES (2601, '令牌删除', 'sys_token_del', NULL, 2600, NULL, NULL, 1, '0', '1', '2018-09-04 05:59:50', '2018-09-28 09:11:24', '0', 1);
+INSERT INTO `sys_menu` VALUES (2700, '动态路由', NULL, 'route', 2000, 'icon-luyou', 'views/admin/route/index', 12, '0', '0', '2018-09-04 05:58:41', '2018-09-28 09:01:38', '0', 1);
+INSERT INTO `sys_menu` VALUES (3000, '系统监控', NULL, '/daemon', -1, 'icon-msnui-supervise', 'Layout', 2, '0', '0', '2018-07-27 01:13:21', '2018-09-28 08:53:24', '0', 1);
+INSERT INTO `sys_menu` VALUES (3100, '服务监控', NULL, 'http://127.0.0.1:5001', 3000, 'icon-server', NULL, 0, '0', '0', '2018-06-26 10:50:32', '2018-09-28 09:03:40', '0', 1);
+INSERT INTO `sys_menu` VALUES (3200, '接口文档', NULL, 'http://139.224.200.249:19999/swagger-ui.html', 3000, 'icon-wendang', NULL, 1, '0', '0', '2018-06-26 10:50:32', '2018-09-28 09:05:16', '0', 1);
+INSERT INTO `sys_menu` VALUES (3300, '事务监控', NULL, 'tx', 3000, 'icon-gtsquanjushiwufuwuGTS', 'views/tx/index', 5, '0', '0', '2018-08-19 11:02:39', '2018-11-23 14:25:08', '0', 1);
+INSERT INTO `sys_menu` VALUES (3400, '在线事务', NULL, 'model', 3000, 'icon-online', 'views/tx/model', 6, '0', '0', '2018-08-19 11:32:04', '2018-11-23 14:25:14', '0', 1);
+INSERT INTO `sys_menu` VALUES (3500, '任务监控', NULL, 'http://139.224.200.249:8899', 3000, 'icon-msnui-supervise', NULL, 7, '0', '0', '2018-06-26 10:50:32', '2018-09-28 09:03:33', '0', 1);
+INSERT INTO `sys_menu` VALUES (3600, '任务轨迹', '', 'statustracelog', 3000, 'icon-guiji', 'views/daemon/status-trace-log/index', 8, '0', '0', '2018-01-20 13:17:19', '2018-11-23 14:28:27', '0', 1);
+INSERT INTO `sys_menu` VALUES (3601, '删除', 'daemon_statustracelog_del', NULL, 3600, '1', NULL, 2, '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:13:45', '0', 1);
+INSERT INTO `sys_menu` VALUES (3700, '调用拓扑', NULL, 'http://139.224.200.249:8081', 3000, 'icon-line', NULL, 10, '0', '0', '2018-01-25 11:08:52', '2018-09-28 09:04:29', '0', 1);
+INSERT INTO `sys_menu` VALUES (3800, '缓存状态', NULL, 'http://139.224.200.249:8585', 3000, 'icon-qingchuhuancun', NULL, 12, '0', '0', '2018-01-23 10:56:11', '2018-09-28 09:13:56', '0', 1);
+INSERT INTO `sys_menu` VALUES (4000, '协同管理', NULL, '/activti', -1, 'icon-kuaisugongzuoliu_o', 'Layout', 3, '0', '0', '2018-09-26 01:38:13', '2018-09-28 08:58:24', '0', 1);
+INSERT INTO `sys_menu` VALUES (4100, '模型管理', NULL, 'activiti', 4000, 'icon-weibiaoti13', 'views/activiti/index', 1, '0', '0', '2018-09-26 01:39:07', '2018-11-23 14:25:25', '0', 1);
+INSERT INTO `sys_menu` VALUES (4101, '模型管理', 'act_model_manage', NULL, 4100, '1', NULL, 0, '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:12:07', '0', 1);
+INSERT INTO `sys_menu` VALUES (4200, '流程管理', NULL, 'process', 4000, 'icon-liucheng', 'views/activiti/process', 2, '0', '0', '2018-09-26 06:41:05', '2018-11-23 14:25:33', '0', 1);
+INSERT INTO `sys_menu` VALUES (4201, '流程管理', 'act_process_manage', NULL, 4200, '1', NULL, 0, '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:12:07', '0', 1);
+INSERT INTO `sys_menu` VALUES (4300, '请假管理', '', 'leavebill', 4000, 'icon-qingjia', 'views/activiti/leave', 3, '0', '0', '2018-01-20 13:17:19', '2018-11-23 14:25:37', '0', 1);
+INSERT INTO `sys_menu` VALUES (4301, '请假新增', 'act_leavebill_add', NULL, 4300, '1', NULL, 0, '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:12:07', '0', 1);
+INSERT INTO `sys_menu` VALUES (4302, '请假修改', 'act_leavebill_edit', NULL, 4300, '1', NULL, 1, '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:12:09', '0', 1);
+INSERT INTO `sys_menu` VALUES (4303, '请假删除', 'act_leavebill_del', NULL, 4300, '1', NULL, 2, '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:12:14', '0', 1);
+INSERT INTO `sys_menu` VALUES (4400, '代办任务', NULL, 'task', 4000, 'icon-renwu', 'views/activiti/task', 4, '0', '0', '2018-09-27 09:52:31', '2018-11-23 14:25:43', '0', 1);
+INSERT INTO `sys_menu` VALUES (4401, '流程管理', 'act_task_manage', NULL, 4400, '1', NULL, 0, '0', '1', '2018-05-15 21:35:18', '2018-09-28 09:12:07', '0', 1);
+INSERT INTO `sys_menu` VALUES (5000, '多级菜单', NULL, '/crud', -1, 'icon-caidanguanli', '', 4, '0', '0', '2018-08-28 01:50:22', '2018-09-28 08:58:20', '0', 1);
+INSERT INTO `sys_menu` VALUES (5001, '一级菜单', NULL, 'index', 5000, 'icon-caidanguanli', 'views/crud/index', 1, '0', '0', '2018-08-28 01:50:48', '2018-11-21 17:48:19', '1', 1);
+INSERT INTO `sys_menu` VALUES (5002, '二级菜单', NULL, 'crud', 5001, 'icon-caidanguanli', 'views/crud/index', 1, '0', '0', '2018-08-28 01:51:23', '2018-11-21 17:47:40', '1', 1);
+INSERT INTO `sys_menu` VALUES (5003, '一级菜单', NULL, '', 5000, 'icon-caidanguanli', '', 1, '0', '0', '2018-11-21 17:49:18', '2018-11-21 17:53:25', '0', NULL);
+INSERT INTO `sys_menu` VALUES (5004, '二级菜单', NULL, 'index', 5003, 'icon-caidanguanli', 'views/crud/index', 1, '0', '0', '2018-11-21 17:53:51', '2018-11-21 17:54:04', '0', NULL);
+INSERT INTO `sys_menu` VALUES (6000, '系统官网', NULL, 'https://pig4cloud.com#', -1, 'icon-guanwang', '', 5, '0', '0', '2018-09-27 02:26:36', '2018-11-17 16:18:50', '1', 1);
 COMMIT;
 
 -- ----------------------------
@@ -260,27 +323,32 @@ INSERT INTO `sys_role_menu` VALUES ('1', '1000'), ('1', '1100'), ('1', '1101'), 
 COMMIT;
 
 -- ----------------------------
---  Table structure for `sys_route_conf`
+-- Table structure for sys_route_conf
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_route_conf`;
-CREATE TABLE `sys_route_conf` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `route_id` varchar(30) NOT NULL DEFAULT '' COMMENT '路由ID',
-  `predicates` text COMMENT '断言',
-  `filters` text COMMENT '过滤器',
-  `uri` varchar(50) DEFAULT NULL,
-  `order` int(2) DEFAULT '0' COMMENT '排序',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` char(1) DEFAULT '0' COMMENT '删除标记',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='路由配置表';
+CREATE TABLE `sys_route_conf`  (
+                                 `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                 `route_id` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '路由ID',
+                                 `predicates` json NULL COMMENT '断言',
+                                 `filters` json NULL COMMENT '过滤器',
+                                 `uri` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                 `order` int(2) NULL DEFAULT 0 COMMENT '排序',
+                                 `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                 `update_time` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
+                                 `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '删除标记',
+                                 PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '路由配置表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
---  Records of `sys_route_conf`
+-- Records of sys_route_conf
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_route_conf` VALUES ('1', 'pigx-activiti', '[{\"args\":{\"_genkey_0\":\"/act/**\"},\"name\":\"Path\"}]', '[]', 'lb://pigx-activiti', '0', '2018-11-07 20:18:16', '2018-11-07 20:23:04', '0'), ('2', 'pigx-auth', '[{\"args\":{\"_genkey_0\":\"/auth/**\"},\"name\":\"Path\"}]', '[{\"args\":{},\"name\":\"ValidateCodeGatewayFilter\"},{\"args\":{},\"name\":\"PasswordDecoderFilter\"}]', 'lb://pigx-auth', '0', '2018-11-07 20:18:16', '2018-11-07 20:23:13', '0'), ('3', 'pigx-codegen', '[{\"args\":{\"_genkey_0\":\"/gen/**\"},\"name\":\"Path\"}]', '[]', 'lb://pigx-codegen', '0', '2018-11-07 20:18:16', '2018-11-07 20:23:16', '0'), ('4', 'pigx-daemon', '[{\"args\":{\"_genkey_0\":\"/daemon/**\"},\"name\":\"Path\"}]', '[]', 'lb://pigx-daemon', '0', '2018-11-07 20:18:16', '2018-11-07 20:23:18', '0'), ('5', 'pigx-tx-manager', '[{\"args\":{\"_genkey_0\":\"/tx/**\"},\"name\":\"Path\"}]', '[]', 'lb://pigx-tx-manager', '0', '2018-11-07 20:18:16', '2018-11-07 20:23:21', '0'), ('6', 'pigx-upms', '[{\"args\":{\"_genkey_0\":\"/admin/**\"},\"name\":\"Path\"}]', '[{\"args\":{\"key-resolver\":\"#{@remoteAddrKeyResolver}\",\"redis-rate-limiter.replenishRate\":\"10\",\"redis-rate-limiter.burstCapacity\":\"20\"},\"name\":\"RequestRateLimiter\"},{\"args\":{\"name\":\"default\",\"fallbackUri\":\"forward:/fallback\"},\"name\":\"Hystrix\"}]', 'lb://pigx-upms', '0', '2018-11-07 20:18:16', '2018-11-07 20:23:24', '0');
+INSERT INTO `sys_route_conf` VALUES (1, 'pigx-activiti', '[{\"args\": {\"_genkey_0\": \"/act/**\"}, \"name\": \"Path\"}]', '[]', 'lb://pigx-activiti', 0, '2018-11-07 20:18:16', '2018-11-22 18:39:11', '0');
+INSERT INTO `sys_route_conf` VALUES (2, 'pigx-auth', '[{\"args\": {\"_genkey_0\": \"/auth/**\"}, \"name\": \"Path\"}]', '[{\"args\": {}, \"name\": \"ValidateCodeGatewayFilter\"}, {\"args\": {}, \"name\": \"PasswordDecoderFilter\"}]', 'lb://pigx-auth', 0, '2018-11-07 20:18:16', '2018-11-22 18:39:13', '0');
+INSERT INTO `sys_route_conf` VALUES (3, 'pigx-codegen', '[{\"args\": {\"_genkey_0\": \"/gen/**\"}, \"name\": \"Path\"}]', '[]', 'lb://pigx-codegen', 0, '2018-11-07 20:18:16', '2018-11-22 18:39:14', '0');
+INSERT INTO `sys_route_conf` VALUES (4, 'pigx-daemon', '[{\"args\": {\"_genkey_0\": \"/daemon/**\"}, \"name\": \"Path\"}]', '[]', 'lb://pigx-daemon', 0, '2018-11-07 20:18:16', '2018-11-22 18:39:16', '0');
+INSERT INTO `sys_route_conf` VALUES (5, 'pigx-tx-manager', '[{\"args\": {\"_genkey_0\": \"/tx/**\"}, \"name\": \"Path\"}]', '[]', 'lb://pigx-tx-manager', 0, '2018-11-07 20:18:16', '2018-11-22 18:39:17', '0');
+INSERT INTO `sys_route_conf` VALUES (6, 'pigx-upms-biz', '[{\"args\": {\"_genkey_0\": \"/admin/**\"}, \"name\": \"Path\"}]', '[{\"args\": {\"key-resolver\": \"#{@remoteAddrKeyResolver}\", \"redis-rate-limiter.burstCapacity\": \"20\", \"redis-rate-limiter.replenishRate\": \"10\"}, \"name\": \"RequestRateLimiter\"}, {\"args\": {\"name\": \"default\", \"fallbackUri\": \"forward:/fallback\"}, \"name\": \"Hystrix\"}]', 'lb://pigx-upms-biz', 0, '2018-11-07 20:18:16', '2018-11-22 18:39:21', '0');
 COMMIT;
 
 -- ----------------------------
