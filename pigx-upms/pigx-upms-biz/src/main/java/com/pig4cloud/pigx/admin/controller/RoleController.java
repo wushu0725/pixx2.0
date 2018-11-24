@@ -122,7 +122,7 @@ public class RoleController {
 	 * @return success、false
 	 */
 	@SysLog("更新角色菜单")
-	@PutMapping("/upd-menu")
+	@PutMapping("/menu")
 	@PreAuthorize("@pms.hasPermission('sys_role_perm')")
 	public R saveRoleMenus(Integer roleId, @RequestParam(value = "menuIds", required = false) String menuIds) {
 		SysRole sysRole = sysRoleService.getById(roleId);
