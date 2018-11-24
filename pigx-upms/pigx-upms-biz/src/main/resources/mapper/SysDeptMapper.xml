@@ -37,7 +37,7 @@
     </sql>
 
 	<!--关联查询部门列表-->
-	<select id="selectDeptDtoList" resultType="com.pig4cloud.pigx.admin.api.entity.SysDept">
+	<select id="listDepts" resultType="com.pig4cloud.pigx.admin.api.entity.SysDept">
 		SELECT
 			t.*
 		FROM

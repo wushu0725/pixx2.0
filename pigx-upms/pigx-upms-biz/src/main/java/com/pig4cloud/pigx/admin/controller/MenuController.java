@@ -58,7 +58,7 @@ public class MenuController {
 	 * @return 当前用户的树形菜单
 	 */
 	@GetMapping
-	public R userMenu() {
+	public R getUserMenu() {
 		// 获取符合条件的菜单
 		Set<MenuVO> all = new HashSet<>();
 		SecurityUtils.getRoles()
@@ -88,7 +88,7 @@ public class MenuController {
 	 * @return 属性集合
 	 */
 	@GetMapping("/tree/{roleId}")
-	public List roleTree(@PathVariable Integer roleId) {
+	public List getRoleTree(@PathVariable Integer roleId) {
 		return sysMenuService.findMenuByRoleId(roleId)
 			.stream()
 			.map(MenuVO::getMenuId)
@@ -102,7 +102,7 @@ public class MenuController {
 	 * @return 菜单详细信息
 	 */
 	@GetMapping("/{id}")
-	public R menu(@PathVariable Integer id) {
+	public R getById(@PathVariable Integer id) {
 		return new R<>(sysMenuService.getById(id));
 	}
 
@@ -115,7 +115,7 @@ public class MenuController {
 	@SysLog("新增菜单")
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_menu_add')")
-	public R menu(@Valid @RequestBody SysMenu sysMenu) {
+	public R save(@Valid @RequestBody SysMenu sysMenu) {
 		return new R<>(sysMenuService.save(sysMenu));
 	}
 
@@ -128,8 +128,8 @@ public class MenuController {
 	@SysLog("删除菜单")
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_menu_del')")
-	public R menuDel(@PathVariable Integer id) {
-		return new R<>(sysMenuService.deleteMenu(id));
+	public R removeById(@PathVariable Integer id) {
+		return new R<>(sysMenuService.removeMenuById(id));
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class MenuController {
 	@SysLog("更新菜单")
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_menu_edit')")
-	public R menuUpdate(@Valid @RequestBody SysMenu sysMenu) {
+	public R update(@Valid @RequestBody SysMenu sysMenu) {
 		return new R<>(sysMenuService.updateMenuById(sysMenu));
 	}
 

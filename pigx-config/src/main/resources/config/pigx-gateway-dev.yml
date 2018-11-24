@@ -13,3 +13,6 @@ security:
 ignore:
   clients:
     - test
+  swagger-providers:
+    - pigx-auth
+    - pigx-tx-manager

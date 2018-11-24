@@ -6,7 +6,7 @@ RUN mkdir -p /pigx/bin/com.pig4cloud/pigx-config
 
 WORKDIR /pigx/bin/com.pig4cloud/pigx-config
 
-EXPOSE 4001
+EXPOSE 8888
 
 ADD ./pigx-config/target/pigx-config.jar ./
 

@@ -48,5 +48,5 @@ public interface SysRoleService extends IService<SysRole> {
 	 * @param id
 	 * @return
 	 */
-	Boolean deleteRoleById(Integer id);
+	Boolean removeRoleById(Integer id);
 }

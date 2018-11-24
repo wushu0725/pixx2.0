@@ -39,7 +39,7 @@ public interface ActTaskService {
 	 * @param name
 	 * @return
 	 */
-	IPage findTaskByName(Map<String, Object> params, String name);
+	IPage getTaskByName(Map<String, Object> params, String name);
 
 	/**
 	 * 通过任务ID查询任务信息关联申请单信息
@@ -47,7 +47,7 @@ public interface ActTaskService {
 	 * @param id
 	 * @return
 	 */
-	LeaveBillDto findTaskByTaskId(String id);
+	LeaveBillDto getTaskById(String id);
 
 	/**
 	 * 提交任务
@@ -63,7 +63,7 @@ public interface ActTaskService {
 	 * @param taskId 任务ID
 	 * @return
 	 */
-	List<CommentDto> findCommentByTaskId(String taskId);
+	List<CommentDto> getCommentByTaskId(String taskId);
 
 	/**
 	 * 追踪图片节点

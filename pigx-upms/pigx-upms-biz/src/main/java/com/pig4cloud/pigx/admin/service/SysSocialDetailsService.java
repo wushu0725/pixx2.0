@@ -44,6 +44,6 @@ public interface SysSocialDetailsService extends IService<SysSocialDetails> {
 	 * @param inStr
 	 * @return
 	 */
-	UserInfo findUserInfo(String inStr);
+	UserInfo getUserInfo(String inStr);
 }
 

@@ -52,13 +52,13 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 	@Override
 	@Cacheable(value = "menu_details", key = "#roleId  + '_menu'")
 	public List<MenuVO> findMenuByRoleId(Integer roleId) {
-		return baseMapper.findMenuByRoleId(roleId);
+		return baseMapper.listMenusByRoleId(roleId);
 	}
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	@CacheEvict(value = "menu_details", allEntries = true)
-	public Boolean deleteMenu(Integer id) {
+	public Boolean removeMenuById(Integer id) {
 		// 查询父节点为当前节点的节点
 		List<Integer> menuIdList = this.list(Wrappers.<SysMenu>query()
 			.lambda().eq(SysMenu::getParentId, id))

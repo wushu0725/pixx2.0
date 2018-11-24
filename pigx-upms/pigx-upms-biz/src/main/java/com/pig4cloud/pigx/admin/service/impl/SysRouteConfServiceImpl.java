@@ -80,7 +80,7 @@ public class SysRouteConfServiceImpl extends ServiceImpl<SysRouteConfMapper, Sys
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public Mono<Void> editRoutes(JSONArray routes) {
+	public Mono<Void> updateRoutes(JSONArray routes) {
 		// 清空Redis 缓存
 		Boolean result = redisTemplate.delete(CommonConstant.ROUTE_KEY);
 		log.info("清空网关路由 {} ", result);

@@ -26,9 +26,9 @@ import com.pig4cloud.pigx.act.entity.LeaveBill;
 import com.pig4cloud.pigx.act.mapper.LeaveBillMapper;
 import com.pig4cloud.pigx.act.service.ProcessService;
 import com.pig4cloud.pigx.common.core.constant.PaginationConstant;
-import com.pig4cloud.pigx.common.core.constant.enums.EnumProcessStatus;
-import com.pig4cloud.pigx.common.core.constant.enums.EnumResourceType;
-import com.pig4cloud.pigx.common.core.constant.enums.EnumTaskStatus;
+import com.pig4cloud.pigx.common.core.constant.enums.ProcessStatusEnum;
+import com.pig4cloud.pigx.common.core.constant.enums.ResourceTypeEnum;
+import com.pig4cloud.pigx.common.core.constant.enums.TaskStatusEnum;
 import com.pig4cloud.pigx.common.core.util.TenantUtils;
 import lombok.AllArgsConstructor;
 import org.activiti.engine.RepositoryService;
@@ -96,7 +96,7 @@ public class ProcessServiceImpl implements ProcessService {
 	 * @return
 	 */
 	@Override
-	public InputStream resourceRead(String procDefId, String proInsId, String resType) {
+	public InputStream readResource(String procDefId, String proInsId, String resType) {
 
 		if (StrUtil.isBlank(procDefId)) {
 			ProcessInstance processInstance = runtimeService
@@ -111,9 +111,9 @@ public class ProcessServiceImpl implements ProcessService {
 			.singleResult();
 
 		String resourceName = "";
-		if (EnumResourceType.IMAGE.getType().equals(resType)) {
+		if (ResourceTypeEnum.IMAGE.getType().equals(resType)) {
 			resourceName = processDefinition.getDiagramResourceName();
-		} else if (EnumResourceType.XML.getType().equals(resType)) {
+		} else if (ResourceTypeEnum.XML.getType().equals(resType)) {
 			resourceName = processDefinition.getResourceName();
 		}
 
@@ -131,9 +131,9 @@ public class ProcessServiceImpl implements ProcessService {
 	 */
 	@Override
 	public Boolean updateStatus(String status, String procDefId) {
-		if (EnumProcessStatus.ACTIVE.getStatus().equals(status)) {
+		if (ProcessStatusEnum.ACTIVE.getStatus().equals(status)) {
 			repositoryService.activateProcessDefinitionById(procDefId, true, null);
-		} else if (EnumProcessStatus.SUSPEND.getStatus().equals(status)) {
+		} else if (ProcessStatusEnum.SUSPEND.getStatus().equals(status)) {
 			repositoryService.suspendProcessDefinitionById(procDefId, true, null);
 		}
 		return Boolean.TRUE;
@@ -146,7 +146,7 @@ public class ProcessServiceImpl implements ProcessService {
 	 * @return
 	 */
 	@Override
-	public Boolean deleteProcIns(String deploymentId) {
+	public Boolean removeProcIns(String deploymentId) {
 		repositoryService.deleteDeployment(deploymentId, true);
 		return Boolean.TRUE;
 	}
@@ -160,7 +160,7 @@ public class ProcessServiceImpl implements ProcessService {
 	@Override
 	public Boolean saveStartProcess(Integer leaveId) {
 		LeaveBill leaveBill = leaveBillMapper.selectById(leaveId);
-		leaveBill.setState(EnumTaskStatus.CHECK.getStatus());
+		leaveBill.setState(TaskStatusEnum.CHECK.getStatus());
 
 		String key = leaveBill.getClass().getSimpleName();
 		String businessKey = key + "_" + leaveBill.getLeaveId();

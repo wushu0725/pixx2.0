@@ -6,7 +6,7 @@ RUN mkdir -p /pigx/bin/com.pig4cloud/pigx-eureka
 
 WORKDIR /pigx/bin/com.pig4cloud/pigx-eureka
 
-EXPOSE 1025
+EXPOSE 8761
 
 ADD ./pigx-eureka/target/pigx-eureka.jar ./
 

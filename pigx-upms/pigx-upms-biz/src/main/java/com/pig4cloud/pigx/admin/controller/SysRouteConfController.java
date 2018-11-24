@@ -46,7 +46,7 @@ public class SysRouteConfController {
 	 * @return
 	 */
 	@GetMapping
-	public R routes() {
+	public R listRoutes() {
 		return new R<>(sysRouteConfService.list());
 	}
 
@@ -58,8 +58,8 @@ public class SysRouteConfController {
 	 */
 	@SysLog("修改路由")
 	@PutMapping
-	public R edit(@RequestBody JSONArray routes) {
-		return new R(sysRouteConfService.editRoutes(routes));
+	public R updateRoutes(@RequestBody JSONArray routes) {
+		return new R(sysRouteConfService.updateRoutes(routes));
 	}
 
 }

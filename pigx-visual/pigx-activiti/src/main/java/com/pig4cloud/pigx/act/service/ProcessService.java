@@ -45,7 +45,7 @@ public interface ProcessService {
 	 * @param resType
 	 * @return
 	 */
-	InputStream resourceRead(String procDefId, String proInsId, String resType);
+	InputStream readResource(String procDefId, String proInsId, String resType);
 
 	/**
 	 * 更新状态
@@ -62,7 +62,7 @@ public interface ProcessService {
 	 * @param deploymentId
 	 * @return
 	 */
-	Boolean deleteProcIns(String deploymentId);
+	Boolean removeProcIns(String deploymentId);
 
 	/**
 	 * 启动流程、更新请假单状态

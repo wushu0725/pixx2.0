@@ -45,7 +45,7 @@ public class RemoteTokenServiceFallbackImpl implements RemoteTokenService {
 	 * @return page
 	 */
 	@Override
-	public R<Page> selectPage(Map<String, Object> params, String from) {
+	public R<Page> getTokenPage(Map<String, Object> params, String from) {
 		log.error("调用认证中心查询token 失败", cause);
 		return null;
 	}
@@ -58,7 +58,7 @@ public class RemoteTokenServiceFallbackImpl implements RemoteTokenService {
 	 * @return
 	 */
 	@Override
-	public R<Boolean> deleteTokenById(String token, String from) {
+	public R<Boolean> removeTokenById(String token, String from) {
 		log.error("删除token 失败 {}", token, cause);
 		return null;
 	}

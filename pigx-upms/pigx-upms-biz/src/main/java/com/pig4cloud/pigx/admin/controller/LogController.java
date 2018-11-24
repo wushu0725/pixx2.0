@@ -57,7 +57,7 @@ public class LogController {
 	 * @return
 	 */
 	@GetMapping("/page")
-	public R getSysLogPage(Page page, SysLog sysLog) {
+	public R getLogPage(Page page, SysLog sysLog) {
 		return new R<>(sysLogService.page(page, Wrappers.query(sysLog)));
 	}
 
@@ -69,7 +69,7 @@ public class LogController {
 	 */
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_log_del')")
-	public R delete(@PathVariable Long id) {
+	public R removeById(@PathVariable Long id) {
 		return new R<>(sysLogService.removeById(id));
 	}
 
@@ -85,13 +85,13 @@ public class LogController {
 	}
 
 	/**
-	 * 插入前端异常日志
+	 * 批量插入前端异常日志
 	 *
 	 * @param preLogVoList 日志实体
 	 * @return success/false
 	 */
 	@PostMapping("/logs")
-	public R saveLogs(@RequestBody List<PreLogVo> preLogVoList) {
-		return new R<>(sysLogService.insertLogs(preLogVoList));
+	public R saveBatchLogs(@RequestBody List<PreLogVo> preLogVoList) {
+		return new R<>(sysLogService.saveBatchLogs(preLogVoList));
 	}
 }

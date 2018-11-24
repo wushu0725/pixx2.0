@@ -48,6 +48,6 @@ public interface SysRouteConfService extends IService<SysRouteConf> {
 	 * @param routes 路由信息
 	 * @return
 	 */
-	Mono<Void> editRoutes(JSONArray routes);
+	Mono<Void> updateRoutes(JSONArray routes);
 }
 

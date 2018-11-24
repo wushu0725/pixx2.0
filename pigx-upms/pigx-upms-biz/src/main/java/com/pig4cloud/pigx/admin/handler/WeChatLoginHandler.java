@@ -26,7 +26,7 @@ import com.pig4cloud.pigx.admin.api.entity.SysUser;
 import com.pig4cloud.pigx.admin.mapper.SysSocialDetailsMapper;
 import com.pig4cloud.pigx.admin.service.SysUserService;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
-import com.pig4cloud.pigx.common.core.constant.enums.EnumLoginType;
+import com.pig4cloud.pigx.common.core.constant.enums.LoginTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -55,7 +55,7 @@ public class WeChatLoginHandler extends AbstractLoginHandler {
 	@Override
 	public String identify(String code) {
 		SysSocialDetails condition = new SysSocialDetails();
-		condition.setType(EnumLoginType.WECHAT.getType());
+		condition.setType(LoginTypeEnum.WECHAT.getType());
 		SysSocialDetails socialDetails = sysSocialDetailsMapper.selectOne(new QueryWrapper<>(condition));
 
 		String url = String.format(SecurityConstants.WX_AUTHORIZATION_CODE_URL

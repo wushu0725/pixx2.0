@@ -49,13 +49,13 @@ public class ModelController {
 	}
 
 	@GetMapping
-	public R list(@RequestParam Map<String, Object> params) {
-		return new R<>(modelService.selectPage(params));
+	public R getModelPage(@RequestParam Map<String, Object> params) {
+		return new R<>(modelService.getModelPage(params));
 	}
 
 	@DeleteMapping("/{id}")
-	public R delete(@PathVariable("id") String id) {
-		return new R<>(modelService.delete(id));
+	public R removeModelById(@PathVariable("id") String id) {
+		return new R<>(modelService.removeModelById(id));
 
 	}
 

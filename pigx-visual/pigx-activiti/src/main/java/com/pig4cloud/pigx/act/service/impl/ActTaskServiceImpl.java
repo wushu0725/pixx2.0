@@ -28,7 +28,7 @@ import com.pig4cloud.pigx.act.entity.LeaveBill;
 import com.pig4cloud.pigx.act.mapper.LeaveBillMapper;
 import com.pig4cloud.pigx.act.service.ActTaskService;
 import com.pig4cloud.pigx.common.core.constant.PaginationConstant;
-import com.pig4cloud.pigx.common.core.constant.enums.EnumTaskStatus;
+import com.pig4cloud.pigx.common.core.constant.enums.TaskStatusEnum;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -70,7 +70,7 @@ public class ActTaskServiceImpl implements ActTaskService {
 	private final ProcessEngineFactoryBean processEngine;
 
 	@Override
-	public IPage findTaskByName(Map<String, Object> params, String name) {
+	public IPage getTaskByName(Map<String, Object> params, String name) {
 		TaskQuery taskQuery = taskService.createTaskQuery()
 			.taskCandidateOrAssigned(name)
 			.orderByTaskCreateTime().asc();
@@ -102,7 +102,7 @@ public class ActTaskServiceImpl implements ActTaskService {
 	 * @return
 	 */
 	@Override
-	public LeaveBillDto findTaskByTaskId(String taskId) {
+	public LeaveBillDto getTaskById(String taskId) {
 		Task task = taskService.createTaskQuery()
 			.taskId(taskId)
 			.singleResult();
@@ -158,16 +158,16 @@ public class ActTaskServiceImpl implements ActTaskService {
 		if (pi == null) {
 			LeaveBill bill = new LeaveBill();
 			bill.setLeaveId(id);
-			bill.setState(StrUtil.equals(EnumTaskStatus.OVERRULE.getDescription()
-				, leaveBillDto.getTaskFlag()) ? EnumTaskStatus.OVERRULE.getStatus()
-				: EnumTaskStatus.COMPLETED.getStatus());
+			bill.setState(StrUtil.equals(TaskStatusEnum.OVERRULE.getDescription()
+				, leaveBillDto.getTaskFlag()) ? TaskStatusEnum.OVERRULE.getStatus()
+				: TaskStatusEnum.COMPLETED.getStatus());
 			leaveBillMapper.updateById(bill);
 		}
 		return null;
 	}
 
 	@Override
-	public List<CommentDto> findCommentByTaskId(String taskId) {
+	public List<CommentDto> getCommentByTaskId(String taskId) {
 		//使用当前的任务ID，查询当前流程对应的历史任务ID
 		//使用当前任务ID，获取当前任务对象
 		Task task = taskService.createTaskQuery()

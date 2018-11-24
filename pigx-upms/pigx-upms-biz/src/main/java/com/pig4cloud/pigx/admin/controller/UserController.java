@@ -139,7 +139,7 @@ public class UserController {
 	@SysLog("更新用户信息")
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_user_edit')")
-	public R userUpdate(@Valid @RequestBody UserDTO userDto) {
+	public R updateUser(@Valid @RequestBody UserDTO userDto) {
 		return new R<>(userService.updateUser(userDto));
 	}
 
@@ -151,7 +151,7 @@ public class UserController {
 	 * @return 用户集合
 	 */
 	@GetMapping("/page")
-	public R userPage(Page page, UserDTO userDTO) {
+	public R getUserPage(Page page, UserDTO userDTO) {
 		return new R<>(userService.getUsersWithRolePage(page, userDTO));
 	}
 
@@ -163,7 +163,7 @@ public class UserController {
 	 */
 	@SysLog("修改个人信息")
 	@PutMapping("/edit")
-	public R editInfo(@Valid @RequestBody UserDTO userDto) {
+	public R updateUserInfo(@Valid @RequestBody UserDTO userDto) {
 		return userService.updateUserInfo(userDto);
 	}
 
@@ -172,7 +172,7 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("/ancestor/{username}")
-	public R ancestorUsers(@PathVariable String username) {
-		return new R<>(userService.ancestorUsers(username));
+	public R listAncestorUsers(@PathVariable String username) {
+		return new R<>(userService.listAncestorUsers(username));
 	}
 }

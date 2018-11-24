@@ -52,7 +52,7 @@ public class SysSocialDetailsController {
 	 * @return
 	 */
 	@GetMapping("/page")
-	public R getSysSocialDetailsPage(Page page, SysSocialDetails sysSocialDetails) {
+	public R getSocialDetailsPage(Page page, SysSocialDetails sysSocialDetails) {
 		return new R<>(sysSocialDetailsService.page(page, Wrappers.query(sysSocialDetails)));
 	}
 
@@ -64,7 +64,7 @@ public class SysSocialDetailsController {
 	 * @return R
 	 */
 	@GetMapping("/{id}")
-	public R info(@PathVariable("id") Integer id) {
+	public R getById(@PathVariable("id") Integer id) {
 		return new R<>(sysSocialDetailsService.getById(id));
 	}
 
@@ -77,8 +77,7 @@ public class SysSocialDetailsController {
 	@SysLog("保存三方信息")
 	@PostMapping
 	public R save(@Valid @RequestBody SysSocialDetails sysSocialDetails) {
-		sysSocialDetailsService.save(sysSocialDetails);
-		return new R<>(Boolean.TRUE);
+		return new R<>(sysSocialDetailsService.save(sysSocialDetails));
 	}
 
 	/**
@@ -89,7 +88,7 @@ public class SysSocialDetailsController {
 	 */
 	@SysLog("修改三方信息")
 	@PutMapping
-	public R update(@Valid @RequestBody SysSocialDetails sysSocialDetails) {
+	public R updateById(@Valid @RequestBody SysSocialDetails sysSocialDetails) {
 		sysSocialDetailsService.updateById(sysSocialDetails);
 		return new R<>(Boolean.TRUE);
 	}
@@ -102,7 +101,7 @@ public class SysSocialDetailsController {
 	 */
 	@SysLog("删除三方信息")
 	@DeleteMapping("/{id}")
-	public R delete(@PathVariable Integer id) {
+	public R removeById(@PathVariable Integer id) {
 		return new R<>(sysSocialDetailsService.removeById(id));
 	}
 
@@ -113,8 +112,8 @@ public class SysSocialDetailsController {
 	 * @return
 	 */
 	@GetMapping("/info/{inStr}")
-	public R social(@PathVariable String inStr) {
-		return new R<>(sysSocialDetailsService.findUserInfo(inStr));
+	public R getUserInfo(@PathVariable String inStr) {
+		return new R<>(sysSocialDetailsService.getUserInfo(inStr));
 	}
 
 	/**
@@ -125,7 +124,7 @@ public class SysSocialDetailsController {
 	 * @return
 	 */
 	@PostMapping("/bind")
-	public R bind(String state, String code) {
+	public R bindSocial(String state, String code) {
 		return new R<>(sysSocialDetailsService.bindSocial(state, code));
 	}
 }

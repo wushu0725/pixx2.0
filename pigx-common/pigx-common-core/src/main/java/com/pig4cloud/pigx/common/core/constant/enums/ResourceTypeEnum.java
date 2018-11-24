@@ -23,35 +23,25 @@ import lombok.Getter;
 /**
  * @author lengleng
  * @date 2018/9/30
- * 流程状态
+ * 资源类型
  */
 @Getter
 @AllArgsConstructor
-public enum EnumTaskStatus {
+public enum ResourceTypeEnum {
 	/**
-	 * 未提交
+	 * 图片资源
 	 */
-	UNSUBMIT("0", "未提交"),
+	IMAGE("image", "图片资源"),
 
 	/**
-	 * 审核中
+	 * xml资源
 	 */
-	CHECK("1", "审核中"),
-
-	/**
-	 * 已完成
-	 */
-	COMPLETED("2", "已完成"),
-
-	/**
-	 * 驳回
-	 */
-	OVERRULE("9", "驳回");
+	XML("xml", "xml资源");
 
 	/**
 	 * 类型
 	 */
-	private final String status;
+	private final String type;
 	/**
 	 * 描述
 	 */

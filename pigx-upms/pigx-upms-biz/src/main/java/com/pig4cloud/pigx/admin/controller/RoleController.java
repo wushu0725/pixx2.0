@@ -50,7 +50,7 @@ public class RoleController {
 	 * @return 角色信息
 	 */
 	@GetMapping("/{id}")
-	public R role(@PathVariable Integer id) {
+	public R getById(@PathVariable Integer id) {
 		return new R<>(sysRoleService.getById(id));
 	}
 
@@ -63,7 +63,7 @@ public class RoleController {
 	@SysLog("添加角色")
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_role_add')")
-	public R role(@RequestBody SysRole sysRole) {
+	public R save(@RequestBody SysRole sysRole) {
 		return new R<>(sysRoleService.save(sysRole));
 	}
 
@@ -76,7 +76,7 @@ public class RoleController {
 	@SysLog("修改角色")
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_role_edit')")
-	public R roleUpdate(@RequestBody SysRole sysRole) {
+	public R update(@RequestBody SysRole sysRole) {
 		return new R<>(sysRoleService.updateById(sysRole));
 	}
 
@@ -89,8 +89,8 @@ public class RoleController {
 	@SysLog("删除角色")
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_role_del')")
-	public R roleDel(@PathVariable Integer id) {
-		return new R<>(sysRoleService.deleteRoleById(id));
+	public R removeById(@PathVariable Integer id) {
+		return new R<>(sysRoleService.removeRoleById(id));
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class RoleController {
 	 * @return 角色列表
 	 */
 	@GetMapping("/list")
-	public R roleList() {
+	public R listRoles() {
 		return new R<>(sysRoleService.list(Wrappers.emptyWrapper()));
 	}
 
@@ -110,7 +110,7 @@ public class RoleController {
 	 * @return 分页对象
 	 */
 	@GetMapping("/page")
-	public R rolePage(Page page) {
+	public R getRolePage(Page page) {
 		return new R<>(sysRoleService.page(page, Wrappers.emptyWrapper()));
 	}
 
@@ -122,10 +122,10 @@ public class RoleController {
 	 * @return success、false
 	 */
 	@SysLog("更新角色菜单")
-	@PutMapping("/upd-menu")
+	@PutMapping("/menu")
 	@PreAuthorize("@pms.hasPermission('sys_role_perm')")
-	public R roleMenuUpd(Integer roleId, @RequestParam(value = "menuIds", required = false) String menuIds) {
+	public R saveRoleMenus(Integer roleId, @RequestParam(value = "menuIds", required = false) String menuIds) {
 		SysRole sysRole = sysRoleService.getById(roleId);
-		return new R<>(sysRoleMenuService.insertRoleMenus(sysRole.getRoleCode(), roleId, menuIds));
+		return new R<>(sysRoleMenuService.saveRoleMenus(sysRole.getRoleCode(), roleId, menuIds));
 	}
 }

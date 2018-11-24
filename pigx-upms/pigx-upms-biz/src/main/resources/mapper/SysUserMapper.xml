@@ -113,7 +113,7 @@
 		d.dept_id AS deptId
     </sql>
 
-	<select id="selectUserVoByUsername" resultMap="userVoResultMap">
+	<select id="getUserVoByUsername" resultMap="userVoResultMap">
 		SELECT
 			<include refid="userRoleSql"/>
 		FROM
@@ -123,7 +123,7 @@
 			WHERE `user`.username = #{username}
 	</select>
 
-	<select id="selectUserVoById" resultMap="userVoResultMap">
+	<select id="getUserVoById" resultMap="userVoResultMap">
         SELECT
 	   		<include refid="userRoleDeptSql"/>
         FROM

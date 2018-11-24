@@ -22,6 +22,7 @@ package com.pig4cloud.pigx.admin.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.pig4cloud.pigx.admin.api.entity.SysRole;
 import com.pig4cloud.pigx.admin.api.entity.SysRoleMenu;
 import com.pig4cloud.pigx.admin.mapper.SysRoleMenuMapper;
 import com.pig4cloud.pigx.admin.service.SysRoleMenuService;
@@ -57,9 +58,9 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	@CacheEvict(value = "menu_details", key = "#roleId + '_menu'")
-	public Boolean insertRoleMenus(String role, Integer roleId, String menuIds) {
+	public Boolean saveRoleMenus(String role, Integer roleId, String menuIds) {
 		this.remove(Wrappers.<SysRoleMenu>query().lambda()
-			.eq(SysRoleMenu::getRoleId, role));
+			.eq(SysRoleMenu::getRoleId, roleId));
 
 		if (StrUtil.isBlank(menuIds)) {
 			return Boolean.TRUE;

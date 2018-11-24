@@ -20,7 +20,7 @@ eureka:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://pig:pig@pigx-eureka:1025/eureka/
+      defaultZone: http://pig:pig@pigx-eureka:8761/eureka/
 turbine:
   app-config: pigx-upms,pigx-auth
   cluster-name-expression: new String("default")

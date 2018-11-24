@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * @author lengleng
  * @date 2018/9/4
- * token 管理
+ * getTokenPage 管理
  */
 @RestController
 @AllArgsConstructor
@@ -47,20 +47,20 @@ public class TokenController {
 	 * @return token集合
 	 */
 	@GetMapping("/page")
-	public R token(@RequestParam Map<String, Object> params) {
-		return remoteTokenService.selectPage(params, SecurityConstants.FROM_IN);
+	public R getTokenPage(@RequestParam Map<String, Object> params) {
+		return remoteTokenService.getTokenPage(params, SecurityConstants.FROM_IN);
 	}
 
 	/**
 	 * 删除
 	 *
-	 * @param token token
+	 * @param token getTokenPage
 	 * @return success/false
 	 */
 	@SysLog("删除用户token")
 	@DeleteMapping("/{token}")
 	@PreAuthorize("@pms.hasPermission('sys_token_del')")
-	public R delete(@PathVariable String token) {
-		return remoteTokenService.deleteTokenById(token, SecurityConstants.FROM_IN);
+	public R removeById(@PathVariable String token) {
+		return remoteTokenService.removeTokenById(token, SecurityConstants.FROM_IN);
 	}
 }

@@ -42,5 +42,5 @@ public interface SysGeneratorService {
 	 * @param tableName 表名
 	 * @return
 	 */
-	IPage<List<Map<String, Object>>> queryPage(Page page, String tableName);
+	IPage<List<Map<String, Object>>> getPage(Page page, String tableName);
 }

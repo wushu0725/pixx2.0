@@ -90,7 +90,7 @@ public interface SysUserService extends IService<SysUser> {
 	 * @param username 用户名
 	 * @return R
 	 */
-	List<SysUser> ancestorUsers(String username);
+	List<SysUser> listAncestorUsers(String username);
 
 	/**
 	 * 保存用户信息

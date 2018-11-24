@@ -59,7 +59,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public Boolean insertDept(SysDept dept) {
+	public Boolean saveDept(SysDept dept) {
 		SysDept sysDept = new SysDept();
 		BeanUtils.copyProperties(dept, sysDept);
 		this.save(sysDept);
@@ -76,7 +76,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public Boolean deleteDeptById(Integer id) {
+	public Boolean removeDeptById(Integer id) {
 		//级联删除部门
 		List<Integer> idList = sysDeptRelationService
 			.list(Wrappers.<SysDeptRelation>query().lambda()
@@ -129,7 +129,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 	 * @return
 	 */
 	@Override
-	public List<DeptTree> selectUserTree() {
+	public List<DeptTree> getUserTree() {
 		Integer deptId = SecurityUtils.getUser().getDeptId();
 		List<Integer> descendantIdList = sysDeptRelationService
 			.list(Wrappers.<SysDeptRelation>query().lambda()

@@ -54,7 +54,7 @@ public class OauthClientDetailsController {
 	 * @return SysOauthClientDetails
 	 */
 	@GetMapping("/{id}")
-	public R get(@PathVariable Integer id) {
+	public R getById(@PathVariable Integer id) {
 		return new R<>(sysOauthClientDetailsService.getById(id));
 	}
 
@@ -67,7 +67,7 @@ public class OauthClientDetailsController {
 	 * @return
 	 */
 	@GetMapping("/page")
-	public R getSysOauthClientDetailsPage(Page page, SysOauthClientDetails sysOauthClientDetails) {
+	public R getOauthClientDetailsPage(Page page, SysOauthClientDetails sysOauthClientDetails) {
 		return new R<>(sysOauthClientDetailsService.page(page, Wrappers.query(sysOauthClientDetails)));
 	}
 
@@ -93,8 +93,8 @@ public class OauthClientDetailsController {
 	@SysLog("删除终端")
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_client_del')")
-	public R delete(@PathVariable String id) {
-		return new R<>(sysOauthClientDetailsService.deleteClientDetailsById(id));
+	public R removeById(@PathVariable String id) {
+		return new R<>(sysOauthClientDetailsService.removeClientDetailsById(id));
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class OauthClientDetailsController {
 	@SysLog("编辑终端")
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_client_edit')")
-	public R edit(@Valid @RequestBody SysOauthClientDetails sysOauthClientDetails) {
+	public R update(@Valid @RequestBody SysOauthClientDetails sysOauthClientDetails) {
 		return new R<>(sysOauthClientDetailsService.updateClientDetailsById(sysOauthClientDetails));
 	}
 }

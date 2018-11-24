@@ -45,7 +45,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 	 * @param username 用户名
 	 * @return userVo
 	 */
-	UserVO selectUserVoByUsername(String username);
+	UserVO getUserVoByUsername(String username);
 
 	/**
 	 * 分页查询用户信息（含角色）
@@ -63,5 +63,5 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 	 * @param id 用户ID
 	 * @return userVo
 	 */
-	UserVO selectUserVoById(Integer id);
+	UserVO getUserVoById(Integer id);
 }

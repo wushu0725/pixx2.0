@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/statustracelog")
+@RequestMapping("/status-trace-log")
 public class StatusTraceLogController {
 	private final StatusTraceLogService statusTraceLogService;
 
@@ -56,7 +56,7 @@ public class StatusTraceLogController {
 	 * @return R
 	 */
 	@GetMapping("/{id}")
-	public R info(@PathVariable("id") String id) {
+	public R getById(@PathVariable("id") String id) {
 		return new R<>(statusTraceLogService.getById(id));
 	}
 
@@ -89,7 +89,7 @@ public class StatusTraceLogController {
 	 * @return R
 	 */
 	@DeleteMapping("/{id}")
-	public R delete(@PathVariable("id") String id) {
+	public R removeById(@PathVariable("id") String id) {
 		return new R<>(statusTraceLogService.removeById(id));
 	}
 
