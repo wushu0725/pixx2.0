@@ -72,7 +72,7 @@ public class SysSocialDetailsServiceImpl extends ServiceImpl<SysSocialDetailsMap
 	 * @return
 	 */
 	@Override
-	public UserInfo findUserInfo(String inStr) {
+	public UserInfo getUserInfo(String inStr) {
 		String[] inStrs = inStr.split("@");
 		String type = inStrs[0];
 		String loginStr = inStrs[1];

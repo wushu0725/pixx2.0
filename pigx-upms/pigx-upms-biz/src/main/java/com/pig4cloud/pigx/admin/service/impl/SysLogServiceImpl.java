@@ -49,7 +49,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
 	 * @return true/false
 	 */
 	@Override
-	public Boolean insertLogs(List<PreLogVo> preLogVoList) {
+	public Boolean saveBatchLogs(List<PreLogVo> preLogVoList) {
 		List<SysLog> sysLogs = preLogVoList.stream()
 			.map(pre -> {
 				SysLog log = new SysLog();

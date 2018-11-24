@@ -108,7 +108,7 @@ public class ModelServiceImpl implements ModelService {
 	 * @return
 	 */
 	@Override
-	public IPage<Model> selectPage(Map<String, Object> params) {
+	public IPage<Model> getModelPage(Map<String, Object> params) {
 		ModelQuery modelQuery = repositoryService.createModelQuery()
 			.latestVersion().orderByLastUpdateTime().desc();
 		String category = (String) params.get("category");
@@ -132,7 +132,7 @@ public class ModelServiceImpl implements ModelService {
 	 * @return
 	 */
 	@Override
-	public Boolean delete(String id) {
+	public Boolean removeModelById(String id) {
 		repositoryService.deleteModel(id);
 		return Boolean.TRUE;
 	}

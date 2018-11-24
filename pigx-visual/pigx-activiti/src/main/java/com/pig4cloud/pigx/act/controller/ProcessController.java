@@ -19,7 +19,7 @@ package com.pig4cloud.pigx.act.controller;
 
 import cn.hutool.core.io.IoUtil;
 import com.pig4cloud.pigx.act.service.ProcessService;
-import com.pig4cloud.pigx.common.core.constant.enums.EnumResourceType;
+import com.pig4cloud.pigx.common.core.constant.enums.ResourceTypeEnum;
 import com.pig4cloud.pigx.common.core.util.R;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -51,13 +51,13 @@ public class ProcessController {
 
 		HttpHeaders headers = new HttpHeaders();
 
-		if (EnumResourceType.XML.getType().equals(resType)) {
+		if (ResourceTypeEnum.XML.getType().equals(resType)) {
 			headers.setContentType(MediaType.APPLICATION_XML);
 		} else {
 			headers.setContentType(MediaType.IMAGE_PNG);
 		}
 
-		InputStream resourceAsStream = processService.resourceRead(procDefId, proInsId, resType);
+		InputStream resourceAsStream = processService.readResource(procDefId, proInsId, resType);
 		return new ResponseEntity(IoUtil.readBytes(resourceAsStream), headers, HttpStatus.CREATED);
 	}
 
@@ -68,6 +68,6 @@ public class ProcessController {
 
 	@DeleteMapping("/{deploymentId}")
 	public R deleteProcIns(@PathVariable String deploymentId) {
-		return new R<>(processService.deleteProcIns(deploymentId));
+		return new R<>(processService.removeProcIns(deploymentId));
 	}
 }

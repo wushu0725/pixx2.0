@@ -19,9 +19,8 @@
 
 package com.pig4cloud.pigx.common.core.util;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.pig4cloud.pigx.common.core.constant.CommonConstant;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -34,17 +33,19 @@ import java.io.Serializable;
  */
 @ToString
 @Accessors(chain=true)
+@Builder
+@AllArgsConstructor
 public class R<T> implements Serializable {
-	private static final int SUCCESS = 0;
-	private static final int FAIL = 1;
 	private static final long serialVersionUID = 1L;
+
+	@Getter
+	@Setter
+	private int code = CommonConstant.SUCCESS;
+
 	@Getter
 	@Setter
 	private String msg = "success";
 
-	@Getter
-	@Setter
-	private int code = SUCCESS;
 
 	@Getter
 	@Setter
@@ -68,6 +69,6 @@ public class R<T> implements Serializable {
 	public R(Throwable e) {
 		super();
 		this.msg = e.getMessage();
-		this.code = FAIL;
+		this.code = CommonConstant.FAIL;
 	}
 }

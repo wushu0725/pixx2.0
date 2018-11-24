@@ -49,7 +49,7 @@ public interface SysMenuService extends IService<SysMenu> {
 	 * @param id 菜单ID
 	 * @return 成功、失败
 	 */
-	Boolean deleteMenu(Integer id);
+	Boolean removeMenuById(Integer id);
 
 	/**
 	 * 更新菜单信息

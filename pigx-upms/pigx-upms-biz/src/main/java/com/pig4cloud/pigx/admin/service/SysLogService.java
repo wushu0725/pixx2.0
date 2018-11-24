@@ -42,5 +42,5 @@ public interface SysLogService extends IService<SysLog> {
 	 * @param preLogVoList 日志信息
 	 * @return true/false
 	 */
-	Boolean insertLogs(List<PreLogVo> preLogVoList);
+	Boolean saveBatchLogs(List<PreLogVo> preLogVoList);
 }

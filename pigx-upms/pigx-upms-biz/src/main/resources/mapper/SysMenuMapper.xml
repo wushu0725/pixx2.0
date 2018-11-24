@@ -55,7 +55,7 @@
 	</resultMap>
 
 	<!--通过角色查询菜单信息-->
-	<select id="findMenuByRoleId" resultMap="MenuVoResultMap">
+	<select id="listMenusByRoleId" resultMap="MenuVoResultMap">
 		SELECT
 			sys_menu.*
 		FROM
@@ -69,7 +69,7 @@
     </select>
 
 	<!--通过角色ID 查询权限-->
-	<select id="findPermissionsByRoleIds" resultType="java.lang.String">
+	<select id="listPermissionsByRoleIds" resultType="java.lang.String">
         SELECT
             m.permission
         FROM

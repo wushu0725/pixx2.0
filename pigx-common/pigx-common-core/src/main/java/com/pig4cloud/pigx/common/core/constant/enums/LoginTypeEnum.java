@@ -22,28 +22,38 @@ import lombok.Getter;
 
 /**
  * @author lengleng
- * @date 2018/9/30
- * 流程状态
+ * @date 2018/8/15
+ * 社交登录类型
  */
 @Getter
 @AllArgsConstructor
-public enum EnumProcessStatus {
+public enum LoginTypeEnum {
 	/**
-	 * 图片资源
+	 * 账号密码登录
 	 */
-	ACTIVE("active", "图片资源"),
+	PWD("PWD", "账号密码登录"),
 
 	/**
-	 * xml资源
+	 * 验证码登录
 	 */
-	SUSPEND("suspend", "xml资源");
+	SMS("SMS", "验证码登录"),
+
+	/**
+	 * QQ登录
+	 */
+	QQ("QQ", "QQ登录"),
+
+	/**
+	 * 微信登录
+	 */
+	WECHAT("WX", "微信登录");
 
 	/**
 	 * 类型
 	 */
-	private final String status;
+	private String type;
 	/**
 	 * 描述
 	 */
-	private final String description;
+	private String description;
 }

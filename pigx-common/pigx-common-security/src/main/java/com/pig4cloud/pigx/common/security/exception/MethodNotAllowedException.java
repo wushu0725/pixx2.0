@@ -15,45 +15,31 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.common.core.constant.enums;
+package com.pig4cloud.pigx.common.security.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.pig4cloud.pigx.common.security.component.PigxAuth2ExceptionSerializer;
+import org.springframework.http.HttpStatus;
 
 /**
  * @author lengleng
- * @date 2018/8/15
- * 社交登录类型
+ * @date 2018/7/8
  */
-@Getter
-@AllArgsConstructor
-public enum EnumLoginType {
-	/**
-	 * 账号密码登录
-	 */
-	PWD("PWD", "账号密码登录"),
+@JsonSerialize(using = PigxAuth2ExceptionSerializer.class)
+public class MethodNotAllowedException extends PigxAuth2Exception {
 
-	/**
-	 * 验证码登录
-	 */
-	SMS("SMS", "验证码登录"),
+	public MethodNotAllowedException(String msg, Throwable t) {
+		super(msg);
+	}
 
-	/**
-	 * QQ登录
-	 */
-	QQ("QQ", "QQ登录"),
+	@Override
+	public String getOAuth2ErrorCode() {
+		return "method_not_allowed";
+	}
 
-	/**
-	 * 微信登录
-	 */
-	WECHAT("WX", "微信登录");
+	@Override
+	public int getHttpErrorCode() {
+		return HttpStatus.METHOD_NOT_ALLOWED.value();
+	}
 
-	/**
-	 * 类型
-	 */
-	private String type;
-	/**
-	 * 描述
-	 */
-	private String description;
 }

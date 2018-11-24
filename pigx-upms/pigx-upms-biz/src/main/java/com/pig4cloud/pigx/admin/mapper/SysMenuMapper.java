@@ -41,7 +41,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
 	 * @param roleId 角色ID
 	 * @return
 	 */
-	List<MenuVO> findMenuByRoleId(Integer roleId);
+	List<MenuVO> listMenusByRoleId(Integer roleId);
 
 	/**
 	 * 通过角色ID查询权限
@@ -49,5 +49,5 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
 	 * @param roleIds Ids
 	 * @return
 	 */
-	List<String> findPermissionsByRoleIds(String roleIds);
+	List<String> listPermissionsByRoleIds(String roleIds);
 }

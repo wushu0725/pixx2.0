@@ -15,31 +15,45 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.common.security.exception;
+package com.pig4cloud.pigx.common.core.constant.enums;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.pig4cloud.pigx.common.security.component.PigxAuth2ExceptionSerializer;
-import org.springframework.http.HttpStatus;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * @author lengleng
- * @date 2018/7/8
+ * @date 2018/9/30
+ * 流程状态
  */
-@JsonSerialize(using = PigxAuth2ExceptionSerializer.class)
-public class MethodNotAllowed extends PigxAuth2Exception {
+@Getter
+@AllArgsConstructor
+public enum TaskStatusEnum {
+	/**
+	 * 未提交
+	 */
+	UNSUBMIT("0", "未提交"),
 
-	public MethodNotAllowed(String msg, Throwable t) {
-		super(msg);
-	}
+	/**
+	 * 审核中
+	 */
+	CHECK("1", "审核中"),
 
-	@Override
-	public String getOAuth2ErrorCode() {
-		return "method_not_allowed";
-	}
+	/**
+	 * 已完成
+	 */
+	COMPLETED("2", "已完成"),
 
-	@Override
-	public int getHttpErrorCode() {
-		return HttpStatus.METHOD_NOT_ALLOWED.value();
-	}
+	/**
+	 * 驳回
+	 */
+	OVERRULE("9", "驳回");
 
+	/**
+	 * 类型
+	 */
+	private final String status;
+	/**
+	 * 描述
+	 */
+	private final String description;
 }

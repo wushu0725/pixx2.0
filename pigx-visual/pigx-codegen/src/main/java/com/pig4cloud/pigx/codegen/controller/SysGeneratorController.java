@@ -48,15 +48,15 @@ public class SysGeneratorController {
 	 * @return 数据库表
 	 */
 	@GetMapping("/page")
-	public R list(Page page, String tableName) {
-		return new R<>(sysGeneratorService.queryPage(page, tableName));
+	public R getPage(Page page, String tableName) {
+		return new R<>(sysGeneratorService.getPage(page, tableName));
 	}
 
 	/**
 	 * 生成代码
 	 */
 	@PostMapping("/code")
-	public void code(@RequestBody GenConfig genConfig, HttpServletResponse response) throws IOException {
+	public void generatorCode(@RequestBody GenConfig genConfig, HttpServletResponse response) throws IOException {
 		byte[] data = sysGeneratorService.generatorCode(genConfig);
 
 		response.reset();

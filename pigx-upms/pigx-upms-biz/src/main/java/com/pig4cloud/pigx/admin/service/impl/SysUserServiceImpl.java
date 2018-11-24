@@ -152,7 +152,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	 */
 	@Override
 	public UserVO selectUserVoById(Integer id) {
-		return baseMapper.selectUserVoById(id);
+		return baseMapper.getUserVoById(id);
 	}
 
 	/**
@@ -172,7 +172,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	@Override
 	@CacheEvict(value = "user_details", key = "#userDto.username")
 	public R<Boolean> updateUserInfo(UserDTO userDto) {
-		UserVO userVO = baseMapper.selectUserVoByUsername(userDto.getUsername());
+		UserVO userVO = baseMapper.getUserVoByUsername(userDto.getUsername());
 		SysUser sysUser = new SysUser();
 		if (StrUtil.isNotBlank(userDto.getPassword())
 			&& StrUtil.isNotBlank(userDto.getNewpassword1())) {
@@ -219,7 +219,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	 * @return R
 	 */
 	@Override
-	public List<SysUser> ancestorUsers(String username) {
+	public List<SysUser> listAncestorUsers(String username) {
 		SysUser sysUser = this.getOne(Wrappers.<SysUser>query().lambda()
 			.eq(SysUser::getUsername, username));
 

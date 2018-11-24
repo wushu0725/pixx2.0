@@ -45,7 +45,7 @@ public interface ModelService {
 	 * @param params
 	 * @return
 	 */
-	IPage<Model> selectPage(Map<String, Object> params);
+	IPage<Model> getModelPage(Map<String, Object> params);
 
 	/**
 	 * 删除流程
@@ -53,7 +53,7 @@ public interface ModelService {
 	 * @param id
 	 * @return
 	 */
-	Boolean delete(String id);
+	Boolean removeModelById(String id);
 
 	/**
 	 * 部署流程

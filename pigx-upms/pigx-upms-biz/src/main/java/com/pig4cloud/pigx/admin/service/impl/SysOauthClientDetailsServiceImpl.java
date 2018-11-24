@@ -46,7 +46,7 @@ public class SysOauthClientDetailsServiceImpl extends ServiceImpl<SysOauthClient
 	 */
 	@Override
 	@CacheEvict(value = SecurityConstants.CLIENT_DETAILS_KEY, key = "#id")
-	public Boolean deleteClientDetailsById(String id) {
+	public Boolean removeClientDetailsById(String id) {
 		return this.removeById(id);
 	}
 

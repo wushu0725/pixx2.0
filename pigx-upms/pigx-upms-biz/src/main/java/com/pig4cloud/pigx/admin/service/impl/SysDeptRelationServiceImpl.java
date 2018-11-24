@@ -82,7 +82,7 @@ public class SysDeptRelationServiceImpl extends ServiceImpl<SysDeptRelationMappe
 	 */
 	@Override
 	public void deleteAllDeptRealtion(Integer id) {
-		baseMapper.deleteAllDeptRealtion(id);
+		baseMapper.deleteDeptRelationsById(id);
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class SysDeptRelationServiceImpl extends ServiceImpl<SysDeptRelationMappe
 	 */
 	@Override
 	public void updateDeptRealtion(SysDeptRelation relation) {
-		baseMapper.updateDeptRealtion(relation);
+		baseMapper.updateDeptRelations(relation);
 	}
 
 }

@@ -51,7 +51,7 @@ public class SysGeneratorServiceImpl implements SysGeneratorService {
 	 * @return
 	 */
 	@Override
-	public IPage<List<Map<String, Object>>> queryPage(Page page, String tableName) {
+	public IPage<List<Map<String, Object>>> getPage(Page page, String tableName) {
 		return sysGeneratorMapper.queryList(page,tableName);
 	}
 

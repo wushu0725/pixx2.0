@@ -52,13 +52,13 @@ public class ExecutionLogController {
 
 
 	/**
-	 * 信息
+	 * 通过id查询一条记录
 	 *
 	 * @param id
 	 * @return R
 	 */
 	@GetMapping("/{id}")
-	public R info(@PathVariable("id") String id) {
+	public R getById(@PathVariable("id") String id) {
 		return new R<>(executionLogService.getById(id));
 	}
 
@@ -91,7 +91,7 @@ public class ExecutionLogController {
 	 * @return R
 	 */
 	@DeleteMapping("/{id}")
-	public R delete(@PathVariable String id) {
+	public R removeById(@PathVariable String id) {
 		return new R<>(executionLogService.removeById(id));
 	}
 

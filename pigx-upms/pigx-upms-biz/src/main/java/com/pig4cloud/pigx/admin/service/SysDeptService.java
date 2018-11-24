@@ -47,7 +47,7 @@ public interface SysDeptService extends IService<SysDept> {
 	 *
 	 * @return
 	 */
-	List<DeptTree> selectUserTree();
+	List<DeptTree> getUserTree();
 
 	/**
 	 * 添加信息部门
@@ -55,7 +55,7 @@ public interface SysDeptService extends IService<SysDept> {
 	 * @param sysDept
 	 * @return
 	 */
-	Boolean insertDept(SysDept sysDept);
+	Boolean saveDept(SysDept sysDept);
 
 	/**
 	 * 删除部门
@@ -63,7 +63,7 @@ public interface SysDeptService extends IService<SysDept> {
 	 * @param id 部门 ID
 	 * @return 成功、失败
 	 */
-	Boolean deleteDeptById(Integer id);
+	Boolean removeDeptById(Integer id);
 
 	/**
 	 * 更新部门

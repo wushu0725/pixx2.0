@@ -22,7 +22,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.act.entity.LeaveBill;
 import com.pig4cloud.pigx.act.service.LeaveBillService;
 import com.pig4cloud.pigx.act.service.ProcessService;
-import com.pig4cloud.pigx.common.core.constant.enums.EnumTaskStatus;
+import com.pig4cloud.pigx.common.core.constant.enums.TaskStatusEnum;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
@@ -62,7 +62,7 @@ public class LeaveBillController {
 	 * @return R
 	 */
 	@GetMapping("/{leaveId}")
-	public R info(@PathVariable("leaveId") Integer leaveId) {
+	public R getById(@PathVariable("leaveId") Integer leaveId) {
 		return new R<>(leaveBillService.getById(leaveId));
 	}
 
@@ -75,7 +75,7 @@ public class LeaveBillController {
 	@PostMapping
 	public R save(@RequestBody LeaveBill leaveBill) {
 		leaveBill.setUsername(SecurityUtils.getUsername());
-		leaveBill.setState(EnumTaskStatus.UNSUBMIT.getStatus());
+		leaveBill.setState(TaskStatusEnum.UNSUBMIT.getStatus());
 		return new R<>(leaveBillService.save(leaveBill));
 	}
 
@@ -86,7 +86,7 @@ public class LeaveBillController {
 	 * @return R
 	 */
 	@PutMapping
-	public R update(@RequestBody LeaveBill leaveBill) {
+	public R updateById(@RequestBody LeaveBill leaveBill) {
 		return new R<>(leaveBillService.updateById(leaveBill));
 	}
 
@@ -97,7 +97,7 @@ public class LeaveBillController {
 	 * @return R
 	 */
 	@DeleteMapping("/{leaveId}")
-	public R delete(@PathVariable Integer leaveId) {
+	public R removeById(@PathVariable Integer leaveId) {
 		return new R<>(leaveBillService.removeById(leaveId));
 	}
 

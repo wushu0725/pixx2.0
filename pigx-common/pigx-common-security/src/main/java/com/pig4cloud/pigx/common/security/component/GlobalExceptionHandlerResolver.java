@@ -17,6 +17,7 @@
 
 package com.pig4cloud.pigx.common.security.component;
 
+import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.util.R;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,11 +35,10 @@ import java.util.List;
 /**
  * @author lengleng
  * @date 2018/8/30
- * 全局的的异常处理器
+ * 全局异常处理器
  */
 @Slf4j
 @RestControllerAdvice
-@AllArgsConstructor
 public class GlobalExceptionHandlerResolver {
 
 	/**
@@ -49,7 +49,7 @@ public class GlobalExceptionHandlerResolver {
 	 */
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public R exception(Exception e) {
+	public R handleGlobalException(Exception e) {
 		log.error("全局异常信息 ex={}", e.getMessage(), e);
 		return new R<>(e);
 	}
@@ -62,8 +62,12 @@ public class GlobalExceptionHandlerResolver {
 	 */
 	@ExceptionHandler(AccessDeniedException.class)
 	@ResponseStatus(HttpStatus.FORBIDDEN)
-	public R exception(AccessDeniedException e) {
-		return new R<>(e.getLocalizedMessage());
+	public R handleAccessDeniedException(AccessDeniedException e) {
+		log.error("拒绝授权异常信息 ex={}",e.getLocalizedMessage(),e);
+		return R.builder()
+			.msg(e.getLocalizedMessage())
+			.code(CommonConstant.FAIL)
+			.build();
 	}
 
 	/**
@@ -74,12 +78,12 @@ public class GlobalExceptionHandlerResolver {
 	 */
 	@ExceptionHandler({MethodArgumentNotValidException.class, BindException.class})
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public R bodyValidExceptionHandler(MethodArgumentNotValidException exception) {
+	public R handleBodyValidException(MethodArgumentNotValidException exception) {
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
-		R result = new R();
-		result.setMsg(fieldErrors.get(0).getDefaultMessage());
-		log.warn(fieldErrors.get(0).getDefaultMessage());
-		return result;
+		log.error("参数绑定异常,ex = {}",fieldErrors.get(0).getDefaultMessage());
+		return R.builder()
+			.msg(fieldErrors.get(0).getDefaultMessage())
+			.code(CommonConstant.FAIL)
+			.build();
 	}
-
 }
