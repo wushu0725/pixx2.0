@@ -1,5 +1,5 @@
 server:
-  port: 1025
+  port: 8761
 
 spring:
   security:
