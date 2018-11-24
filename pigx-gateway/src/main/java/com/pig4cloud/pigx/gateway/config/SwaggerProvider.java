@@ -39,6 +39,7 @@ import java.util.List;
 public class SwaggerProvider implements SwaggerResourcesProvider {
 	private static final String API_URI = "/v2/api-docs";
 	private final RouteDefinitionRepository routeDefinitionRepository;
+	private final FilterIgnorePropertiesConfig filterIgnorePropertiesConfig;
 
 
 	@Override
@@ -48,7 +49,7 @@ public class SwaggerProvider implements SwaggerResourcesProvider {
 		routeDefinitionRepository.getRouteDefinitions().subscribe(route -> routes.add(route));
 		routes.forEach(routeDefinition -> routeDefinition.getPredicates().stream()
 			.filter(predicateDefinition -> "Path".equalsIgnoreCase(predicateDefinition.getName()))
-			.filter(predicateDefinition -> !"pigx-auth".equalsIgnoreCase(routeDefinition.getId()))
+			.filter(predicateDefinition -> !filterIgnorePropertiesConfig.getSwaggerProviders().contains(routeDefinition.getId()))
 			.forEach(predicateDefinition -> resources.add(swaggerResource(routeDefinition.getId(),
 				predicateDefinition.getArgs().get(NameUtils.GENERATED_NAME_PREFIX + "0")
 					.replace("/**", API_URI)))));
