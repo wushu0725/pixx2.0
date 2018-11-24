@@ -17,21 +17,16 @@
 
 package com.pig4cloud.pigx.common.security.component;
 
-import cn.hutool.core.util.ClassUtil;
-import com.pig4cloud.pigx.common.security.annotation.EnablePigxResourceServer;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.Set;
 
 /**
  * @author lengleng
@@ -53,19 +48,5 @@ public class PigxResourceServerAutoConfiguration {
 			}
 		});
 		return restTemplate;
-	}
-
-	@Bean
-	@ConditionalOnMissingBean(ResourceServerConfigurerAdapter.class)
-	public ResourceServerConfigurerAdapter resourceServerConfigurerAdapter() {
-		Set<Class<?>> classes = ClassUtil.scanPackageByAnnotation("com.pig4cloud.pigx", EnablePigxResourceServer.class);
-		boolean details = false;
-		for (Class<?> clazz : classes) {
-			details = clazz.getAnnotation(EnablePigxResourceServer.class).details();
-		}
-		BaseResourceServerConfigurerAdapter baseResourceServerConfigurerAdapter
-			= new BaseResourceServerConfigurerAdapter();
-		baseResourceServerConfigurerAdapter.setDetails(details);
-		return baseResourceServerConfigurerAdapter;
 	}
 }

@@ -38,7 +38,7 @@ import org.springframework.web.client.RestTemplate;
  * 2. 支持 获取用户全部信息
  */
 @Slf4j
-public class BaseResourceServerConfigurerAdapter extends ResourceServerConfigurerAdapter {
+public class PigxResourceServerConfigurerAdapter extends ResourceServerConfigurerAdapter {
 	@Autowired
 	protected ResourceAuthExceptionEntryPoint resourceAuthExceptionEntryPoint;
 	@Autowired

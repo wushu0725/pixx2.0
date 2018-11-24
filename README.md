@@ -1,14 +1,3 @@
-### 使用说明  
-
-请参考VIP群共享 《从零开始部署pigx》  
-[>> 文档](doc/md/catalog.md)   
-
-视频 | ppt
----|---
-[>> 环境准备、运行pigx](https://www.bilibili.com/video/av33200189)|  [PPT](https://slides.com/lengleng/pigx-springcloud-6/fullscreen#/)
-[>> pigx定时任务、运维平台使用](https://www.bilibili.com/video/av33268288)|  [PPT](https://slides.com/lengleng/pigx-springcloud-7/fullscreen#/)
-[>> pigx 配置文件加解密原理和选择](https://www.bilibili.com/video/av33315412)|  [PPT](https://slides.com/lengleng/pigx-springcloud-6-8/fullscreen#/)
-
 ## 协议和授权
 
 pigX并非一个开源软件，作者保留全部的权利。
@@ -22,7 +11,6 @@ pigX并非一个开源软件，作者保留全部的权利。
 
 1. 将本项目的部分或全部代码和资源进行任何形式的再发行（尤其上传GitHub、Gitee ）
 2. 利用本项目的部分或全部代码和资源进行`任何商业行为`
-3. 举报有奖，抢先体验`pigx 2.0`。
 
 ## 贡献代码
 
