@@ -56,10 +56,11 @@ public class RemoteUserServiceFallbackImpl implements RemoteUserService {
 	 * 通过社交账号查询用户、角色信息
 	 *
 	 * @param inStr appid@code
+	 * @param from  内外标志
 	 * @return
 	 */
 	@Override
-	public R<UserInfo> social(String inStr) {
+	public R<UserInfo> social(String inStr, String from) {
 		log.error("feign 查询用户信息失败:{}", inStr, cause);
 		return null;
 	}

@@ -23,6 +23,7 @@ import com.pig4cloud.pigx.admin.api.entity.SysSocialDetails;
 import com.pig4cloud.pigx.admin.service.SysSocialDetailsService;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.log.annotation.SysLog;
+import com.pig4cloud.pigx.common.security.annotation.Inner;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -111,6 +112,7 @@ public class SysSocialDetailsController {
 	 * @param inStr appid@code
 	 * @return
 	 */
+	@Inner
 	@GetMapping("/info/{inStr}")
 	public R getUserInfo(@PathVariable String inStr) {
 		return new R<>(sysSocialDetailsService.getUserInfo(inStr));

@@ -26,6 +26,7 @@ import com.pig4cloud.pigx.admin.api.entity.SysLog;
 import com.pig4cloud.pigx.admin.api.vo.PreLogVo;
 import com.pig4cloud.pigx.admin.service.SysLogService;
 import com.pig4cloud.pigx.common.core.util.R;
+import com.pig4cloud.pigx.common.security.annotation.Inner;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -79,7 +80,8 @@ public class LogController {
 	 * @param sysLog 日志实体
 	 * @return success/false
 	 */
-	@PostMapping
+	@Inner
+	@PostMapping("/save")
 	public R save(@Valid @RequestBody SysLog sysLog) {
 		return new R<>(sysLogService.save(sysLog));
 	}

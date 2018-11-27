@@ -15,26 +15,32 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.pig4cloud.pigx.sso;
+package com.pig4cloud.pigx.common.security.annotation;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
-import org.springframework.cloud.client.SpringCloudApplication;
+import java.lang.annotation.*;
 
 /**
  * @author lengleng
- * @date 2018年11月15日17:06:26
+ * @date 2018/11/26
  * <p>
- * 单点登录客户端
- * 1. 启动实例访问:http://localhost:4040/sso1/ 提示登录，然后获取到用户信息
- * 2. 再启动一个实例： http://localhost:4040/sso1/ 不需要登录即可获取当前用户信息
+ * 服务调用不鉴权注解
  */
-@EnableOAuth2Sso
-@SpringCloudApplication
-public class PigxSsoClientDemoApplication {
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Inner {
 
-	public static void main(String[] args) {
-		SpringApplication.run(PigxSsoClientDemoApplication.class, args);
-	}
+	/**
+	 * 是否AOP统一处理
+	 *
+	 * @return false, true
+	 */
+	boolean value() default true;
 
+	/**
+	 * 需要特殊判空的字段(预留)
+	 *
+	 * @return {}
+	 */
+	String[] field() default {};
 }

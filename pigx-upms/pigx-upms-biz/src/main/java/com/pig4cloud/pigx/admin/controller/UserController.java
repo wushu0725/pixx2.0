@@ -19,16 +19,15 @@
 
 package com.pig4cloud.pigx.admin.controller;
 
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.admin.api.dto.UserDTO;
 import com.pig4cloud.pigx.admin.api.entity.SysUser;
 import com.pig4cloud.pigx.admin.service.SysUserService;
-import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import com.pig4cloud.pigx.common.core.util.R;
 import com.pig4cloud.pigx.common.log.annotation.SysLog;
+import com.pig4cloud.pigx.common.security.annotation.Inner;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -51,34 +50,39 @@ public class UserController {
 	private final SysUserService userService;
 
 	/**
-	 * 获取当前用户信息（角色、权限）
-	 * 并且异步初始化用户部门信息
+	 * 获取当前用户全部信息
 	 *
-	 * @param from     请求标志，该接口会被 auth、 前端调用
-	 * @param username 用户名
-	 * @return 用户名
+	 * @return 用户信息
 	 */
-	@GetMapping(value = {"/info", "/info/{username}"})
-	public R user(@PathVariable(required = false) String username,
-				  @RequestHeader(required = false) String from) {
-		// 查询用户不为空时判断是不是内部请求
-		if (StrUtil.isNotBlank(username) && !StrUtil.equals(SecurityConstants.FROM_IN, from)) {
-			return new R<>(null, "error");
-		}
-		//为空时查询当前用户
-		if (StrUtil.isBlank(username)) {
-			username = SecurityUtils.getUser().getUsername();
-		}
+	@GetMapping(value = {"/info"})
+	public R info() {
+		String username = SecurityUtils.getUser().getUsername();
 		SysUser sysUser = userService.getOne(Wrappers.<SysUser>query()
 			.lambda().eq(SysUser::getUsername, username));
 		if (sysUser == null) {
-			return new R<>();
+			return new R<>(Boolean.FALSE, "获取当前用户信息失败");
 		}
 		return new R<>(userService.findUserInfo(sysUser));
 	}
 
 	/**
-	 * 通过ID查询当前用户信息
+	 * 获取指定用户全部信息
+	 *
+	 * @return 用户信息
+	 */
+	@Inner
+	@GetMapping("/info/{username}")
+	public R info(@PathVariable String username) {
+		SysUser user = userService.getOne(Wrappers.<SysUser>query()
+			.lambda().eq(SysUser::getUsername, username));
+		if (user == null) {
+			return new R<>(Boolean.FALSE, String.format("用户信息为空 %s", username));
+		}
+		return new R<>(userService.findUserInfo(user));
+	}
+
+	/**
+	 * 通过ID查询用户信息
 	 *
 	 * @param id ID
 	 * @return 用户信息
@@ -169,7 +173,7 @@ public class UserController {
 
 	/**
 	 * @param username 用户名称
-	 * @return
+	 * @return 上级部门用户列表
 	 */
 	@GetMapping("/ancestor/{username}")
 	public R listAncestorUsers(@PathVariable String username) {

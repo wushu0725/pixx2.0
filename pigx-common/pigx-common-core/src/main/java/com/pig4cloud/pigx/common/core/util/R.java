@@ -31,9 +31,9 @@ import java.io.Serializable;
  * @param <T>
  * @author lengleng
  */
-@ToString
-@Accessors(chain=true)
 @Builder
+@ToString
+@Accessors(chain = true)
 @AllArgsConstructor
 public class R<T> implements Serializable {
 	private static final long serialVersionUID = 1L;

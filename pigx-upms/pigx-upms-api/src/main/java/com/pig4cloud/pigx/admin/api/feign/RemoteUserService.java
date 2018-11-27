@@ -53,10 +53,12 @@ public interface RemoteUserService {
 	 * 通过社交账号或手机号查询用户、角色信息
 	 *
 	 * @param inStr appid@code
+	 * @param from  调用标志
 	 * @return
 	 */
 	@GetMapping("/social/info/{inStr}")
-	R<UserInfo> social(@PathVariable("inStr") String inStr);
+	R<UserInfo> social(@PathVariable("inStr") String inStr
+		, @RequestHeader(SecurityConstants.FROM) String from);
 
 	/**
 	 * 查询上级部门的用户信息

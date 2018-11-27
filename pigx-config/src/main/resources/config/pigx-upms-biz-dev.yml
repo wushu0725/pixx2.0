@@ -10,9 +10,9 @@ security:
         - '/actuator/**'
         - '/v2/api-docs'
         - '/user/info/*'
-        - '/social/info/**'
+        - '/social/info/*'
         - '/mobile/*'
-        - '/log/**'
+        - '/log/save'
 
 # 数据源
 spring:

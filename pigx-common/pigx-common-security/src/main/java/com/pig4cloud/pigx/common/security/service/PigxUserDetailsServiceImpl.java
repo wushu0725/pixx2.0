@@ -72,7 +72,7 @@ public class PigxUserDetailsServiceImpl implements PigxUserDetailsService {
 	 */
 	@Override
 	public UserDetails loadUserBySocial(String inStr) throws UsernameNotFoundException {
-		return getUserDetails(remoteUserService.social(inStr));
+		return getUserDetails(remoteUserService.social(inStr, SecurityConstants.FROM_IN));
 	}
 
 	/**
