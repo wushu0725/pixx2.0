@@ -19,7 +19,6 @@ package com.pig4cloud.pigx.admin.controller;
 
 import com.pig4cloud.pigx.admin.service.MobileService;
 import com.pig4cloud.pigx.common.core.util.R;
-import com.pig4cloud.pigx.common.log.annotation.SysLog;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +39,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class MobileController {
 	private final MobileService mobileService;
 
-	@SysLog("发送验证码")
 	@GetMapping("/{mobile}")
 	public R sendSmsCode(@PathVariable String mobile) {
 		return mobileService.sendSmsCode(mobile);

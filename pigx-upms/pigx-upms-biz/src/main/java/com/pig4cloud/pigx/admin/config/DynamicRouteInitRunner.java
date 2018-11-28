@@ -62,6 +62,7 @@ public class DynamicRouteInitRunner {
 
 		routeConfService.routes().forEach(route -> {
 			RouteDefinitionVo vo = new RouteDefinitionVo();
+			vo.setRouteName(route.getRouteName());
 			vo.setId(route.getRouteId());
 			vo.setUri(URI.create(route.getUri()));
 			vo.setOrder(route.getOrder());

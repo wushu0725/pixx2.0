@@ -44,6 +44,10 @@ public class SysRouteConf extends Model<SysRouteConf> {
 	 */
 	private String routeId;
 	/**
+	 * 路由名称
+	 */
+	private String routeName;
+	/**
 	 * 断言
 	 */
 	private String predicates;
@@ -58,7 +62,7 @@ public class SysRouteConf extends Model<SysRouteConf> {
 	/**
 	 * 排序
 	 */
-	@TableField(value="`order`")
+	@TableField(value = "`order`")
 	private Integer order;
 	/**
 	 * 创建时间

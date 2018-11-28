@@ -97,6 +97,11 @@ public class SysRouteConfServiceImpl extends ServiceImpl<SysRouteConfMapper, Sys
 				vo.setId(String.valueOf(id));
 			}
 
+			Object routeName = map.get("routeName");
+			if (routeName != null) {
+				vo.setRouteName(String.valueOf(routeName));
+			}
+
 			Object predicates = map.get("predicates");
 			if (predicates != null) {
 				JSONArray predicatesArray = (JSONArray) predicates;
@@ -137,6 +142,7 @@ public class SysRouteConfServiceImpl extends ServiceImpl<SysRouteConfMapper, Sys
 		List<SysRouteConf> routeConfList = routeDefinitionVoList.stream().map(vo -> {
 			SysRouteConf routeConf = new SysRouteConf();
 			routeConf.setRouteId(vo.getId());
+			routeConf.setRouteName(vo.getRouteName());
 			routeConf.setFilters(JSONUtil.toJsonStr(vo.getFilters()));
 			routeConf.setPredicates(JSONUtil.toJsonStr(vo.getPredicates()));
 			routeConf.setOrder(vo.getOrder());
