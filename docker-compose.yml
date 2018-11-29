@@ -17,6 +17,8 @@ services:
       context: ./
       dockerfile: ./pigx-eureka/Dockerfile
     restart: always
+    container_name: pigx-eureka
+    image: pigx-eureka
     ports:
       - 8761:8761
 
@@ -25,12 +27,16 @@ services:
       context: ./
       dockerfile: ./pigx-config/Dockerfile
     restart: always
+    container_name: pigx-config
+    image: pigx-config
 
   pigx-gateway:
     build:
       context: ./
       dockerfile: ./pigx-gateway/Dockerfile
     restart: always
+    container_name: pigx-gateway
+    image: pigx-gateway
     ports:
       - 9999:9999
 
@@ -39,18 +45,24 @@ services:
       context: ./
       dockerfile: ./pigx-auth/Dockerfile
     restart: always
+    container_name: pigx-auth
+    image: pigx-auth
 
   pigx-upms:
     build:
       context: ./
       dockerfile: ./pigx-upms/pigx-upms-biz/Dockerfile
     restart: always
+    container_name: pigx-upms
+    image: pigx-upms
 
   pigx-monitor:
     build:
       context: ./
       dockerfile: ./pigx-visual/pigx-monitor/Dockerfile
     restart: always
+    image: pigx-monitor
+    container_name: pigx-monitor
     ports:
       - 5001:5001
 
@@ -59,6 +71,8 @@ services:
       context: ./
       dockerfile: ./pigx-visual/pigx-daemon/Dockerfile
     restart: always
+    image: pigx-daemon
+    container_name: pigx-daemon
     ports:
       - 5002:5002
 
@@ -67,14 +81,16 @@ services:
       context: ./
       dockerfile: ./pigx-visual/pigx-codegen/Dockerfile
     restart: always
+    image: pigx-codegen
+    container_name: pigx-codegen
+
 
   pigx-activiti:
-    links:
-      - pigx-eureka
-      - pigx-redis
     build:
       context: ./
       dockerfile: ./pigx-visual/pigx-activiti/Dockerfile
+    image: pigx-activiti
+    container_name: pigx-activiti
     restart: always
 
   pigx-tx-manager:
@@ -82,6 +98,8 @@ services:
       context: ./
       dockerfile: ./pigx-visual/pigx-tx-manager/Dockerfile
     restart: always
+    image: pigx-tx-manager
+    container_name: pigx-tx-manager
     ports:
       - 5004:5004
       - 9998:9998
