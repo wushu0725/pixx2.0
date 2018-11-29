@@ -1,4 +1,3 @@
-server.session
 server:
   port: 5005
 

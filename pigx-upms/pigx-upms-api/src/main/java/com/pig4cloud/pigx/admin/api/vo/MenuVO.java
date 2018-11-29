@@ -76,7 +76,7 @@ public class MenuVO implements Serializable {
 	/**
 	 * 是否缓冲
 	 */
-	private String keepalive;
+	private String keepAlive;
 	/**
 	 * 创建时间
 	 */

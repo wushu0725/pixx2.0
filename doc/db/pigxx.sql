@@ -175,11 +175,11 @@ CREATE TABLE `sys_menu` (
   `icon` varchar(32) DEFAULT NULL COMMENT '图标',
   `component` varchar(64) DEFAULT NULL COMMENT 'VUE页面',
   `sort` int(11) DEFAULT '1' COMMENT '排序值',
-  `keepalive` char(1) DEFAULT '0' COMMENT '0-开启，1- 关闭',
-  `type` char(1) DEFAULT NULL COMMENT '菜单类型 （0菜单 1按钮）',
+  `keep_alive` char(1) DEFAULT '0' COMMENT '路由缓冲(0-开启，1- 关闭)',
+  `type` char(1) DEFAULT NULL COMMENT '菜单类型 （0-菜单 1-按钮）',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `del_flag` char(1) DEFAULT '0' COMMENT '0--正常 1--删除',
+  `del_flag` char(1) DEFAULT '0' COMMENT '逻辑删除标记(0--正常 1--删除)',
   `tenant_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`menu_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='菜单权限表';

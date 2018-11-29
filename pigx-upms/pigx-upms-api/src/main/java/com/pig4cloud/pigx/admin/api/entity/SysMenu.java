@@ -84,9 +84,9 @@ public class SysMenu extends Model<SysMenu> {
 	@NotNull(message = "菜单类型不能为空")
 	private String type;
 	/**
-	 * 是否缓冲
+	 * 路由缓冲
 	 */
-	private String keepalive;
+	private String keepAlive;
 	/**
 	 * 创建时间
 	 */
