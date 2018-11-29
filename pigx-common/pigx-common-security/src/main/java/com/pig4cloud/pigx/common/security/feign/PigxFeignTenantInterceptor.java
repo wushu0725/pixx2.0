@@ -18,7 +18,7 @@
 package com.pig4cloud.pigx.common.security.feign;
 
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
-import com.pig4cloud.pigx.common.core.util.TenantUtils;
+import com.pig4cloud.pigx.common.core.util.TenantContextHolder;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -31,10 +31,10 @@ import lombok.extern.slf4j.Slf4j;
 public class PigxFeignTenantInterceptor implements RequestInterceptor {
 	@Override
 	public void apply(RequestTemplate requestTemplate) {
-		if (TenantUtils.getTenantId() == null) {
+		if (TenantContextHolder.getTenantId() == null) {
 			log.error("TTL 中的 租户ID为空，feign拦截器 >> 增强失败");
 			return;
 		}
-		requestTemplate.header(CommonConstant.TENANT_ID, TenantUtils.getTenantId().toString());
+		requestTemplate.header(CommonConstant.TENANT_ID, TenantContextHolder.getTenantId().toString());
 	}
 }

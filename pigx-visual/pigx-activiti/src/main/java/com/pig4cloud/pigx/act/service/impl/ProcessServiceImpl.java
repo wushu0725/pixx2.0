@@ -29,7 +29,7 @@ import com.pig4cloud.pigx.common.core.constant.PaginationConstant;
 import com.pig4cloud.pigx.common.core.constant.enums.ProcessStatusEnum;
 import com.pig4cloud.pigx.common.core.constant.enums.ResourceTypeEnum;
 import com.pig4cloud.pigx.common.core.constant.enums.TaskStatusEnum;
-import com.pig4cloud.pigx.common.core.util.TenantUtils;
+import com.pig4cloud.pigx.common.core.util.TenantContextHolder;
 import lombok.AllArgsConstructor;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
@@ -38,11 +38,12 @@ import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author lengleng
@@ -75,14 +76,13 @@ public class ProcessServiceImpl implements ProcessService {
 		IPage result = new Page(page, limit);
 		result.setTotal(query.count());
 
-		List<ProcessDefDTO> deploymentList = new ArrayList<>();
-		query.listPage((page - 1) * limit, limit)
+		List<ProcessDefDTO> deploymentList = query.listPage((page - 1) * limit, limit)
 			.stream()
-			.forEach(processDefinition -> {
+			.map(processDefinition -> {
 				Deployment deployment = repositoryService.createDeploymentQuery()
 					.deploymentId(processDefinition.getDeploymentId()).singleResult();
-				deploymentList.add(ProcessDefDTO.toProcessDefDTO(processDefinition, deployment));
-			});
+				return ProcessDefDTO.toProcessDefDTO(processDefinition, deployment);
+			}).collect(Collectors.toList());
 		result.setRecords(deploymentList);
 		return result;
 	}
@@ -158,13 +158,14 @@ public class ProcessServiceImpl implements ProcessService {
 	 * @return
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public Boolean saveStartProcess(Integer leaveId) {
 		LeaveBill leaveBill = leaveBillMapper.selectById(leaveId);
 		leaveBill.setState(TaskStatusEnum.CHECK.getStatus());
 
 		String key = leaveBill.getClass().getSimpleName();
 		String businessKey = key + "_" + leaveBill.getLeaveId();
-		runtimeService.startProcessInstanceByKeyAndTenantId(key, businessKey, String.valueOf(TenantUtils.getTenantId()));
+		runtimeService.startProcessInstanceByKeyAndTenantId(key, businessKey, String.valueOf(TenantContextHolder.getTenantId()));
 		leaveBillMapper.updateById(leaveBill);
 		return Boolean.TRUE;
 	}

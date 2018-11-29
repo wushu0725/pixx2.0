@@ -1,5 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.pig4cloud.pigx.common.security.filter.TenantIdTtlFilter,\
+  com.pig4cloud.pigx.common.security.filter.TenantContextHolderFilter,\
   com.pig4cloud.pigx.common.security.feign.PigxFeignClientConfiguration,\
   com.pig4cloud.pigx.common.security.feign.PigxFeignTenantConfiguration,\
   com.pig4cloud.pigx.common.security.service.PigxUserDetailsServiceImpl

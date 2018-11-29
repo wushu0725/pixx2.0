@@ -27,7 +27,7 @@ import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
 import com.pig4cloud.pigx.common.core.datascope.DataScopeInterceptor;
-import com.pig4cloud.pigx.common.core.util.TenantUtils;
+import com.pig4cloud.pigx.common.core.util.TenantContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
@@ -61,7 +61,7 @@ public class MybatisPlusConfigurer {
 		tenantSqlParser.setTenantHandler(new TenantHandler() {
 			@Override
 			public Expression getTenantId() {
-				Integer tenantId = TenantUtils.getTenantId();
+				Integer tenantId = TenantContextHolder.getTenantId();
 				log.debug("当前租户为 >> {}", tenantId);
 				return new LongValue(tenantId);
 			}

@@ -19,7 +19,7 @@ package com.pig4cloud.pigx.common.security.filter;
 
 import cn.hutool.core.util.StrUtil;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
-import com.pig4cloud.pigx.common.core.util.TenantUtils;
+import com.pig4cloud.pigx.common.core.util.TenantContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -41,7 +41,7 @@ import java.io.IOException;
 @Slf4j
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class TenantIdTtlFilter extends GenericFilterBean {
+public class TenantContextHolderFilter extends GenericFilterBean {
 
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -52,12 +52,12 @@ public class TenantIdTtlFilter extends GenericFilterBean {
 		log.debug("获取header中的租户ID为:{}", tenantId);
 
 		if (StrUtil.isNotBlank(tenantId)) {
-			TenantUtils.setTenantId(Integer.parseInt(tenantId));
+			TenantContextHolder.setTenantId(Integer.parseInt(tenantId));
 		} else {
-			TenantUtils.setTenantId(1);
+			TenantContextHolder.setTenantId(1);
 		}
 
 		filterChain.doFilter(request, response);
-		TenantUtils.clear();
+		TenantContextHolder.clear();
 	}
 }

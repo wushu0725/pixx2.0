@@ -17,8 +17,6 @@
 
 package com.pig4cloud.pigx.act.service.impl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig4cloud.pigx.act.entity.LeaveBill;
 import com.pig4cloud.pigx.act.mapper.LeaveBillMapper;

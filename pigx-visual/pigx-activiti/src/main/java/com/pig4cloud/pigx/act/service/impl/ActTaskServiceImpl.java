@@ -42,7 +42,6 @@ import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
 import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
 import org.activiti.image.ProcessDiagramGenerator;
@@ -52,6 +51,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author lengleng
@@ -80,17 +80,18 @@ public class ActTaskServiceImpl implements ActTaskService {
 
 		IPage result = new Page(page, limit);
 		result.setTotal(taskQuery.count());
-		List<TaskDTO> taskDTOList = new ArrayList<>();
-		taskQuery.list().forEach(task -> {
-			TaskDTO dto = new TaskDTO();
-			dto.setTaskId(task.getId());
-			dto.setTaskName(task.getName());
-			dto.setProcessInstanceId(task.getProcessInstanceId());
-			dto.setNodeKey(task.getTaskDefinitionKey());
-			dto.setCategory(task.getCategory());
-			dto.setTime(task.getCreateTime());
-			taskDTOList.add(dto);
-		});
+
+		List<TaskDTO> taskDTOList = taskQuery.list().stream()
+			.map(task -> {
+				TaskDTO dto = new TaskDTO();
+				dto.setTaskId(task.getId());
+				dto.setTaskName(task.getName());
+				dto.setProcessInstanceId(task.getProcessInstanceId());
+				dto.setNodeKey(task.getTaskDefinitionKey());
+				dto.setCategory(task.getCategory());
+				dto.setTime(task.getCreateTime());
+				return dto;
+			}).collect(Collectors.toList());
 		result.setRecords(taskDTOList);
 		return result;
 	}
@@ -174,20 +175,20 @@ public class ActTaskServiceImpl implements ActTaskService {
 			.taskId(taskId)
 			.singleResult();
 		//获取流程实例ID
-		List<CommentDto> commentDtoList = new ArrayList<>();
-		List<Comment> commentList = taskService.getProcessInstanceComments(task.getProcessInstanceId());
-
-		commentList.forEach(comment -> {
-			CommentDto commentDto = new CommentDto();
-			commentDto.setId(comment.getId());
-			commentDto.setTime(comment.getTime());
-			commentDto.setType(comment.getType());
-			commentDto.setTaskId(comment.getTaskId());
-			commentDto.setUserId(comment.getUserId());
-			commentDto.setFullMessage(comment.getFullMessage());
-			commentDto.setProcessInstanceId(comment.getProcessInstanceId());
-			commentDtoList.add(commentDto);
-		});
+		List<CommentDto> commentDtoList = taskService
+			.getProcessInstanceComments(task.getProcessInstanceId())
+			.stream().map(comment -> {
+					CommentDto commentDto = new CommentDto();
+					commentDto.setId(comment.getId());
+					commentDto.setTime(comment.getTime());
+					commentDto.setType(comment.getType());
+					commentDto.setTaskId(comment.getTaskId());
+					commentDto.setUserId(comment.getUserId());
+					commentDto.setFullMessage(comment.getFullMessage());
+					commentDto.setProcessInstanceId(comment.getProcessInstanceId());
+					return commentDto;
+				}
+			).collect(Collectors.toList());
 		return commentDtoList;
 	}
 
@@ -204,9 +205,11 @@ public class ActTaskServiceImpl implements ActTaskService {
 			.singleResult();
 
 		String processInstanceId = task.getProcessInstanceId();
-		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
+		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+			.processInstanceId(processInstanceId).singleResult();
 		HistoricProcessInstance historicProcessInstance =
-			historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
+			historyService.createHistoricProcessInstanceQuery()
+				.processInstanceId(processInstanceId).singleResult();
 		String processDefinitionId = null;
 		List<String> executedActivityIdList = new ArrayList<>();
 		if (processInstance != null) {
@@ -214,11 +217,11 @@ public class ActTaskServiceImpl implements ActTaskService {
 			executedActivityIdList = this.runtimeService.getActiveActivityIds(processInstance.getId());
 		} else if (historicProcessInstance != null) {
 			processDefinitionId = historicProcessInstance.getProcessDefinitionId();
-			List<HistoricActivityInstance> historicActivityInstanceList =
-				historyService.createHistoricActivityInstanceQuery().processInstanceId(processInstanceId).orderByHistoricActivityInstanceId().asc().list();
-			for (HistoricActivityInstance activityInstance : historicActivityInstanceList) {
-				executedActivityIdList.add(activityInstance.getActivityId());
-			}
+			executedActivityIdList = historyService.createHistoricActivityInstanceQuery()
+				.processInstanceId(processInstanceId)
+				.orderByHistoricActivityInstanceId().asc().list()
+				.stream().map(HistoricActivityInstance::getActivityId)
+				.collect(Collectors.toList());
 		}
 
 		BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
@@ -237,18 +240,17 @@ public class ActTaskServiceImpl implements ActTaskService {
 	}
 
 	private List<String> findOutFlagListByTaskId(Task task, ProcessInstance pi) {
-		//返回存放连线的名称集合
-		List<String> list = new ArrayList<>();
 		//查询ProcessDefinitionEntiy对象
 		ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity) repositoryService
 			.getProcessDefinition(task.getProcessDefinitionId());
 
 		ActivityImpl activityImpl = processDefinitionEntity.findActivity(pi.getActivityId());
 		//获取当前活动完成之后连线的名称
-		activityImpl.getOutgoingTransitions().forEach(pvm -> {
-			String name = (String) pvm.getProperty("name");
-			list.add(StrUtil.isNotBlank(name) ? name : FLAG);
-		});
-		return list;
+		List<String> nameList = activityImpl.getOutgoingTransitions().stream()
+			.map(pvm -> {
+				String name = (String) pvm.getProperty("name");
+				return StrUtil.isNotBlank(name) ? name : FLAG;
+			}).collect(Collectors.toList());
+		return nameList;
 	}
 }

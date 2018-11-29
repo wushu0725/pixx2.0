@@ -25,7 +25,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig4cloud.pigx.common.core.constant.PaginationConstant;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import com.pig4cloud.pigx.common.core.util.R;
-import com.pig4cloud.pigx.common.core.util.TenantUtils;
+import com.pig4cloud.pigx.common.core.util.TenantContextHolder;
 import com.pig4cloud.pigx.common.security.service.PigxUser;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.CacheManager;
@@ -171,7 +171,7 @@ public class PigxTokenEndpoint {
 	private boolean extractToken(Map<String, String> map, Object principal) {
 		if (principal instanceof PigxUser) {
 			PigxUser user = (PigxUser) principal;
-			if (!user.getTenantId().equals(TenantUtils.getTenantId())) {
+			if (!user.getTenantId().equals(TenantContextHolder.getTenantId())) {
 				return true;
 			}
 			map.put("user_id", user.getId() + "");

@@ -24,7 +24,7 @@ import com.alibaba.ttl.TransmittableThreadLocal;
  * @date 2018/10/4
  * 租户工具类
  */
-public class TenantUtils {
+public class TenantContextHolder {
 
 	private static final ThreadLocal<Integer> THREAD_LOCAL_TENANT = new TransmittableThreadLocal<>();
 
@@ -47,7 +47,7 @@ public class TenantUtils {
 		return THREAD_LOCAL_TENANT.get();
 	}
 
-	public static void clear(){
+	public static void clear() {
 		THREAD_LOCAL_TENANT.remove();
 	}
 }
