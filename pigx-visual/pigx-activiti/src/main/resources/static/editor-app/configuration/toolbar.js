@@ -165,11 +165,5 @@ KISBPM.TOOLBAR_CONFIG = {
     ],
     
     "secondaryItems" : [
-		{
-		    "type" : "button",
-		    "title" : "Close",
-		    "cssClass" : "editor-icon editor-icon-close",
-		    "action" : "KISBPM.TOOLBAR.ACTIONS.closeEditor"
-		}
     ]
 };

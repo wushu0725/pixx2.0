@@ -29,6 +29,7 @@ import com.pig4cloud.pigx.act.mapper.LeaveBillMapper;
 import com.pig4cloud.pigx.act.service.ActTaskService;
 import com.pig4cloud.pigx.common.core.constant.PaginationConstant;
 import com.pig4cloud.pigx.common.core.constant.enums.TaskStatusEnum;
+import com.pig4cloud.pigx.common.core.util.TenantContextHolder;
 import com.pig4cloud.pigx.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -71,18 +72,18 @@ public class ActTaskServiceImpl implements ActTaskService {
 
 	@Override
 	public IPage getTaskByName(Map<String, Object> params, String name) {
-		TaskQuery taskQuery = taskService.createTaskQuery()
-			.taskCandidateOrAssigned(name)
-			.orderByTaskCreateTime().asc();
-
 		int page = MapUtil.getInt(params, PaginationConstant.CURRENT);
 		int limit = MapUtil.getInt(params, PaginationConstant.SIZE);
+
+		TaskQuery taskQuery = taskService.createTaskQuery()
+			.taskCandidateOrAssigned(name)
+			.taskTenantId(String.valueOf(TenantContextHolder.getTenantId()));
 
 		IPage result = new Page(page, limit);
 		result.setTotal(taskQuery.count());
 
-		List<TaskDTO> taskDTOList = taskQuery.list().stream()
-			.map(task -> {
+		List<TaskDTO> taskDTOList = taskQuery.orderByTaskCreateTime().desc()
+			.listPage((page - 1) * limit, limit).stream().map(task -> {
 				TaskDTO dto = new TaskDTO();
 				dto.setTaskId(task.getId());
 				dto.setTaskName(task.getName());

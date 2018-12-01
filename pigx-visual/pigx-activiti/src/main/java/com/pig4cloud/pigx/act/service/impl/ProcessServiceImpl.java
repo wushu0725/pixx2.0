@@ -64,7 +64,9 @@ public class ProcessServiceImpl implements ProcessService {
 	 */
 	@Override
 	public IPage<ProcessDefDTO> getProcessByPage(Map<String, Object> params) {
-		ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().latestVersion();
+		ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery()
+			.processDefinitionTenantId(String.valueOf(TenantContextHolder.getTenantId())).latestVersion();
+
 		String category = MapUtil.getStr(params, "category");
 		if (StrUtil.isNotBlank(category)) {
 			query.processDefinitionCategory(category);

@@ -18,6 +18,8 @@ spring:
         service-id: pigx-config
   autoconfigure:
     exclude: org.springframework.cloud.gateway.config.GatewayClassPathWarningAutoConfiguration
+  main:
+    allow-bean-definition-overriding: true
 
 # 注册中心配置
 eureka:

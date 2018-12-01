@@ -110,6 +110,7 @@ public class ModelServiceImpl implements ModelService {
 	@Override
 	public IPage<Model> getModelPage(Map<String, Object> params) {
 		ModelQuery modelQuery = repositoryService.createModelQuery()
+			.modelTenantId(String.valueOf(TenantContextHolder.getTenantId()))
 			.latestVersion().orderByLastUpdateTime().desc();
 		String category = (String) params.get("category");
 		if (StrUtil.isNotBlank(category)) {
