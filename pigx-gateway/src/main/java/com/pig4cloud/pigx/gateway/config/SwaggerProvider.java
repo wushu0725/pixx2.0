@@ -27,7 +27,9 @@ import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Sywd
@@ -54,7 +56,8 @@ public class SwaggerProvider implements SwaggerResourcesProvider {
 				predicateDefinition.getArgs().get(NameUtils.GENERATED_NAME_PREFIX + "0")
 					.replace("/**", API_URI)))));
 
-		return resources;
+		return resources.stream().sorted(Comparator.comparing(SwaggerResource::getName))
+			.collect(Collectors.toList());
 	}
 
 	private SwaggerResource swaggerResource(String name, String location) {

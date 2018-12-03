@@ -1,18 +1,10 @@
 root = true
 
-# 对所有文件生效
-[*]
+[*.{adoc,bat,groovy,html,java,js,jsp,kt,kts,md,properties,py,rb,sh,sql,svg,txt,xml,xsd}]
 charset = utf-8
-indent_style = space
-indent_size = 2
-end_of_line = lf
-insert_final_newline = true
-trim_trailing_whitespace = true
 
-[*.{java,xml}]
+[*.{groovy,java,kt,kts,xml,xsd}]
 indent_style = tab
 indent_size = 4
-
-# 对后缀名为 md 的文件生效
-[*.md]
-trim_trailing_whitespace = false
+continuation_indent_size = 8
+end_of_line = lf

@@ -19,6 +19,7 @@ package com.pig4cloud.pigx.act;
 
 import com.pig4cloud.pigx.common.security.annotation.EnablePigxFeignClients;
 import com.pig4cloud.pigx.common.security.annotation.EnablePigxResourceServer;
+import com.pig4cloud.pigx.common.swagger.annotation.EnablePigxSwagger2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 
@@ -27,6 +28,7 @@ import org.springframework.cloud.client.SpringCloudApplication;
  * @date 2018/9/25
  * 工作流管理模块
  */
+@EnablePigxSwagger2
 @EnablePigxFeignClients
 @EnablePigxResourceServer
 @SpringCloudApplication

@@ -43,6 +43,11 @@
 			<artifactId>pigx-common-job</artifactId>
 			<version>1.8.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.pig4cloud</groupId>
+			<artifactId>pigx-common-swagger</artifactId>
+			<version>1.8.0</version>
+		</dependency>
 		<!--mybatis-->
 		<dependency>
 			<groupId>com.baomidou</groupId>
