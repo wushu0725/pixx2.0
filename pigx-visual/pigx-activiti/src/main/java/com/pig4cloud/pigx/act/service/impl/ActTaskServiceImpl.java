@@ -151,6 +151,7 @@ public class ActTaskServiceImpl implements ActTaskService {
 
 		Map<String, Object> variables = new HashMap<>(1);
 		variables.put("flag", leaveBillDto.getTaskFlag());
+		variables.put("days", leaveBillDto.getDays());
 
 		taskService.complete(taskId, variables);
 		ProcessInstance pi = runtimeService.createProcessInstanceQuery()

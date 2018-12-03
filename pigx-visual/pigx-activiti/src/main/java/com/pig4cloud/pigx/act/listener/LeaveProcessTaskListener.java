@@ -50,11 +50,11 @@ public class LeaveProcessTaskListener implements TaskListener {
 		R<List<SysUser>> result = userService.ancestorUsers(SecurityUtils.getUsername());
 
 		if (CollUtil.isEmpty(result.getData())) {
-			log.debug("用户 {} 不存在上级,任务单由当前用户审批", SecurityUtils.getUsername());
+			log.warn("用户 {} 不存在上级,任务单由当前用户审批", SecurityUtils.getUsername());
 			delegateTask.addCandidateUser(SecurityUtils.getUsername());
 		} else {
 			List<String> userList = result.getData().stream().map(SysUser::getUsername).collect(Collectors.toList());
-			log.debug("当前任务 {}，由 {}处理", delegateTask.getId(), userList);
+			log.warn("当前任务 {}，由 {}处理", delegateTask.getId(), userList);
 			delegateTask.addCandidateUsers(userList);
 		}
 
