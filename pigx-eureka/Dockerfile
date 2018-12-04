@@ -2,9 +2,9 @@ FROM anapsix/alpine-java:8_server-jre_unlimited
 
 MAINTAINER wangiegie@gmail.com
 
-RUN mkdir -p /pigx/bin/com.pig4cloud/pigx-eureka
+RUN mkdir -p /pigx-eureka
 
-WORKDIR /pigx/bin/com.pig4cloud/pigx-eureka
+WORKDIR /pigx-eureka
 
 EXPOSE 8761
 

@@ -2,9 +2,9 @@ FROM anapsix/alpine-java:8_server-jre_unlimited
 
 MAINTAINER wangiegie@gmail.com
 
-RUN mkdir -p /pigx/bin/com.pig4cloud/pigx-upms
+RUN mkdir -p /pigx-upms
 
-WORKDIR /pigx/bin/com.pig4cloud/pigx-upms
+WORKDIR /pigx-upms
 
 EXPOSE 4000
 

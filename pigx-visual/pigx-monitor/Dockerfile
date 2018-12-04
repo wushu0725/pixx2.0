@@ -2,9 +2,9 @@ FROM anapsix/alpine-java:8_server-jre_unlimited
 
 MAINTAINER wangiegie@gmail.com
 
-RUN mkdir -p /pigx/bin/com.pig4cloud/pigx-monitor
+RUN mkdir -p /pigx-monitor
 
-WORKDIR /pigx/bin/com.pig4cloud/pigx-monitor
+WORKDIR /pigx-monitor
 
 EXPOSE 5001
 

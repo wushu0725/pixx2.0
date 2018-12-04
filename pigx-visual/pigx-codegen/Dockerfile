@@ -2,9 +2,9 @@ FROM anapsix/alpine-java:8_server-jre_unlimited
 
 MAINTAINER wangiegie@gmail.com
 
-RUN mkdir -p /pigx/bin/com.pig4cloud/pigx-codegen
+RUN mkdir -p /pigx-codegen
 
-WORKDIR /pigx/bin/com.pig4cloud/pigx-codegen
+WORKDIR /pigx-codegen
 
 EXPOSE 5003
 
