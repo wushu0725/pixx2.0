@@ -111,11 +111,9 @@
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
-        })
-          .then(function() {
+        }).then(function() {
             return delObj(row.$pk.lowerAttrName)
-          })
-          .then(data => {
+          }).then(data => {
           _this.tableData.splice(index, 1)
           _this.$message({
             showClose: true,
@@ -123,8 +121,7 @@
             type: 'success'
           })
           this.getList(this.page)
-        })
-      .catch(function(err) { })
+        }).catch(function(err) { })
       },
       /**
        * @title 数据更新
