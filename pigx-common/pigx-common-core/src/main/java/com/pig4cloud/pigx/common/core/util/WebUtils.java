@@ -23,6 +23,7 @@ import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.json.JSONUtil;
 import com.pig4cloud.pigx.common.core.exception.CheckedException;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpHeaders;
@@ -47,6 +48,7 @@ import java.io.PrintWriter;
  * @author L.cm
  */
 @Slf4j
+@UtilityClass
 public class WebUtils extends org.springframework.web.util.WebUtils {
 	private static final String BASIC_ = "Basic ";
 	public static final String UNKNOWN = "unknown";
@@ -58,7 +60,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 	 * @param handlerMethod HandlerMethod
 	 * @return 是否ajax请求
 	 */
-	public static boolean isBody(HandlerMethod handlerMethod) {
+	public boolean isBody(HandlerMethod handlerMethod) {
 		ResponseBody responseBody = ClassUtils.getAnnotation(handlerMethod, ResponseBody.class);
 		return responseBody != null;
 	}
@@ -69,7 +71,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 	 * @param name cookie name
 	 * @return cookie value
 	 */
-	public static String getCookieVal(String name) {
+	public String getCookieVal(String name) {
 		HttpServletRequest request = WebUtils.getRequest();
 		Assert.notNull(request, "request from RequestContextHolder is null");
 		return getCookieVal(request, name);
@@ -82,7 +84,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 	 * @param name    cookie name
 	 * @return cookie value
 	 */
-	public static String getCookieVal(HttpServletRequest request, String name) {
+	public String getCookieVal(HttpServletRequest request, String name) {
 		Cookie cookie = getCookie(request, name);
 		return cookie != null ? cookie.getValue() : null;
 	}
@@ -93,7 +95,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 	 * @param response HttpServletResponse
 	 * @param key      cookie key
 	 */
-	public static void removeCookie(HttpServletResponse response, String key) {
+	public void removeCookie(HttpServletResponse response, String key) {
 		setCookie(response, key, null, 0);
 	}
 
@@ -105,7 +107,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 	 * @param value           cookie value
 	 * @param maxAgeInSeconds maxage
 	 */
-	public static void setCookie(HttpServletResponse response, String name, String value, int maxAgeInSeconds) {
+	public void setCookie(HttpServletResponse response, String name, String value, int maxAgeInSeconds) {
 		Cookie cookie = new Cookie(name, value);
 		cookie.setPath("/");
 		cookie.setMaxAge(maxAgeInSeconds);
@@ -118,7 +120,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 	 *
 	 * @return {HttpServletRequest}
 	 */
-	public static HttpServletRequest getRequest() {
+	public HttpServletRequest getRequest() {
 		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 	}
 
@@ -127,7 +129,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 	 *
 	 * @return {HttpServletResponse}
 	 */
-	public static HttpServletResponse getResponse() {
+	public HttpServletResponse getResponse() {
 		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
 	}
 
@@ -137,7 +139,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 	 * @param response HttpServletResponse
 	 * @param result   结果对象
 	 */
-	public static void renderJson(HttpServletResponse response, Object result) {
+	public void renderJson(HttpServletResponse response, Object result) {
 		renderJson(response, result, MediaType.APPLICATION_JSON_UTF8_VALUE);
 	}
 
@@ -148,7 +150,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 	 * @param result      结果对象
 	 * @param contentType contentType
 	 */
-	public static void renderJson(HttpServletResponse response, Object result, String contentType) {
+	public void renderJson(HttpServletResponse response, Object result, String contentType) {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType(contentType);
 		try (PrintWriter out = response.getWriter()) {
@@ -163,7 +165,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 	 *
 	 * @return {String}
 	 */
-	public static String getIP() {
+	public String getIP() {
 		return getIP(WebUtils.getRequest());
 	}
 
@@ -173,7 +175,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 	 * @param request HttpServletRequest
 	 * @return {String}
 	 */
-	public static String getIP(HttpServletRequest request) {
+	public String getIP(HttpServletRequest request) {
 		Assert.notNull(request, "HttpServletRequest is null");
 		String ip = request.getHeader("X-Requested-For");
 		if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
@@ -202,7 +204,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 	 *
 	 * @return
 	 */
-	public static String[] getClientId(ServerHttpRequest request) throws Exception {
+	public String[] getClientId(ServerHttpRequest request) throws Exception {
 		String header = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
 
 		if (header == null || !header.startsWith(BASIC_)) {
@@ -214,7 +216,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 			decoded = Base64.decode(base64Token);
 		} catch (IllegalArgumentException e) {
 			throw new CheckedException(
-				"Failed to decode basic authentication token");
+					"Failed to decode basic authentication token");
 		}
 
 		String token = new String(decoded, CharsetUtil.UTF_8);

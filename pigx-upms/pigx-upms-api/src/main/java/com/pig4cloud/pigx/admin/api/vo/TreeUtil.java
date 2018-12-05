@@ -23,6 +23,7 @@ package com.pig4cloud.pigx.admin.api.vo;
 import com.pig4cloud.pigx.admin.api.dto.MenuTree;
 import com.pig4cloud.pigx.admin.api.dto.TreeNode;
 import com.pig4cloud.pigx.admin.api.entity.SysMenu;
+import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ import java.util.List;
  * @author lengleng
  * @date 2017年11月9日23:34:11
  */
+@UtilityClass
 public class TreeUtil {
 	/**
 	 * 两层循环实现建树
@@ -38,7 +40,7 @@ public class TreeUtil {
 	 * @param treeNodes 传入的树节点列表
 	 * @return
 	 */
-	public static <T extends TreeNode> List<T> bulid(List<T> treeNodes, Object root) {
+	public <T extends TreeNode> List<T> bulid(List<T> treeNodes, Object root) {
 
 		List<T> trees = new ArrayList<>();
 
@@ -66,7 +68,7 @@ public class TreeUtil {
 	 * @param treeNodes
 	 * @return
 	 */
-	public static <T extends TreeNode> List<T> buildByRecursive(List<T> treeNodes, Object root) {
+	public <T extends TreeNode> List<T> buildByRecursive(List<T> treeNodes, Object root) {
 		List<T> trees = new ArrayList<T>();
 		for (T treeNode : treeNodes) {
 			if (root.equals(treeNode.getParentId())) {
@@ -82,7 +84,7 @@ public class TreeUtil {
 	 * @param treeNodes
 	 * @return
 	 */
-	public static <T extends TreeNode> T findChildren(T treeNode, List<T> treeNodes) {
+	public <T extends TreeNode> T findChildren(T treeNode, List<T> treeNodes) {
 		for (T it : treeNodes) {
 			if (treeNode.getId() == it.getParentId()) {
 				if (treeNode.getChildren() == null) {
@@ -101,7 +103,7 @@ public class TreeUtil {
 	 * @param root
 	 * @return
 	 */
-	public static List<MenuTree> bulidTree(List<SysMenu> menus, int root) {
+	public List<MenuTree> bulidTree(List<SysMenu> menus, int root) {
 		List<MenuTree> trees = new ArrayList<>();
 		MenuTree node;
 		for (SysMenu menu : menus) {

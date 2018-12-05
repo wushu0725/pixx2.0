@@ -19,6 +19,7 @@ package com.pig4cloud.pigx.common.security.util;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.CharsetUtil;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 
@@ -31,6 +32,7 @@ import java.io.IOException;
  * 认证授权相关工具类
  */
 @Slf4j
+@UtilityClass
 public class AuthUtils {
 	private static final String BASIC_ = "Basic ";
 
@@ -41,8 +43,8 @@ public class AuthUtils {
 	 * @throws RuntimeException if the Basic header is not present or is not valid
 	 *                          Base64
 	 */
-	public static String[] extractAndDecodeHeader(String header)
-		throws IOException {
+	public String[] extractAndDecodeHeader(String header)
+			throws IOException {
 
 		byte[] base64Token = header.substring(6).getBytes("UTF-8");
 		byte[] decoded;
@@ -50,7 +52,7 @@ public class AuthUtils {
 			decoded = Base64.decode(base64Token);
 		} catch (IllegalArgumentException e) {
 			throw new RuntimeException(
-				"Failed to decode basic authentication token");
+					"Failed to decode basic authentication token");
 		}
 
 		String token = new String(decoded, CharsetUtil.UTF_8);
@@ -70,8 +72,8 @@ public class AuthUtils {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String[] extractAndDecodeHeader(HttpServletRequest request)
-		throws IOException {
+	public String[] extractAndDecodeHeader(HttpServletRequest request)
+			throws IOException {
 		String header = request.getHeader(HttpHeaders.AUTHORIZATION);
 
 		if (header == null || !header.startsWith(BASIC_)) {
