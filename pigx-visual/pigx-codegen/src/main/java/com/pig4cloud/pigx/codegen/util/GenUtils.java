@@ -54,16 +54,16 @@ import java.util.zip.ZipOutputStream;
 @UtilityClass
 public class GenUtils {
 
-	private static final String ENTITY_JAVA_VM = "Entity.java.vm";
-	private static final String MAPPER_JAVA_VM = "Mapper.java.vm";
-	private static final String SERVICE_JAVA_VM = "Service.java.vm";
-	private static final String SERVICE_IMPL_JAVA_VM = "ServiceImpl.java.vm";
-	private static final String CONTROLLER_JAVA_VM = "Controller.java.vm";
-	private static final String MAPPER_XML_VM = "Mapper.xml.vm";
-	private static final String MENU_SQL_VM = "menu.sql.vm";
-	private static final String INDEX_VUE_VM = "index.vue.vm";
-	private static final String API_JS_VM = "api.js.vm";
-	private static final String CRUD_JS_VM = "crud.js.vm";
+	private final String ENTITY_JAVA_VM = "Entity.java.vm";
+	private final String MAPPER_JAVA_VM = "Mapper.java.vm";
+	private final String SERVICE_JAVA_VM = "Service.java.vm";
+	private final String SERVICE_IMPL_JAVA_VM = "ServiceImpl.java.vm";
+	private final String CONTROLLER_JAVA_VM = "Controller.java.vm";
+	private final String MAPPER_XML_VM = "Mapper.xml.vm";
+	private final String MENU_SQL_VM = "menu.sql.vm";
+	private final String INDEX_VUE_VM = "index.vue.vm";
+	private final String API_JS_VM = "api.js.vm";
+	private final String CRUD_JS_VM = "crud.js.vm";
 
 	private List<String> getTemplates() {
 		List<String> templates = new ArrayList<>();
