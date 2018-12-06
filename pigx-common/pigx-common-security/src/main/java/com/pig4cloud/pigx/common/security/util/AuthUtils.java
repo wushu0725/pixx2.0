@@ -34,7 +34,7 @@ import java.io.IOException;
 @Slf4j
 @UtilityClass
 public class AuthUtils {
-	private static final String BASIC_ = "Basic ";
+	private final String BASIC_ = "Basic ";
 
 	/**
 	 * 从header 请求中的clientId/clientsecect

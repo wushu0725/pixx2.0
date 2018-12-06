@@ -39,7 +39,7 @@ import java.lang.reflect.Method;
  */
 @UtilityClass
 public class ClassUtils extends org.springframework.util.ClassUtils {
-	private static final ParameterNameDiscoverer PARAMETERNAMEDISCOVERER = new DefaultParameterNameDiscoverer();
+	private final ParameterNameDiscoverer PARAMETERNAMEDISCOVERER = new DefaultParameterNameDiscoverer();
 
 	/**
 	 * 获取方法参数信息

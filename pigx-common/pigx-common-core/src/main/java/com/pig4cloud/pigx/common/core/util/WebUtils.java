@@ -50,8 +50,8 @@ import java.io.PrintWriter;
 @Slf4j
 @UtilityClass
 public class WebUtils extends org.springframework.web.util.WebUtils {
-	private static final String BASIC_ = "Basic ";
-	public static final String UNKNOWN = "unknown";
+	private  final String BASIC_ = "Basic ";
+	private  final String UNKNOWN = "unknown";
 
 	/**
 	 * 判断是否ajax请求
