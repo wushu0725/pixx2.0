@@ -23,6 +23,7 @@ package com.pig4cloud.pigx.common.security.util;
 import cn.hutool.core.util.StrUtil;
 import com.pig4cloud.pigx.common.core.constant.SecurityConstants;
 import com.pig4cloud.pigx.common.security.service.PigxUser;
+import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,11 +38,12 @@ import java.util.List;
  *
  * @author L.cm
  */
+@UtilityClass
 public class SecurityUtils {
 	/**
 	 * 获取Authentication
 	 */
-	public static Authentication getAuthentication() {
+	public Authentication getAuthentication() {
 		return SecurityContextHolder.getContext().getAuthentication();
 	}
 
@@ -51,13 +53,10 @@ public class SecurityUtils {
 	 * @param authentication
 	 * @return PigxUser
 	 * <p>
-	 * 获取当前用户的全部信息
-	 * 每次check—token 后根据用户名调用 remoteService 查询用户信息，效率比较低。
-	 * 建议长链路调用不要使用，重写configure() 例如  codegen 模块ResourceServerConfigurer
-	 * 1.前提使用继承BaseResourceServerConfigurerAdapter
-	 * 2. 使用默认 configure（）
+	 * 获取当前用户的全部信息 EnablePigxResourceServer true
+	 * 获取当前用户的用户名 EnablePigxResourceServer false
 	 */
-	public static PigxUser getUser(Authentication authentication) {
+	public PigxUser getUser(Authentication authentication) {
 		Object principal = authentication.getPrincipal();
 		if (principal instanceof PigxUser) {
 			return (PigxUser) principal;
@@ -70,7 +69,7 @@ public class SecurityUtils {
 	 *
 	 * @return String
 	 */
-	public static String getUsername() {
+	public String getUsername() {
 		Object principal = getAuthentication().getPrincipal();
 		if (principal instanceof String) {
 			return principal.toString();
@@ -79,7 +78,7 @@ public class SecurityUtils {
 	}
 
 
-	public static String getClientId() {
+	public String getClientId() {
 		Authentication authentication = getAuthentication();
 		if (authentication instanceof OAuth2Authentication) {
 			OAuth2Authentication auth2Authentication = (OAuth2Authentication) authentication;
@@ -91,7 +90,7 @@ public class SecurityUtils {
 	/**
 	 * 获取用户
 	 */
-	public static PigxUser getUser() {
+	public PigxUser getUser() {
 		Authentication authentication = getAuthentication();
 		if (authentication == null) {
 			return null;
@@ -104,17 +103,17 @@ public class SecurityUtils {
 	 *
 	 * @return 角色集合
 	 */
-	public static List<Integer> getRoles() {
+	public List<Integer> getRoles() {
 		Authentication authentication = getAuthentication();
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
 		List<Integer> roleIds = new ArrayList<>();
 		authorities.stream()
-			.filter(granted -> StrUtil.startWith(granted.getAuthority(), SecurityConstants.ROLE))
-			.forEach(granted -> {
-				String id = StrUtil.removePrefix(granted.getAuthority(), SecurityConstants.ROLE);
-				roleIds.add(Integer.parseInt(id));
-			});
+				.filter(granted -> StrUtil.startWith(granted.getAuthority(), SecurityConstants.ROLE))
+				.forEach(granted -> {
+					String id = StrUtil.removePrefix(granted.getAuthority(), SecurityConstants.ROLE);
+					roleIds.add(Integer.parseInt(id));
+				});
 		return roleIds;
 	}
 

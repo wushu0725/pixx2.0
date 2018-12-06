@@ -22,13 +22,15 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.ReferenceCountUtil;
+import lombok.experimental.UtilityClass;
 
 /**
- *@author LCN on 2017/7/6.
+ * @author LCN on 2017/7/6.
  */
+@UtilityClass
 public class SocketUtils {
 
-	public static String getJson(Object msg) {
+	public String getJson(Object msg) {
 		String json;
 		try {
 			ByteBuf buf = (ByteBuf) msg;
@@ -42,12 +44,12 @@ public class SocketUtils {
 
 	}
 
-	public static void sendMsg(ChannelHandlerContext ctx, String msg) {
+	public void sendMsg(ChannelHandlerContext ctx, String msg) {
 		ctx.writeAndFlush(Unpooled.buffer().writeBytes(msg.getBytes()));
 	}
 
 
-	public static void sendMsg(Channel ctx, String msg) {
+	public void sendMsg(Channel ctx, String msg) {
 		ctx.writeAndFlush(Unpooled.buffer().writeBytes(msg.getBytes()));
 	}
 }

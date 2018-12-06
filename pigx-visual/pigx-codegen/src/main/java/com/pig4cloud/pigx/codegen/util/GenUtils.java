@@ -26,6 +26,7 @@ import com.pig4cloud.pigx.codegen.entity.GenConfig;
 import com.pig4cloud.pigx.codegen.entity.TableEntity;
 import com.pig4cloud.pigx.common.core.constant.CommonConstant;
 import com.pig4cloud.pigx.common.core.exception.CheckedException;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
@@ -50,6 +51,7 @@ import java.util.zip.ZipOutputStream;
  * @date 2018-07-30
  */
 @Slf4j
+@UtilityClass
 public class GenUtils {
 
 	private static final String ENTITY_JAVA_VM = "Entity.java.vm";
@@ -63,7 +65,7 @@ public class GenUtils {
 	private static final String API_JS_VM = "api.js.vm";
 	private static final String CRUD_JS_VM = "crud.js.vm";
 
-	private static List<String> getTemplates() {
+	private List<String> getTemplates() {
 		List<String> templates = new ArrayList<>();
 		templates.add("template/Entity.java.vm");
 		templates.add("template/Mapper.java.vm");
@@ -82,8 +84,8 @@ public class GenUtils {
 	/**
 	 * 生成代码
 	 */
-	public static void generatorCode(GenConfig genConfig, Map<String, String> table,
-									 List<Map<String, String>> columns, ZipOutputStream zip) {
+	public void generatorCode(GenConfig genConfig, Map<String, String> table,
+							  List<Map<String, String>> columns, ZipOutputStream zip) {
 		//配置信息
 		Configuration config = getConfig();
 		boolean hasBigDecimal = false;
@@ -196,8 +198,8 @@ public class GenUtils {
 			try {
 				//添加到zip
 				zip.putNextEntry(new ZipEntry(Objects
-					.requireNonNull(getFileName(template, tableEntity.getCaseClassName()
-						, map.get("package").toString(), map.get("moduleName").toString()))));
+						.requireNonNull(getFileName(template, tableEntity.getCaseClassName()
+								, map.get("package").toString(), map.get("moduleName").toString()))));
 				IoUtil.write(zip, CharsetUtil.UTF_8, false, sw.toString());
 				IoUtil.close(sw);
 				zip.closeEntry();
@@ -211,14 +213,14 @@ public class GenUtils {
 	/**
 	 * 列名转换成Java属性名
 	 */
-	private static String columnToJava(String columnName) {
+	private String columnToJava(String columnName) {
 		return WordUtils.capitalizeFully(columnName, new char[]{'_'}).replace("_", "");
 	}
 
 	/**
 	 * 表名转换成Java类名
 	 */
-	private static String tableToJava(String tableName, String tablePrefix) {
+	private String tableToJava(String tableName, String tablePrefix) {
 		if (StringUtils.isNotBlank(tablePrefix)) {
 			tableName = tableName.replace(tablePrefix, "");
 		}
@@ -228,7 +230,7 @@ public class GenUtils {
 	/**
 	 * 获取配置信息
 	 */
-	private static Configuration getConfig() {
+	private Configuration getConfig() {
 		try {
 			return new PropertiesConfiguration("generator.properties");
 		} catch (ConfigurationException e) {
@@ -239,7 +241,7 @@ public class GenUtils {
 	/**
 	 * 获取文件名
 	 */
-	private static String getFileName(String template, String className, String packageName, String moduleName) {
+	private String getFileName(String template, String className, String packageName, String moduleName) {
 		String packagePath = CommonConstant.BACK_END_PROJECT + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator;
 		if (StringUtils.isNotBlank(packageName)) {
 			packagePath += packageName.replace(".", File.separator) + File.separator + moduleName + File.separator;
@@ -275,7 +277,7 @@ public class GenUtils {
 
 		if (template.contains(INDEX_VUE_VM)) {
 			return CommonConstant.FRONT_END_PROJECT + File.separator + "src" + File.separator + "views" +
-				File.separator + moduleName + File.separator + className.toLowerCase() + File.separator + "index.vue";
+					File.separator + moduleName + File.separator + className.toLowerCase() + File.separator + "index.vue";
 		}
 
 		if (template.contains(API_JS_VM)) {
@@ -284,7 +286,7 @@ public class GenUtils {
 
 		if (template.contains(CRUD_JS_VM)) {
 			return CommonConstant.FRONT_END_PROJECT + File.separator + "src" + File.separator + "const" +
-				File.separator + "crud" + File.separator + className.toLowerCase() + ".js";
+					File.separator + "crud" + File.separator + className.toLowerCase() + ".js";
 		}
 
 		return null;
