@@ -46,8 +46,6 @@ services:
     build:
       context: ./
       dockerfile: ./pigx-gateway/Dockerfile
-    depends_on:
-      - pigx-config
     restart: always
     container_name: pigx-gateway
     image: pigx-gateway
@@ -58,8 +56,6 @@ services:
     build:
       context: ./
       dockerfile: ./pigx-auth/Dockerfile
-    depends_on:
-      - pigx-config
     restart: always
     container_name: pigx-auth
     image: pigx-auth
@@ -68,8 +64,6 @@ services:
     build:
       context: ./
       dockerfile: ./pigx-upms/pigx-upms-biz/Dockerfile
-    depends_on:
-      - pigx-config
     restart: always
     container_name: pigx-upms
     image: pigx-upms
@@ -78,8 +72,6 @@ services:
     build:
       context: ./
       dockerfile: ./pigx-visual/pigx-monitor/Dockerfile
-    depends_on:
-      - pigx-config
     restart: always
     image: pigx-monitor
     container_name: pigx-monitor
@@ -90,8 +82,6 @@ services:
     build:
       context: ./
       dockerfile: ./pigx-visual/pigx-daemon/Dockerfile
-    depends_on:
-      - pigx-config
     restart: always
     image: pigx-daemon
     container_name: pigx-daemon
@@ -102,8 +92,6 @@ services:
     build:
       context: ./
       dockerfile: ./pigx-visual/pigx-codegen/Dockerfile
-    depends_on:
-      - pigx-config
     restart: always
     image: pigx-codegen
     container_name: pigx-codegen
@@ -113,8 +101,6 @@ services:
     build:
       context: ./
       dockerfile: ./pigx-visual/pigx-activiti/Dockerfile
-    depends_on:
-      - pigx-config
     restart: always
     image: pigx-activiti
     container_name: pigx-activiti
@@ -123,8 +109,6 @@ services:
     build:
       context: ./
       dockerfile: ./pigx-visual/pigx-tx-manager/Dockerfile
-    depends_on:
-      - pigx-config
     restart: always
     image: pigx-tx-manager
     container_name: pigx-tx-manager
