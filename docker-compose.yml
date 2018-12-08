@@ -14,14 +14,10 @@ services:
 
   pigx-zookeeper:
     image: zookeeper:3.4.13
-    ports:
-      - 2181:2181
     restart: always
 
   pigx-redis:
     image: redis:4.0.10
-    ports:
-      - 6379:6379
     restart: always
 
   pigx-eureka:
