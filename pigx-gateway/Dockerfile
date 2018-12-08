@@ -2,6 +2,8 @@ FROM anapsix/alpine-java:8_server-jre_unlimited
 
 MAINTAINER wangiegie@gmail.com
 
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
 RUN mkdir -p /pigx-gateway
 
 WORKDIR /pigx-gateway
