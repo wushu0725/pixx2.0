@@ -1,5 +1,17 @@
 version: '2'
 services:
+  pigx-mysql:
+    build:
+      context: ./
+      dockerfile: ./doc/db/Dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    restart: always
+    container_name: pigx-mysql
+    image: pigx-mysql
+    ports:
+      - 3306:3306
+
   pigx-zookeeper:
     image: zookeeper:3.4.13
     ports:
