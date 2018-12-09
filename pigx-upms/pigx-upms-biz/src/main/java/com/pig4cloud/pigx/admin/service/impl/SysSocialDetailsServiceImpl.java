@@ -30,7 +30,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
@@ -44,7 +43,6 @@ import java.util.Map;
 public class SysSocialDetailsServiceImpl extends ServiceImpl<SysSocialDetailsMapper, SysSocialDetails> implements SysSocialDetailsService {
 	private final Map<String, LoginHandler> loginHandlerMap;
 	private final CacheManager cacheManager;
-	private final RestTemplate restTemplate;
 	private final SysUserMapper sysUserMapper;
 
 	/**
