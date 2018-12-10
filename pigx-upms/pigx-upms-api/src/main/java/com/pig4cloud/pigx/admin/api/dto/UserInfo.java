@@ -36,7 +36,6 @@ import java.io.Serializable;
  * commit('SET_PERMISSIONS', data)
  */
 @Data
-@ToString
 public class UserInfo implements Serializable {
 	/**
 	 * 用户基本信息

@@ -29,15 +29,15 @@ public class ConfigReader {
 	/**
 	 * 事务默认数据的位置，有最大时间
 	 */
-	private final String key_prefix = "tx:manager:default:";
+	private static final String KEY_PREFIX = "tx:manager:default:";
 	/**
 	 * 负载均衡模块存储信息
 	 */
-	private final String key_prefix_loadbalance = "tx:manager:loadbalance:";
+	private static final String KEY_PREFIX_LOADBALANCE = "tx:manager:loadbalance:";
 	/**
 	 * 补偿事务永久存储数据
 	 */
-	private final String key_prefix_compensate = "tx:manager:compensate:";
+	private static final String TX_MANAGER_COMPENSATE = "tx:manager:compensate:";
 	@Value("${tm.socket.port}")
 	private int socketPort;
 	@Value("${tm.socket.maxconnection}")
@@ -58,7 +58,7 @@ public class ConfigReader {
 	private int compensateMaxWaitTime;
 
 	public String getKeyPrefixLoadbalance() {
-		return key_prefix_loadbalance;
+		return KEY_PREFIX_LOADBALANCE;
 	}
 
 	public String getCompensateNotifyUrl() {
@@ -66,11 +66,11 @@ public class ConfigReader {
 	}
 
 	public String getKeyPrefix() {
-		return key_prefix;
+		return KEY_PREFIX;
 	}
 
 	public String getKeyPrefixCompensate() {
-		return key_prefix_compensate;
+		return TX_MANAGER_COMPENSATE;
 	}
 
 	public int getSocketPort() {

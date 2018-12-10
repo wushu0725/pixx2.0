@@ -28,7 +28,7 @@
 	<name>${project.artifactId}</name>
 	<packaging>pom</packaging>
 	<organization>
-		<name>Pig4Cloud</name>
+		<name>pig4cloud</name>
 		<url>https://www.pig4cloud.com</url>
 	</organization>
 	<developers>
@@ -49,7 +49,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<spring-boot-admin.version>2.0.4</spring-boot-admin.version>
-		<hutool.version>4.2.1</hutool.version>
+		<hutool.version>4.3.0</hutool.version>
 		<mybatis-plus.version>3.0.6</mybatis-plus.version>
 		<kaptcha.version>0.0.9</kaptcha.version>
 		<swagger.version>2.9.2</swagger.version>
