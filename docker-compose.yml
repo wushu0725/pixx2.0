@@ -81,8 +81,6 @@ services:
     restart: always
     image: pigx-daemon
     container_name: pigx-daemon
-    ports:
-      - 5002:5002
 
   pigx-codegen:
     build:
@@ -91,7 +89,6 @@ services:
     restart: always
     image: pigx-codegen
     container_name: pigx-codegen
-
 
   pigx-activiti:
     build:

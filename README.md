@@ -1,5 +1,5 @@
 ## pigx 2.0
-[✨pigx 2.0 部署文档](doc/md/deploy.md)  
+[pigx 2.0 部署文档](doc/md/deploy.md)  
 [pigx 2.0 新特性说明  ](https://www.bilibili.com/video/av37786337)   
 [pigx 2.0 从检出到启动](https://www.bilibili.com/video/av37695530)  
 [pigx pro新建微服务模块（一）](https://www.bilibili.com/video/av37737139)  
