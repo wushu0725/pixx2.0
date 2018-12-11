@@ -11,9 +11,8 @@
  Target Server Version : 50723
  File Encoding         : utf-8
 
- Date: 12/10/2018 21:57:09 PM
+ Date: 12/11/2018 21:39:50 PM
 */
-USE pigxx_ac;
 
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -77,7 +76,7 @@ CREATE TABLE `ACT_GE_PROPERTY` (
 --  Records of `ACT_GE_PROPERTY`
 -- ----------------------------
 BEGIN;
-INSERT INTO `ACT_GE_PROPERTY` VALUES ('next.dbid', '27501', '12'), ('schema.history', 'create(5.22.0.0)', '1'), ('schema.version', '5.22.0.0', '1');
+INSERT INTO `ACT_GE_PROPERTY` VALUES ('next.dbid', '30001', '13'), ('schema.history', 'create(5.22.0.0)', '1'), ('schema.version', '5.22.0.0', '1');
 COMMIT;
 
 -- ----------------------------
@@ -110,7 +109,7 @@ CREATE TABLE `ACT_HI_ACTINST` (
 --  Records of `ACT_HI_ACTINST`
 -- ----------------------------
 BEGIN;
-INSERT INTO `ACT_HI_ACTINST` VALUES ('25006', 'LeaveBill:1:25004', '25005', '25005', 'start', null, null, '开始', 'startEvent', null, '2018-12-03 23:52:38.725', '2018-12-03 23:52:38.746', '21', '1'), ('25007', 'LeaveBill:1:25004', '25005', '25005', 'user', '25008', null, '用户提交', 'userTask', null, '2018-12-03 23:52:38.748', '2018-12-03 23:53:40.532', '61784', '1'), ('25014', 'LeaveBill:1:25004', '25005', '25005', 'pm', '25015', null, '组长审批', 'userTask', null, '2018-12-03 23:53:40.532', '2018-12-03 23:54:09.373', '28841', '1'), ('25018', 'LeaveBill:1:25004', '25005', '25005', 'sid-7D3BA0CC-0E14-401A-997B-E5B57798D600', null, null, null, 'exclusiveGateway', null, '2018-12-03 23:54:09.373', '2018-12-03 23:54:09.384', '11', '1'), ('25019', 'LeaveBill:1:25004', '25005', '25005', 'sid-A13A9AA8-CC8F-4B33-8166-EF7757F6ABDB', '25020', null, '人力报备', 'userTask', null, '2018-12-03 23:54:09.384', null, null, '1'), ('25023', 'LeaveBill:1:25004', '25022', '25022', 'start', null, null, '开始', 'startEvent', null, '2018-12-03 23:57:55.883', '2018-12-03 23:57:55.885', '2', '1'), ('25024', 'LeaveBill:1:25004', '25022', '25022', 'user', '25025', null, '用户提交', 'userTask', null, '2018-12-03 23:57:55.885', '2018-12-03 23:58:06.820', '10935', '1'), ('25031', 'LeaveBill:1:25004', '25022', '25022', 'pm', '25032', null, '组长审批', 'userTask', null, '2018-12-03 23:58:06.820', '2018-12-03 23:58:14.514', '7694', '1'), ('25035', 'LeaveBill:1:25004', '25022', '25022', 'sid-7D3BA0CC-0E14-401A-997B-E5B57798D600', null, null, null, 'exclusiveGateway', null, '2018-12-03 23:58:14.514', '2018-12-03 23:58:14.515', '1', '1'), ('25036', 'LeaveBill:1:25004', '25022', '25022', 'sid-D191DB7D-10B8-4AE7-8284-E0931287237C', '25037', null, '经理审批', 'userTask', null, '2018-12-03 23:58:14.515', null, null, '1');
+INSERT INTO `ACT_HI_ACTINST` VALUES ('25006', 'LeaveBill:1:25004', '25005', '25005', 'start', null, null, '开始', 'startEvent', null, '2018-12-03 23:52:38.725', '2018-12-03 23:52:38.746', '21', '1'), ('25007', 'LeaveBill:1:25004', '25005', '25005', 'user', '25008', null, '用户提交', 'userTask', null, '2018-12-03 23:52:38.748', '2018-12-03 23:53:40.532', '61784', '1'), ('25014', 'LeaveBill:1:25004', '25005', '25005', 'pm', '25015', null, '组长审批', 'userTask', null, '2018-12-03 23:53:40.532', '2018-12-03 23:54:09.373', '28841', '1'), ('25018', 'LeaveBill:1:25004', '25005', '25005', 'sid-7D3BA0CC-0E14-401A-997B-E5B57798D600', null, null, null, 'exclusiveGateway', null, '2018-12-03 23:54:09.373', '2018-12-03 23:54:09.384', '11', '1'), ('25019', 'LeaveBill:1:25004', '25005', '25005', 'sid-A13A9AA8-CC8F-4B33-8166-EF7757F6ABDB', '25020', null, '人力报备', 'userTask', null, '2018-12-03 23:54:09.384', null, null, '1'), ('25023', 'LeaveBill:1:25004', '25022', '25022', 'start', null, null, '开始', 'startEvent', null, '2018-12-03 23:57:55.883', '2018-12-03 23:57:55.885', '2', '1'), ('25024', 'LeaveBill:1:25004', '25022', '25022', 'user', '25025', null, '用户提交', 'userTask', null, '2018-12-03 23:57:55.885', '2018-12-03 23:58:06.820', '10935', '1'), ('25031', 'LeaveBill:1:25004', '25022', '25022', 'pm', '25032', null, '组长审批', 'userTask', null, '2018-12-03 23:58:06.820', '2018-12-03 23:58:14.514', '7694', '1'), ('25035', 'LeaveBill:1:25004', '25022', '25022', 'sid-7D3BA0CC-0E14-401A-997B-E5B57798D600', null, null, null, 'exclusiveGateway', null, '2018-12-03 23:58:14.514', '2018-12-03 23:58:14.515', '1', '1'), ('25036', 'LeaveBill:1:25004', '25022', '25022', 'sid-D191DB7D-10B8-4AE7-8284-E0931287237C', '25037', null, '经理审批', 'userTask', null, '2018-12-03 23:58:14.515', null, null, '1'), ('27502', 'LeaveBill:1:25004', '27501', '27501', 'start', null, null, '开始', 'startEvent', null, '2018-12-11 13:44:16.165', '2018-12-11 13:44:16.228', '63', '1'), ('27503', 'LeaveBill:1:25004', '27501', '27501', 'user', '27504', null, '用户提交', 'userTask', null, '2018-12-11 13:44:16.230', '2018-12-11 13:45:15.552', '59322', '1'), ('27510', 'LeaveBill:1:25004', '27501', '27501', 'pm', '27511', null, '组长审批', 'userTask', null, '2018-12-11 13:45:15.552', '2018-12-11 13:45:25.721', '10169', '1'), ('27514', 'LeaveBill:1:25004', '27501', '27501', 'sid-7D3BA0CC-0E14-401A-997B-E5B57798D600', null, null, null, 'exclusiveGateway', null, '2018-12-11 13:45:25.721', '2018-12-11 13:45:25.730', '9', '1'), ('27515', 'LeaveBill:1:25004', '27501', '27501', 'sid-A13A9AA8-CC8F-4B33-8166-EF7757F6ABDB', '27516', null, '人力报备', 'userTask', null, '2018-12-11 13:45:25.730', '2018-12-11 13:46:08.285', '42555', '1'), ('27519', 'LeaveBill:1:25004', '27501', '27501', 'sid-BA76EC1F-B75E-4F28-B898-FE0666B681BF', null, null, null, 'endEvent', null, '2018-12-11 13:46:08.285', '2018-12-11 13:46:08.285', '0', '1');
 COMMIT;
 
 -- ----------------------------
@@ -153,7 +152,7 @@ CREATE TABLE `ACT_HI_COMMENT` (
 --  Records of `ACT_HI_COMMENT`
 -- ----------------------------
 BEGIN;
-INSERT INTO `ACT_HI_COMMENT` VALUES ('25011', 'comment', '2018-12-03 23:53:40.481', 'admin', '25008', '25005', 'AddComment', '组长同意', 0xe7bb84e995bfe5908ce6848f), ('25017', 'comment', '2018-12-03 23:54:09.341', 'admin', '25015', '25005', 'AddComment', '组长审批通过', 0xe7bb84e995bfe5aea1e689b9e9809ae8bf87), ('25028', 'comment', '2018-12-03 23:58:06.803', 'admin', '25025', '25022', 'AddComment', '审批', 0xe5aea1e689b9), ('25034', 'comment', '2018-12-03 23:58:14.496', 'admin', '25032', '25022', 'AddComment', '组长同意', 0xe7bb84e995bfe5908ce6848f);
+INSERT INTO `ACT_HI_COMMENT` VALUES ('25011', 'comment', '2018-12-03 23:53:40.481', 'admin', '25008', '25005', 'AddComment', '组长同意', 0xe7bb84e995bfe5908ce6848f), ('25017', 'comment', '2018-12-03 23:54:09.341', 'admin', '25015', '25005', 'AddComment', '组长审批通过', 0xe7bb84e995bfe5aea1e689b9e9809ae8bf87), ('25028', 'comment', '2018-12-03 23:58:06.803', 'admin', '25025', '25022', 'AddComment', '审批', 0xe5aea1e689b9), ('25034', 'comment', '2018-12-03 23:58:14.496', 'admin', '25032', '25022', 'AddComment', '组长同意', 0xe7bb84e995bfe5908ce6848f), ('27507', 'comment', '2018-12-11 13:45:15.210', 'admin', '27504', '27501', 'AddComment', '11111', 0x3131313131), ('27513', 'comment', '2018-12-11 13:45:25.284', 'admin', '27511', '27501', 'AddComment', '2222', 0x32323232), ('27518', 'comment', '2018-12-11 13:46:02.740', 'admin', '27516', '27501', 'AddComment', '3333', 0x33333333);
 COMMIT;
 
 -- ----------------------------
@@ -205,7 +204,7 @@ CREATE TABLE `ACT_HI_IDENTITYLINK` (
 --  Records of `ACT_HI_IDENTITYLINK`
 -- ----------------------------
 BEGIN;
-INSERT INTO `ACT_HI_IDENTITYLINK` VALUES ('25009', null, 'candidate', 'admin', '25008', null), ('25010', null, 'participant', 'admin', null, '25005'), ('25016', null, 'candidate', 'admin', '25015', null), ('25021', null, 'candidate', 'admin', '25020', null), ('25026', null, 'candidate', 'admin', '25025', null), ('25027', null, 'participant', 'admin', null, '25022'), ('25033', null, 'candidate', 'admin', '25032', null), ('25038', null, 'candidate', 'admin', '25037', null);
+INSERT INTO `ACT_HI_IDENTITYLINK` VALUES ('25009', null, 'candidate', 'admin', '25008', null), ('25010', null, 'participant', 'admin', null, '25005'), ('25016', null, 'candidate', 'admin', '25015', null), ('25021', null, 'candidate', 'admin', '25020', null), ('25026', null, 'candidate', 'admin', '25025', null), ('25027', null, 'participant', 'admin', null, '25022'), ('25033', null, 'candidate', 'admin', '25032', null), ('25038', null, 'candidate', 'admin', '25037', null), ('27505', null, 'candidate', 'admin', '27504', null), ('27506', null, 'participant', 'admin', null, '27501'), ('27512', null, 'candidate', 'admin', '27511', null), ('27517', null, 'candidate', 'admin', '27516', null);
 COMMIT;
 
 -- ----------------------------
@@ -237,7 +236,7 @@ CREATE TABLE `ACT_HI_PROCINST` (
 --  Records of `ACT_HI_PROCINST`
 -- ----------------------------
 BEGIN;
-INSERT INTO `ACT_HI_PROCINST` VALUES ('25005', '25005', 'LeaveBill_17', 'LeaveBill:1:25004', '2018-12-03 23:52:38.725', null, null, null, 'start', null, null, null, '1', null), ('25022', '25022', 'LeaveBill_18', 'LeaveBill:1:25004', '2018-12-03 23:57:55.883', null, null, null, 'start', null, null, null, '1', null);
+INSERT INTO `ACT_HI_PROCINST` VALUES ('25005', '25005', 'LeaveBill_17', 'LeaveBill:1:25004', '2018-12-03 23:52:38.725', null, null, null, 'start', null, null, null, '1', null), ('25022', '25022', 'LeaveBill_18', 'LeaveBill:1:25004', '2018-12-03 23:57:55.883', null, null, null, 'start', null, null, null, '1', null), ('27501', '27501', 'LeaveBill_1', 'LeaveBill:1:25004', '2018-12-11 13:44:16.163', '2018-12-11 13:46:08.311', '112148', null, 'start', 'sid-BA76EC1F-B75E-4F28-B898-FE0666B681BF', null, null, '1', null);
 COMMIT;
 
 -- ----------------------------
@@ -273,7 +272,7 @@ CREATE TABLE `ACT_HI_TASKINST` (
 --  Records of `ACT_HI_TASKINST`
 -- ----------------------------
 BEGIN;
-INSERT INTO `ACT_HI_TASKINST` VALUES ('25008', 'LeaveBill:1:25004', 'user', '25005', '25005', '用户提交', null, null, null, null, '2018-12-03 23:52:38.756', null, '2018-12-03 23:53:40.525', '61769', 'completed', '50', null, null, null, '1'), ('25015', 'LeaveBill:1:25004', 'pm', '25005', '25005', '组长审批', null, null, null, null, '2018-12-03 23:53:40.532', null, '2018-12-03 23:54:09.356', '28824', 'completed', '50', null, null, null, '1'), ('25020', 'LeaveBill:1:25004', 'sid-A13A9AA8-CC8F-4B33-8166-EF7757F6ABDB', '25005', '25005', '人力报备', null, null, null, null, '2018-12-03 23:54:09.384', null, null, null, null, '50', null, null, null, '1'), ('25025', 'LeaveBill:1:25004', 'user', '25022', '25022', '用户提交', null, null, null, null, '2018-12-03 23:57:55.886', null, '2018-12-03 23:58:06.818', '10932', 'completed', '50', null, null, null, '1'), ('25032', 'LeaveBill:1:25004', 'pm', '25022', '25022', '组长审批', null, null, null, null, '2018-12-03 23:58:06.820', null, '2018-12-03 23:58:14.507', '7687', 'completed', '50', null, null, null, '1'), ('25037', 'LeaveBill:1:25004', 'sid-D191DB7D-10B8-4AE7-8284-E0931287237C', '25022', '25022', '经理审批', null, null, null, null, '2018-12-03 23:58:14.515', null, null, null, null, '50', null, null, null, '1');
+INSERT INTO `ACT_HI_TASKINST` VALUES ('25008', 'LeaveBill:1:25004', 'user', '25005', '25005', '用户提交', null, null, null, null, '2018-12-03 23:52:38.756', null, '2018-12-03 23:53:40.525', '61769', 'completed', '50', null, null, null, '1'), ('25015', 'LeaveBill:1:25004', 'pm', '25005', '25005', '组长审批', null, null, null, null, '2018-12-03 23:53:40.532', null, '2018-12-03 23:54:09.356', '28824', 'completed', '50', null, null, null, '1'), ('25020', 'LeaveBill:1:25004', 'sid-A13A9AA8-CC8F-4B33-8166-EF7757F6ABDB', '25005', '25005', '人力报备', null, null, null, null, '2018-12-03 23:54:09.384', null, null, null, null, '50', null, null, null, '1'), ('25025', 'LeaveBill:1:25004', 'user', '25022', '25022', '用户提交', null, null, null, null, '2018-12-03 23:57:55.886', null, '2018-12-03 23:58:06.818', '10932', 'completed', '50', null, null, null, '1'), ('25032', 'LeaveBill:1:25004', 'pm', '25022', '25022', '组长审批', null, null, null, null, '2018-12-03 23:58:06.820', null, '2018-12-03 23:58:14.507', '7687', 'completed', '50', null, null, null, '1'), ('25037', 'LeaveBill:1:25004', 'sid-D191DB7D-10B8-4AE7-8284-E0931287237C', '25022', '25022', '经理审批', null, null, null, null, '2018-12-03 23:58:14.515', null, null, null, null, '50', null, null, null, '1'), ('27504', 'LeaveBill:1:25004', 'user', '27501', '27501', '用户提交', null, null, null, null, '2018-12-11 13:44:16.257', null, '2018-12-11 13:45:15.530', '59273', 'completed', '50', null, null, null, '1'), ('27511', 'LeaveBill:1:25004', 'pm', '27501', '27501', '组长审批', null, null, null, null, '2018-12-11 13:45:15.552', null, '2018-12-11 13:45:25.685', '10133', 'completed', '50', null, null, null, '1'), ('27516', 'LeaveBill:1:25004', 'sid-A13A9AA8-CC8F-4B33-8166-EF7757F6ABDB', '27501', '27501', '人力报备', null, null, null, null, '2018-12-11 13:45:25.730', null, '2018-12-11 13:46:08.268', '42538', 'completed', '50', null, null, null, '1');
 COMMIT;
 
 -- ----------------------------
@@ -305,7 +304,7 @@ CREATE TABLE `ACT_HI_VARINST` (
 --  Records of `ACT_HI_VARINST`
 -- ----------------------------
 BEGIN;
-INSERT INTO `ACT_HI_VARINST` VALUES ('25012', '25005', '25005', null, 'days', 'integer', '1', null, null, '3', '3', null, '2018-12-03 23:53:40.516', '2018-12-03 23:54:09.351'), ('25013', '25005', '25005', null, 'flag', 'string', '1', null, null, null, '审批', null, '2018-12-03 23:53:40.517', '2018-12-03 23:54:09.352'), ('25029', '25022', '25022', null, 'days', 'integer', '1', null, null, '15', '15', null, '2018-12-03 23:58:06.813', '2018-12-03 23:58:14.504'), ('25030', '25022', '25022', null, 'flag', 'string', '1', null, null, null, '审批', null, '2018-12-03 23:58:06.813', '2018-12-03 23:58:14.505');
+INSERT INTO `ACT_HI_VARINST` VALUES ('25012', '25005', '25005', null, 'days', 'integer', '1', null, null, '3', '3', null, '2018-12-03 23:53:40.516', '2018-12-03 23:54:09.351'), ('25013', '25005', '25005', null, 'flag', 'string', '1', null, null, null, '审批', null, '2018-12-03 23:53:40.517', '2018-12-03 23:54:09.352'), ('25029', '25022', '25022', null, 'days', 'integer', '1', null, null, '15', '15', null, '2018-12-03 23:58:06.813', '2018-12-03 23:58:14.504'), ('25030', '25022', '25022', null, 'flag', 'string', '1', null, null, null, '审批', null, '2018-12-03 23:58:06.813', '2018-12-03 23:58:14.505'), ('27508', '27501', '27501', null, 'days', 'integer', '2', null, null, '7', '7', null, '2018-12-11 13:45:15.411', '2018-12-11 13:46:08.313'), ('27509', '27501', '27501', null, 'flag', 'string', '2', null, null, null, '审批', null, '2018-12-11 13:45:15.412', '2018-12-11 13:46:08.311');
 COMMIT;
 
 -- ----------------------------
@@ -553,13 +552,6 @@ CREATE TABLE `ACT_RU_IDENTITYLINK` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
---  Records of `ACT_RU_IDENTITYLINK`
--- ----------------------------
-BEGIN;
-INSERT INTO `ACT_RU_IDENTITYLINK` VALUES ('25010', '1', null, 'participant', 'admin', null, '25005', null), ('25021', '1', null, 'candidate', 'admin', '25020', null, null), ('25027', '1', null, 'participant', 'admin', null, '25022', null), ('25038', '1', null, 'candidate', 'admin', '25037', null, null);
-COMMIT;
-
--- ----------------------------
 --  Table structure for `ACT_RU_JOB`
 -- ----------------------------
 DROP TABLE IF EXISTS `ACT_RU_JOB`;
@@ -621,13 +613,6 @@ CREATE TABLE `ACT_RU_TASK` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
---  Records of `ACT_RU_TASK`
--- ----------------------------
-BEGIN;
-INSERT INTO `ACT_RU_TASK` VALUES ('25020', '1', '25005', '25005', 'LeaveBill:1:25004', '人力报备', null, null, 'sid-A13A9AA8-CC8F-4B33-8166-EF7757F6ABDB', null, null, null, '50', '2018-12-03 23:54:09.384', null, null, '1', '1', null), ('25037', '1', '25022', '25022', 'LeaveBill:1:25004', '经理审批', null, null, 'sid-D191DB7D-10B8-4AE7-8284-E0931287237C', null, null, null, '50', '2018-12-03 23:58:14.515', null, null, '1', '1', null);
-COMMIT;
-
--- ----------------------------
 --  Table structure for `ACT_RU_VARIABLE`
 -- ----------------------------
 DROP TABLE IF EXISTS `ACT_RU_VARIABLE`;
@@ -677,6 +662,6 @@ CREATE TABLE `oa_leave_bill` (
   `del_flag` char(50) DEFAULT '0' COMMENT '删除标识',
   `tenant_id` int(11) NOT NULL COMMENT '所属租户',
   PRIMARY KEY (`leave_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -19,6 +19,7 @@ services:
   pigx-redis:
     image: redis:4.0.10
     restart: always
+    container_name: pigx-redis
 
   pigx-eureka:
     build:
