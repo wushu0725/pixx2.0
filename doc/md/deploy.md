@@ -103,7 +103,7 @@ git clone https://www.gitee.wang/pig/pigx-ui.git
 npm run pre
 
 # 安装依赖
-cnpm install
+npm install
 
 # 启动
 npm run dev
