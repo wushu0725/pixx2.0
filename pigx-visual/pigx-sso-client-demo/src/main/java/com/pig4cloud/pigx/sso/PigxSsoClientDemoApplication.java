@@ -27,7 +27,7 @@ import org.springframework.cloud.client.SpringCloudApplication;
  * <p>
  * 单点登录客户端
  * 1. 启动实例访问:http://localhost:4040/sso1/ 提示登录，然后获取到用户信息
- * 2. 再启动一个实例： http://localhost:4040/sso1/ 不需要登录即可获取当前用户信息
+ * 2. 再启动一个实例： http://localhost:4041/sso1/ 不需要登录即可获取当前用户信息
  */
 @EnableOAuth2Sso
 @SpringCloudApplication
